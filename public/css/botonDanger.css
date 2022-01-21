@@ -1,0 +1,45 @@
+.btn-eliminar { 
+  color: #FFFFFF; 
+  background-color: #C9303A; 
+  border-color: #000000; 
+} 
+ 
+.btn-eliminar:hover, 
+.btn-eliminar:focus, 
+.btn-eliminar:active, 
+.btn-eliminar.active, 
+.open .dropdown-toggle.btn-eliminar { 
+  color: #FFFFFF; 
+  background-color: #B8373F; 
+  border-color: #000000; 
+} 
+ 
+.btn-eliminar:active, 
+.btn-eliminar.active, 
+.open .dropdown-toggle.btn-eliminar { 
+  background-image: none; 
+} 
+ 
+.btn-eliminar.disabled, 
+.btn-eliminar[disabled], 
+fieldset[disabled] .btn-eliminar, 
+.btn-eliminar.disabled:hover, 
+.btn-eliminar[disabled]:hover, 
+fieldset[disabled] .btn-eliminar:hover, 
+.btn-eliminar.disabled:focus, 
+.btn-eliminar[disabled]:focus, 
+fieldset[disabled] .btn-eliminar:focus, 
+.btn-eliminar.disabled:active, 
+.btn-eliminar[disabled]:active, 
+fieldset[disabled] .btn-eliminar:active, 
+.btn-eliminar.disabled.active, 
+.btn-eliminar[disabled].active, 
+fieldset[disabled] .btn-eliminar.active { 
+  background-color: #C9303A; 
+  border-color: #000000; 
+} 
+ 
+.btn-eliminar .badge { 
+  color: #C9303A; 
+  background-color: #FFFFFF; 
+}

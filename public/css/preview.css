@@ -1,0 +1,10 @@
+#preview {
+  
+    padding:5px;
+    border-radius:2px;
+    background:#fff;
+    max-width:200px;
+    
+  }
+  
+  #preview img {width:100%;display:block;   border:1px solid #ddd;;}

@@ -1,0 +1,45 @@
+.btn-pordefecto { 
+    color: #000000; 
+    background-color: #ECF0F5; 
+    border-color: #000000; 
+  } 
+   
+  .btn-pordefecto:hover, 
+  .btn-pordefecto:focus, 
+  .btn-pordefecto:active, 
+  .btn-pordefecto.active, 
+  .open .dropdown-toggle.btn-pordefecto { 
+    color: #000000; 
+    background-color: #CAD1D9; 
+    border-color: #000000; 
+  } 
+   
+  .btn-pordefecto:active, 
+  .btn-pordefecto.active, 
+  .open .dropdown-toggle.btn-pordefecto { 
+    background-image: none; 
+  } 
+   
+  .btn-pordefecto.disabled, 
+  .btn-pordefecto[disabled], 
+  fieldset[disabled] .btn-pordefecto, 
+  .btn-pordefecto.disabled:hover, 
+  .btn-pordefecto[disabled]:hover, 
+  fieldset[disabled] .btn-pordefecto:hover, 
+  .btn-pordefecto.disabled:focus, 
+  .btn-pordefecto[disabled]:focus, 
+  fieldset[disabled] .btn-pordefecto:focus, 
+  .btn-pordefecto.disabled:active, 
+  .btn-pordefecto[disabled]:active, 
+  fieldset[disabled] .btn-pordefecto:active, 
+  .btn-pordefecto.disabled.active, 
+  .btn-pordefecto[disabled].active, 
+  fieldset[disabled] .btn-pordefecto.active { 
+    background-color: #ECF0F5; 
+    border-color: #000000; 
+  } 
+   
+  .btn-pordefecto .badge { 
+    color: #ECF0F5; 
+    background-color: #000000; 
+  }

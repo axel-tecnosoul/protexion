@@ -1,0 +1,45 @@
+.btn-celeste { 
+    color: #FFFFFF; 
+    background-color: #3C8DBC; 
+    border-color: #222D32; 
+  } 
+   
+  .btn-celeste:hover, 
+  .btn-celeste:focus, 
+  .btn-celeste:active, 
+  .btn-celeste.active, 
+  .open .dropdown-toggle.btn-celeste { 
+    color: #FFFFFF; 
+    background-color: #357CA5; 
+    border-color: #222D32; 
+  } 
+   
+  .btn-celeste:active, 
+  .btn-celeste.active, 
+  .open .dropdown-toggle.btn-celeste { 
+    background-image: none; 
+  } 
+   
+  .btn-celeste.disabled, 
+  .btn-celeste[disabled], 
+  fieldset[disabled] .btn-celeste, 
+  .btn-celeste.disabled:hover, 
+  .btn-celeste[disabled]:hover, 
+  fieldset[disabled] .btn-celeste:hover, 
+  .btn-celeste.disabled:focus, 
+  .btn-celeste[disabled]:focus, 
+  fieldset[disabled] .btn-celeste:focus, 
+  .btn-celeste.disabled:active, 
+  .btn-celeste[disabled]:active, 
+  fieldset[disabled] .btn-celeste:active, 
+  .btn-celeste.disabled.active, 
+  .btn-celeste[disabled].active, 
+  fieldset[disabled] .btn-celeste.active { 
+    background-color: #3C8DBC; 
+    border-color: #222D32; 
+  } 
+   
+  .btn-celeste .badge { 
+    color: #3C8DBC; 
+    background-color: #FFFFFF; 
+  }
