@@ -214,12 +214,7 @@
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                         <!-- GESTION -->
                         <li class="nav-header">GESTION</li>
-                        <li class="nav-item">
-                            <a href="{{ route('personal.index') }}" class="nav-link">
-                                <i class="nav-icon fa fa-user-md"></i>
-                                <p>Personal</p>
-                            </a>
-                        </li>
+                        
                         <li class="nav-item">
                             <a href="{{ route('paciente.index') }}" class="nav-link">
                                 <i class="nav-icon fa fa-user"></i>
@@ -317,6 +312,13 @@
                                 <p>Auditoria</p>
                             </a>
                         </li>-->
+                        
+                        <li class="nav-item">
+                            <a href="{{ route('personal.index') }}" class="nav-link">
+                                <i class="nav-icon fa fa-user-md"></i>
+                                <p>Personal</p>
+                            </a>
+                        </li>
                         
                         <li class="nav-item">
                             <a href="{{ route('user.index') }}" class="nav-link">
