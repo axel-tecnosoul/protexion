@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('navegacion')
-    <li class="breadcrumb-item"><a href="/">Menu Principal</a></li>
+    <li class="breadcrumb-item"><a href="/protexion/public/home">Menu Principal</a></li>
     <li class="breadcrumb-item active">Audiometría</li>
 @endsection
 

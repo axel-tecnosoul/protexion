@@ -1,7 +1,7 @@
 @extends('layouts.admin')
   <!-- Extiende de layout -->
 @section('navegacion')
-    <li class="breadcrumb-item"><a href="/voucher">Indice de Vouchers</a></li>
+    <li class="breadcrumb-item"><a href="/protexion/public/voucher">Indice de Vouchers</a></li>
     <li class="breadcrumb-item active">Datos de Voucher</li>
 @endsection
 
