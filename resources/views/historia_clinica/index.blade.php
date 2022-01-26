@@ -1,7 +1,7 @@
 @extends('layouts.admin')  <!-- Extiende de layout -->
 
 @section('navegacion')
-    <li class="breadcrumb-item"><a href="/">Menu Principal</a></li>
+    <li class="breadcrumb-item"><a href="/protexion/public/home">Menu Principal</a></li>
     <li class="breadcrumb-item active">Historia Clinica</li>
 @endsection
 

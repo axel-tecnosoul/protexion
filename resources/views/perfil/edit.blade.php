@@ -55,7 +55,7 @@
 
                         </label>
                         <br>
-                        <a href="/perfil">
+                        <a href="/protexion/public/perfil">
                             <button title="Cancelar" class="btn btn-secondary btn-lg" type="button"><i class="fas fa-arrow-left"></i> Cancelar</button>
                         </a>
                         <button title="Guardar" id="confirmar" class="btn btn-danger btn-lg" type="submit"> <i class="fa fa-check"></i> Guardar</button>

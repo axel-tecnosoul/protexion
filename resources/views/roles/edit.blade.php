@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('navegacion')
-    <li class="breadcrumb-item"><a href="/roles">Indice de Roles</a></li>
+    <li class="breadcrumb-item"><a href="/protexion/public/roles">Indice de Roles</a></li>
     <li class="breadcrumb-item active">Editar Rol</li>
 @endsection
 
@@ -45,7 +45,7 @@
 
             </label>
             <br>
-            <a href="/personal">
+            <a href="/protexion/public/personal">
                 <button title="Limpiar" class="btn btn-secondary btn-lg" type="button"><i class="fas fa-arrow-left"></i> Cancelar</button>
             </a>
             <button title="Guardar" id="confirmar" class="btn btn-danger btn-lg" type="submit"> <i class="fa fa-check"></i> Guardar</button>

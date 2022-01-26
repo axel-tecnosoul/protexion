@@ -1,7 +1,7 @@
 @extends('layouts.admin')
   <!-- Extiende de layout -->
 @section('navegacion')
-    <li class="breadcrumb-item"><a href="/declaracion_jurada">Indice de Pacientes</a></li>
+    <li class="breadcrumb-item"><a href="/protexion/public/declaracion_jurada">Indice de Pacientes</a></li>
     <li class="breadcrumb-item active">Declaración jurada de Salud</li>
 @endsection
 
@@ -574,7 +574,7 @@
 
                 </label>
                 <br>
-                <a href="/declaracion_jurada">
+                <a href="/protexion/public/declaracion_jurada">
                     <button title="Cancelar" class="btn btn-secondary btn-lg" type="button"><i class="fas fa-arrow-left"></i> Cancelar</button>
                 </a>
                 <button title="Guardar" id="confirmar" class="btn btn-danger btn-lg" type="submit"> <i class="fa fa-check"></i> Guardar</button>

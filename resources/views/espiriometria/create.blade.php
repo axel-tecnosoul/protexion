@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('navegacion')
-    <li class="breadcrumb-item"><a href="/espiriometrias">Índice de Espiriometría</a></li>
+    <li class="breadcrumb-item"><a href="/protexion/public/espiriometrias">Índice de Espiriometría</a></li>
     <li class="breadcrumb-item active">Formulario de Espiriometría</li>
 @endsection
 

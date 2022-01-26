@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('navegacion')
-    <li class="breadcrumb-item"><a href="/estudios">Índice de Estudios</a></li>
+    <li class="breadcrumb-item"><a href="/protexion/public/estudios">Índice de Estudios</a></li>
     <li class="breadcrumb-item active">Nuevo estudio</li>
 @endsection
 

@@ -1,7 +1,7 @@
 @extends('layouts.admin')
   <!-- Extiende de layout -->
 @section('navegacion')
-    <li class="breadcrumb-item"><a href="/voucher">Indice de Vouchers</a></li>
+    <li class="breadcrumb-item"><a href="/protexion/public/voucher">Indice de Vouchers</a></li>
     <li class="breadcrumb-item active">Generar Voucher</li>
 @endsection
 
@@ -112,7 +112,7 @@
         </div>
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
             <div class="form-group" style="text-align:center">
-                <a href="/voucher">
+                <a href="/protexion/public/voucher">
                     <button title="Cancelar" class="btn btn-secondary btn-lg" type="button"><i class="fas fa-arrow-left"></i> Cancelar</button>
                 </a>
                 <button title="Guardar" id="confirmar" class="btn btn-danger btn-lg" type="submit"> <i class="fa fa-check"></i> Guardar</button>

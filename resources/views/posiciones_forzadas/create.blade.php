@@ -1,7 +1,7 @@
 @extends('layouts.admin')
   <!-- Extiende de layout -->
 @section('navegacion')
-    <li class="breadcrumb-item"><a href="/posiciones_forzadas">Indice de Pacientes</a></li>
+    <li class="breadcrumb-item"><a href="/protexion/public/posiciones_forzadas">Indice de Pacientes</a></li>
     <li class="breadcrumb-item active">Formulario de Posiciones Forzadas</li>
 @endsection
 

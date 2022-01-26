@@ -58,12 +58,12 @@
                                 <th>Cuit</th>
                                 <td>{{ $paciente->cuil }}</td>
                             </tr>
-                            <tr>
+                            <!-- <tr>
                                 <th>Obra Social</th>
                                 <td><?php if($paciente->obraSocial == null)
                                         echo(" ");
                                     else echo($paciente->obraSocial->obraSocialCompleta())?></td>
-                            </tr>
+                            </tr> -->
                             <tr>
                                 <th>Peso</th>
                                 <td>{{ $paciente->peso }} Kgrs</td>

@@ -1,7 +1,7 @@
 @extends('layouts.admin')
   <!-- Extiende de layout -->
 @section('navegacion')
-    <li class="breadcrumb-item"><a href="/historia_clinica">Indice de Historias Clinicas</a></li>
+    <li class="breadcrumb-item"><a href="/protexion/public/historia_clinica">Indice de Historias Clinicas</a></li>
     <li class="breadcrumb-item active">Historia Clinica</li>
 @endsection
 

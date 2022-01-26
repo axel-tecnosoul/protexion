@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('navegacion')
-    <li class="breadcrumb-item"><a href="/audiometrias">Indice de audiometría</a></li>
+    <li class="breadcrumb-item"><a href="/protexion/public/audiometrias">Indice de audiometría</a></li>
     <li class="breadcrumb-item active">Formulario de Audiometría</li>
 @endsection
 

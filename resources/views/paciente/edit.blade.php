@@ -1,7 +1,7 @@
 @extends('layouts.admin')
   <!-- Extiende de layout -->
 @section('navegacion')
-    <li class="breadcrumb-item"><a href="/paciente">Indice de Pacientes</a></li>
+    <li class="breadcrumb-item"><a href="/protexion/public/paciente">Indice de Pacientes</a></li>
     <li class="breadcrumb-item active">Editar Paciente</li>
 @endsection
 
@@ -27,6 +27,21 @@
             <div class="card-body">
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                     <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                            <div class="form-group">
+                                <label for="apellidos">
+                                        Apellidos
+                                </label>
+                                <input
+                                    type="string"
+                                    name="apellidos"
+                                    value="{{ $paciente->apellidos }}"
+                                    class="form-control"
+                                    title="apellidos del paciente"
+                                    onkeypress="return soloLetras(event)"
+                                    required>
+                            </div>
+                        </div>
                         <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
                             <div class="form-group">
                                 <label for="nombres">
@@ -41,22 +56,7 @@
                                     onkeypress="return soloLetras(event)"
                                     required>
                             </div>
-                        </div>
-                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-                            <div class="form-group">
-                                <label for="apellidos">
-                                        Apellido
-                                </label>
-                                <input
-                                    type="string"
-                                    name="apellidos"
-                                    value="{{ $paciente->apellidos }}"
-                                    class="form-control"
-                                    title="apellidos del paciente"
-                                    onkeypress="return soloLetras(event)"
-                                    required>
-                            </div>
-                        </div>
+                        </div>  
                     </div>
                 </div>
                 
@@ -75,7 +75,7 @@
                                     class="form-control"
                                     title="documento del paciente"
                                     onkeypress="return soloNumeros(event)"
-                                    required>
+                                    >
                             </div>
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
@@ -89,7 +89,7 @@
                                     value="{{ $paciente->fecha_nacimiento }}"
                                     class="form-control"
                                     title="fecha de nacimiento de la persona"
-                                    required>
+                                    >
                             </div>
                         </div>
                     </div>
@@ -100,7 +100,7 @@
                         <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
                             <div class="form-group">
                                 <label for="cuil">
-                                    Cuil
+                                    CUIL
                                 </label>
                                 <input
                                     type="text"
@@ -252,7 +252,7 @@
                 </div>
                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                         <div class="form-group">
-                            <label>
+                            <!-- <label>
                                 Obra social
                             </label>
                             <select
@@ -285,7 +285,7 @@
                                     <i class="fa fa-plus"></i>
                                 </button>
                             </a>
-                            @include('obra_social.modalAgregarObraSocial')
+                            @include('obra_social.modalAgregarObraSocial') -->
                         </div>
                     </div>
 
@@ -437,7 +437,7 @@
 
             </label>
             <br>
-            <a href="/paciente">
+            <a href="/protexion/public/paciente">
                 <button title="Cancelar" class="btn btn-secondary btn-lg" type="button"><i class="fas fa-arrow-left"></i> Cancelar</button>
             </a>
             <button title="Guardar" id="confirmar" class="btn btn-danger btn-lg" type="submit"> <i class="fa fa-check"></i> Guardar</button>
@@ -454,8 +454,8 @@
             var select1 = $("#sexo_id").select2({width:'100%'});
             select1.data('select2').$selection.css('height', '100%');
 
-            var select2 = $("#obra_social_id").select2({width:'90%'});
-            select2.data('select2').$selection.css('height', '100%');
+            /*var select2 = $("#obra_social_id").select2({width:'90%'});
+            select2.data('select2').$selection.css('height', '100%');*/
 
             var select3 = $("#origen_id").select2({width:'90%'});
             select3.data('select2').$selection.css('height', '100%');

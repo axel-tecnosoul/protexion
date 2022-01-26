@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 <!-- Extiende de layout -->
 @section('navegacion')
-    <li class="breadcrumb-item"><a href="/paciente">Indice de Pacientes</a></li>
+    <li class="breadcrumb-item"><a href="/protexion/public/paciente">Indice de Pacientes</a></li>
     <li class="breadcrumb-item active">Crear Paciente</li>
 @endsection
 @section('content')
@@ -21,6 +21,23 @@
             <div class="card-body">
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                     <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                            <div class="form-group">
+                                <label for="apellidos">
+                                        Apellidos
+                                </label>
+                                <input
+                                    type="string"
+                                    name="apellidos"
+                                    maxlength="30"
+                                    value="{{old('apellidos')}}"
+                                    class="form-control"
+                                    placeholder="Ingrese el apellido..."
+                                    title="Introduzca el apellido"
+                                    onkeypress="return soloLetras(event)"
+                                    required>
+                            </div>
+                        </div>
                         <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
                             <div class="form-group">
                                 <label for="nombres">
@@ -38,23 +55,7 @@
                                     required>
                             </div>
                         </div>
-                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-                            <div class="form-group">
-                                <label for="apellidos">
-                                        Apellidos
-                                </label>
-                                <input
-                                    type="string"
-                                    name="apellidos"
-                                    maxlength="30"
-                                    value="{{old('apellidos')}}"
-                                    class="form-control"
-                                    placeholder="Ingrese el apellido..."
-                                    title="Introduzca el apellido"
-                                    onkeypress="return soloLetras(event)"
-                                    required>
-                            </div>
-                        </div>
+                       
                     </div>
                 </div>
                 
@@ -89,8 +90,15 @@
                                     onkeypress="return soloNumeros(event)">
                             </div>
                         </div>   
-        
                         <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                            <div class="form-group">
+                                <label for="telefono">Teléfono</label>
+                                <input type="text"name="telefono"value="{{old('telefono')}}"class="form-control"
+                                    placeholder="3764-232266"title="Introduzca un teléfono"
+                                    onkeypress="return soloNumeros(event)">
+                            </div>
+                        </div>
+                        <!-- <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
                             <div class="form-group">
                                 <label for="ciudad_id">Lugar de Nacimiento</label>
                                 <select name="ciudad_id"id="ciudad_id2"class="ciudad_id2 custom-select"required>
@@ -104,13 +112,27 @@
                                     @endforeach
                                 </select>
                             </div>
-                        </div>
+                        </div> -->
                         
                     </div>
                 </div>
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                     <div class="row">
-                        
+                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                            <div class="form-group">
+                                <label for="sexo_id">Género</label>
+                                <select name="sexo_id"id="sexo_id"class="sexo_id custom-select" required>
+                                    <option value="0"disabled="true"selected="true"title="-Seleccione un tipo de sexo-">
+                                        -Seleccione un genero-
+                                    </option>
+                                    @foreach ($sexos as $sexo)
+                                        <option
+                                            value="{{$sexo->id }}">{{$sexo->definicion}}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
                         <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
                             <div class="form-group">
                                 <label for="estado_civil_id">Estado Civil</label>
@@ -127,41 +149,15 @@
                             </div>
                         </div>
 
-                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-                            <div class="form-group">
-                                <label for="sexo_id">Sexo</label>
-                                <select name="sexo_id"id="sexo_id"class="sexo_id custom-select" required>
-                                    <option value="0"disabled="true"selected="true"title="-Seleccione un tipo de sexo-">
-                                        -Seleccione un sexo-
-                                    </option>
-                                    @foreach ($sexos as $sexo)
-                                        <option
-                                            value="{{$sexo->id }}">{{$sexo->definicion}}
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
                     </div>
                 </div>
                 
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                    <div class="row">
-                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-                            <div class="form-group">
-                                <label for="telefono">Teléfono</label>
-                                <input type="text"name="telefono"value="{{old('telefono')}}"class="form-control"
-                                    placeholder="3764-232266"title="Introduzca un teléfono"
-                                    onkeypress="return soloNumeros(event)">
-                            </div>
-                        </div>
-                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-                            <div class="form-group">
-                                <label for="foto de perfil">Foto de Perfil</label>
-                                <input type="file"name="imagen"value="{{old('imagen')}}"class="form-control">
-                            </div>
-                        </div>
-                    </div>
+                    
+                    <div class="form-group">
+                        <label for="foto de perfil">Foto de Perfil</label>
+                        <input type="file"name="imagen"value="{{old('imagen')}}"class="form-control">
+                    </div>  
                 </div>
                
             </div>
@@ -169,11 +165,12 @@
     </div>
     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
         <div class="card card-dark">
-            <div class="card-header">
+            <!-- <div class="card-header">
                 <div class="card-title">
                     <p style="font-size:130%"> <i class="fa fa-id-card" aria-hidden="true"></i> Domicilio del Paciente</p>
+                    
                 </div>
-            </div>
+            </div> -->
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                 
                 <div class="card-body">
@@ -208,7 +205,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div>-->
                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                         <label for="origen_id">
                             Procedencia
@@ -240,7 +237,7 @@
                             @include('origen.modalAgregarOrigen')
                         </div>
                     </div>
-                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <!--<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                         <label for="obra_social_id">
                             Obra Social
                         </label>
@@ -313,7 +310,7 @@
                                 
                                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                     <div class="form-group" style="text-align:center">
-                                        <a href="/paciente">
+                                        <a href="/protexion/public/paciente">
                                             <button title="Cancelar" class="btn btn-secondary btn-lg" type="button"><i class="fas fa-arrow-left"></i> Cancelar</button>
                                         </a>
                                         <button title="Guardar" id="confirmar" class="btn btn-danger btn-lg" type="submit"> <i class="fa fa-check"></i> Guardar</button>
@@ -340,11 +337,11 @@
             var select1 = $("#sexo_id").select2({width:'100%'});
             select1.data('select2').$selection.css('height', '100%');
 
-            var select3 = $("#estado_civil_id").select2({width:'100%'});
-            select3.data('select2').$selection.css('height', '100%');
+            var select2 = $("#estado_civil_id").select2({width:'100%'});
+            select2.data('select2').$selection.css('height', '100%');
 
-            var select4 = $("#ciudad_id2").select2({width:'100%'});
-            select4.data('select2').$selection.css('height', '100%');
+            // var select4 = $("#ciudad_id2").select2({width:'100%'});
+            // select4.data('select2').$selection.css('height', '100%');
 
             var select5 = $("#pais_id").select2({width:'100%'});
             select5.data('select2').$selection.css('height', '100%');
@@ -355,7 +352,8 @@
             var select7 = $("#ciudad_id").select2({width:'100%'});
             select7.data('select2').$selection.css('height', '100%');
 
-
+            var select3 = $("#origen_id").select2({width:'90%'});
+            select3.data('select2').$selection.css('height', '100%');
 
             $(document).on('change','.pais_id',function(){
                 var pais_id=$(this).val();

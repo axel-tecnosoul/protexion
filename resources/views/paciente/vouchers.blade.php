@@ -15,15 +15,13 @@
                 <p style="font-size:130%"> <i class="fa fa-id-card" aria-hidden="true"></i> Vouchers de {{ $paciente->nombreCompleto() }}</p>
             </div>
             <div class="card-tools">
-                @if ($paciente->documento!=null)
+                
                 <a href= {{ route('voucher.create',$paciente->id)}}>
                     <button class="btn fondo1">
                         <i class="fa fa-plus"></i> Nuevo estudio
                     </button>
                 </a>
-                @else
-                <p style="color:white">Falta completar datos del paciente</p>
-                @endif
+                
             </div>
         </div>
         <div class="card-body">

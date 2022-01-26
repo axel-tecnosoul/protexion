@@ -39,7 +39,7 @@ class Paciente extends Model implements Auditable
 
     public function nombreCompleto()
     {
-        return $this->nombres . " " . $this->apellidos;
+        return $this->apellidos . " " . $this->nombres;
     }
 
     public function estado()

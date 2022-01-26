@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('navegacion')
-    <li class="breadcrumb-item"><a href="/tipo_estudios">Indice de tipo de estudios</a></li>
+    <li class="breadcrumb-item"><a href="/protexion/public/tipo_estudios">Indice de tipo de estudios</a></li>
     <li class="breadcrumb-item active">Formulario de tipso de estudios</li>
 @endsection
 

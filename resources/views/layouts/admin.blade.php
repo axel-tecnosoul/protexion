@@ -177,7 +177,7 @@
                     </a>
                 </li-->
                 <li class="nav-item d-none d-sm-inline-block">
-                    <a style="color: white" href="/logout" class="nav-link">
+                    <a style="color: white" href="/protexion/public/logout" class="nav-link">
                         <i class="fas fa-sign-out-alt"></i> Cerrar sesión
                     </a>
                 </li>
@@ -190,7 +190,7 @@
 
         <aside class="main-sidebar sidebar-dark-primary fondo2 elevation-4">
 
-            <a href="/home" class="brand-link">
+            <a href="/protexion/public/home" class="brand-link">
                 <!--img src="{{ asset('imagenes/logo.jpg')}}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8"-->
                 <span class="brand-text font-weight-light"><b>ProteXion</b></span>
             </a>

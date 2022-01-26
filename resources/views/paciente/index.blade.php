@@ -1,7 +1,7 @@
 @extends('layouts.admin')  <!-- Extiende de layout -->
 
 @section('navegacion')
-    <li class="breadcrumb-item"><a href="/">Menu Principal</a></li>
+    <li class="breadcrumb-item"><a href="/protexion/public/home">Menu Principal</a></li>
     <li class="breadcrumb-item active">Indice de Pacientes</li>
 @endsection
 
@@ -52,7 +52,7 @@
                         <th width="10%" style="color:#F8F9F9">Documento</th>
                         <th width="25%" style="color:#F8F9F9">Apellido y Nombre</th>
                         <th width="15%" style="color:#F8F9F9">Origen</th>
-                        <th width="15%" style="color:#F8F9F9">Obra social</th>
+                        <!-- <th width="15%" style="color:#F8F9F9">Obra social</th> -->
                         <th width="15%" style="color:#F8F9F9">Foto de perfil</th>
                         <th width="20%" style="color:#F8F9F9">Opciones</th>
 
@@ -68,9 +68,9 @@
                         <td><?php if($paciente->origen == null)
                                         echo(" ");
                                     else echo($paciente->origen->definicion)?></td>
-                        <td><?php if($paciente->obraSocial == null)
+                        <!-- <td><?php if($paciente->obraSocial == null)
                                         echo(" ");
-                                    else echo($paciente->obraSocial->abreviatura)?></td>
+                                    else echo($paciente->obraSocial->abreviatura)?></td> -->
                         <td style="text-align: center">
                             @if($paciente->imagen == null)
                                 <img src="{{ asset('imagenes/paciente/default.png')}}" width="50px" class="img-circle elevation-2" alt="User Image">
