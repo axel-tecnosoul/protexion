@@ -13,7 +13,8 @@ class HeadingRowExtractor
     /**
      * @const int
      */
-    const DEFAULT_HEADING_ROW = 9;
+    //const DEFAULT_HEADING_ROW = 9;
+    const DEFAULT_HEADING_ROW = 1;
 
     /**
      * @param  WithHeadingRow|mixed  $importable

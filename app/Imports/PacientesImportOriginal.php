@@ -12,9 +12,8 @@ class PacientesImport implements ToModel
     *
     * @return \Illuminate\Database\Eloquent\Model|null
     */
-    public function model(array $row){
-        /*var_dump("hola");
-        var_dump($row);*/
+    public function model(array $row)
+    {
         return new Paciente([
             'apellidos'=>$row[0],
             'nombres'=>$row[1],            
