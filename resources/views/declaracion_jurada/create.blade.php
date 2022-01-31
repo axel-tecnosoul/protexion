@@ -513,6 +513,17 @@
                                         <input type="text" class="form-control"  name="detalle2_q"  placeholder="Detalle si corresponde...">
                                     </div>
                                     <!-- ¿Padece alguna otra enfermedad no especificada en el interrogatorio anterior? -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header fondo2">
+                                <h3 class="card-title">Enfermedad no especificada</h3>
+                            </div>
+                            <div class="card-body">
+                                <div class="form-group">
                                     <div class="form-group row">
                                         <label for="detalle">
                                             ¿Padece alguna otra enfermedad no especificada en el interrogatorio anterior?

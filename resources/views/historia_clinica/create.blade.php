@@ -186,90 +186,7 @@
                             </div>
                         </div>
                     </div>
-                    <!-- Neurológico -->
-                    <div class="col-6">
-                        <div class="card ">
-                            <div class="card-header fondo2">
-                                <h3 class="card-title">Neurológico</h3>
-                                <div class="card-tools">
-                                    <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-plus"></i></button>
-                                </div>
-                            </div>
-                            <div class="card-body">
-                                <!-- Instrucciones -->
-                                <div class="row">
-                                    <div class="card text-white bg-light col" style="width: max-content">
-                                      <div class="card-body">
-                                        <h4 class="card-title"><b>Instrucciones:</b></h4><br>
-                                        <p>                                        
-                                            <ul>
-                                                <li>Si corresponde alguno de estos items, describirlos.</li>
-                                                <li>En caso de que corresponda y no se desee ingresar una descripción, escriba "Si".</li>
-                                                <li>Si el item no corresponde, dejar el campo en vacío.</li>
-                                            </ul> 
-                                        </p>
-                                      </div>
-                                    </div>
-                                </div>
-                                <!-- Motilidad activa -->
-                                <div class="form-group row">
-                                    <div class="col">
-                                        <label for="" class="form-label">Motilidad activa</label>
-                                        <input class="form-control" placeholder="Describa si corresponde..." type="text" name="observacion1_neu">
-                                    </div>
-                                </div>
-                                <!-- Motilidad pasiva -->
-                                <div class="form-group row">
-                                    <div class="col">
-                                        <label for="" class="form-label">Motilidad pasiva</label>
-                                        <input class="form-control" placeholder="Describa si corresponde..." type="text" name="observacion2_neu">
-                                    </div>
-                                </div>
-                                <!-- Sensibilidad -->
-                                <div class="form-group row">
-                                    <div class="col">
-                                        <label for="" class="form-label">Sensibilidad</label>
-                                        <input class="form-control" placeholder="Describa si corresponde..." type="text" name="observacion3_neu">
-                                    </div>
-                                </div>
-                                <!-- Marcha -->
-                                <div class="form-group row">
-                                    <div class="col">
-                                        <label for="" class="form-label">Marcha</label>
-                                        <input class="form-control" placeholder="Describa si corresponde..." type="text" name="observacion4_neu">
-                                    </div>
-                                </div>
-                                <!-- Reflejos osteotendinosos -->
-                                <div class="form-group row">
-                                    <div class="col">
-                                        <label for="" class="form-label">Reflejos osteotendinosos</label>
-                                        <input class="form-control" placeholder="Describa si corresponde..." type="text" name="observacion5_neu">
-                                    </div>
-                                </div>
-                                <!-- Pares craneales -->
-                                <div class="form-group row">
-                                    <div class="col">
-                                        <label for="" class="form-label">Pares craneales</label>
-                                        <input class="form-control" placeholder="Describa si corresponde..." type="text" name="observacion6_neu">
-                                    </div>
-                                </div>
-                                <!-- Taxia -->
-                                <div class="form-group row">
-                                    <div class="col">
-                                        <label for="" class="form-label">Taxia</label>
-                                        <input class="form-control" placeholder="Describa si corresponde..." type="text" name="observacion7_neu">
-                                    </div>
-                                </div>
-                                <!-- Observaciones -->
-                                <div class="form-group row">
-                                    <div class="col">
-                                        <label for="" class="form-label">Observaciones</label>
-                                        <input class="form-control" placeholder="Observaciones" type="text" name="observacion_neu">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    
                     <!-- Piel -->
                     <div class="col-6">
                         <div class="card ">
@@ -589,66 +506,87 @@
                             </div>
                         </div>
                     </div>
-                    <!-- Abdomen -->
+                    <!-- Neurológico -->
                     <div class="col-6">
                         <div class="card ">
                             <div class="card-header fondo2">
-                                <h3 class="card-title">Abdomen</h3>
+                                <h3 class="card-title">Neurológico</h3>
                                 <div class="card-tools">
                                     <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-plus"></i></button>
                                 </div>
                             </div>
                             <div class="card-body">
-                                <!-- Forma -->
-                                <div class="form-group row">
-                                    <div class="col">
-                                        <label for="" class="form-label">Forma</label>
-                                        <input class="form-control" placeholder="Describa las anormalidades..." type="text" name="observacion1_ab">
+                                <!-- Instrucciones -->
+                                <div class="row">
+                                    <div class="card text-white bg-light col" style="width: max-content">
+                                      <div class="card-body">
+                                        <h4 class="card-title"><b>Instrucciones:</b></h4><br>
+                                        <p>                                        
+                                            <ul>
+                                                <li>Si corresponde alguno de estos items, describirlos.</li>
+                                                <li>En caso de que corresponda y no se desee ingresar una descripción, escriba "Si".</li>
+                                                <li>Si el item no corresponde, dejar el campo en vacío.</li>
+                                            </ul> 
+                                        </p>
+                                      </div>
                                     </div>
                                 </div>
-                                <!-- Hígado -->
+                                <!-- Motilidad activa -->
                                 <div class="form-group row">
                                     <div class="col">
-                                        <label for="" class="form-label">Hígado</label>
-                                        <input class="form-control" placeholder="Describa las anormalidades..." type="text" name="observacion2_ab">
+                                        <label for="" class="form-label">Motilidad activa</label>
+                                        <input class="form-control" placeholder="Describa si corresponde..." type="text" name="observacion1_neu">
                                     </div>
                                 </div>
-                                <!-- Bazo -->
+                                <!-- Motilidad pasiva -->
                                 <div class="form-group row">
                                     <div class="col">
-                                        <label for="" class="form-label">Bazo</label>
-                                        <input class="form-control" placeholder="Describa las anormalidades..." type="text" name="observacion3_ab">
+                                        <label for="" class="form-label">Motilidad pasiva</label>
+                                        <input class="form-control" placeholder="Describa si corresponde..." type="text" name="observacion2_neu">
                                     </div>
                                 </div>
-                                <!-- Colon -->
+                                <!-- Sensibilidad -->
                                 <div class="form-group row">
                                     <div class="col">
-                                        <label for="" class="form-label">Colon</label>
-                                        <input class="form-control" placeholder="Describa las anormalidades..." type="text" name="observacion4_ab">
+                                        <label for="" class="form-label">Sensibilidad</label>
+                                        <input class="form-control" placeholder="Describa si corresponde..." type="text" name="observacion3_neu">
                                     </div>
                                 </div>
-                                <!-- Ruidos hidroaéreos -->
+                                <!-- Marcha -->
                                 <div class="form-group row">
                                     <div class="col">
-                                        <label for="" class="form-label">Ruidos hidroaéreos</label>
-                                        <input class="form-control" placeholder="Describa las anormalidades..." type="text" name="observacion5_ab">
+                                        <label for="" class="form-label">Marcha</label>
+                                        <input class="form-control" placeholder="Describa si corresponde..." type="text" name="observacion4_neu">
                                     </div>
                                 </div>
-                                <!-- Puño percusión -->
+                                <!-- Reflejos osteotendinosos -->
                                 <div class="form-group row">
                                     <div class="col">
-                                        <label for="" class="form-label">Puño percusión</label>
-                                        <input class="form-control" placeholder="Describa las anormalidades..." type="text" name="observacion6_ab">
+                                        <label for="" class="form-label">Reflejos osteotendinosos</label>
+                                        <input class="form-control" placeholder="Describa si corresponde..." type="text" name="observacion5_neu">
                                     </div>
                                 </div>
-                                <!-- Cicatrices quirúrjicas -->
+                                <!-- Pares craneales -->
                                 <div class="form-group row">
                                     <div class="col">
-                                        <label for="" class="form-label">Cicatrices quirúrjicas</label>
-                                        <input class="form-control" placeholder="Describa las anormalidades..." type="text" name="observacion_ab">
+                                        <label for="" class="form-label">Pares craneales</label>
+                                        <input class="form-control" placeholder="Describa si corresponde..." type="text" name="observacion6_neu">
                                     </div>
                                 </div>
-
+                                <!-- Taxia -->
+                                <div class="form-group row">
+                                    <div class="col">
+                                        <label for="" class="form-label">Taxia</label>
+                                        <input class="form-control" placeholder="Describa si corresponde..." type="text" name="observacion7_neu">
+                                    </div>
+                                </div>
+                                <!-- Observaciones -->
+                                <div class="form-group row">
+                                    <div class="col">
+                                        <label for="" class="form-label">Observaciones</label>
+                                        <input class="form-control" placeholder="Observaciones" type="text" name="observacion_neu">
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -742,6 +680,69 @@
                                         <input class="form-control" placeholder="Describa las anormalidades..." type="text" name="observacion2_re">
                                     </div>
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Abdomen -->
+                    <div class="col-6">
+                        <div class="card ">
+                            <div class="card-header fondo2">
+                                <h3 class="card-title">Abdomen</h3>
+                                <div class="card-tools">
+                                    <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-plus"></i></button>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <!-- Forma -->
+                                <div class="form-group row">
+                                    <div class="col">
+                                        <label for="" class="form-label">Forma</label>
+                                        <input class="form-control" placeholder="Describa las anormalidades..." type="text" name="observacion1_ab">
+                                    </div>
+                                </div>
+                                <!-- Hígado -->
+                                <div class="form-group row">
+                                    <div class="col">
+                                        <label for="" class="form-label">Hígado</label>
+                                        <input class="form-control" placeholder="Describa las anormalidades..." type="text" name="observacion2_ab">
+                                    </div>
+                                </div>
+                                <!-- Bazo -->
+                                <div class="form-group row">
+                                    <div class="col">
+                                        <label for="" class="form-label">Bazo</label>
+                                        <input class="form-control" placeholder="Describa las anormalidades..." type="text" name="observacion3_ab">
+                                    </div>
+                                </div>
+                                <!-- Colon -->
+                                <div class="form-group row">
+                                    <div class="col">
+                                        <label for="" class="form-label">Colon</label>
+                                        <input class="form-control" placeholder="Describa las anormalidades..." type="text" name="observacion4_ab">
+                                    </div>
+                                </div>
+                                <!-- Ruidos hidroaéreos -->
+                                <div class="form-group row">
+                                    <div class="col">
+                                        <label for="" class="form-label">Ruidos hidroaéreos</label>
+                                        <input class="form-control" placeholder="Describa las anormalidades..." type="text" name="observacion5_ab">
+                                    </div>
+                                </div>
+                                <!-- Puño percusión -->
+                                <div class="form-group row">
+                                    <div class="col">
+                                        <label for="" class="form-label">Puño percusión</label>
+                                        <input class="form-control" placeholder="Describa las anormalidades..." type="text" name="observacion6_ab">
+                                    </div>
+                                </div>
+                                <!-- Cicatrices quirúrjicas -->
+                                <div class="form-group row">
+                                    <div class="col">
+                                        <label for="" class="form-label">Cicatrices quirúrjicas</label>
+                                        <input class="form-control" placeholder="Describa las anormalidades..." type="text" name="observacion_ab">
+                                    </div>
+                                </div>
+
                             </div>
                         </div>
                     </div>

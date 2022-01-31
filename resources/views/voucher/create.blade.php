@@ -90,13 +90,18 @@
                                 </div>
                                 <div class="card-body" > <!--style="display: none;" -->
                                     <div class="row">
+                                        <?php $idChecked = ["45","46","47","48","49","50","56","57"]; ?>
                                         @foreach ($estudios as $item)
                                             @if ($item->tipo_estudio_id == $tipo->id)
                                                 <div class="col-6">
                                                     <div class="custom-control custom-checkbox">
                                                         <div class="icheck-danger d-inline">
-                                                            <input class="{{$tipo->id}}" type="checkbox" name="{{$item->id}}" value = 1 id="{{$item->id}}">
-                                                            <label for="{{$item->id}}"> {{strtoupper($item->nombre)}} </label>
+                                                            <?php $checked="" ?>
+                                                            @if(in_array($item->id, $idChecked))
+                                                                <?php $checked="checked"?>  
+                                                            @endif
+                                                            <input class="{{$tipo->id}}" type="checkbox" name="{{$item->id}}" value = 1 id="{{$item->id}}" <?=$checked?>>
+                                                                <label for="{{$item->id}}"> {{strtoupper($item->nombre)}} </label>
                                                         </div>
                                                     </div>  
                                                 </div>         
