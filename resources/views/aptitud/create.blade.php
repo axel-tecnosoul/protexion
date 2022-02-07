@@ -60,26 +60,47 @@
         $(document).ready(function(){
             let texto = $("#datosAdicionales").val();
             $("#observaciones").val(texto);
+            
         })
 
         // Preexistencias
         $(".preexistencias").change(function()
-        {   
+        {   //Axel te paso la pelota y mete el gol :v 
+            let idCheck = $("input[name='"+this.id+"_check']:checked");
+            let lenghtCheck = idCheck[0].id.length;
+            console.log(this.id);
+            console.log(($(this))[0].type);
+            console.log(idCheck);
+            console.log(idCheck[0].id);
+            console.log(idCheck[0]);
+            console.log("lenght: " + lenghtCheck);
+            let sbCheck = idCheck[0].id.substr(-21, 11);
+            console.log(sbCheck);
+            
+            //print(idCheck.html().substring(4,7));
+            /*console.log($("#"+this.id+"_obs"));
+            console.log($("#"+this.id+"_pre"));*/
+            //console.log("#"+this.id+"_hidden_label");
+            //console.log($("#"+this.id+"_hidden_label"));
+            //console.log($("#"+this.id+"_hidden_label").html());
+            
             //Variables
                 //Estudios
                 let cantTipo = $("#cantTipo").val();
                 let cantEstudios = [];
                 let texto = "";
-
+                let declaJuradaPre = $("#declaJuradaPre").val();
+                let histoClinPre = $("#histoClinPre").val();
+                
                 //Declaracion_jurada
-                $("#pre_declaracion_jurada").val() == undefined 
+                $("#pre_declaracion_jurada").val() == undefined || $("#pre_declaracion_jurada").val() == ""
                     ? (declaracion_jurada = "") 
-                    : (declaracion_jurada = $("#pre_declaracion_jurada").val()) + " ";
+                    : (declaracion_jurada = declaJuradaPre + $("#pre_declaracion_jurada").val() + "\n");
 
                 //Historia_clinica
-                $("#pre_historia_clinica").val() == undefined 
+                $("#pre_historia_clinica").val() == undefined || $("#pre_historia_clinica").val() == ""
                     ? (historia_clinica = "") 
-                    : (historia_clinica = $("#pre_historia_clinica").val()) + " ";
+                    : (historia_clinica = histoClinPre + $("#pre_historia_clinica").val() + "\n");
 
                 //Posiciones_forzada
                 $("#pre_posiciones_forzadas").val() == undefined 
@@ -101,11 +122,11 @@
             for (let i = 0; i < cantTipo; i++) {
                 for (let j = 0; j < cantEstudios[i]; j++) {
                     if ($("#POinput_"+i+"_"+j).val() != "") {
-
+                        //console.log($("#POinput_"+i+"_"+j+"_label").val());
                         if (
                             $("input:radio[name=POinput_"+i+"_"+j+"_check]:checked").val() == "P"
                         ) { 
-                            texto = texto + $("#POinput_"+i+"_"+j).val() + " ";
+                            texto =texto + $("#POinput_"+i+"_"+j).val() + " ";
                         }
                     }
                 }
@@ -117,6 +138,13 @@
             $("#preexistencias").val(texto);
         })
 
+        /*$(document).on("keyup","#pre_declaracion_jurada",function(){
+            let declaJuradaPre=$("#declaJuradaPre");
+            let aux=declaJuradaPre.val();
+            $("#preexistencias").val(aux+this.value);
+            //declaJuradaPre.val(+this.value);  
+        })*/
+
         // Observaciones
         $(".observaciones").change(function()
         {
@@ -125,15 +153,17 @@
                 let cantTipo = $("#cantTipo").val();
                 let cantEstudios = [];
                 let texto = $("#datosAdicionales").val();
+                let declaJuradaObs = $("#declaJuradaObs").val();
+                let histoClinObs = $("#histoClinObs").val();
                 //Declaracion_jurada
-                $("#obs_declaracion_jurada").val() == undefined 
+                $("#obs_declaracion_jurada").val() == undefined || $("#obs_declaracion_jurada").val() == ""
                     ? (declaracion_jurada = "") 
-                    : (declaracion_jurada = $("#obs_declaracion_jurada").val() + " ");
+                    : (declaracion_jurada = declaJuradaObs + $("#obs_declaracion_jurada").val() + "\n");
 
                 //Historia_clinica
-                $("#obs_historia_clinica").val() == undefined 
+                $("#obs_historia_clinica").val() == undefined  || $("#obs_historia_clinica").val() == ""
                     ? (historia_clinica = "") 
-                    : (historia_clinica = $("#obs_historia_clinica").val() + " ");
+                    : (historia_clinica = histoClinObs + $("#obs_historia_clinica").val() + "\n");
 
                 //Posiciones_forzada
                 $("#obs_posiciones_forzadas").val() == undefined 
@@ -154,6 +184,7 @@
             //Recorrer inputs y cargar sus valores en variable "texto"
             for (let i = 0; i < cantTipo; i++) {
                 for (let j = 0; j < cantEstudios[i]; j++) {
+                    
                     if ($("#POinput_"+i+"_"+j).val() != "") {
 
                         if (
