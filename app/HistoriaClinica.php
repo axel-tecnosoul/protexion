@@ -100,7 +100,7 @@ class HistoriaClinica extends Model implements Auditable
     {
 
             // Generación de Diagnóstico
-            /* La generación deldiagnostico se realiza cargando dos arrays, uno con las etiquetas y otro con los atributos.
+            /* La generación del diagnostico se realiza cargando dos arrays, uno con las etiquetas y otro con los atributos.
             Luego se procede a cargar sólo los atributos que fueron cargados cuando se generó el formulario*/
             $matriz = [];
             $diagnostico = "";

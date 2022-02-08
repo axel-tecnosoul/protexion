@@ -7,7 +7,7 @@
             </div>
         </div>
         <div class="card-body" > 
-            <div class="form-group row">
+            <!-- <div class="form-group row">
                 <div class="col-12">
                     <label><input type="radio" name="aptitud_laboral" value="APTO “A”: TODO TIPO DE TAREAS SEGÚN EXPOSICIÓN A RIESGO DECLARADO"> APTO “A”: TODO TIPO DE TAREAS SEGÚN EXPOSICIÓN A RIESGO DECLARADO </label>
                 </div>
@@ -22,6 +22,17 @@
                 </div>
                 <div class="col-12">
                     <label><input type="radio" name="aptitud_laboral" value="APTO “E”: NO APTO"> APTO “E”: NO APTO </label>
+                </div>
+            </div> -->
+            <div class="form-group row">
+                <div class="col-12">
+                    <label><input type="radio" name="aptitud_laboral" value="APTO SIN PREEXISTENCIAS"> APTO SIN PREEXISTENCIAS </label>
+                </div>
+                <div class="col-12">
+                    <label><input type="radio" name="aptitud_laboral" value="APTO CON PREEXISTENCIAS"> APTO CON PREEXISTENCIAS </label>
+                </div>
+                <div class="col-12">
+                    <label><input type="radio" name="aptitud_laboral" value="INCONVENIENTE SU INGRESO EN EL MOMENTO ACTUAL"> INCONVENIENTE SU INGRESO EN EL MOMENTO ACTUAL </label>
                 </div>
             </div>
             <div class="row form-group">

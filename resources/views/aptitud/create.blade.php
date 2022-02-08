@@ -66,11 +66,30 @@
       })
       //Tomy ya hice el gol y te muestro la jugada
       $(document).on("keyup",".inputText",fillObsPre);
+      $(document).on("keyup",".textArea",fillObsPre);
       $(document).on("change",".radioObsPre",fillObsPre);
 
       function fillObsPre(){
         aObsPre["preexistencias"]="";
         aObsPre["observaciones"]=$("#datosAdicionales").val();
+        $(".textArea").each(function(){
+          let valor=this.value.trim();
+          /*console.log(this);
+          console.log(valor);*/
+          if(valor!="" && valor.length>0){
+            let hidden_label=$(this).data("label");
+            let label=$("#"+hidden_label).val();
+            let target=$(this).data("target");
+            console.log(hidden_label);
+            console.log(label);
+            console.log(target);
+            let saltoLinea="\n";
+            if(aObsPre[target]==""){
+              saltoLinea="";
+            }
+            aObsPre[target]=aObsPre[target]+saltoLinea+label+valor;
+          }
+        });
         $(".inputText").each(function(){
           let valor=this.value.trim();
           //console.log(this);

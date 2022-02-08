@@ -24,7 +24,10 @@ class Aptitud extends Model
                 'RIESGO COD. 07: POSICIONES FORZADAS Y GESTOS REPETITIVOS.',
                 'RIESGO COD. 08: TRABAJO EN ALTURA.',
                 'RIESGO COD. 09: INGRESO EN ESPACIOS CONFINADOS.',
-                'RIESGO COD. 10: OPERACIÓN DE VEHÍCULOS MOTORIZADOS.',];
+                'RIESGO COD. 10: OPERACIÓN DE VEHÍCULOS MOTORIZADOS.',
+                'RIESGO COD. 11: TOXICOLÓGICO.',
+                'RIESGO COD. 12: TEST EMBARAZO.',
+                'RIESGO COD. 13: DOCENCIA.',];
     }
 
 }

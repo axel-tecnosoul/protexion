@@ -5,7 +5,7 @@
             <div class="col-6">
                 <div class="card">
                     <div class="card-header fondo2">
-                        Declaracion Jurada
+                        <label>Declaracion Jurada</label>
                         <div class="card-tools">
                             <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-plus"></i></button>
                         </div>
@@ -25,11 +25,11 @@
                                 <div class="row">
                                     <div class="col-6">
                                         <label for="">Preexistencias</label>
-                                        <textarea class="form-control preexistencias" id="pre_declaracion_jurada" name="" cols="15" rows="5"></textarea>
+                                        <textarea class="form-control textArea" data-target="preexistencias" data-label="lblDeclaracionJurada" id="pre_declaracion_jurada" name="" cols="15" rows="5"></textarea>
                                     </div>
                                     <div class="col-6">
                                         <label for="">Observaciones</label>
-                                        <textarea class="form-control observaciones" id="obs_declaracion_jurada" name="" cols="15" rows="5"></textarea>
+                                        <textarea class="form-control textArea" data-target="observaciones" data-label="lblDeclaracionJurada" id="obs_declaracion_jurada" name="" cols="15" rows="5"></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -63,11 +63,11 @@
                                 <div class="row">
                                     <div class="col-6">
                                         <label for="">Preexistencias</label>
-                                        <textarea class="form-control preexistencias" name="" id="pre_historia_clinica" cols="15" rows="5"></textarea>
+                                        <textarea class="form-control textArea" data-target="preexistencias" data-label="lblHistoriaClinica" name="" id="pre_historia_clinica" cols="15" rows="5"></textarea>
                                     </div>
                                     <div class="col-6">
                                         <label for="">Observaciones</label>
-                                        <textarea class="form-control observaciones" id="obs_historia_clinica" name="" cols="15" rows="5"></textarea>
+                                        <textarea class="form-control textArea" data-target="observaciones" data-label="lblHistoriaClinica" id="obs_historia_clinica" name="" cols="15" rows="5"></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -109,11 +109,11 @@
                                 <div class="row">
                                     <div class="col-6">
                                         <label for="">Preexistencias</label>
-                                        <textarea class="form-control preexistencias" name="" id="pre_posiciones_forzadas" cols="15" rows="5"></textarea>
+                                        <textarea class="form-control textArea" data-target="preexistencias" data-label="lblPosicionesForzadas" name="" id="pre_posiciones_forzadas" cols="15" rows="5"></textarea>
                                     </div>
                                     <div class="col-6">
                                         <label for="">Observaciones</label>
-                                        <textarea class="form-control observaciones" id="obs_posiciones_forzadas" name="" cols="15" rows="5"></textarea>
+                                        <textarea class="form-control textArea" data-target="observaciones" data-label="lblPosicionesForzadas" id="obs_posiciones_forzadas" name="" cols="15" rows="5"></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -147,12 +147,11 @@
                                 <div class="row">
                                     <div class="col-6">
                                         <label for="">Preexistencias</label>
-                                        <textarea class="form-control preexistencias" name="" id="pre_iluminacion_insuficiente" cols="15" rows="5"></textarea>
-
+                                        <textarea class="form-control textArea" data-target="preexistencias" data-label="lblIlumincacionInsuficiente" name="" id="pre_iluminacion_insuficiente" cols="15" rows="5"></textarea>
                                     </div>
                                     <div class="col-6">
                                         <label for="">Observaciones</label>
-                                        <textarea class="form-control observaciones" id="obs_iluminacion_insuficiente" name="" cols="15" rows="5"></textarea>
+                                        <textarea class="form-control textArea" data-target="observaciones" data-label="lblIlumincacionInsuficiente" id="obs_iluminacion_insuficiente" name="" cols="15" rows="5"></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -179,12 +178,13 @@
                                 <div class="col-10">
                                     <label for=""  id="POinput_{{$i}}_{{$j}}_label">{{$estudios[$i][1][$j]->nombre}}: </label>
                                     <!-- <input type="hidden" id="POinput_{{$i}}_{{$j}}_hidden_label" value='{{$estudios[$i][1][$j]->nombre}}'> -->
-                                    <input class="form-control inputText preexistencias observaciones" type="text"  id="POinput_{{$i}}_{{$j}}">
+                                    <input class="form-control inputText" type="text"  id="POinput_{{$i}}_{{$j}}">
+                                    <!--  preexistencias observaciones -->
                                 </div><?php
 
                                 $checkedObs="checked";
                                 $checkedPre="";?>
-                                
+
                                 @if (($estudios[$i][0]->nombre == "ANALISIS BIOQUIMICO") or ($estudios[$i][0]->nombre == "ANALISIS BIOQUIMICO ANEXO 01"))<?php
                                     $checkedObs="";
                                     $checkedPre="checked";?>
@@ -203,5 +203,5 @@
                 </div>
             </div>
         @endfor
-    </div>   
+    </div>
 </div>
