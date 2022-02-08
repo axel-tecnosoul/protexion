@@ -81,8 +81,13 @@
                                             <h3 class="card-title">{{$tipo->nombre}}</h3> 
                                         </div>
                                             <div style="text-align: right" class="col">
-                                                <div class="icheck-danger d-inline">
-                                                <input id="a{{$tipo->id}}" type="checkbox" onClick="ActivarCasilla(this,{{$tipo->id}});" />
+                                                <div class="icheck-danger d-inline"><?php
+                                                $checked="";
+                                                if($tipo->id==2){
+                                                  $checked="checked";
+                                                }?>
+
+                                                <input id="a{{$tipo->id}}" type="checkbox" onClick="ActivarCasilla(this,{{$tipo->id}});" <?=$checked?>/>
                                                 <Label for="a{{$tipo->id}}">{{strtoupper("Seleccionar todo")}} </Label>
                                             </div>
                                         </div>

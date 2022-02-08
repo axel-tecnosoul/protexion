@@ -17,6 +17,7 @@
                                 @php
                                     echo $diagnosticoD;
                                 @endphp
+                                <input type="hidden" id="lblDeclaracionJurada" value="Declaración Jurada: ">
                             </div>
                             <!-- Preexistencia u observaciones -->
                             <div class="col-12">
@@ -25,12 +26,10 @@
                                     <div class="col-6">
                                         <label for="">Preexistencias</label>
                                         <textarea class="form-control preexistencias" id="pre_declaracion_jurada" name="" cols="15" rows="5"></textarea>
-                                        <input type="hidden" id="declaJuradaPre" value="Declaración Jurada: ">
                                     </div>
                                     <div class="col-6">
                                         <label for="">Observaciones</label>
                                         <textarea class="form-control observaciones" id="obs_declaracion_jurada" name="" cols="15" rows="5"></textarea>
-                                        <input type="hidden" id="declaJuradaObs" value="Declaración Jurada: ">
                                     </div>
                                 </div>
                             </div>
@@ -56,6 +55,7 @@
                                 @php
                                     echo $diagnosticoH;
                                 @endphp
+                                <input type="hidden" id="lblHistoriaClinica" value="Historia Clínica: ">
                             </div>
                             <!-- Preexistencia u observaciones -->
                             <div class="col-12">
@@ -64,12 +64,10 @@
                                     <div class="col-6">
                                         <label for="">Preexistencias</label>
                                         <textarea class="form-control preexistencias" name="" id="pre_historia_clinica" cols="15" rows="5"></textarea>
-                                        <input type="hidden" id="histoClinPre" value="Historia Clínica: ">
                                     </div>
                                     <div class="col-6">
                                         <label for="">Observaciones</label>
                                         <textarea class="form-control observaciones" id="obs_historia_clinica" name="" cols="15" rows="5"></textarea>
-                                        <input type="hidden" id="histoClinObs" value="Historia Clínica: ">
                                     </div>
                                 </div>
                             </div>
@@ -95,6 +93,7 @@
                                 @php
                                     echo $diagnosticoP;
                                 @endphp
+                                <input type="hidden" id="lblPosicionesForzadas" value="Posiciones Forzadas: ">
                                 <!-- Tabla de semiologia -->
                                 <div class="card text-white bg-light">
                                   <div class="card-body">
@@ -111,7 +110,6 @@
                                     <div class="col-6">
                                         <label for="">Preexistencias</label>
                                         <textarea class="form-control preexistencias" name="" id="pre_posiciones_forzadas" cols="15" rows="5"></textarea>
-
                                     </div>
                                     <div class="col-6">
                                         <label for="">Observaciones</label>
@@ -141,6 +139,7 @@
                                 @php
                                     echo $diagnosticoI;
                                 @endphp
+                                <input type="hidden" id="lblIlumincacionInsuficiente" value="Ilumincacion Insuficiente: ">
                             </div>
                             <!-- Preexistencia u observaciones -->
                             <div class="col-12">
@@ -178,26 +177,24 @@
                         @for ($j = 0; $j < sizeof($estudios[$i][1]); $j++)
                             <div class="row form-group">
                                 <div class="col-10">
-                                    <label for=""  id="POinput_{{$i}}_{{$j}}_hidden_label">{{$estudios[$i][1][$j]->nombre}}: </label>
-                                    <input type="hidden" id="POinput_{{$i}}_{{$j}}_label" value='{{$estudios[$i][1][$j]->nombre}}'>
-                                    
-                                    <input class="form-control preexistencias observaciones" type="text"  id="POinput_{{$i}}_{{$j}}">
-                                </div>
-                                <?php
+                                    <label for=""  id="POinput_{{$i}}_{{$j}}_label">{{$estudios[$i][1][$j]->nombre}}: </label>
+                                    <!-- <input type="hidden" id="POinput_{{$i}}_{{$j}}_hidden_label" value='{{$estudios[$i][1][$j]->nombre}}'> -->
+                                    <input class="form-control inputText preexistencias observaciones" type="text"  id="POinput_{{$i}}_{{$j}}">
+                                </div><?php
+
                                 $checkedObs="checked";
                                 $checkedPre="";?>
-                                @if (($estudios[$i][0]->nombre == "ANALISIS BIOQUIMICO") or ($estudios[$i][0]->nombre == "ANALISIS BIOQUIMICO ANEXO 01"))
-                                    <?php
+                                
+                                @if (($estudios[$i][0]->nombre == "ANALISIS BIOQUIMICO") or ($estudios[$i][0]->nombre == "ANALISIS BIOQUIMICO ANEXO 01"))<?php
                                     $checkedObs="";
                                     $checkedPre="checked";?>
                                 @endif
+
                                 <div class="col-1">
-                                    <label><input class="preexistencias observaciones" type="radio" name="POinput_{{$i}}_{{$j}}_check" id="POinput_{{$i}}_{{$j}}_check_obs" value="O" <?=$checkedObs?>>Obs</label>
-                                    
+                                    <label><input class="radioObsPre" data-target="observaciones" type="radio" name="POinput_{{$i}}_{{$j}}_radio" id="POinput_{{$i}}_{{$j}}_check_obs" value="O" <?=$checkedObs?>>Obs</label>
                                 </div>
                                 <div class="col-1">
-                                    <label><input class="preexistencias observaciones" type="radio" name="POinput_{{$i}}_{{$j}}_check" id="POinput_{{$i}}_{{$j}}_check_pre" value="P" <?=$checkedPre?>>Pre</label>
-                                    
+                                    <label><input class="radioObsPre" data-target="preexistencias" type="radio" name="POinput_{{$i}}_{{$j}}_radio" id="POinput_{{$i}}_{{$j}}_check_pre" value="P" <?=$checkedPre?>>Pre</label>
                                 </div>
                             </div>
                             <hr>
