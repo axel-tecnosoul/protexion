@@ -38,12 +38,12 @@
 <body style="font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;">
 
     <div id="content" class="container">
-        <div id="header" style="text-align: right">
+        <div id="header" style="text-align: right; ">
             <img src="{{public_path('imagenes/logo.png')}}" alt="logo" width="200px">
         </div>
         <h3 class="titulo" style="text-align: center">ESTUDIO FUNCIONAL DE LA AUDICIÓN</h3>
 
-        <p class="campos" >Fecha: _________/_________/_________</p>
+        <p class="campos" >Fecha: {{ \Carbon\Carbon::parse($voucher->turno)->format('d/m/Y') }}</p>
         <!-- Datos precargados -->
         <p class="subtitulo">DATOS DE LA EMPRESA</p>
         <p class="datos"> <label class="campos" for="">Razón social:</label> {{$voucher->paciente->origen ? $voucher->paciente->origen->definicion : " "}} </p>
@@ -263,7 +263,6 @@
         <h3 class="titulo" style="text-align: center">CONCLUSIÓN</h3>
 
         <br><hr><br><hr><br><hr>
-        
     </div>
 
 </body>
