@@ -262,7 +262,17 @@
 
         <h3 class="titulo" style="text-align: center">CONCLUSIÓN</h3>
 
-        <br><hr><br><hr><br><hr>
+        <br><hr><br>
+        <!-- <table class="table table-condensed table-hover" >
+            <tr >
+                <td style="width: 350px;text-align: center" colspan="6">
+                <div>
+                        <img src="{{$hc_formulario->firma}}" width=130 height=130 alt="firma del paciente">
+                    </div>
+                    <label>Firma del Paciente</label>
+                </td>
+            </tr>
+        </table> -->
     </div>
 
 </body>

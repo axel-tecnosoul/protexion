@@ -64,7 +64,7 @@
                     <label>CUIL:</label> {{$hc_formulario->voucher->paciente->cuil }}
                 </td>
                 <td style=" width: 350px" colspan="6">
-                    <label>Sexo:</label> {{$hc_formulario->voucher->paciente->sexo ? $hc_formulario->voucher->paciente->sexo->abreviatura : " " }}
+                    <label>Sexo:</label> {{$hc_formulario->voucher->paciente->sexo ? $hc_formulario->voucher->paciente->sexo->definicion : " " }}
                 </td>
             </tr>
         </table>
