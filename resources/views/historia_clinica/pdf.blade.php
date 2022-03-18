@@ -110,14 +110,15 @@
             </tr>
             <tr style="text-align: left;">
                 <td colspan="8">
-                    <label for="">Tensión Arterial:</label> {{$hc_formulario->cardiovascular->tension_arterial}}
+                    <!-- <label for="">Tensión Arterial:</label> {{$hc_formulario->cardiovascular->tension_arterial}} -->
+                    <label for="">Tensión Arterial:</label> {{$hc_formulario->cardiovascular->sistolica}} / {{$hc_formulario->cardiovascular->diastolica}}
                 </td>
-                <td colspan="2">
+                <!-- <td colspan="2">
                     <label for="">Sistolica:</label> {{$hc_formulario->cardiovascular->sistolica}}
                 </td>
                 <td colspan="2">
                     <label for="">Diastolica:</label> {{$hc_formulario->cardiovascular->diastolica}}
-                </td>
+                </td> -->
             </tr>
             <tr style="text-align: left;">
                 <td colspan="6">
