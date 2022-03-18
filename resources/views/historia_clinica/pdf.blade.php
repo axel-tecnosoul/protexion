@@ -121,7 +121,12 @@
             </tr>
             <tr style="text-align: left;">
                 <td colspan="6">
-                    <label for="">Várices:</label> {{$hc_formulario->cardiovascular->observacion_varices}}
+                    <label for="">Várices:</label> <!--{{$hc_formulario->cardiovascular->observacion_varices}} -->
+                    @if ($hc_formulario->cardiovascular->observacion_varices)
+                        {{$hc_formulario->cardiovascular->observacion_varices}}
+                    @else
+                        NO
+                    @endif
                 </td>
                 <td colspan="6">
                     <label for="">Pulso:</label> {{$hc_formulario->cardiovascular->pulso}}
