@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Paciente;
+use DB;
 use App\Estado;
 use App\Origen;
 use App\EstadoCivil;
@@ -314,30 +315,32 @@ class PacienteController extends Controller
     }
 
     public function importExcel(Request $request){
-      //var_dump($request);
       $file = $request->file('file');
       $array = Excel::toArray(new PacientesImport, $file);
+      //$array = Excel::toArray($file);
       $filas=$array[0];
-      var_dump($filas);
+      //var_dump($filas);
       $filaEmpresa=$filas[3];
-
+      $cuit=$filaEmpresa[2];
+      
       $origen = new Origen;
       $origen->definicion = $filaEmpresa[1];
-      $origen->cuit = $filaEmpresa[2];
+      $origen->cuit = $cuit;
       //$origen->domicilio_id = $request->get('domicilio_id');
-      $origen->save();
 
-      /*$this->validate($request, [
-          'documento' => 'unique:pacientes,documento,except,id',
-          'nombres'   => 'required',
-          'apellidos' => 'required'
-      ]);*/
+      $ori=DB::select('SELECT id FROM origenes WHERE cuit='.$cuit);
+      if(!$ori){
+        $origen->save();
+        $id_origen=$origen->id;
+      }else{
+        $id_origen=$ori[0]->id;
+      }
 
       $cant_filas=count($filas);
 
       for($i=8;$i<$cant_filas;$i++){
           $fila=$filas[$i];
-          var_dump($fila);
+          //var_dump($fila);
 
           /*if($request->get('direccion')!=null) {
               $domicilio = new Domicilio;
@@ -350,49 +353,23 @@ class PacienteController extends Controller
           $paciente = new Paciente;
           $paciente->apellidos=$fila[0];
           $paciente->nombres=$fila[1];
-
           $documento=$fila[7];
+
           if(!is_null($documento)){
             $paciente->documento=$documento;
           }
-          /*if($request->get('fecha_nacimiento')!=null){
-              $paciente->fecha_nacimiento=$request->get('fecha_nacimiento');
-          }
-          if($request->get('sexo_id')!=null){
-              $paciente->sexo_id=$request->get('sexo_id');
-          }
-          if($request->get('obra_social_id')!=null){
-              $paciente->obra_social_id=$request->get('obra_social_id');
-          }
-          if($request->get('peso')!=null){
-              $paciente->peso=$request->get('peso');
-          }
-          if($request->get('cuil')!=null){
-              $paciente->cuil=$request->get('cuil');
-          }
-          if($request->get('estatura')!=null){
-              $paciente->estatura=$request->get('estatura');
-          }
-          if($request->get('telefono')!=null){
-              $paciente->telefono=$request->get('telefono');
-          }
-          if($request->get('origen_id')!=null){
-              $paciente->origen_id=$request->get('origen_id');
-          }
-          if($request->get('estado_civil_id')!=null){
-              $paciente->estado_civil_id=$request->get('estado_civil_id');
-          }
-          if($request->get('ciudad_id')!=null){
-              $paciente->ciudad_id=$request->get('ciudad_id');
-          }
-          if($request->get('direccion')!=null) {
-              $paciente->domicilio_id = $domicilio->id;
-          }*/
+          $paciente->origen_id=$id_origen;
           $paciente->estado_id=1; //Habilitado
-          //$paciente->save();
+
+          $pac=DB::select('SELECT id FROM pacientes WHERE documento='.$documento);
+          //var_dump($pac);
+          if(!$pac){
+            $paciente->save();
+          }
+          //
       }
 
-      //return back()->with('message','Pacientes importados');
+      return back()->with('message','Pacientes importados');
   }
 
 }
