@@ -130,7 +130,12 @@
                     @endif
                 </td>
                 <td colspan="6">
-                    <label for="">Pulso:</label> {{$hc_formulario->cardiovascular->pulso}}
+                    <label for="">Pulso:</label> <!--{{$hc_formulario->cardiovascular->pulso}}-->
+                    @if ($hc_formulario->cardiovascular->pulso == "A")
+                        Anormal
+                    @else
+                        Normal
+                    @endif
                 </td>
             </tr>
         </table>

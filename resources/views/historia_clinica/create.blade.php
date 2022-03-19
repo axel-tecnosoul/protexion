@@ -171,10 +171,10 @@
                                         <label for="">Pulso:</label>
                                     </div>
                                     <div class="col-2">
-                                        <label><input type="radio" name="pulso" value="Anormal">Anormal</label>
+                                        <label><input type="radio" name="pulso" value="A">Anormal</label>
                                     </div>
                                     <div class="col-2">
-                                        <label><input type="radio" name="pulso" value="Normal">Normal</label>
+                                        <label><input type="radio" name="pulso" value="N">Normal</label>
                                     </div>
                                 </div><hr>
                                 <div class="form-group row">
