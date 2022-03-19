@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" style='margin-top: 5px;margin-bottom: 5px'>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -66,7 +66,7 @@
                 </tr>
                 <tr>
                     <td style="text-align: left; width: 350px">
-                        <label class="campos" for="">CUIL-DNI:  </label>{{$voucher->paciente->cuil}}
+                        <label class="campos" for="">CUIL-DNI:  </label>{{$voucher->paciente->cuil ?? number_format($voucher->paciente->documento,0,",",".")}}
                     </td>
                     <td style="text-align: left; width: 350px">
                         <label class="campos" for="">           Edad:</label> {{$voucher->paciente->edad()}}

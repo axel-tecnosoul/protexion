@@ -81,7 +81,7 @@
                     <label>Apellidos y Nombres:</label> {{$voucher->paciente->nombreCompleto()}}
                 </td>
                 <td style="width: 170px" colspan="3">
-                    <label>CUIL:</label> {{$voucher->paciente->cuil }}
+                    <label>CUIL:</label> {{$voucher->paciente->cuil ?? number_format($voucher->paciente->documento,0,",",".")}}
                 </td>
                 <td style="width: 170px" colspan="3">
                     <label>Fecha:</label> {{Carbon\Carbon::parse($aptitud["fecha"])->format('d/m/Y') }}

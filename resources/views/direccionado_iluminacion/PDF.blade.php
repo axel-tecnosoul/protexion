@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" style='margin-top: 5px;margin-bottom: 5px'>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -91,7 +91,7 @@
                     </td>
                     <td class="datos" style="text-align: left; width: 350px">
                         <label for=""> CUIL/DNI N°:                       </label>    
-                            {{$iluminacion->voucher->paciente->cuil                         }}  
+                            {{$iluminacion->voucher->paciente->cuil ?? number_format($iluminacion->voucher->paciente->documento,0,",",".")}}  
                     </td>
                 </tr>
                 <tr>

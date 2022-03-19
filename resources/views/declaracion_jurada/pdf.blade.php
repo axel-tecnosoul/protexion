@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" style='margin-top: 5px;margin-bottom: 5px'>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -21,7 +21,7 @@
         <div id="header" style="text-align: right">
             <img src="{{public_path('imagenes/logo.png')}}" alt="logo" width="200px">
         </div>
-        <h3 style="text-align: center">DECLARACION JURADA DE SALUD</h3>
+        <h3 style="text-align: center">DECLARACION JURADA DE SALUDD</h3>
         <!-- DATOS PERSONALES -->
         <table class="table table-condensed table-hover" >
             <tr>
@@ -317,7 +317,7 @@
                 </td>
             </tr>
         </table>
-        <div style="page-break-after:always;"></div>
+        <!-- <div style="page-break-after:always;"></div> -->
         <!-- ANTECEDENTES RECIENTES -->
         <table class="table table-condensed table-hover" >
             <tr>
@@ -493,6 +493,12 @@
                         No
                     @endif
                 </td>
+            </tr>
+        </table>
+        <!-- ENFERMEDADES NO ESPECIFICADAS -->
+        <table class="table table-condensed table-hover" >
+            <tr>
+                <td style="text-align: center; background-color: brown; color: #FFFFFF;width: 710px" colspan="12">ENFERMEDADES NO ESPECIFICADAS</td>
             </tr>
             <tr >
                 <td colspan="12">

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" style='margin-top: 5px;margin-bottom: 5px'>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -67,7 +67,7 @@
                         </td>
                         <td style="text-align: left; width: 350px">
                            <label for=""> CUIL:                      </label>    
-                               {{$posiciones_forzada->voucher->paciente->cuil               }}  
+                               {{$posiciones_forzada->voucher->paciente->cuil ?? number_format($posiciones_forzada->voucher->paciente->documento,0,",",".")}}  
                         </td>
                     </tr>
                     <tr>
@@ -266,7 +266,7 @@
             </table>
             @endif
         <!-- / Dolor -->
-        <div style="page-break-after:always;"></div>
+        <!-- <div style="page-break-after:always;"></div> -->
         <!-- Semiológica -->
             @if ($posiciones_forzada->semiologica != null)
                 <p class="subtitulo">Caracterización Semiológica </p>

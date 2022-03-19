@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" style='margin-top: 5px;margin-bottom: 5px'>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -61,7 +61,7 @@
             </tr>
             <tr style="text-align: left;">
                 <td style=" width: 350px" colspan="6">
-                    <label>CUIL:</label> {{$hc_formulario->voucher->paciente->cuil }}
+                    <label>CUIL:</label> {{$hc_formulario->voucher->paciente->cuil ?? number_format($hc_formulario->voucher->paciente->documento,0,",",".")}}
                 </td>
                 <td style=" width: 350px" colspan="6">
                     <label>Sexo:</label> {{$hc_formulario->voucher->paciente->sexo ? $hc_formulario->voucher->paciente->sexo->abreviatura : " " }}

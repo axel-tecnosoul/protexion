@@ -50,13 +50,18 @@ class DeclaracionJuradaController extends Controller
     
     public function crearPDF($id)
     {
-    $declaracion_jurada=DeclaracionJurada::find($id);
-        $pdf = PDF::loadView('declaracion_jurada.pdf',[
-            "declaracion_jurada"   =>  $declaracion_jurada
-            ]);
+        $declaracion_jurada=DeclaracionJurada::find($id);
+        $data = [
+          'declaracion_jurada' => $declaracion_jurada
+        ];
+        $pdf = PDF::loadView('declaracion_jurada.pdf',$data)
+          ->setPaper('a4','letter')
+          ->stream('declaracion_jurada.pdf', [ "Attachment" => 0]);
 
-        $pdf->setPaper('a4','letter');
-        return $pdf->stream();
+        //$pdf->setPaper('a4','letter');
+        //return $pdf->stream('declaracion_jurada.pdf', array("Attachment" => false));
+        //$pdf->render();
+        return $pdf;
     }
 
     public function create($id)

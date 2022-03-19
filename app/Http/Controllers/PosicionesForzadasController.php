@@ -44,7 +44,7 @@ class PosicionesForzadasController extends Controller
             "cuadro"               =>  $cuadro
             ]);
         $pdf->setPaper('a4','letter');
-        return $pdf->stream('posiciones-forzada.pdf');
+        return $pdf->stream('posiciones-forzadas.pdf');
     }
 
     public function create($id)

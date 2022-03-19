@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" style='margin-top: 5px;margin-bottom: 5px'>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -35,7 +35,7 @@
         }
     </style>
 </head>
-<body style="font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;">
+<body style="font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif; margin: 0px">
 
     <div id="content" class="container">
         <div id="header" style="text-align: right; ">
@@ -48,7 +48,7 @@
         <p class="subtitulo">DATOS DE LA EMPRESA</p>
         <p class="datos"> <label class="campos" for="">Razón social:</label> {{$voucher->paciente->origen ? $voucher->paciente->origen->definicion : " "}} </p>
 
-        <p class="subtitulo">DATOS DE LA TRABAJADOR</p>
+        <p class="subtitulo">DATOS DEL TRABAJADOR</p>
 
         <table class="datos">
             <tbody>
@@ -62,7 +62,7 @@
                 </tr>
                 <tr>
                     <td style="text-align: left; width: 350px">
-                        <label class="campos" for="">CUIL - DNI:  </label>{{$voucher->paciente->cuil}}
+                        <label class="campos" for="">CUIL - DNI:  </label>{{$voucher->paciente->cuil ?? number_format($voucher->paciente->documento,0,",",".")}}
                     </td>
                     <td style="text-align: left; width: 350px">
                         <label class="campos" for="">Ambiente: </label> CABINA
@@ -262,7 +262,27 @@
 
         <h3 class="titulo" style="text-align: center">CONCLUSIÓN</h3>
 
-        <br><hr><br><hr><br><hr>
+        <hr><br><hr><br><hr>
+
+        <br><br><br><br>
+        <!-- FIRMAS -->
+        <table class="table table-condensed table-hover" style="width: 100%;text-align: center">
+            <tr >
+                <td style="width: 50%;text-align: center">
+                    <div>
+                        <img src="{{$voucher->firma}}" width=130 height=130 alt="firma del paciente">
+                    </div>
+                    <label>Firma del Paciente</label>
+                </td>
+                <td style="width: 50%;text-align: center">
+                    <div>
+                        <img src="{{$voucher->firma}}" width=130 height=130 alt="firma del medico">
+                    </div>
+                    <label>Firma y sello del medico examinador</label>
+                </td>
+            </tr>
+        </table>
+        <h3 class="titulo" style="text-align: center; font-size:10px">Telf. 03743 - 476272 - Av. San Martin 1400,Esquina Rivadavia - Puerto Rico - Misiones - gerencia@protexionpr.com.ar - www.protexionpr.com.ar</h3>
     </div>
 
 </body>
