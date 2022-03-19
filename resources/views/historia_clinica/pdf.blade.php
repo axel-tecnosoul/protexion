@@ -105,7 +105,7 @@
             </tr>
             <tr style="text-align: left;">
                 <td colspan="12">
-                    <label for="">Frecuencia Cardíaca:</label> {{$hc_formulario->cardiovascular->frecuencia_cardiaca}}
+                    <label for="">Frecuencia Cardíaca:</label> {{$hc_formulario->cardiovascular->frecuencia_cardiaca}} x'
                 </td>
             </tr>
             <tr style="text-align: left;">
