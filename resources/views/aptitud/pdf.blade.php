@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
     <style>
+
         td{
             border-bottom:  0.1px solid rgb(202, 202, 202);
             padding: 3px;
@@ -16,6 +17,10 @@
         }
         .hidden{
             display: none;
+        }
+        #rojo {
+            text-transform: uppercase;
+            color: red;
         }
     </style>
 </head>
@@ -89,7 +94,7 @@
             </tr>
             <tr style="text-align: left;">
                 <td colspan="12">
-                    <label for="">Resultado: </label> {{$aptitud["aptitud_laboral"]}}
+                    <label for="" style="color: red;">RESULTADO: </label> {{$aptitud["aptitud_laboral"]}}
                 </td>
             </tr>
         </table>
