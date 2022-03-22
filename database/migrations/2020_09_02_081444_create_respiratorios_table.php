@@ -17,6 +17,8 @@ class CreateRespiratoriosTable extends Migration
             $table->bigIncrements('id');
             $table->string('observacion1_re')->nullable();
             $table->string('observacion2_re')->nullable();
+            $table->string('covid19')->nullable();
+            $table->string('vacunado')->nullable();
             $table->timestamps();
 
             $table->unsignedBigInteger('historia_clinica_id');

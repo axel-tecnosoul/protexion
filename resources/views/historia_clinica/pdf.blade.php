@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <style>
+        @page {
+            margin: 100px 25px;
+        }
         td{ 
             border-bottom:  0.1px solid rgb(202, 202, 202);
             padding: 3px;
@@ -13,14 +16,30 @@
         label{
             font-weight: bold;
         }
+        header {
+            position: fixed;
+            top: -60px;
+            left: 0px;
+            right: 0px;
+            height: 50px;
+
+            /** Extra personal styles **/
+            background-color: #03a9f4;
+            color: white;
+            text-align: center;
+            line-height: 35px;
+        }
     </style>
     <title>Formulario de Historia Clinica</title>
 </head>
 <body>
-    <div id="content" class="container">
-        <div style="text-align: right">
-            <img src="{{public_path('imagenes/logo.png')}}" alt="logo" width="200px">
-        </div>
+    <header>
+      <div style="text-align: right">
+        <img src="{{public_path('imagenes/logo.png')}}" alt="logo" width="200px">
+      </div>
+    </header>
+    <main>
+      <div id="content" class="container">
         <h3 style="text-align: center">HISTORIA CLINICA</h3>
         <!-- DATOS EMPRESA -->
         <table class="table table-condensed table-hover" >
@@ -419,6 +438,14 @@
                     <label for="">Pulmones:</label> {{$hc_formulario->respitario->observacion2_re}}
                 </td>
             </tr>
+            <tr>
+                <td colspan="6">
+                    <label for="">COVID 19:</label> {{$hc_formulario->respitario->covid19}}
+                </td>
+                <td colspan="6">
+                    <label for="">Vacunas:</label> {{$hc_formulario->respitario->vacunado}}
+                </td>
+            </tr>
         </table>
         <!-- ABDOMEN -->
         <table class="table table-condensed table-hover" >
@@ -520,5 +547,6 @@
             </tr>
         </table>
     </div>
+  </main>
 </body>
 </html>

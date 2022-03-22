@@ -5,7 +5,7 @@
             <div class="col-6">
                 <div class="card">
                     <div class="card-header fondo2">
-                        <label>Declaracion Jurada</label>
+                        Declaracion Jurada
                         <div class="card-tools">
                             <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-plus"></i></button>
                         </div>
@@ -53,7 +53,7 @@
                             <div class="col-12"><label for=""><u>Diagnóstico:</u> </label></div>
                             <div class="col">
                                 @php
-                                    echo $diagnosticoH;
+                                    echo $diagnosticoH[0];
                                 @endphp
                                 <input type="hidden" id="lblHistoriaClinica" value="Historia Clínica: ">
                             </div>
@@ -67,7 +67,7 @@
                                     </div>
                                     <div class="col-6">
                                         <label for="">Observaciones</label>
-                                        <textarea class="form-control textArea" data-target="observaciones" data-label="lblHistoriaClinica" id="obs_historia_clinica" name="" cols="15" rows="5"></textarea>
+                                        <textarea class="form-control textArea" data-target="observaciones" data-label="lblHistoriaClinica" id="obs_historia_clinica" name="" cols="15" rows="5"><?=$diagnosticoH[1]?></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -164,6 +164,7 @@
         <!-- HIDDEN -->
         <input type="text" id="cantTipo" value={{sizeof($estudios)}} hidden>
         @for ($i = 0; $i < sizeof($estudios); $i++)
+          @if (sizeof($estudios[$i][1])>0)
             <!-- HIDDEN -->
             <input type="text" id="cantEstudio{{$i}}" value={{sizeof($estudios[$i][1])}} hidden>
             <div class="col-6">
@@ -173,7 +174,7 @@
                     </div>
                     <div class="card-body">
                         <!-- Inputs de estudios por cada tipo de estudio -->
-                        @for ($j = 0; $j < sizeof($estudios[$i][1]); $j++)
+                          @for ($j = 0; $j < sizeof($estudios[$i][1]); $j++)
                             <div class="row form-group">
                                 <div class="col-10">
                                     <label for=""  id="POinput_{{$i}}_{{$j}}_label">{{$estudios[$i][1][$j]->nombre}}: </label>
@@ -198,10 +199,11 @@
                                 </div>
                             </div>
                             <hr>
-                        @endfor
+                          @endfor
                     </div>
                 </div>
             </div>
+          @endif
         @endfor
     </div>
 </div>

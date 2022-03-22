@@ -680,6 +680,20 @@
                                         <input class="form-control" placeholder="Describa las anormalidades..." type="text" name="observacion2_re">
                                     </div>
                                 </div>
+                                <!-- Covid 1 -->
+                                <div class="form-group row">
+                                    <div class="col">
+                                        <label for="" class="form-label">COVID 19</label>
+                                        <input class="form-control" placeholder="Describa las anormalidades..." type="text" name="covid19">
+                                    </div>
+                                </div>
+                                <!-- Vacunas -->
+                                <div class="form-group row">
+                                    <div class="col">
+                                        <label for="" class="form-label">Vacunas</label>
+                                        <input class="form-control" placeholder="Describa las dosis..." type="text" name="vacunado">
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

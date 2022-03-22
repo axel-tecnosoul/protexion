@@ -188,6 +188,8 @@ class HistoriaClinicaController extends Controller
                 $respiratorio=new Respiratorio();
                 $respiratorio->observacion1_re=$request->observacion1_re;
                 $respiratorio->observacion2_re=$request->observacion2_re;
+                $respiratorio->covid19=$request->covid19;
+                $respiratorio->vacunado=$request->vacunado;
                 $respiratorio->historia_clinica_id=$historia_clinica->id;
                 $respiratorio->save();
             //

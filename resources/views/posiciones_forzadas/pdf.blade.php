@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" style='margin-top: 5px;margin-bottom: 5px'>
+<html lang="en" style='margin-top: 5px;margin-bottom: 0px'>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -26,6 +26,7 @@
             background-color: brown;
             color: white;
             text-align: center;
+            margin: 0;
         }
         label{
             font-weight: bold;
@@ -42,7 +43,7 @@
         <div id="header" style="text-align: right">
             <img src="{{public_path('imagenes/logo.png')}}" alt="logo" width="200px">
         </div>
-        <h3 style="text-align: center">Cuestionario Direccionado <br>
+        <h3 style="text-align: center;margin: 0;">Cuestionario Direccionado <br>
             Agente de Riesgo: Gestos repetitivos y posiciones forzadas <br>
             Anexo V – Resolución SRT N° 37/2010 
         </h3>
@@ -347,13 +348,31 @@
         <!-- / Semiológica -->
         <hr>
         <!-- FIRMAS -->
-        <table class="table table-condensed table-hover" >
+        <!-- <table class="table table-condensed table-hover" >
             <tr >
                 <td style="width: 570px;text-align: right">
                     <div>
                         <img src="{{$posiciones_forzada->firma}}" width=130 height=130 alt="firma del paciente">
                     </div>
                     <label>Firma del Paciente</label>
+                </td>
+            </tr>
+        </table> -->
+        <br><br><br><br>
+        
+        <table class="table table-condensed table-hover" style="width: 100%;text-align: center">
+            <tr >
+                <td style="width: 50%;text-align: center">
+                    <div>
+                        <img src="" width=130 height=130 alt="firma del paciente">
+                    </div>
+                    <label>Firma del Pacientes</label>
+                </td>
+                <td style="width: 50%;text-align: center">
+                    <div>
+                        <img src="" width=130 height=130 alt="firma del medico">
+                    </div>
+                    <label>Firma y sello del medico examinador</label>
                 </td>
             </tr>
         </table>

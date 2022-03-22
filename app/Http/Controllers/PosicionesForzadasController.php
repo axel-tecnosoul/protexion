@@ -136,7 +136,7 @@ class PosicionesForzadasController extends Controller
                     "cuadro"               =>  $cuadro
                     ]);
                 $pdf->setPaper('a4','letter');
-                $pdf->save($ruta);
+                $pdf->stream($ruta);
                 //Almacenar archivo adjunto
                 $archivo_adjunto = new ArchivoAdjunto();
                 $archivo_adjunto->anexo = $ruta;

@@ -111,13 +111,15 @@ class HistoriaClinica extends Model implements Auditable
                                         $this->examenClinico->estatura,
                                         $this->examenClinico->sobrepeso,
                                         $this->examenClinico->imc,
-                                        $this->examenClinico->medicacion_actual,
+                                        //$this->examenClinico->medicacion_actual,
+                                        ($this->examenClinico->medicacion_actual) ? $this->examenClinico->medicacion_actual : "No posee",
 
                                         //Cardiovascular
                                         ' ',
                                         $this->cardiovascular->frecuencia_cardiaca,
                                         $this->cardiovascular->tension_arterial,
-                                        $this->cardiovascular->pulso,
+                                        ($this->cardiovascular->pulso=="A") ? "Anormal" : "Normal",
+                                        //$this->cardiovascular->pulso,
                                         $this->cardiovascular->observacion_varices,
 
                                         //Piel
@@ -194,6 +196,8 @@ class HistoriaClinica extends Model implements Auditable
                                         ' ',
                                         $this->respitario->observacion1_re,
                                         $this->respitario->observacion2_re,
+                                        $this->respitario->covid19,
+                                        $this->respitario->vacunado,
 
                                         //ABDOMEN
                                         ' ',
@@ -228,14 +232,14 @@ class HistoriaClinica extends Model implements Auditable
                 $matriz[] = [   '<b>EXAMEN CLÍNICO</b><br>',
                                 'Peso: ',
                                 'Estatura: ',
-                                'Sobrepeso:',
+                                'Sobrepeso: ',
                                 'IMC: ',
-                                'Medicación adicional: ',
+                                'Medicación actual: ',
 
                                 '<br><b>CARDIOVASCULAR</b><br>',
-                                'Fecruencia cardíaca: ',
-                                'Tensión arterial:',
-                                'Pulso:',
+                                'Frecuencia cardíaca: ',
+                                'Tensión arterial: ',
+                                'Pulso: ',
                                 'Várices: ',
 
                                 '<br><b>PIEL</b><br>',
@@ -304,6 +308,8 @@ class HistoriaClinica extends Model implements Auditable
                                 '<br><b>TORAX Y APARTO RESPIRATORIO</b><br>',
                                 'Caja torácica: ',
                                 'Pulmones: ',
+                                'COVID 19: ',
+                                'Vacunas: ',
                                 
                                 '<br><b>ABDOMEN</b><br>',
                                 'Forma: ',
@@ -333,10 +339,18 @@ class HistoriaClinica extends Model implements Auditable
             //
             //Carga de diagnostico
             $vacio = false;
+            $obs="";
+            $arExcluidos=["Estatura: ","Peso: ","Ojo derecho: ","Ojo izquierdo: ","Usa lentes: ","Pulso: ","Frecuencia cardíaca: "];
+            //var_dump($matriz[0]);
+            
             for ($i=0; $i < sizeof($matriz[1]); $i++) {
                 if ($matriz[0][$i] != null) {
+                    $label=$matriz[1][$i];
                     if ($matriz[0][$i] == 1) {
-                        $diagnostico = $diagnostico.$matriz[1][$i]."<b>Si</b>. ";
+                        $diagnostico = $diagnostico.$label."<b>Si</b>. ";
+                        if(!in_array($label,$arExcluidos)){
+                          $obs.=$label." Si\n";
+                        }
                         $vacio = false;
                     }else{
                         if ($matriz[0][$i] == " ") {
@@ -344,15 +358,21 @@ class HistoriaClinica extends Model implements Auditable
                                 $diagnostico = $diagnostico.'Sin particularidades.';
                             }
                             $vacio = true;
-                            $diagnostico = $diagnostico.$matriz[1][$i]."<b>".$matriz[0][$i]."</b>";
+                            $diagnostico = $diagnostico.$label."<b>".$matriz[0][$i]."</b>";
                         }else{
-                            $diagnostico = $diagnostico.$matriz[1][$i]." "."<b>".$matriz[0][$i]."</b>.<br> ";
+                            $diagnostico = $diagnostico.$label." "."<b>".$matriz[0][$i]."</b>.<br> ";
+                            $cargarObs=$matriz[0][$i];
+                            
+                            if(!in_array($label,$arExcluidos)){
+                              //$cargarObs=str_replace("<br>","",$cargarObs);
+                              $obs.=$label." ".$cargarObs."\n";
+                            }
                             $vacio = false;
                         }
                     }
                 }
             };
-            return $diagnostico;
+            return [$diagnostico,$obs];
             //
         //
     }

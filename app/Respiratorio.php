@@ -15,6 +15,8 @@ class Respiratorio extends Model
         'observacion1_re',
         'pregunta2_re',
         'observacion2_re',
+        'covid19',
+        'vacunado',
         'hc_formulario_id'
     ];
 

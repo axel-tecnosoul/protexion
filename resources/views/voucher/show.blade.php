@@ -100,8 +100,8 @@
                                 <table data-page-length='10' id="tablaDetalle" style="border:1px solid black; width:100%" class="table-sm table-bordered table-condensed table-hover ">
                                     <thead class="fondo2">
                                         <tr>
-                                            <th style="width: 30%"> Estudio               </th>
                                             <th style="width: 30%"> Tipo                  </th>
+                                            <th style="width: 30%"> Estudio               </th>
                                             <th style="width: 25%"> Estado                </th>
                                             <th style="width: 15%"> Acción                </th>
                                         </tr>
@@ -109,8 +109,9 @@
                                     <tbody>
                                         @foreach ($estudios_cargar as $item)
                                         <tr onmouseover="cambiar_color_over(this)" onmouseout="cambiar_color_out(this)">
-                                            <td style="text-align: left"> {{strtoupper($item->estudio->nombre)    }}    </td>
                                             <td style="text-align: left"> {{($item->estudio->tipoEstudio->nombre) }}    </td> 
+                                            <td style="text-align: left"> {{strtoupper($item->estudio->nombre)    }}    </td>
+                                            
                                             @if ($item->archivo_adjunto != "[]")
                                                 <td><label class="badge badge-success" style="font-size:90%">Cargado</label></td>
                                                 <td style="text-align: center">

@@ -34,7 +34,7 @@ class AptitudController extends Controller
         $estudios = $voucher->getEstudiosClasificados();
 
         //Carga de datos adicionales
-        if ($voucher->historiaClinica) {
+        /*if ($voucher->historiaClinica) {
             $datosAdicionales = "IMC: ".$historia_clinica->examenClinico->imc.". ";
             if ($historia_clinica->examenClinico->sobrepeso) {
                 $datosAdicionales = $datosAdicionales." Sobrepeso. ";
@@ -46,7 +46,8 @@ class AptitudController extends Controller
             }
         } else {
             $datosAdicionales = "";
-        }
+        }*/
+        $datosAdicionales = "";
 
         //Tabla pf
         $articulaciones = ['Hombro','Codo','Muñeca','Mano y dedos','Cadera','Rodilla','Tobillo'];
