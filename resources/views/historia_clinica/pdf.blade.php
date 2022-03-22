@@ -102,18 +102,24 @@
                 <td colspan="3">
                     <label for="">Sobrepeso:</label>
                     @if ($hc_formulario->examenClinico->sobrepeso==true)
-                        SI
+                        Si
                     @else
-                        NO
+                        No
                     @endif
                 </td>
                 <td colspan="3">
-                    <label for="">IMC:</label> {{$hc_formulario->examenClinico->imc}}
+                    <label for="">IMC:</label> {{$hc_formulario->examenClinico->imc}}1
                 </td>
             </tr>
             <tr>
                 <td colspan="12">
-                    <label for="">Medicación Act.:</label> {{$hc_formulario->examenClinico->medicacion_actual}}
+                    <label for="">Medicación Act.:</label> <!--{{$hc_formulario->examenClinico->medicacion_actual}}-->
+                    @if ($hc_formulario->examenClinico->medicacion_actual)
+                        {{$hc_formulario->examenClinico->medicacion_actual}}
+                    @else
+                        No Posee
+                    @endif
+                    
                 </td>
             </tr>
         </table>
@@ -145,7 +151,7 @@
                     @if ($hc_formulario->cardiovascular->observacion_varices)
                         {{$hc_formulario->cardiovascular->observacion_varices}}
                     @else
-                        NO
+                        No
                     @endif
                 </td>
                 <td colspan="6">
@@ -165,42 +171,92 @@
             </tr>
             <tr>
                 <td colspan="6">
-                    <label for="">Cicatrices patológicas visibles:</label> {{$hc_formulario->piel->observacion1_piel}}
+                    <label for="">Cicatrices patológicas visibles:</label> <!--{{$hc_formulario->piel->observacion1_piel}}-->
+                    @if ($hc_formulario->piel->observacion1_piel)
+                        {{$hc_formulario->piel->observacion1_piel}}
+                    @else
+                        No
+                    @endif
                 </td>
                 <td colspan="6">
-                    <label for="">Vesículas:</label> {{$hc_formulario->piel->obs_vesicula}}
-                </td>
-            </tr>
-            <tr>
-                <td colspan="6">
-                    <label for="">Úlceras:</label> {{$hc_formulario->piel->obs_ulceras}}
-                </td>
-                <td colspan="6">
-                    <label for="">Fisuras:</label> {{$hc_formulario->piel->obs_fisuras}}
-                </td>
-            </tr>
-            <tr>
-                <td colspan="6">
-                    <label for="">Prurito:</label> {{$hc_formulario->piel->obs_prurito}}
-                </td>
-                <td colspan="6">
-                    <label for="">Eczemas:</label> {{$hc_formulario->piel->obs_eczemas}}
+                    <label for="">Vesículas:</label> <!--{{$hc_formulario->piel->obs_vesicula}}-->
+                    @if ($hc_formulario->piel->obs_vesicula)
+                        {{$hc_formulario->piel->obs_vesicula}}
+                    @else
+                        No
+                    @endif
                 </td>
             </tr>
             <tr>
                 <td colspan="6">
-                    <label for="">Dermatitis:</label> {{$hc_formulario->piel->obs_dertmatitis}}
+                    <label for="">Úlceras:</label> <!--{{$hc_formulario->piel->obs_ulceras}}-->
+                    @if ($hc_formulario->piel->obs_ulceras)
+                        {{$hc_formulario->piel->obs_ulceras}}
+                    @else
+                        No
+                    @endif
                 </td>
                 <td colspan="6">
-                    <label for="">Eritemas:</label> {{$hc_formulario->piel->obs_eritemas}}
+                    <label for="">Fisuras:</label> <!--{{$hc_formulario->piel->obs_fisuras}} -->
+                    @if ($hc_formulario->piel->obs_fisuras)
+                        {{$hc_formulario->piel->obs_fisuras}}
+                    @else
+                        No
+                    @endif
                 </td>
             </tr>
             <tr>
                 <td colspan="6">
-                    <label for="">Petequias:</label> {{$hc_formulario->piel->obs_petequias}}
+                    <label for="">Prurito:</label> <!--{{$hc_formulario->piel->obs_prurito}}-->
+                    @if ($hc_formulario->piel->obs_prurito)
+                        {{$hc_formulario->piel->obs_prurito}}
+                    @else
+                        No
+                    @endif
                 </td>
                 <td colspan="6">
-                    <label for="">Tejido Celular Subcutáneo:</label> {{$hc_formulario->piel->tejido}}
+                    <label for="">Eczemas:</label> <!--{{$hc_formulario->piel->obs_eczemas}}-->
+                    @if ($hc_formulario->piel->obs_eczemas)
+                        {{$hc_formulario->piel->obs_eczemas}}
+                    @else
+                        No
+                    @endif
+                </td>
+            </tr>
+            <tr>
+                <td colspan="6">
+                    <label for="">Dermatitis:</label> <!--{{$hc_formulario->piel->obs_dertmatitis}}-->
+                    @if ($hc_formulario->piel->obs_dertmatitis)
+                        {{$hc_formulario->piel->obs_dertmatitis}}
+                    @else
+                        No
+                    @endif
+                </td>
+                <td colspan="6">
+                    <label for="">Eritemas:</label> <!--{{$hc_formulario->piel->obs_eritemas}}-->
+                    @if ($hc_formulario->piel->obs_eritemas)
+                        {{$hc_formulario->piel->obs_eritemas}}
+                    @else
+                        No
+                    @endif
+                </td>
+            </tr>
+            <tr>
+                <td colspan="6">
+                    <label for="">Petequias:</label> <!--{{$hc_formulario->piel->obs_petequias}}-->
+                    @if ($hc_formulario->piel->obs_eczemas)
+                        {{$hc_formulario->piel->obs_eczemas}}
+                    @else
+                        No
+                    @endif
+                </td>
+                <td colspan="6">
+                    <label for="">Tejido Celular Subcutáneo:</label> <!--{{$hc_formulario->piel->tejido}}-->
+                    @if ($hc_formulario->piel->obs_petequias)
+                        {{$hc_formulario->piel->obs_petequias}}
+                    @else
+                        No
+                    @endif
                 </td>
             </tr>
         </table>
@@ -211,23 +267,48 @@
             </tr>
             <tr>
                 <td colspan="6">
-                    <label for="">Limitaciones Funcionales:</label> {{$hc_formulario->osteoarticular->observacion1_os}}
+                    <label for="">Limitaciones Funcionales:</label> <!--{{$hc_formulario->osteoarticular->observacion1_os}}-->
+                    @if ($hc_formulario->osteoarticular->observacion1_os)
+                        {{$hc_formulario->osteoarticular->observacion1_os}}
+                    @else
+                        No
+                    @endif
                 </td>
                 <td colspan="6">
-                    <label for="">Amputaciones:</label> {{$hc_formulario->osteoarticular->observacion2_os}}
+                    <label for="">Amputaciones:</label> <!--{{$hc_formulario->osteoarticular->observacion2_os}}-->
+                    @if ($hc_formulario->osteoarticular->observacion2_os)
+                        {{$hc_formulario->osteoarticular->observacion2_os}}
+                    @else
+                        No
+                    @endif
                 </td>
             </tr>
             <tr>
                 <td colspan="6">
-                    <label for="">Movilidad y Reflejos:</label> {{$hc_formulario->osteoarticular->observacion3_os}}
+                    <label for="">Movilidad y Reflejos:</label> <!--{{$hc_formulario->osteoarticular->observacion3_os}}-->
+                    @if ($hc_formulario->osteoarticular->observacion3_os)
+                        {{$hc_formulario->osteoarticular->observacion3_os}}
+                    @else
+                        No
+                    @endif
                 </td>
                 <td colspan="6">
-                    <label for="">Tonicidad y Fuerza Muscular Normal:</label> {{$hc_formulario->osteoarticular->observacion4_os}}
+                    <label for="">Tonicidad y Fuerza Muscular Normal:</label> <!--{{$hc_formulario->osteoarticular->observacion4_os}}-->
+                    @if ($hc_formulario->osteoarticular->observacion4_os)
+                        {{$hc_formulario->osteoarticular->observacion4_os}}
+                    @else
+                        No
+                    @endif
                 </td>
             </tr>
             <tr>
                 <td colspan="12">
-                    <label for="">Observaciones:</label> {{$hc_formulario->osteoarticular->observacion_os}}
+                    <label for="">Observaciones:</label> <!--{{$hc_formulario->osteoarticular->observacion_os}}-->
+                    @if ($hc_formulario->osteoarticular->observacion_os)
+                        {{$hc_formulario->osteoarticular->observacion_os}}
+                    @else
+                        No
+                    @endif
                 </td>
             </tr>
         </table>
@@ -238,23 +319,48 @@
             </tr>
             <tr>
                 <td colspan="6">
-                    <label for="">Examen Normal:</label> {{$hc_formulario->columna->observacion1_col}}
+                    <label for="">Examen Normal:</label> <!--{{$hc_formulario->columna->observacion1_col}}-->
+                    @if ($hc_formulario->columna->observacion1_col)
+                        {{$hc_formulario->columna->observacion1_col}}
+                    @else
+                        No
+                    @endif
                 </td>
                 <td colspan="6">
-                    <label for="">Contracturas:</label> {{$hc_formulario->columna->observacion2_col}}
+                    <label for="">Contracturas:</label> <!--{{$hc_formulario->columna->observacion2_col}}-->
+                    @if ($hc_formulario->columna->observacion2_col)
+                        {{$hc_formulario->columna->observacion2_col}}
+                    @else
+                        No
+                    @endif
                 </td>
             </tr>
             <tr>
                 <td colspan="6">
-                    <label for="">Puntos Dolorosos:</label> {{$hc_formulario->columna->observacion3_col}}
+                    <label for="">Puntos Dolorosos:</label> <!--{{$hc_formulario->columna->observacion3_col}}-->
+                    @if ($hc_formulario->columna->observacion3_col)
+                        {{$hc_formulario->columna->observacion3_col}}
+                    @else
+                        No
+                    @endif
                 </td>
                 <td colspan="6">
-                    <label for="">Limitaciones Funcionales:</label> {{$hc_formulario->columna->observacion4_col}}
+                    <label for="">Limitaciones Funcionales:</label> <!--{{$hc_formulario->columna->observacion4_col}}-->
+                    @if ($hc_formulario->columna->observacion4_col)
+                        {{$hc_formulario->columna->observacion4_col}}
+                    @else
+                        No
+                    @endif
                 </td>
             </tr>
             <tr>
                 <td colspan="12">
-                    <label for="">Observaciones:</label> {{$hc_formulario->columna->observacion_col}}
+                    <label for="">Observaciones:</label> <!--{{$hc_formulario->columna->observacion_col}}-->
+                    @if ($hc_formulario->columna->observacion_col)
+                        {{$hc_formulario->columna->observacion_col}}
+                    @else
+                        No
+                    @endif
                 </td>
             </tr>
         </table>
@@ -265,26 +371,56 @@
             </tr>
             <tr>
                 <td colspan="6">
-                    <label for="">Cráneo:</label> {{$hc_formulario->cabezaCuello->observacion1_cc}}
+                    <label for="">Cráneo:</label> <!--{{$hc_formulario->cabezaCuello->observacion1_cc}}-->
+                    @if ($hc_formulario->cabezaCuello->observacion1_cc)
+                        {{$hc_formulario->cabezaCuello->observacion1_cc}}
+                    @else
+                        Normal
+                    @endif
                 </td>
                 <td colspan="6">
-                    <label for="">Cara:</label> {{$hc_formulario->cabezaCuello->observacion2_cc}}
+                    <label for="">Cara:</label> <!--{{$hc_formulario->cabezaCuello->observacion2_cc}}-->
+                    @if ($hc_formulario->cabezaCuello->observacion2_cc)
+                        {{$hc_formulario->cabezaCuello->observacion2_cc}}
+                    @else
+                        Normal
+                    @endif
                 </td>
             </tr>
             <tr>
                 <td colspan="6">
-                    <label for="">Nariz:</label> {{$hc_formulario->cabezaCuello->observacion3_cc}}
+                    <label for="">Nariz:</label> <!--{{$hc_formulario->cabezaCuello->observacion3_cc}}-->
+                    @if ($hc_formulario->cabezaCuello->observacion3_cc)
+                        {{$hc_formulario->cabezaCuello->observacion3_cc}}
+                    @else
+                        Normal
+                    @endif
                 </td>
                 <td colspan="6">
-                    <label for="">Oídos:</label> {{$hc_formulario->cabezaCuello->observacion4_cc}}
+                    <label for="">Oídos:</label> <!--{{$hc_formulario->cabezaCuello->observacion4_cc}}-->
+                    @if ($hc_formulario->cabezaCuello->observacion4_cc)
+                        {{$hc_formulario->cabezaCuello->observacion4_cc}}
+                    @else
+                        Normal
+                    @endif
                 </td>
             </tr>
             <tr>
                 <td colspan="6">
-                    <label for="">Boca:</label> {{$hc_formulario->cabezaCuello->observacion5_cc}}
+                    <label for="">Boca:</label> <!--{{$hc_formulario->cabezaCuello->observacion5_cc}}-->
+                    @if ($hc_formulario->cabezaCuello->observacion5_cc)
+                        {{$hc_formulario->cabezaCuello->observacion5_cc}}
+                    @else
+                        Normal
+                    @endif
                 </td>
                 <td colspan="6">
-                    <label for="">Cuello y Tiroides:</label> {{$hc_formulario->cabezaCuello->observacion6_cc}}
+                    <label for="">Cuello y Tiroides:</label> <!--{{$hc_formulario->cabezaCuello->observacion6_cc}}-->
+                    @if ($hc_formulario->cabezaCuello->observacion6_cc)
+                        {{$hc_formulario->cabezaCuello->observacion6_cc}}
+                    @else
+                        Normal
+                    @endif
                 </td>
             </tr>
         </table>
@@ -295,18 +431,38 @@
             </tr>
             <tr>
                 <td colspan="6">
-                    <label for="">Pupilas:</label> {{$hc_formulario->oftalmologico->observacion1_of}}
+                    <label for="">Pupilas:</label> <!--{{$hc_formulario->oftalmologico->observacion1_of}}-->
+                    @if ($hc_formulario->oftalmologico->observacion1_of)
+                        {{$hc_formulario->oftalmologico->observacion1_of}}
+                    @else
+                        Normal
+                    @endif
                 </td>
                 <td colspan="6">
-                    <label for="">Córneas:</label> {{$hc_formulario->oftalmologico->observacion2_of}}
+                    <label for="">Córneas:</label> <!--{{$hc_formulario->oftalmologico->observacion2_of}}-->
+                    @if ($hc_formulario->oftalmologico->observacion2_of)
+                        {{$hc_formulario->oftalmologico->observacion2_of}}
+                    @else
+                        Normal
+                    @endif
                 </td>
             </tr>
             <tr>
                 <td colspan="6">
-                    <label for="">Conjuntivas:</label> {{$hc_formulario->oftalmologico->observacion3_of}}
+                    <label for="">Conjuntivas:</label> <!--{{$hc_formulario->oftalmologico->observacion3_of}}-->
+                    @if ($hc_formulario->oftalmologico->observacion3_of)
+                        {{$hc_formulario->oftalmologico->observacion3_of}}
+                    @else
+                        Normal
+                    @endif
                 </td>
                 <td colspan="6">
-                    <label for="">Visión en colores:</label> {{$hc_formulario->oftalmologico->observacion4_of}}
+                    <label for="">Visión en colores:</label> <!--{{$hc_formulario->oftalmologico->observacion4_of}}-->
+                    @if ($hc_formulario->oftalmologico->observacion4_of)
+                        {{$hc_formulario->oftalmologico->observacion4_of}}
+                    @else
+                        Normal
+                    @endif
                 </td>
             </tr>
             <tr>
@@ -316,23 +472,28 @@
             </tr>
             <tr>
                 <td colspan="4">
-                    <label for="">Ojo derecho:</label> {{$hc_formulario->oftalmologico->observacion5_of}}
+                    <label for="">Ojo derecho:</label> <!--{{$hc_formulario->oftalmologico->observacion5_of}}-->
                 </td>
                 <td colspan="4">
-                    <label for="">Ojo izquierdo:</label> {{$hc_formulario->oftalmologico->observacion6_of}}
+                    <label for="">Ojo izquierdo:</label> <!--{{$hc_formulario->oftalmologico->observacion6_of}}-->
                 </td>
                 <td colspan="4">
                     <label for="">Usa Lentes:</label>                 
                     @if ($hc_formulario->oftalmologico->pregunta7_of==true)
-                        SI
+                        Si
                     @else
-                        NO
+                        No
                     @endif
                 </td>
             </tr>
             <tr>
                 <td colspan="12">
-                    <label for="">Observaciones:</label> {{$hc_formulario->oftalmologico->observacion_of}}
+                    <label for="">Observaciones:</label> <!--{{$hc_formulario->oftalmologico->observacion_of}}-->
+                    @if ($hc_formulario->oftalmologico->observacion_of)
+                        {{$hc_formulario->oftalmologico->observacion_of}}
+                    @else
+                        No
+                    @endif
                 </td>
             </tr>
         </table>
@@ -346,34 +507,74 @@
             </tr>
             <tr>
                 <td colspan="6">
-                    <label for="">Motilidad Activa:</label> {{$hc_formulario->neurologico->observacion1_neu}}
+                    <label for="">Motilidad Activa:</label> <!--{{$hc_formulario->neurologico->observacion1_neu}}-->
+                    @if ($hc_formulario->neurologico->observacion1_neu)
+                        {{$hc_formulario->neurologico->observacion1_neu}}
+                    @else
+                        Normal
+                    @endif
                 </td>
                 <td colspan="6">
-                    <label for="">Motilidad Pasiva:</label> {{$hc_formulario->neurologico->observacion2_neu}}
-                </td>
-            </tr>
-            <tr>
-                <td colspan="6">
-                    <label for="">Sensibilidad:</label> {{$hc_formulario->neurologico->observacion3_neu}}
-                </td>
-                <td colspan="6">
-                    <label for="">Marcha:</label> {{$hc_formulario->neurologico->observacion4_neu}}
-                </td>
-            </tr>
-            <tr>
-                <td colspan="6">
-                    <label for="">Reflejos Osteotendinosos:</label> {{$hc_formulario->neurologico->observacion5_neu}}
-                </td>
-                <td colspan="6">
-                    <label for="">Pares Craneales:</label> {{$hc_formulario->neurologico->observacion6_neu}}
+                    <label for="">Motilidad Pasiva:</label> <!--{{$hc_formulario->neurologico->observacion2_neu}}-->
+                    @if ($hc_formulario->neurologico->observacion2_neu)
+                        {{$hc_formulario->neurologico->observacion2_neu}}
+                    @else
+                        Normal
+                    @endif
                 </td>
             </tr>
             <tr>
                 <td colspan="6">
-                    <label for="">Taxia:</label> {{$hc_formulario->neurologico->observacion7_neu}}
+                    <label for="">Sensibilidad:</label> <!--{{$hc_formulario->neurologico->observacion3_neu}}-->
+                    @if ($hc_formulario->neurologico->observacion3_neu)
+                        {{$hc_formulario->neurologico->observacion3_neu}}
+                    @else
+                        Normal
+                    @endif
                 </td>
                 <td colspan="6">
-                    <label for="">Observaciones:</label> {{$hc_formulario->neurologico->observacion_neu}}
+                    <label for="">Marcha:</label> <!--{{$hc_formulario->neurologico->observacion4_neu}}-->
+                    @if ($hc_formulario->neurologico->observacion4_neu)
+                        {{$hc_formulario->neurologico->observacion4_neu}}
+                    @else
+                        Normal
+                    @endif
+                </td>
+            </tr>
+            <tr>
+                <td colspan="6">
+                    <label for="">Reflejos Osteotendinosos:</label> <!--{{$hc_formulario->neurologico->observacion5_neu}}-->
+                    @if ($hc_formulario->neurologico->observacion5_neu)
+                        {{$hc_formulario->neurologico->observacion5_neu}}
+                    @else
+                        Normal
+                    @endif
+                </td>
+                <td colspan="6">
+                    <label for="">Pares Craneales:</label> <!--{{$hc_formulario->neurologico->observacion6_neu}}-->
+                    @if ($hc_formulario->neurologico->observacion6_neu)
+                        {{$hc_formulario->neurologico->observacion6_neu}}
+                    @else
+                        Normal
+                    @endif
+                </td>
+            </tr>
+            <tr>
+                <td colspan="6">
+                    <label for="">Taxia:</label> <!--{{$hc_formulario->neurologico->observacion7_neu}}-->
+                    @if ($hc_formulario->neurologico->observacion7_neu)
+                        {{$hc_formulario->neurologico->observacion7_neu}}
+                    @else
+                        Normal
+                    @endif
+                </td>
+                <td colspan="6">
+                    <label for="">Observaciones:</label> <!--{{$hc_formulario->neurologico->observacion_neu}}-->
+                    @if ($hc_formulario->neurologico->observacion_neu)
+                        {{$hc_formulario->neurologico->observacion_neu}}
+                    @else
+                        No
+                    @endif
                 </td>
             </tr>
         </table>
@@ -384,44 +585,66 @@
             </tr>
             <tr>
                 <td colspan="6">
-                    <label for="">Encias y Mucosas:</label> {{$hc_formulario->odontologico->observacion1_od}}
+                    <label for="">Encias y Mucosas:</label> <!--{{$hc_formulario->odontologico->observacion1_od}}-->
+                    @if ($hc_formulario->odontologico->observacion1_od)
+                        {{$hc_formulario->odontologico->observacion1_od}}
+                    @else
+                        No
+                    @endif
                 </td>
                 <td colspan="6">
-                    <label for="">Esmalte Dental:</label> {{$hc_formulario->odontologico->observacion2_od}}
+                    <label for="">Esmalte Dental:</label> <!--{{$hc_formulario->odontologico->observacion2_od}}-->
+                    @if ($hc_formulario->odontologico->observacion2_od)
+                        {{$hc_formulario->odontologico->observacion2_od}}
+                    @else
+                        No
+                    @endif
                 </td>
             </tr>
             <tr>
                 <td colspan="6">
                     <label for="">Caries:</label>
                     @if ($hc_formulario->odontologico->pregunta4_od==true)
-                        SI
+                        Si
                     @else
-                        NO
+                        No
                     @endif
                 </td>
                 <td colspan="6">
                     <label for="">Faltan piezas dentales:</label>
                     @if ($hc_formulario->odontologico->pregunta5_od==true)
-                        SI
+                        Si
                     @else
-                        NO
+                        No
                     @endif
                 </td>
             </tr>
             <tr>
                 <td colspan="6">
-                    <label for="">Prótesis:</label>
+                    <label for="">Protesis Superior:</label> <!--{{$hc_formulario->odontologico->superior}}-->
+                        @if ($hc_formulario->odontologico->superior)
+                            {{$hc_formulario->odontologico->superior}}
+                        @else
+                            No
+                        @endif
                 </td>
-                <td colspan="3">
-                    <label for="">Superior:</label> {{$hc_formulario->odontologico->superior}}
-                </td>
-                <td colspan="3">
-                    <label for="">Inferior:</label> {{$hc_formulario->odontologico->inferior}}
+                <td colspan="6">
+                    <label for="">Protesis Inferior:</label> <!--{{$hc_formulario->odontologico->inferior}}-->
+                        @if ($hc_formulario->odontologico->inferior)
+                            {{$hc_formulario->odontologico->inferior}}
+                        @else
+                            No
+                        @endif
                 </td>
             </tr>
             <tr>
                 <td colspan="12">
-                    <label for="">Observaciones:</label> {{$hc_formulario->odontologico->observacion_od}}
+                    <label for="">Observaciones:</label> <!--{{$hc_formulario->odontologico->observacion_od}}-->
+                    @if ($hc_formulario->odontologico->observacion_od)
+                        {{$hc_formulario->odontologico->observacion_od}}
+                    @else
+                        No
+                    @endif
                 </td>
             </tr>
         </table>
@@ -432,10 +655,20 @@
             </tr>
             <tr>
                 <td colspan="6">
-                    <label for="">Caja Torácica:</label> {{$hc_formulario->respitario->observacion1_re}}
+                    <label for="">Caja Torácica:</label> <!--{{$hc_formulario->respitario->observacion1_re}}-->
+                    @if ($hc_formulario->respitario->observacion1_re)
+                        {{$hc_formulario->respitario->observacion1_re}}
+                    @else
+                        Normal
+                    @endif
                 </td>
                 <td colspan="6">
-                    <label for="">Pulmones:</label> {{$hc_formulario->respitario->observacion2_re}}
+                    <label for="">Pulmones:</label> <!--{{$hc_formulario->respitario->observacion2_re}}-->
+                    @if ($hc_formulario->respitario->observacion2_re)
+                        {{$hc_formulario->respitario->observacion2_re}}
+                    @else
+                        Normal
+                    @endif
                 </td>
             </tr>
             <tr>
@@ -454,31 +687,66 @@
             </tr>
             <tr>
                 <td colspan="6">
-                    <label for="">Forma:</label> {{$hc_formulario->abdomen->observacion1_ab}}
+                    <label for="">Forma:</label> <!--{{$hc_formulario->abdomen->observacion1_ab}}-->
+                    @if ($hc_formulario->abdomen->observacion1_ab)
+                        {{$hc_formulario->abdomen->observacion1_ab}}
+                    @else
+                        Normal
+                    @endif
                 </td>
                 <td colspan="6">
-                    <label for="">Hígado:</label> {{$hc_formulario->abdomen->observacion2_ab}}
+                    <label for="">Hígado:</label> <!--{{$hc_formulario->abdomen->observacion2_ab}}-->
+                    @if ($hc_formulario->abdomen->observacion2_ab)
+                        {{$hc_formulario->abdomen->observacion2_ab}}
+                    @else
+                        Normal
+                    @endif
                 </td>
             </tr>
             <tr>
                 <td colspan="6">
-                    <label for="">Bazo:</label> {{$hc_formulario->abdomen->observacion3_ab}}
+                    <label for="">Bazo:</label> <!--{{$hc_formulario->abdomen->observacion3_ab}}-->
+                    @if ($hc_formulario->abdomen->observacion3_ab)
+                        {{$hc_formulario->abdomen->observacion3_ab}}
+                    @else
+                        Normal
+                    @endif
                 </td>
                 <td colspan="6">
-                    <label for="">Colon:</label> {{$hc_formulario->abdomen->observacion4_ab}}
+                    <label for="">Colon:</label> <!--{{$hc_formulario->abdomen->observacion4_ab}}-->
+                    @if ($hc_formulario->abdomen->observacion4_ab)
+                        {{$hc_formulario->abdomen->observacion4_ab}}
+                    @else
+                        Normal
+                    @endif
                 </td>
             </tr>
             <tr>
                 <td colspan="6">
-                    <label for="">Ruidos Hidroaéreos:</label> {{$hc_formulario->abdomen->observacion5_ab}}
+                    <label for="">Ruidos Hidroaéreos:</label> <!--{{$hc_formulario->abdomen->observacion5_ab}}-->
+                    @if ($hc_formulario->abdomen->observacion5_ab)
+                        {{$hc_formulario->abdomen->observacion5_ab}}
+                    @else
+                        Normal
+                    @endif
                 </td>
                 <td colspan="6">
-                    <label for="">Puño percusión:</label> {{$hc_formulario->abdomen->observacion6_ab}}
+                    <label for="">Puño percusión:</label> <!--{{$hc_formulario->abdomen->observacion6_ab}}-->
+                    @if ($hc_formulario->abdomen->observacion6_ab)
+                        {{$hc_formulario->abdomen->observacion6_ab}}
+                    @else
+                        Normal
+                    @endif
                 </td>
             </tr>
             <tr>
                 <td colspan="12">
-                    <label for="">Cicatrices quirúrgicas:</label> {{$hc_formulario->abdomen->observacion_ab}}
+                    <label for="">Cicatrices quirúrgicas:</label> <!--{{$hc_formulario->abdomen->observacion_ab}}-->
+                    @if ($hc_formulario->abdomen->observacion_ab)
+                        {{$hc_formulario->abdomen->observacion_ab}}
+                    @else
+                        Normal
+                    @endif
                 </td>
             </tr>
         </table>
@@ -489,18 +757,38 @@
             </tr>
             <tr>
                 <td colspan="6">
-                    <label for="">Tono de la pared posterior:</label> {{$hc_formulario->regionInguinal->observacion1_in}}
+                    <label for="">Tono de la pared posterior:</label> <!--{{$hc_formulario->regionInguinal->observacion1_in}}-->
+                    @if ($hc_formulario->regionInguinal->observacion1_in)
+                        {{$hc_formulario->regionInguinal->observacion1_in}}
+                    @else
+                        Normal
+                    @endif
                 </td>
                 <td colspan="6">
-                    <label for="">Orificios Superficiales:</label> {{$hc_formulario->regionInguinal->observacion2_in}}
+                    <label for="">Orificios Superficiales:</label> <!--{{$hc_formulario->regionInguinal->observacion2_in}}-->
+                    @if ($hc_formulario->regionInguinal->observacion2_in)
+                        {{$hc_formulario->regionInguinal->observacion2_in}}
+                    @else
+                        Normal
+                    @endif
                 </td>
             </tr>
             <tr>
                 <td colspan="6">
-                    <label for="">Orificios Profundos:</label> {{$hc_formulario->regionInguinal->observacion3_in}}
+                    <label for="">Orificios Profundos:</label> <!--{{$hc_formulario->regionInguinal->observacion3_in}}-->
+                    @if ($hc_formulario->regionInguinal->observacion3_in)
+                        {{$hc_formulario->regionInguinal->observacion3_in}}
+                    @else
+                        Normal
+                    @endif
                 </td>
                 <td colspan="6">
-                    <label for="">Observaciones:</label> {{$hc_formulario->regionInguinal->observacion_in}}
+                    <label for="">Observaciones:</label> <!--{{$hc_formulario->regionInguinal->observacion_in}}-->
+                    @if ($hc_formulario->regionInguinal->observacion_in)
+                        {{$hc_formulario->regionInguinal->observacion_in}}
+                    @else
+                        No
+                    @endif
                 </td>
             </tr>
         </table>
@@ -511,10 +799,20 @@
             </tr>
             <tr>
                 <td colspan="6">
-                    <label for="">Características:</label> {{$hc_formulario->genital->observacion1_ge}}
+                    <label for="">Características:</label> <!--{{$hc_formulario->genital->observacion1_ge}}-->
+                    @if ($hc_formulario->genital->observacion1_ge)
+                        {{$hc_formulario->genital->observacion1_ge}}
+                    @else
+                        Normal
+                    @endif
                 </td>
                 <td colspan="6">
-                    <label for="">Observaciones:</label> {{$hc_formulario->genital->observacion_ge}}
+                    <label for="">Observaciones:</label> <!--{{$hc_formulario->genital->observacion_ge}}-->
+                    @if ($hc_formulario->genital->observacion_ge)
+                        {{$hc_formulario->genital->observacion_ge}}
+                    @else
+                        No
+                    @endif
                 </td>
             </tr>
         </table>
@@ -525,10 +823,20 @@
             </tr>
             <tr>
                 <td colspan="6">
-                    <label for="">Características:</label> {{$hc_formulario->regionAnal->observacion1_an}}
+                    <label for="">Características:</label> <!--{{$hc_formulario->regionAnal->observacion1_an}}-->
+                    @if ($hc_formulario->regionAnal->observacion1_an)
+                        {{$hc_formulario->regionAnal->observacion1_an}}
+                    @else
+                        Normal
+                    @endif
                 </td>
                 <td colspan="6">
-                    <label for="">Observaciones:</label> {{$hc_formulario->regionAnal->observacion_an}}
+                    <label for="">Observaciones:</label> <!--{{$hc_formulario->regionAnal->observacion_an}}-->
+                    @if ($hc_formulario->regionAnal->observacion_an)
+                        {{$hc_formulario->regionAnal->observacion_an}}
+                    @else
+                        No
+                    @endif
                 </td>
             </tr>
         </table>
@@ -536,16 +844,20 @@
         <table class="table table-condensed table-hover" >
             <tr >
                 <td style="width: 350px;text-align:center">
-                    <!-- Vacio -->
-                </td>
-                <td style="width: 350px;text-align:center">
                     <div>
                         <img src="{{$hc_formulario->firma}}" width=130 height=130 alt="firma del paciente">
                     </div>
                     <label>Firma del Paciente</label>
                 </td>
+                <td style="width: 350px;text-align: center" colspan="6">
+                    <div>
+                        <img src="" width=130 height=130 alt="firma del médico"> 
+                    </div>
+                    <label>Firma del Médico</label>
+                </td>
             </tr>
         </table>
+        
     </div>
   </main>
 </body>

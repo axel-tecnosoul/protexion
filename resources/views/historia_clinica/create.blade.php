@@ -101,11 +101,11 @@
                                 <div class="form-group row">
                                     <div class="col">
                                         <label for="" class="form-label">Estatura (Mts): </label>
-                                        <input class="form-control calculoIMC" type="number" step="0.01" id="estatura" name="estatura" placeholder="Estatura">
+                                        <input class="form-control calculoIMC" type="number" step="0.01" id="estatura" name="estatura" placeholder="Estatura Ej. 1.72" required>
                                     </div>
                                     <div class="col">
                                         <label for="" class="form-label">Peso (Kgs):</label>
-                                        <input class="form-control calculoIMC" type="number" step="0.01" id="peso" name="peso" placeholder="Peso">
+                                        <input class="form-control calculoIMC" type="number" step="0.01" id="peso" name="peso" placeholder="Peso" required>
                                     </div>
                                 </div>
                                 <div class="form-group row">
@@ -146,7 +146,7 @@
                                 <div class="form-group row">
                                     <div class="col">
                                         <label for="" class="form-label">Frecuencia cardíaca:</label>
-                                        <input class="form-control" type="text" name="frecuencia_cardiaca" placeholder="Frecuencia cardíaca">
+                                        <input class="form-control" type="text" name="frecuencia_cardiaca" placeholder="Frecuencia cardíaca" required>
                                     </div>
                                 </div>
                                 <div class="form-group row">
@@ -154,10 +154,10 @@
                                         <label for="">Tensión arterial:</label>
                                         <div class="row">
                                             <div class="col-6">
-                                                <input class="form-control" type="text" name="sistolica" placeholder="Sistolica">
+                                                <input class="form-control" type="text" name="sistolica" placeholder="Sistolica" required>
                                             </div>
                                             <div class="col-6">
-                                                <input class="form-control" type="text" name="diastolica" placeholder="Diastolica">
+                                                <input class="form-control" type="text" name="diastolica" placeholder="Diastolica" required>
                                             </div>
                                         </div>
                                     </div>
@@ -171,7 +171,7 @@
                                         <label for="">Pulso:</label>
                                     </div>
                                     <div class="col-2">
-                                        <label><input type="radio" name="pulso" value="A">Anormal</label>
+                                        <label><input type="radio" name="pulso" value="A" required>Anormal</label>
                                     </div>
                                     <div class="col-2">
                                         <label><input type="radio" name="pulso" value="N">Normal</label>
