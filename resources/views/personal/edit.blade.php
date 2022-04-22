@@ -11,7 +11,7 @@
         @include('errors.request')
         @include('personal.mensaje')
 
-        {!!Form::model($personal, ['method'=>'PATCH','route'=>['personal.update',$personal->id]])!!}
+        {!!Form::model($personal, ['method'=>'PATCH','route'=>['personal.update',$personal->id],'files' => true,])!!}
         {{Form::token()}}
 
         <div class="card card-dark">
@@ -83,27 +83,134 @@
                                     @if ($sexo->id==$personal->sexo_id)
                                         <option value="{{$sexo->id}}" selected>{{$sexo->definicion}}</option> 
                                     @else
-                                            <option value="{{$sexo->id}}">{{$sexo->definicion}}</option>                                                
+                                        <option value="{{$sexo->id}}">{{$sexo->definicion}}<option>
                                     @endif
                                 @endforeach
                         </select>
                     </div>
                 </div>
+            </div>
+        </div>
 
+      </div>
+      <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+          <div class="card card-dark">
+            <div class="card-header">
+                <div class="card-title">
+                    <p style="font-size:130%"> <i class="fa fa-id-card" aria-hidden="true"></i> Datos Laborales</p>
+                </div>
+            </div>
+            <div class="card-body">
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                    <div class="form-group" style="text-align:center">
-                        <label>
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <div class="form-group">
+                            <label> Puesto</label>
+                            <select
+                                name="puesto_id"
+                                id="puesto_id"
+                                class="puesto_id form-control"
+                                required
+                                >
+                                <option
+                                    value="0"
+                                    disabled="true"
+                                    selected="true"
+                                    title="Seleccione un puesto"
+                                    >
+                                    -Seleccione un puesto-
+                                </option>
+                                @foreach ($puestos as $puesto)
+                                    @if ($puesto->id==$personal->puesto_id)
+                                        <option value="{{$puesto->id}}" selected>{{$puesto->nombre}}</option> 
+                                    @else
+                                    <option value="{{$puesto->id }}">{{$puesto->nombre}}</option>
+                                    @endif
+                                @endforeach
+                            </select>
+                            <label>
+                                Especialidad
+                            </label>
+                            <select
+                                name="especialidad_id"
+                                id="especialidad_id"
+                                class="especialidad_id form-control"
+                                required
+                                >
+                                <option
+                                    value="0"
+                                    disabled="true"
+                                    selected="true"
+                                    title="Seleccione una especialidad"
+                                    >
+                                    -Seleccione una especialidad
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <div class="form-group">
+                            <label for="nro_matricula"> Matricula</label>
+                            <!-- old('nro_matricula') -->
+                            <input
+                                type="string"
+                                name="nro_matricula"
+                                maxlength="30"
+                                value="{{$personal->nro_matricula}}"
+                                class="form-control"
+                                placeholder="Ingrese la matricula..."
+                                title="Introduzca la matricula">
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <div class="card-body">
+                            <div class="form-group"><?php
+                            //echo (public_path('imagenes/firmas/'.$personal->foto));
+                            $classSelectFirma="";
+                            $classPreview="d-none";
+                            if($personal->foto){
+                              $classSelectFirma="d-none";
+                              $classPreview="";
+                            }?>
+                                <label for="foto">Firma</label>
+                                <div id="select_firma" class="input-group <?=$classSelectFirma?>">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"> <i class="fa fa-file-image" aria-hidden="true"></i></span>
+                                    </div>
+                                    <input
+                                        id="file"
+                                        type="file"
+                                        name="foto"
+                                        class="form-control img-responsive">
+                                </div>
+                                <div id="preview" class="<?=$classPreview?>">
+                                  @if ($personal->foto)
+                                    <!-- <img src="{{public_path('imagenes/firmas/'.$personal->foto)}}" width="130" height="130" alt="firma del médico"> -->
+                                    <img src="{{'../../../public/imagenes/firmas/'.$personal->foto}}" width="130" height="130" alt="firma del médico">
+                                  @endif
+                                </div>
+                            </div>
 
-                        </label>
-                        <br>
-                        <a href="/protexion/public/personal">
-                            <button title="Cancelar" class="btn btn-secondary btn-lg" type="button"><i class="fas fa-arrow-left"></i> Cancelar</button>
-                        </a>
-                        <button title="Guardar" id="confirmar" class="btn btn-danger btn-lg" type="submit"> <i class="fa fa-check"></i> Guardar</button>
+                        </div>
+                    </div>
+                    <input type="hidden" name="firma" id="firma">
                     </div>
                 </div>
             </div>
         </div>
+    </div>
+</div>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <div class="form-group" style="text-align:center">
+        <label>
+
+        </label>
+        <br>
+        <a href="/protexion/public/personal">
+            <button title="Cancelar" class="btn btn-secondary btn-lg" type="button"><i class="fas fa-arrow-left"></i> Cancelar</button>
+        </a>
+        <button title="Guardar" id="confirmar" class="btn btn-danger btn-lg" type="submit"> <i class="fa fa-check"></i> Guardar</button>
     </div>
 </div>
     
@@ -117,7 +224,41 @@
             var select1 = $("#sexo_id").select2({width:'100%'});
             select1.data('select2').$selection.css('height', '100%');
 
-            
+            var select2 = $("#puesto_id").select2({width:'100%'});
+            select2.data('select2').$selection.css('height', '100%');
+
+            var select3 = $("#especialidad_id").select2({width:'100%'});
+            select3.data('select2').$selection.css('height', '100%');
+
+            $(document).on('change','.puesto_id',function(){
+                var puesto_id=$(this).val();
+                var div=$(this).parent();
+                var op=" ";
+
+                $.ajax({
+                    type:'get',
+                    url:'{!!URL::to('personal/create/encontrarEspecialidad')!!}',
+                    data:{'id':puesto_id},
+                    success:function(data){
+                        op+='<option value="0" selected disabled>-Seleccione una especialidad-</option>';
+                        for(var i=0;i<data.length;i++){
+                          let selected="";
+                          if("{{$personal->especialidad_id}}"==data[i].id){
+                            selected="selected";
+                          }
+                            op+='<option value="'+data[i].id+'" '+selected+'>'+data[i].nombre+'</option>';
+                        }
+                        div.find('.especialidad_id').html(" ");
+                        div.find('.especialidad_id').append(op);
+                    },
+                    error:function(){
+                    }
+                });
+            });
+
+            if("{{$personal->puesto_id}}"==3){
+              $(".puesto_id").change();
+            }
 
             $('#documento').mask('00.000.000');
         });

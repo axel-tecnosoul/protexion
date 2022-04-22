@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\DeclaracionJurada;
 use App\HistoriaClinica;
 use App\Paciente;
 use App\ExamenClinico;
@@ -35,10 +36,14 @@ class HistoriaClinicaController extends Controller
 
     public function crearPDF($id)
     {
-    $historia_clinica=HistoriaClinica::find($id);
+        $voucher=Voucher::find($id);
+        $historia_clinica=HistoriaClinica::find($voucher->historiaClinica->id);
+        $declaracionJurada=DeclaracionJurada::find($voucher->declaracionJurada->id);
+
         $pdf = PDF::loadView('historia_clinica.pdf',[
-            "hc_formulario"   =>  $historia_clinica
-            ]);
+            "hc_formulario"   =>  $historia_clinica,
+            "declaracion_jurada"   =>  $declaracionJurada,
+        ]);
 
         $pdf->setPaper('a4','letter');
         return $pdf->stream('historia-clinica.pdf');
@@ -232,7 +237,7 @@ class HistoriaClinicaController extends Controller
 
         //Generar PDF y enlazarlo
             //Obtener voucher-estudio
-            foreach ($voucher->vouchersEstudios as $item) {
+            /*foreach ($voucher->vouchersEstudios as $item) {
                 if ($item->estudio->nombre == "HISTORIA CLINICA") {
                     $estudio = $item;
                 }
@@ -249,7 +254,7 @@ class HistoriaClinicaController extends Controller
             $archivo_adjunto = new ArchivoAdjunto();
             $archivo_adjunto->anexo = $ruta;
             $archivo_adjunto->voucher_estudio_id = $estudio->id;
-            $archivo_adjunto->save();
+            $archivo_adjunto->save();*/
         //
         return redirect()->route('voucher.show',$voucher->id);
     }

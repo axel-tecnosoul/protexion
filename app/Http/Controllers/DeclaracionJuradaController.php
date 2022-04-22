@@ -50,7 +50,8 @@ class DeclaracionJuradaController extends Controller
     
     public function crearPDF($id)
     {
-        $declaracion_jurada=DeclaracionJurada::find($id);
+        $voucher=Voucher::find($id);
+        $declaracion_jurada=DeclaracionJurada::find($voucher->declaracionJurada->id);
         $data = [
           'declaracion_jurada' => $declaracion_jurada
         ];
@@ -162,7 +163,7 @@ class DeclaracionJuradaController extends Controller
 
             //Generar PDF y enlazarlo
                 //Obtener voucher-estudio
-                $estudio = $voucher->getVoucherEstudio("DECLARACION JURADA");
+                /*$estudio = $voucher->getVoucherEstudio("DECLARACION JURADA");
 
                 //Ruta de PDF
                 $ruta = public_path().'/archivo/'."DECLARACION JURADA".$estudio->id.".pdf";
@@ -176,7 +177,7 @@ class DeclaracionJuradaController extends Controller
                 $archivo_adjunto = new ArchivoAdjunto();
                 $archivo_adjunto->anexo = $ruta;
                 $archivo_adjunto->voucher_estudio_id = $estudio->id;
-                $archivo_adjunto->save();
+                $archivo_adjunto->save();*/
             //
 
         return redirect()->route('voucher.show',$voucher->id);

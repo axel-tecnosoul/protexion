@@ -20,18 +20,24 @@
                 </div>
                 <div class="card-tools">
                     @if ($voucher->aptitud)
-                        <a href= {{ route('aptitudes.descargar',$voucher->aptitud->id)}} class="btn fondo1"><i class="fas fa-file-pdf"></i> Informe Final</a>
+                        <a target="_blank" href=" {{ route('aptitudes.pdf',$voucher->id)}}" class="btn fondo1"><i class="fas fa-file-pdf"></i> Informe Final</a>
 
                         <!-- ELIMINAR DESPUES DE PRUEBAS 
                         <a href= {{ route('aptitudes.create',$voucher->id)}} class="btn fondo1">Generar Informe Final</a>-->
                     @else
                         @if ($voucher->voucherListo())
-                            <a href= {{ route('aptitudes.create',$voucher->id)}} class="btn fondo1">Generar Informe Final</a>
+                            <a href=" {{ route('aptitudes.create',$voucher->id)}}" class="btn fondo1">Generar Informe Final</a>
                         @else
                         @endif
                     @endif
                 </div>
-            </div>
+            </div><?php
+            $aRutasPDF=[
+              "DECLARACION JURADA"=>"declaracion_jurada.pdf",
+              "HISTORIA CLINICA"=>"historia_clinica.pdf",
+              "POSICIONES FORZADAS"=>"posiciones_forzadas.pdf",
+              "ILUMINACION"=>"iluminacion_direccionados.pdf",
+            ];?>
             <div class="card-body">
                 <div class="row">
                     <!-- PACIENTE -->
@@ -65,10 +71,18 @@
                                                         </a>
                                                     </td>
                                                 @else
+                                                <?php
+                                    //var_dump($estudios_sistema[0][$item]->estudio->nombre)?>
                                                     <td style="width: 65%">{{ $estudios_sistema[0][$item]->estudio->nombre }}</td>
                                                     @if ($estudios_sistema[0][$item]->archivo_adjunto != "[]")
                                                         <td style="text-align: center">
-                                                            <a target="_blank" href="{{ route('voucherEstudio.show',$estudios_sistema[0][$item]->id) }}" class="btn fondo1 btn-responsive">
+                                                            <!-- <a target="_blank" href="{{ route('voucherEstudio.show',$estudios_sistema[0][$item]->id) }}" class="btn fondo1 btn-responsive">
+                                                                <i class="fas fa-file-pdf"></i>
+                                                            </a> -->
+                                                          <!-- <a target="_blank" href="<?=route($aRutasPDF[$estudios_sistema[0][$item]->estudio->nombre],$estudios_sistema[0][$item]->id)?>" class="btn fondo1 btn-responsive">
+                                                                <i class="fas fa-file-pdf"></i>
+                                                            </a> -->
+                                                            <a target="_blank" href="<?=route($aRutasPDF[$estudios_sistema[0][$item]->estudio->nombre],$voucher->id)?>" class="btn fondo1 btn-responsive">
                                                                 <i class="fas fa-file-pdf"></i>
                                                             </a>
                                                         </td>

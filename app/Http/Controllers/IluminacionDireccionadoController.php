@@ -16,7 +16,8 @@ class IluminacionDireccionadoController extends Controller
 
     public function crearPDF($id)
     {
-        $iluminacion=IluminacionDireccionado::find($id);
+        $voucher=Voucher::find($id);
+        $iluminacion=IluminacionDireccionado::find($voucher->iluminacionDireccionado->id);
         $pdf = PDF::loadView('direccionado_iluminacion.PDF',["iluminacion"   =>  $iluminacion]);
         $pdf->setPaper('a4','letter');
         return $pdf->stream('iluminacion.pdf');

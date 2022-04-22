@@ -1,12 +1,17 @@
 <!DOCTYPE html>
-<html lang="en" style='margin-top: 5px;margin-bottom: 5px'>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Declaracion Jurada</title>
     <style>
-        td{
+        @page {
+            margin: 72px 25px 25px 30px;
+        }
+        table{
+          width: 100%;
+        }
+        td{ 
             border-bottom:  0.1px solid rgb(202, 202, 202);
             padding: 3px;
             font-size: 12px;
@@ -14,22 +19,48 @@
         label{
             font-weight: bold;
         }
+        h3{
+          margin-top:0;
+        }
+        header {
+            position: fixed;
+            top: -72px;
+            left: 0;
+            right: 0;
+            height: 70px;
+
+            /** Extra personal styles **/
+            /*background-color: #03a9f4;
+            color: white;
+            text-align: center;
+            line-height: 35px;*/
+        }
+        /*main{
+          margin-top: 20px;
+        }*/
     </style>
+    <title>Declaracion Jurada</title>
 </head>
 <body>
+  <header>
+    <div style="text-align: right">
+      <img src="{{public_path('imagenes/logo.png')}}" alt="logo" width="200px">
+    </div>
+  </header>
     <div id="content" class="container">
-        <div id="header" style="text-align: right">
+        <!-- <div id="header" style="text-align: right">
             <img src="{{public_path('imagenes/logo.png')}}" alt="logo" width="200px">
-        </div>
-        <h3 style="text-align: center">DECLARACION JURADA DE SALUDD</h3>
+        </div> -->
+        <h3 style="text-align: center">DECLARACION JURADA DE SALUD</h3>
         <!-- DATOS PERSONALES -->
         <table class="table table-condensed table-hover" >
             <tr>
                 <td style="text-align: center; background-color: brown; color: #FFFFFF" colspan="12">DATOS PERSONALES</td>
-            </tr>
+            </tr><?php
+            //dd($declaracion_jurada->voucher->paciente->sexo)?>
             <tr style="text-align: left;">
                 <td style=" width: 350px" colspan="6"> <b> Nombre Completo:</b> {{$declaracion_jurada->voucher->paciente->nombreCompleto()}}</td>
-                <td style=" width: 350px" colspan="6"><b>Sexo:</b> {{$declaracion_jurada->voucher->paciente->sexo ? $declaracion_jurada->voucher->paciente->sexo->abreviatura : " " }}  </td>
+                <td style=" width: 350px" colspan="6"><b>Sexo:</b> {{$declaracion_jurada->voucher->paciente->sexo ? $declaracion_jurada->voucher->paciente->sexo->definicion : " " }}  </td>
             </tr>
             <tr style="text-align: left;" >
                 <td style=" width: 350px" colspan="6"> <b> Fecha de Nacimiento:</b> {{Carbon\Carbon::parse($declaracion_jurada->voucher->paciente->fecha_nacimiento)->format('d/m/Y') }}</td>
@@ -525,9 +556,9 @@
                     <label>Firma del Paciente</label>
                 </td>
                 <td style="width: 350px;text-align: center" colspan="6">
-                    <div>
+                    <div style="height:130px">
                         @if ($declaracion_jurada->personalClinica->foto)
-                            <img src="{{public_path('imagenes/firmas/'.$declaracion_jurada->personalClinica->foto)}}" width=130 height=130 alt="firma del médico">
+                            <img src="{{public_path('imagenes/firmas/'.$declaracion_jurada->personalClinica->foto)}}" width="130" height="130" alt="firma del médico">
                         @endif
                     </div>
                     <label>Firma del Médico</label>

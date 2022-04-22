@@ -9,5 +9,6 @@ use Illuminate\Support\Facades\Route;
     Route::delete('aptitudes/{id}',                 'AptitudController@destroy')           ->name('aptitudes.destroy');
 
     Route::get('aptitudes/{aptitud}/descargar',     'AptitudController@descargar')         ->name('aptitudes.descargar');
+    Route::get('aptitudes/{aptitud}/pdf',           'AptitudController@crearPDF')          ->name('aptitudes.pdf');
 
 ?>

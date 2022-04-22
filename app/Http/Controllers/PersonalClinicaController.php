@@ -182,7 +182,10 @@ class PersonalClinicaController extends Controller
     {
         $personal=PersonalClinica::findOrFail($id);
         $sexos=Sexo::all();
-        return view("personal.edit",["personal"=>$personal,"sexos"=>$sexos]);
+        $puestos=Puesto::all();
+
+
+        return view("personal.edit",["personal"=>$personal,"sexos"=>$sexos,"puestos"           =>  $puestos]);
     }
 
 
@@ -203,6 +206,18 @@ class PersonalClinicaController extends Controller
         $personal->documento=$request->get('documento');
         $personal->fecha_nacimiento=$request->get('fecha_nacimiento');
         $personal->sexo_id=$request->get('sexo_id');
+
+        $personal->nro_matricula=$request->get('nro_matricula');
+        if($request->file('foto')){
+
+            $image = $request->foto;
+            $image->move(public_path() . '/imagenes/firmas/', $personal->documento.$image->getClientOriginalName());
+            $personal->foto = $personal->documento.$image->getClientOriginalName();
+
+        }
+        
+        $personal->puesto_id=$request->get('puesto_id');
+        $personal->especialidad_id=$request->get('especialidad_id');
 
         $personal->update();
 
