@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
     <style>
+
         td{
             border-bottom:  0.1px solid rgb(202, 202, 202);
             padding: 3px;
@@ -87,9 +88,12 @@
                     <label>Fecha:</label> {{Carbon\Carbon::parse($aptitud["fecha"])->format('d/m/Y') }}
                 </td>
             </tr>
+            <tr>
+                <td style="text-align: center; background-color: brown; color: #FFFFFF" colspan="12">RESULTADO</td>
+            </tr>
             <tr style="text-align: left;">
-                <td colspan="12">
-                    <label for="">Resultado: </label> {{$aptitud["aptitud_laboral"]}}
+                <td style=" width: 350px" colspan="6">
+                    {{$aptitud["aptitud_laboral"]}}
                 </td>
             </tr>
         </table>

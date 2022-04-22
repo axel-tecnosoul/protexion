@@ -15,19 +15,19 @@ class Aptitud extends Model
     }
 
     public function riesgos(){
-        return ['RIESGO COD. 01: SIN EXPOSICIÓN A AGENTES O ACTIVIDADES DE RIESGO ESPECÍFICOS.',
-                'RIESGO COD. 02: SUSTANCIAS QUÍMICAS (POLVOS, HUMOS, VAPORES O GASES).',
-                'RIESGO COD. 03: RUIDO.',
-                'RIESGO COD. 04: VIBRACIONES TRANSMITIDAS AL CUERPO ENTERO.',
-                'RIESGO COD. 05: VIBRACIONES TRANSMITIDAS A LA EXTREMIDAD SUPERIOR.',
-                'RIESGO COD. 06: VIBRACIONES TRANSMITIDAS A LA EXTREMIDAD INFERIOR.',
-                'RIESGO COD. 07: POSICIONES FORZADAS Y GESTOS REPETITIVOS.',
-                'RIESGO COD. 08: TRABAJO EN ALTURA.',
-                'RIESGO COD. 09: INGRESO EN ESPACIOS CONFINADOS.',
-                'RIESGO COD. 10: OPERACIÓN DE VEHÍCULOS MOTORIZADOS.',
-                'RIESGO COD. 11: TOXICOLÓGICO.',
-                'RIESGO COD. 12: TEST EMBARAZO.',
-                'RIESGO COD. 13: DOCENCIA.',];
+        return ['RIESGO COD. 01: Sin exposición a agentes o actividades de riesgo específicos.',
+                'RIESGO COD. 02: Sustancias químicas (polvos, humos, vapores o gases).',
+                'RIESGO COD. 03: Ruido.',
+                'RIESGO COD. 04: Vibraciones transmitidas al cuerpo entero.',
+                'RIESGO COD. 05: Vibraciones transmitidas a la extremidad superior.',
+                'RIESGO COD. 06: Vibraciones transmitidas a la extremidad inferior.',
+                'RIESGO COD. 07: Posiciones forzadas y gestos repetitivos.',
+                'RIESGO COD. 08: Trabajo en altura.',
+                'RIESGO COD. 09: Ingreso en espacios confinados.',
+                'RIESGO COD. 10: Operación de vehículos motorizados.',
+                'RIESGO COD. 11: Toxicológico.',
+                'RIESGO COD. 12: Test Embarazo.',
+                'RIESGO COD. 13: Docencia.',];
     }
 
 }
