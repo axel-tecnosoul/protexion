@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\DeclaracionJurada;
 use App\ArchivoAdjunto;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -35,14 +36,18 @@ class PosicionesForzadasController extends Controller
 
     public function crearPDF($id)
     {
-        $posiciones_forzada=PosicionesForzada::find($id);
+        $voucher=Voucher::find($id);
+        $posiciones_forzada=PosicionesForzada::find($voucher->posicionesForzadas->id);
+        $declaracionJurada=DeclaracionJurada::find($voucher->declaracionJurada->id);
+
         $articulaciones = ['Hombro','Codo','Muñeca','Mano y dedos','Cadera','Rodilla','Tobillo'];
         $cuadro = 0;
         $pdf = PDF::loadView('posiciones_forzadas.pdf',[
             "posiciones_forzada"   =>  $posiciones_forzada,
             "articulaciones"       =>  $articulaciones,
-            "cuadro"               =>  $cuadro
-            ]);
+            "cuadro"               =>  $cuadro,
+            "declaracion_jurada"   =>  $declaracionJurada,
+        ]);
         $pdf->setPaper('a4','letter');
         return $pdf->stream('posiciones-forzadas.pdf');
     }

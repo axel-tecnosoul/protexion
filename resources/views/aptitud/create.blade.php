@@ -78,7 +78,7 @@
           console.log(valor);*/
           if(valor!="" && valor.length>0){
             let hidden_label=$(this).data("label");
-            let label=$("#"+hidden_label).val();
+            let label=$("#"+hidden_label).val().trim();
             let target=$(this).data("target");
             console.log(hidden_label);
             console.log(label);
@@ -95,7 +95,8 @@
           //console.log(this);
           if(valor!="" && valor.length>0){
             let inputId=this.id;
-            let label=$("#"+inputId+"_label").html();
+            let label=$("#"+inputId+"_label").html().trim();
+            console.log(label);
             let target=$("input[name='"+inputId+"_radio']:checked").data("target");
             let saltoLinea="\n";
             if(aObsPre[target]==""){

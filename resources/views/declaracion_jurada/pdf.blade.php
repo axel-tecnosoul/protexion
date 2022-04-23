@@ -166,7 +166,7 @@
                 <td style="text-align: center; background-color: brown; color: #FFFFFF;width: 710px" colspan="12">ANTECEDENTES PERSONALES</td>
             </tr>
             <tr >
-                <td colspan="12">
+                <td colspan="4">
                     <label for="">Fuma:</label> 
                     @if ($declaracion_jurada->antecedentePersonal->fuma)
                         {{$declaracion_jurada->antecedentePersonal->fuma}}
@@ -174,9 +174,9 @@
                         No
                     @endif
                 </td>
-            </tr>
-            <tr>
-                <td colspan="12">
+            <!-- </tr>
+            <tr> -->
+                <td colspan="4">
                     <label for="">Bebe:</label> 
                     @if ($declaracion_jurada->antecedentePersonal->bebe)
                         {{$declaracion_jurada->antecedentePersonal->bebe}}
@@ -184,9 +184,9 @@
                         No
                     @endif
                 </td>
-            </tr>
-            <tr>
-                <td colspan="12">
+            <!-- </tr>
+            <tr> -->
+                <td colspan="4">
                     <label for="">Act. Física:</label> 
                     @if ($declaracion_jurada->antecedentePersonal->actividad_fisica)
                         {{$declaracion_jurada->antecedentePersonal->actividad_fisica}}

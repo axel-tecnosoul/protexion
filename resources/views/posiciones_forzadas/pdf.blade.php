@@ -346,7 +346,7 @@
                 </div>
             @endif
         <!-- / Semiológica -->
-        <hr>
+        <!-- <hr> -->
         <!-- FIRMAS -->
         <!-- <table class="table table-condensed table-hover" >
             <tr >
@@ -358,9 +358,9 @@
                 </td>
             </tr>
         </table> -->
-        <br><br><br><br>
+        <!-- <br><br><br><br> -->
         
-        <table class="table table-condensed table-hover" style="width: 100%;text-align: center">
+        <!-- <table class="table table-condensed table-hover" style="width: 100%;text-align: center">
             <tr >
                 <td style="width: 50%;text-align: center">
                     <div>
@@ -373,6 +373,25 @@
                         <img src="" width=130 height=130 alt="firma del medico">
                     </div>
                     <label>Firma y sello del medico examinador</label>
+                </td>
+            </tr>
+        </table> -->
+        <!-- Firma -->
+        <table class="table table-condensed table-hover" style="font-size: 12px;border-bottom:  0.1px solid rgb(202, 202, 202);">
+            <tr >
+                <td style="width: 350px;text-align:center" colspan="6">
+                    <div>
+                        <img src="{{$declaracion_jurada->firma}}" width=130 height=130 alt="firma del paciente">
+                    </div>
+                    <label>Firma del Paciente</label>
+                </td>
+                <td style="width: 350px;text-align: center" colspan="6">
+                    <div style="height:130px">
+                        @if ($declaracion_jurada->personalClinica->foto)
+                            <img src="{{public_path('imagenes/firmas/'.$declaracion_jurada->personalClinica->foto)}}" width="130" height="130" alt="firma del médico"> 
+                        @endif
+                    </div>
+                    <label>Firma del Médico examinador</label>
                 </td>
             </tr>
         </table>

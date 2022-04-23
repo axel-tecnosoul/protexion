@@ -51,11 +51,11 @@
                                     <i class="fas fa-file-pdf"></i>
                                 </button>
                             </a>
-                            <a target="_blank" href="{{ route('voucher.pdf_medico',$voucher->id) }}">
+                            <!-- <a target="_blank" href="{{ route('voucher.pdf_medico',$voucher->id) }}">
                                 <button title="exportar pdf médico" class="btn fondo2 btn-responsive">
                                     <i class="fas fa-file-pdf"></i>
                                 </button>
-                            </a>
+                            </a> -->
                             <a href="{{ route('voucher.show',$voucher->id) }}">
                                 <button title="carpeta"  class="btn fondo3 btn-responsive">
                                     <i style="color: rgb(255, 255, 255)" class="fas fa-folder"></i>

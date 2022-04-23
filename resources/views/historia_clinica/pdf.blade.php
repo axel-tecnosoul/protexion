@@ -854,7 +854,7 @@
       <!-- Firma -->
       <table class="table table-condensed table-hover" >
           <tr >
-              <td style="width: 350px;text-align:center">
+              <td style="width: 350px;text-align:center" colspan="6">
                   <div>
                       <img src="{{$declaracion_jurada->firma}}" width=130 height=130 alt="firma del paciente">
                       <!-- <img src="{{$hc_formulario->firma}}" width=130 height=130 alt="firma del paciente"> -->

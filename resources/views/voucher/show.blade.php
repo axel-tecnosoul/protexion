@@ -6,7 +6,8 @@
 @endsection
 
 @section('content')
-    <div class="container col-12">
+    <div class="container col-12"><?php
+//var_dump($voucher->aptitud);?>
         @if(Session::has('message'))
         <div class="alert alert-danger alert-dismissible" role="alert">
         <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -20,10 +21,8 @@
                 </div>
                 <div class="card-tools">
                     @if ($voucher->aptitud)
-                        <a target="_blank" href=" {{ route('aptitudes.pdf',$voucher->id)}}" class="btn fondo1"><i class="fas fa-file-pdf"></i> Informe Final</a>
-
-                        <!-- ELIMINAR DESPUES DE PRUEBAS 
-                        <a href= {{ route('aptitudes.create',$voucher->id)}} class="btn fondo1">Generar Informe Final</a>-->
+                        <!-- descargamos el archivo generado al crear el informe -->
+                        <a target="_blank" href=" {{ route('aptitudes.descargar',$voucher->aptitud->id)}}" class="btn fondo1"><i class="fas fa-file-pdf"></i> Informe Final</a>
                     @else
                         @if ($voucher->voucherListo())
                             <a href=" {{ route('aptitudes.create',$voucher->id)}}" class="btn fondo1">Generar Informe Final</a>

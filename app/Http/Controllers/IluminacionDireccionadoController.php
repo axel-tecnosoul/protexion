@@ -1,11 +1,13 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\DeclaracionJurada;
 use App\ArchivoAdjunto;
 use App\Models\IluminacionDireccionado;
 use App\Voucher;
 use Illuminate\Http\Request;
 use PDF;
+
 class IluminacionDireccionadoController extends Controller
 {
     public function index()
@@ -18,7 +20,12 @@ class IluminacionDireccionadoController extends Controller
     {
         $voucher=Voucher::find($id);
         $iluminacion=IluminacionDireccionado::find($voucher->iluminacionDireccionado->id);
-        $pdf = PDF::loadView('direccionado_iluminacion.PDF',["iluminacion"   =>  $iluminacion]);
+        $declaracionJurada=DeclaracionJurada::find($voucher->declaracionJurada->id);
+
+        $pdf = PDF::loadView('direccionado_iluminacion.PDF',[
+            "iluminacion"   =>  $iluminacion,
+            "declaracion_jurada"   =>  $declaracionJurada,
+        ]);
         $pdf->setPaper('a4','letter');
         return $pdf->stream('iluminacion.pdf');
     }

@@ -76,7 +76,8 @@ class AptitudController extends Controller
         $aptitudDB = Aptitud::create($request->all());
 
         //Generar PDF
-        /*$ruta = public_path().'/archivo/'."APTITUD".$aptitudDB->id.".pdf";
+        $ruta = public_path().'/archivo/'."APTITUD".$aptitudDB->id.".pdf";
+        //$ruta = public_path().'/archivo/'."APTITUD".$voucher->id.".pdf";
 
         $pdf = PDF::loadView('aptitud.pdf',["voucher" => $voucher, 
                                             "riesgos" => $aptitudModel->riesgos(), 
@@ -86,7 +87,7 @@ class AptitudController extends Controller
 
         //Almacenar ruta de archivo en db
         $aptitudDB->pdf = $ruta;
-        $aptitudDB->save();*/
+        $aptitudDB->save();
 
         return redirect()->route('voucher.show',$voucher->id);
 
@@ -95,19 +96,10 @@ class AptitudController extends Controller
     //Descarga archivos pasando el Id del archivo a descargar (Se usa para estudios cargados)
     public function descargar($id)
     {   
-        $aptitudModel = new Aptitud();
-        $aptitud = Aptitud::find($id);
-        $voucher = Voucher::find($aptitud->voucher_id);
-        //return response()->file($aptitud->pdf);
-        $pdf = PDF::loadView('aptitud.pdf',["voucher" => $voucher, 
-                                            "riesgos" => $aptitudModel->riesgos(), 
-                                            "aptitud" => $aptitud]);
-        $pdf->setPaper('a4','letter');
-        $pdf->stream($ruta);
 
-        //Almacenar ruta de archivo en db
-        /*$aptitudDB->pdf = $ruta;
-        $aptitudDB->save();*/
+        $aptitud = Aptitud::find($id); 
+        return response()->file($aptitud->pdf);
+
     }
 
     
@@ -115,17 +107,19 @@ class AptitudController extends Controller
     {   
         $aptitudModel = new Aptitud(); 
         $voucher=Voucher::find($id);
-        $aptitud = Aptitud::find($voucher->aptitud->id);
-        var_dump($aptitud);
+        /*$aptitud = Aptitud::find($voucher->aptitud->id);
+        var_dump($aptitud);*/
         
         //$declaracion_jurada=DeclaracionJurada::find($voucher->declaracionJurada->id);
 
         //Carga de riesgos
         $riesgos = $aptitudModel->riesgos();
 
-        $pdf = PDF::loadView('aptitud.pdf',["voucher" => $voucher, 
-                                            //"riesgos" => $riesgos, 
-                                            "aptitud" => $aptitud]);
+        $pdf = PDF::loadView('aptitud.pdf',[
+          "voucher" => $voucher, 
+          "riesgos" => $riesgos, 
+          //"aptitud" => $aptitud
+        ]);
         $pdf->setPaper('a4','letter');
 
         return $pdf->stream('aptitud.pdf');

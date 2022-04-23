@@ -177,7 +177,7 @@
                           @for ($j = 0; $j < sizeof($estudios[$i][1]); $j++)
                             <div class="row form-group">
                                 <div class="col-10">
-                                    <label for=""  id="POinput_{{$i}}_{{$j}}_label">{{$estudios[$i][1][$j]->nombre}}: </label>
+                                    <label for="" id="POinput_{{$i}}_{{$j}}_label">{{$estudios[$i][1][$j]->nombre}}: </label>
                                     <!-- <input type="hidden" id="POinput_{{$i}}_{{$j}}_hidden_label" value='{{$estudios[$i][1][$j]->nombre}}'> -->
                                     <input class="form-control inputText" type="text"  id="POinput_{{$i}}_{{$j}}">
                                     <!--  preexistencias observaciones -->

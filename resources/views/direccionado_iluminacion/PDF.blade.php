@@ -11,7 +11,7 @@
         h1{
             font-weight: bold;
             font-size: 25px;
-            padding-bottom: 20px;
+            /*padding-bottom: 20px;*/
         }
         h2{
             font-weight: bold;
@@ -19,6 +19,7 @@
             background-color: brown;
             color: white;
             text-align: center;
+            margin-bottom:0;
         }
         h3{
             font-weight: bold;
@@ -41,7 +42,7 @@
         <h1 class="titulo" style="text-align: center"> Agente: Iluminación Insuficiente <br> Cuestionario Direccionado </h1>
         
         <!-- Criterio -->
-        <h2>Criterio de exposición al riesgo                               </h2>
+        <h2>Criterio de exposición al riesgo</h2>
         <p class="datos"> Está orientado a trabajadores de minas o galerías subterráneas </p>
 
         <!-- Empresa -->
@@ -50,22 +51,23 @@
             <tbody>
                 <tr>
                     <td class="datos" style="text-align: left; width: 350px">
-                        <p><label for=""> <u>Datos de la empresa o establecimiento:</u></label> </p>
+                        <!-- <p><label for=""> <u>Datos de la empresa o establecimiento:</u></label> </p> -->
+                        <label for=""> <u>Datos de la empresa o establecimiento:</u></label>
                     </td>
                 </tr>
                 <tr>
                     <td class="datos" style="text-align: left; width: 350px">
-                       <label for=""> Nombre:                   </label>    
-                           {{$iluminacion->voucher->paciente->origen ? $iluminacion->voucher->paciente->origen->definicion : " "         }}  
+                       <label for=""> Nombre:</label>
+                           {{$iluminacion->voucher->paciente->origen ? $iluminacion->voucher->paciente->origen->definicion : " " }}
                     </td>
                     <td class="datos" style="text-align: left; width: 350px">
-                       <label for=""> CUIT:                      </label>    
-                           {{$iluminacion->voucher->paciente->origen ? $iluminacion->voucher->paciente->origen->cuit : " "                }}  
+                       <label for=""> CUIT:</label>
+                           {{$iluminacion->voucher->paciente->origen ? $iluminacion->voucher->paciente->origen->cuit : " " }}
                     </td>
                 </tr>
                 <tr>
                     <td class="datos" style="text-align: left; width: 350px">
-                       <label for=""> Domicilio:                 </label>    
+                       <label for=""> Domicilio:</label>
                         @if ($iluminacion->voucher->paciente->origen)
                             @if ($iluminacion->voucher->paciente->origen->domicilio)
                                 {{$iluminacion->voucher->paciente->origen->domicilio->direccion}}
@@ -81,195 +83,195 @@
             <tbody>
                 <tr>
                     <td class="datos" style="text-align: left; width: 350px">
-                        <p><label for=""> <u>Datos personales:</u></label> </p>
+                        <!-- <p><label for=""> <u>Datos personales:</u></label> </p> -->
+                        <label for=""> <u>Datos personales:</u></label>
                     </td>
                 </tr>
                 <tr>
                     <td class="datos" style="text-align: left; width: 350px">
-                        <label for=""> Nombre completo:                   </label>    
-                            {{$iluminacion->voucher->paciente->nombreCompleto()             }}  
+                        <label for=""> Nombre completo:</label>
+                            {{$iluminacion->voucher->paciente->nombreCompleto()}}
                     </td>
                     <td class="datos" style="text-align: left; width: 350px">
-                        <label for=""> CUIL/DNI N°:                       </label>    
-                            {{$iluminacion->voucher->paciente->cuil ?? number_format($iluminacion->voucher->paciente->documento,0,",",".")}}  
-                    </td>
-                </tr>
-                <tr>
-                    <td class="datos" style="text-align: left; width: 350px">
-                        <label for=""> Sexo:                              </label>    
-                            {{$iluminacion->voucher->paciente->sexo ? $iluminacion->voucher->paciente->sexo->definicion : " "            }}  
-                    </td>
-                    <td class="datos" style="text-align: left; width: 350px">
-                        <label for=""> Fecha de nacimiento:               </label>    
-                            {{$iluminacion->voucher->paciente->fecha_nacimiento()           }}  
+                        <label for=""> CUIL/DNI N°:</label>
+                            {{$iluminacion->voucher->paciente->cuil ?? number_format($iluminacion->voucher->paciente->documento,0,",",".")}}
                     </td>
                 </tr>
                 <tr>
                     <td class="datos" style="text-align: left; width: 350px">
-                        <label for=""> Puesto de trabajo:                 </label>    
-                            {{$iluminacion->puesto                                          }}  
+                        <label for=""> Sexo:</label>
+                            {{$iluminacion->voucher->paciente->sexo ? $iluminacion->voucher->paciente->sexo->definicion : " "}}  
                     </td>
                     <td class="datos" style="text-align: left; width: 350px">
-                        <label for=""> Antigüedad en la empresa:          </label>    
-                            {{$iluminacion->antiguedad                                      }}  años.
+                        <label for=""> Fecha de nacimiento:</label>
+                            {{$iluminacion->voucher->paciente->fecha_nacimiento()}}
+                    </td>
+                </tr>
+                <tr>
+                    <td class="datos" style="text-align: left; width: 350px">
+                        <label for=""> Puesto de trabajo:</label>
+                            {{$iluminacion->puesto}}
+                    </td>
+                    <td class="datos" style="text-align: left; width: 350px">
+                        <label for=""> Antigüedad en la empresa:</label>
+                            {{$iluminacion->antiguedad}}años.
                     </td>
                 </tr>
             </tbody>
         </table>
         <!-- Antecedentes -->
-        <h2>Antecedentes                                                   </h2>
+        <h2>Antecedentes</h2>
         <table>
             <tbody>
                 <tr>
-                    <td class="datos" style="text-align: left; width: 700px">
-                        <label for=""> Antecedentes de enfermedades:                                            </label> 
-                        <p>                            {{$iluminacion->enfermedades                                    }}  </p>
-                        <hr>
+                    <td class="datos" style="text-align: left; width: 700px;border-bottom: solid 1px">
+                        <label for=""> Antecedentes de enfermedades:</label> 
+                        <p>{{$iluminacion->enfermedades}}</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="datos" style="text-align: left; width: 700px;border-bottom: solid 1px">
+                        <label for=""> Antecedentes de trastornos congénitos:</label> 
+                        <p>{{$iluminacion->transtornos_congenitos}}</p>
                     </td>
                 </tr>
                 <tr>
                     <td class="datos" style="text-align: left; width: 700px">
-                        <label for=""> Antecedentes de trastornos congénitos:                                   </label> 
-                        <p>                            {{$iluminacion->transtornos_congenitos                          }}  </p>
-                        <hr>   
-                    </td>
-                </tr>
-                <tr>
-                    <td class="datos" style="text-align: left; width: 700px">
-                        <label for=""> Antecedentes de enfermedades profesionales o accidentes de trabajo:      </label> 
-                        <p>                            {{$iluminacion->enfermedades_profecionales                      }}  </p>
+                        <label for=""> Antecedentes de enfermedades profesionales o accidentes de trabajo:</label> 
+                        <p>{{$iluminacion->enfermedades_profecionales}}</p>
                     </td>
                 </tr>
             </tbody>
         </table>
         <!-- Exposición al riesgo -->
-        <h2>Exposición al riesgo                                           </h2>
+        <h2>Exposición al riesgo</h2>
         <table>
             <tbody>
                 <tr>
-                    <td class="datos" style="text-align: left; width: 700px">
-                        <label for="">Exposición anterior:                </label>
-                        <p>                        {{$iluminacion->exposicion_anterior           }}    </p> <hr>
+                    <td class="datos" style="text-align: left; width: 700px;border-bottom: solid 1px">
+                        <label for="">Exposición anterior: </label> {{$iluminacion->exposicion_anterior}}
+                        <!-- <p>{{$iluminacion->exposicion_anterior}}</p> -->
                     </td>
                 </tr>
                 <tr>
                     <td class="datos" style="text-align: left; width: 700px">
-                        <label for="">Exposición actual:                  </label>
-                        <p>                        {{$iluminacion->exposicion_actual             }}  </p>
+                        <label for="">Exposición actual: </label> {{$iluminacion->exposicion_actual}}
+                        <!-- <p>{{$iluminacion->exposicion_actual}}</p> -->
                     </td>
                 </tr>
             </tbody>
         </table>
         <!-- Salto de página -->
-        <div style="page-break-after:always;"></div>
+        <!-- <div style="page-break-after:always;"></div> -->
         <!-- Examen clínico -->
-        <h2>Examen clínico                                                 </h2>
+        <h2>Examen clínico</h2>
         <table>
             <tbody>
                 <tr>
                     <td class="datos" style="text-align: left; width: 350px">
-                        <p><label for=""> <u>Presencia de:</u></label></p>
+                        <!-- <p><label for=""> <u>Presencia de:</u></label></p> -->
+                        <label for=""> <u>Presencia de:</u></label>
                     </td>
                 </tr>
                 <tr>
                     <td class="datos" style="text-align: left; width: 350px">
-                        <label for="">Cefaleas:                                       </label>    
-                            {{$iluminacion->cefaleas          }}  
+                        <label for="">Cefaleas:</label>
+                            {{$iluminacion->cefaleas}}
                     </td>
                     <td class="datos" style="text-align: left; width: 350px">
-                        <label for="">Visión doble:                                   </label>    
-                            {{$iluminacion->vision_doble          }}  
-                    </td>
-                </tr>
-                <tr>
-                    <td class="datos" style="text-align: left; width: 350px">
-                        <label for="">Mareos / Vértigo:                               </label>    
-                            {{$iluminacion->mareo_vertigo          }}  
-                    </td>
-                    <td class="datos" style="text-align: left; width: 350px">
-                        <label for="">Conjuntivitis:                                  </label>    
-                            {{$iluminacion->conjuntivitis          }}  
+                        <label for="">Visión doble:</label>
+                            {{$iluminacion->vision_doble}}
                     </td>
                 </tr>
                 <tr>
                     <td class="datos" style="text-align: left; width: 350px">
-                        <label for="">Visión borrosa:                                 </label>    
-                            {{$iluminacion->vision_borrosa          }}  
+                        <label for="">Mareos / Vértigo:</label>
+                            {{$iluminacion->mareo_vertigo}}
                     </td>
                     <td class="datos" style="text-align: left; width: 350px">
-                        <label for="">Presencia de inseguridad en posición de pie:    </label>    
-                            {{$iluminacion->inseguridad_de_pie          }}  
+                        <label for="">Conjuntivitis:</label>
+                            {{$iluminacion->conjuntivitis}}
+                    </td>
+                </tr>
+                <tr>
+                    <td class="datos" style="text-align: left; width: 350px">
+                        <label for="">Visión borrosa:</label>
+                            {{$iluminacion->vision_borrosa}}
+                    </td>
+                    <td class="datos" style="text-align: left; width: 350px">
+                        <label for="">Presencia de inseguridad en posición de pie:</label>
+                            {{$iluminacion->inseguridad_de_pie}}
                     </td>
                 </tr>
             </tbody>
         </table>
         <!-- Examen ocular -->
-        <h2>Examen ocular                                                  </h2>
+        <h2>Examen ocular</h2>
         <table>
             <tbody>
                 <tr>
                     <td class="datos" style="text-align: left; width: 350px">
-                        <p><label for=""> <u>Ojos:</u></label></p>
-                         
+                        <!-- <p><label for=""> <u>Ojos:</u></label></p> -->
+                        <label for=""> <u>Ojos:</u></label>
                     </td>
                 </tr>
                 <tr>
                     <td class="datos" style="text-align: left; width: 350px">
-                        <label for="">Centrados:                                       </label>    
-                            @if ($iluminacion->no_centrados           )
+                        <label for="">Centrados:</label>
+                            @if ($iluminacion->no_centrados)
                                 No
                             @else
                                 Si
-                            @endif   
+                            @endif
                     </td>
                     <td class="datos" style="text-align: left; width: 350px">
-                        <label for="">Pupilase:                                        </label>    
-                            @if ($iluminacion->pupilas_anormales           )
-                                Anormal 
+                        <label for="">Pupilase:</label>
+                            @if ($iluminacion->pupilas_anormales)
+                                Anormal
                             @else
                                 Normal
-                            @endif   
+                            @endif
                     </td>
                 </tr>
                 <tr>
                     <td class="datos" style="text-align: left; width: 350px">
-                        <label for="">Conjuntivas:                                     </label>    
-                            @if ($iluminacion->conjuntivas_anormales           )
-                                Anormal 
+                        <label for="">Conjuntivas:</label>
+                            @if ($iluminacion->conjuntivas_anormales)
+                                Anormal
                             @else
                                 Normal
-                            @endif   
+                            @endif
                     </td>
                     <td class="datos" style="text-align: left; width: 350px">
-                        <label for="">Córneas:                                         </label>    
-                            @if ($iluminacion->corneas_anormales           )
-                                Anormal 
+                        <label for="">Córneas:</label>
+                            @if ($iluminacion->corneas_anormales)
+                                Anormal
                             @else
                                 Normal
-                            @endif   
+                            @endif
                     </td>
                 </tr>
                 <tr>
                     <td class="datos" style="text-align: left; width: 350px">
-                        <label for="">Motilidad ocular:                                </label>    
-                            @if ($iluminacion->motilidad_anormal           )
-                                Anormal 
+                        <label for="">Motilidad ocular:</label>
+                            @if ($iluminacion->motilidad_anormal)
+                                Anormal
                             @else
                                 Normal
-                            @endif   
+                            @endif
                     </td>
                     <td class="datos" style="text-align: left; width: 350px">
-                        <label for="">Nistagmus:                                       </label>    
-                            @if ($iluminacion->nistagmus_ausente           )
+                        <label for="">Nistagmus:</label>
+                            @if ($iluminacion->nistagmus_ausente)
                                 Ausente
                             @else
                                 Presente
-                            @endif   
+                            @endif
                     </td>
                 </tr>
                 <tr>
                     <td colspan="2" class="datos" style="text-align: left;">
-                        <label for="">Informe:                                       </label>    
+                        <label for="">Informe:</label>
                         {{$iluminacion->informe_ocular}}
                         <hr>
                     </td>
@@ -280,44 +282,63 @@
             <tbody>
                 <tr>
                     <td class="datos" style="text-align: left; width: 350px">
-                        <p><label for=""> <u>Agudeza visual:</u></label></p>
-                         
+                        <!-- <p><label for=""> <u>Agudeza visual:</u></label></p> -->
+                        <label for=""> <u>Agudeza visual:</u></label>
                     </td>
                 </tr>
                 <tr>
                     <td class="datos" style="text-align: left; width: 700px">
-                        <label for="">Con correción:                                       </label>    
+                        <label for="">Con correción:</label>
                         {{$iluminacion->av_correccion}}
                     </td>
                 </tr>
                 <tr>
                     <td class="datos" style="text-align: left; width: 700px">
-                        <label for="">Sin correción:                                       </label>    
+                        <label for="">Sin correción:</label>
                         {{$iluminacion->av_sin_correccion}}
                     </td>
                 </tr>
                 <tr>
                     <td class="datos" style="text-align: left; width: 700px">
-                        <label for="">Fecha y hora:                                        </label>    
-                        {{$iluminacion->created_at}}
+                        <label for="">Fecha y hora:</label>
+                        {{Carbon\Carbon::parse($iluminacion->created_at)->format('d/m/Y H:i') }}
                     </td>
                 </tr>
                 <tr>
                     <td class="datos" style="text-align: left; width: 700px">
-                        <label for="">Observaciones:                                       </label>    
+                        <label for="">Observaciones:</label>
                         {{$iluminacion->observaciones}}
                     </td>
                 </tr>
             </tbody>
         </table>
         <!-- Firma -->
-        <table class="table table-condensed table-hover" >
+        <!-- <table class="table table-condensed table-hover" >
             <tr >
                 <td style="width: 570px;text-align: right">
                     <div>
                         <img src="{{$iluminacion->firma}}" width=130 height=130 alt="firma del paciente">
                     </div>
                     <label>Firma del Paciente</label>
+                </td>
+            </tr>
+        </table> -->
+        <!-- Firma -->
+        <table class="table table-condensed table-hover" style="font-size: 12px;border-bottom:  0.1px solid rgb(202, 202, 202);">
+            <tr >
+                <td style="width: 350px;text-align:center" colspan="6">
+                    <div>
+                        <img src="{{$declaracion_jurada->firma}}" width=130 height=130 alt="firma del paciente">
+                    </div>
+                    <label>Firma del Paciente</label>
+                </td>
+                <td style="width: 350px;text-align: center" colspan="6">
+                    <div style="height:130px">
+                        @if ($declaracion_jurada->personalClinica->foto)
+                            <img src="{{public_path('imagenes/firmas/'.$declaracion_jurada->personalClinica->foto)}}" width="130" height="130" alt="firma del médico"> 
+                        @endif
+                    </div>
+                    <label>Firma del Médico examinador</label>
                 </td>
             </tr>
         </table>
