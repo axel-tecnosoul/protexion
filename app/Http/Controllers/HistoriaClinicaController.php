@@ -237,24 +237,24 @@ class HistoriaClinicaController extends Controller
 
         //Generar PDF y enlazarlo
             //Obtener voucher-estudio
-            /*foreach ($voucher->vouchersEstudios as $item) {
+            foreach ($voucher->vouchersEstudios as $item) {
                 if ($item->estudio->nombre == "HISTORIA CLINICA") {
                     $estudio = $item;
                 }
             }
-            //Ruta de PDF
+            /*//Ruta de PDF
             $ruta = public_path().'/archivo/'."HISTORIA CLINICA".$estudio->id.".pdf";
             //Generar PDF
             $pdf = PDF::loadView('historia_clinica.pdf',[
                 "hc_formulario"   =>  $historia_clinica
                 ]);
             $pdf->setPaper('a4','letter');
-            $pdf->save($ruta);
+            $pdf->save($ruta);*/
             //Almacenar archivo adjunto
             $archivo_adjunto = new ArchivoAdjunto();
-            $archivo_adjunto->anexo = $ruta;
+            $archivo_adjunto->anexo = "ruta";
             $archivo_adjunto->voucher_estudio_id = $estudio->id;
-            $archivo_adjunto->save();*/
+            $archivo_adjunto->save();
         //
         return redirect()->route('voucher.show',$voucher->id);
     }

@@ -194,11 +194,13 @@ class Voucher extends Model implements Auditable
         public function voucherListo(){
             $listo = true;
             foreach ($this->estudiosCargar() as $item) {
+                //dd($item);
                 if ($item->archivo_adjunto == "[]") {
                     $listo = false;
                 }
             }
             foreach ($this->estudiosSistema() as $item) {
+                //dd($item);
                 if ($item->archivo_adjunto == "[]") {
                     $listo = false;
                 }

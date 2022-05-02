@@ -4,10 +4,13 @@ namespace App\Http\Controllers;
 
 use App\ArchivoAdjunto;
 use App\Http\Controllers\Controller;
+use App\DeclaracionJurada;
+use App\HistoriaClinica;
 use App\Models\Audiometria;
 use App\Models\Espiriometria;
 use App\Models\Estudio;
 use App\Models\TipoEstudio;
+
 use Illuminate\Http\Request;
 use App\Voucher;
 use App\User;
@@ -197,11 +200,18 @@ class VoucherController extends Controller
                             'ILUMINACION'); 
 
         $forms[] = array(   'declaracion_jurada.create',
-                            'historia_clinica.create',                    
+                            'historia_clinica.create',
                             'posiciones_forzadas.create',
                             'audiometrias.create',
                             'espiriometrias.create',
                             'iluminacion_direccionados.create');
+
+        $forms[] = array(   'declaracionJurada',
+                            'historiaClinica',
+                            'posicionesForzadas',
+                            '',
+                            '',
+                            'iluminacionDireccionado');
         $a = 0;
         foreach ($voucher->vouchersEstudios as $item) {
             for ($i=0; $i < sizeof($forms[0]); $i++) {
@@ -209,14 +219,24 @@ class VoucherController extends Controller
                     $estudios[] = $item;
                     $rutas[] = $forms[1][$i];
                     $indice[] = $a;
+
+                    $id_estudio=0;
+                    if($voucher->{$forms[2][$i]}){
+                      $id_estudio=$voucher->{$forms[2][$i]}->id;
+                    }
+
+                    $id_estudios[] = $id_estudio;
                     $a++;
                 }
 
             }
         }
+        //var_dump($id_estudios);
+        
         $estudios_sistema[] = $estudios;
         $estudios_sistema[] = $rutas;
         $estudios_sistema[] = $indice;
+        $estudios_sistema[] = $id_estudios;
         return view('voucher.show', compact('voucher', 'estudios_sistema','estudios_cargar', 'tipo_estudios'));
     }
 

@@ -163,21 +163,21 @@ class DeclaracionJuradaController extends Controller
 
             //Generar PDF y enlazarlo
                 //Obtener voucher-estudio
-                /*$estudio = $voucher->getVoucherEstudio("DECLARACION JURADA");
+                $estudio = $voucher->getVoucherEstudio("DECLARACION JURADA");
 
-                //Ruta de PDF
+                /*//Ruta de PDF
                 $ruta = public_path().'/archivo/'."DECLARACION JURADA".$estudio->id.".pdf";
                 //Generar PDF
                 $pdf = PDF::loadView('declaracion_jurada.pdf',[
                     "declaracion_jurada"   =>  $declaracion_jurada
                     ]);
                 $pdf->setPaper('a4','letter');
-                $pdf->save($ruta);
+                $pdf->save($ruta);*/
                 //Almacenar archivo adjunto
                 $archivo_adjunto = new ArchivoAdjunto();
-                $archivo_adjunto->anexo = $ruta;
+                $archivo_adjunto->anexo = "ruta";
                 $archivo_adjunto->voucher_estudio_id = $estudio->id;
-                $archivo_adjunto->save();*/
+                $archivo_adjunto->save();
             //
 
         return redirect()->route('voucher.show',$voucher->id);

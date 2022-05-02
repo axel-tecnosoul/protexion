@@ -135,16 +135,16 @@ class PosicionesForzadasController extends Controller
                 //Generar PDF
                 $articulaciones = ['Hombro','Codo','Muñeca','Mano y dedos','Cadera','Rodilla','Tobillo'];
                 $cuadro = 0;
-                $pdf = PDF::loadView('posiciones_forzadas.pdf',[
+                /*$pdf = PDF::loadView('posiciones_forzadas.pdf',[
                     "posiciones_forzada"   =>  $posiciones_forzada,
                     "articulaciones"       =>  $articulaciones,
                     "cuadro"               =>  $cuadro
                     ]);
                 $pdf->setPaper('a4','letter');
-                $pdf->stream($ruta);
+                $pdf->stream($ruta);*/
                 //Almacenar archivo adjunto
                 $archivo_adjunto = new ArchivoAdjunto();
-                $archivo_adjunto->anexo = $ruta;
+                $archivo_adjunto->anexo = "ruta";
                 $archivo_adjunto->voucher_estudio_id = $estudio->id;
                 $archivo_adjunto->save();
             //

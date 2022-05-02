@@ -50,14 +50,14 @@ class IluminacionDireccionadoController extends Controller
                 }
             }
             //Ruta de PDF
-            $ruta = public_path().'/archivo/'."ILUMINACION".$estudio->id.".pdf";
+            /*$ruta = public_path().'/archivo/'."ILUMINACION".$estudio->id.".pdf";
             //Generar PDF
             $pdf = PDF::loadView('direccionado_iluminacion.PDF',["iluminacion"   =>  $iluminacion]);
             $pdf->setPaper('a4','letter');
-            $pdf->save($ruta);
+            $pdf->save($ruta);*/
             //Almacenar archivo adjunto
             $archivo_adjunto = new ArchivoAdjunto();
-            $archivo_adjunto->anexo = $ruta;
+            $archivo_adjunto->anexo = "ruta";
             $archivo_adjunto->voucher_estudio_id = $estudio->id;
             $archivo_adjunto->save();
         //
