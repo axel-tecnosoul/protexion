@@ -383,7 +383,7 @@
                         </div>
                     </div>
                     <!-- Firma -->
-                    <div class="col-12">
+                    <!-- <div class="col-12">
                         <div class="card">
                             <div class="card-header header-bg">
                                 <h3 class="card-title">Firma del Paciente</h3>
@@ -404,7 +404,6 @@
                                                         <br>
                                                         <button type="button" class="button clear btn btn-dark" data-action="clear"><i class="fa fa-eraser" aria-hidden="true"></i>...Limpiar</button>
                                                         <button type="button" class="button btn btn-dark" data-action="change-color"><i class="fas fa-palette"></i> Cambiar color</button>
-                                                        <!--<button type="button" class="button save btn btn-dark" data-action="save-svg"><i class="fas fa-save"></i> Guardar como SVG</button>-->
                                                     </div>
                                                 </div>
                                             </div>
@@ -414,7 +413,7 @@
                             </div>
                         </div>
                         <input type="hidden" name="firma" id="firma">
-                    </div>
+                    </div> -->
                 </div>
             </div>
             <!-- Guardar -->
@@ -435,7 +434,7 @@
     <script>
     $(document).ready(function(){
         //Firma
-            var wrapper = document.getElementById("signature-pad");
+            /*var wrapper = document.getElementById("signature-pad");
             var clearButton = wrapper.querySelector("[data-action=clear]");
             var changeColorButton = wrapper.querySelector("[data-action=change-color]");
             var guardar = document.getElementById("confirmar");
@@ -511,7 +510,7 @@
                 //var dataURL = signaturePad.toDataURL('image/svg+xml');
                 //download(dataURL, "signature.svg");
                 }
-            });
+            });*/
 
         //
         //Completar campo de exposicion actual

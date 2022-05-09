@@ -7,6 +7,7 @@
 
 @section('content')
 {!!Form::open(array(
+    'id'=>'declaracion_jurada',
     'url'=>'declaracion_jurada',
     'method'=>'POST',
     'autocomplete'=>'off',
@@ -666,7 +667,7 @@
                 signaturePad.penColor = color;
             });
 
-            guardar.addEventListener("click", function (event) {
+            /*guardar.addEventListener("click", function (event) {
                 if (signaturePad.isEmpty()) {
                 alert("Please provide a signature first.");
                 } else {
@@ -677,7 +678,17 @@
                 //var dataURL = signaturePad.toDataURL('image/svg+xml');
                 //download(dataURL, "signature.svg");
                 }
-            });
+            });*/
+            $("#declaracion_jurada").submit(function(e){
+              e.preventDefault(); //evita el comportambiento normal del submit, es decir, recarga total de la página  
+              if (signaturePad.isEmpty()) {
+                alert("Por favor ingrese una firma.");
+              } else {
+                var dataURL = signaturePad.toDataURL('image/svg+xml');
+                document.getElementById('firma').value = dataURL;
+                this.submit()
+              }
+            })
         //
         //Voucher
             var select1 = $("#voucher_id").select2({width:'100%'});
