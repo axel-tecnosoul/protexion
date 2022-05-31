@@ -666,17 +666,17 @@
           </tr>
           <tr>
               <td colspan="6">
-                  <label for="">Caja Torácica:</label> <!--{{$hc_formulario->respitario->observacion1_re}}-->
-                  @if ($hc_formulario->respitario->observacion1_re)
-                      {{$hc_formulario->respitario->observacion1_re}}
+                  <label for="">Caja Torácica:</label> <!--{{$hc_formulario->respiratorio->observacion1_re}}-->
+                  @if ($hc_formulario->respiratorio->observacion1_re)
+                      {{$hc_formulario->respiratorio->observacion1_re}}
                   @else
                       Normal
                   @endif
               </td>
               <td colspan="6">
-                  <label for="">Pulmones:</label> <!--{{$hc_formulario->respitario->observacion2_re}}-->
-                  @if ($hc_formulario->respitario->observacion2_re)
-                      {{$hc_formulario->respitario->observacion2_re}}
+                  <label for="">Pulmones:</label> <!--{{$hc_formulario->respiratorio->observacion2_re}}-->
+                  @if ($hc_formulario->respiratorio->observacion2_re)
+                      {{$hc_formulario->respiratorio->observacion2_re}}
                   @else
                       Normal
                   @endif
@@ -684,10 +684,10 @@
           </tr>
           <tr>
               <td colspan="6">
-                  <label for="">COVID 19:</label> {{$hc_formulario->respitario->covid19}}
+                  <label for="">COVID 19:</label> {{$hc_formulario->respiratorio->covid19}}
               </td>
               <td colspan="6">
-                  <label for="">Vacunas:</label> {{$hc_formulario->respitario->vacunado}}
+                  <label for="">Vacunas:</label> {{$hc_formulario->respiratorio->vacunado}}
               </td>
           </tr>
       </table>

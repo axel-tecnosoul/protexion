@@ -71,7 +71,7 @@ class HistoriaClinica extends Model implements Auditable
         return $this->hasOne('App\Odontologico');
     }
 
-    public function respitario()
+    public function respiratorio()
     {
         return $this->hasOne('App\Respiratorio');
     }
@@ -194,10 +194,10 @@ class HistoriaClinica extends Model implements Auditable
 
                                         //TORAX Y APARTO RESPIRATORIO
                                         ' ',
-                                        $this->respitario->observacion1_re,
-                                        $this->respitario->observacion2_re,
-                                        $this->respitario->covid19,
-                                        $this->respitario->vacunado,
+                                        $this->respiratorio->observacion1_re,
+                                        $this->respiratorio->observacion2_re,
+                                        $this->respiratorio->covid19,
+                                        $this->respiratorio->vacunado,
 
                                         //ABDOMEN
                                         ' ',
