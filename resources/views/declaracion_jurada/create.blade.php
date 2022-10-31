@@ -696,23 +696,24 @@ $dosis_vacuna=["Sin a dosis","Con 1ra dosis","Con 2da dosis","Con 3ra dosis","Co
                                     </div>
                                 </div>
                                 <div class="row justify-content-center">
-                                    <div class="form-group">
-                                        <div id="signature-pad" class="jay-signature-pad">
-                                            <div class="jay-signature-pad--body">
-                                                <canvas id="jay-signature-pad" width=550 height=200></canvas>
-                                            </div>
-                                            <div class="signature-pad--footer txt-center">
-                                                <div class="signature-pad--actions txt-center">
-                                                    <div>
-                                                        <br>
-                                                        <button type="button" class="button clear btn btn-dark" data-action="clear"><i class="fa fa-eraser" aria-hidden="true"></i>...Limpiar</button>
-                                                        <button type="button" class="button btn btn-dark" data-action="change-color"><i class="fas fa-palette"></i> Cambiar color</button>
-                                                        <!--<button type="button" class="button save btn btn-dark" data-action="save-svg"><i class="fas fa-save"></i> Guardar como SVG</button>-->
-                                                    </div>
-                                                </div>
-                                            </div>
+                                  <div class="form-group col-8">
+                                    <div id="signature-pad" class="jay-signature-pad">
+                                      <div class="jay-signature-pad--body" style="width:550px;height:200px">
+                                        <canvas id="jay-signature-pad" width="550px" height="200px" style="border:1px solid;border-radius: 5px;"></canvas>
+                                        <!-- width="550" height="200"  -->
+                                      </div>
+                                      <div class="signature-pad--footer txt-center">
+                                        <div class="signature-pad--actions txt-center">
+                                          <div>
+                                            <!-- <br> -->
+                                            <button type="button" class="button clear btn btn-dark" data-action="clear"><i class="fa fa-eraser" aria-hidden="true"></i>...Limpiar</button>
+                                            <button type="button" class="button btn btn-dark" data-action="change-color"><i class="fas fa-palette"></i> Cambiar color</button>
+                                            <!--<button type="button" class="button save btn btn-dark" data-action="save-svg"><i class="fas fa-save"></i> Guardar como SVG</button>-->
+                                          </div>
                                         </div>
-                                        <script>
+                                      </div>
+                                    </div>
+                                    <script>
                                          /* var canvas, ctx, flag = false,
             prevX = 0,
             currX = 0,
@@ -877,6 +878,20 @@ $dosis_vacuna=["Sin a dosis","Con 1ra dosis","Con 2da dosis","Con 3ra dosis","Co
           //init();
             //fin agregado axel
 
+            function init(){
+              canvas = document.getElementById("jay-signature-pad");
+              canvas.width = document.body.clientWidth; //document.width is obsolete
+              canvas.height = document.body.clientHeight; //document.height is obsolete
+              canvasW = canvas.width;
+              canvasH = canvas.height;
+
+              if( canvas.getContext )
+              {
+                  setup();
+                  setInterval( run , 33 );
+              }
+            }
+
         //Firma
             var wrapper = document.getElementById("signature-pad");
             var clearButton = wrapper.querySelector("[data-action=clear]");
@@ -890,6 +905,7 @@ $dosis_vacuna=["Sin a dosis","Con 1ra dosis","Con 2da dosis","Con 3ra dosis","Co
             // to make it look crisp on mobile devices.
             // This also causes canvas to be cleared.
             function resizeCanvas() {
+              /*
                 // When zoomed out to less than 100%, for some very strange reason,
                 // some browsers report devicePixelRatio as less than 1
                 // and only part of the canvas is cleared then.
@@ -904,6 +920,7 @@ $dosis_vacuna=["Sin a dosis","Con 1ra dosis","Con 2da dosis","Con 3ra dosis","Co
                 // that the state of this library is consistent with visual state of the canvas, you
                 // have to clear it manually.
                 signaturePad.clear();
+              */
             }
             // On mobile devices it might make more sense to listen to orientation change,
             // rather than window resize events.
