@@ -83,6 +83,8 @@ class DeclaracionJurada extends Model implements Auditable
                                     $this->antecedentePersonal->fuma,
                                     $this->antecedentePersonal->bebe,
                                     $this->antecedentePersonal->actividad_fisica,
+                                    $this->antecedentePersonal->covid19,
+                                    $this->antecedentePersonal->vacunado,
                                     //ANTECEDENTES INFANCIA
                                     ' ',
                                     $this->antecedenteMedicoInfancia->sarampion,

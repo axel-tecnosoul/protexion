@@ -19,6 +19,7 @@ class IluminacionDireccionadoController extends Controller
     public function crearPDF($id)
     {
         $voucher=Voucher::find($id);
+        //dd($voucher);
         $iluminacion=IluminacionDireccionado::find($voucher->iluminacionDireccionado->id);
         $declaracionJurada=DeclaracionJurada::find($voucher->declaracionJurada->id);
 
@@ -33,7 +34,18 @@ class IluminacionDireccionadoController extends Controller
     public function create($id)
     {
         $voucher  = Voucher::find($id);
-        return view('direccionado_iluminacion.create', compact('voucher'));
+
+        $voucher_historial = Voucher::wherePaciente_id($voucher->paciente_id)->orderBy("created_at","desc")->get();
+        $id_iluminacion_direccionado_anterior = 0;
+        foreach ($voucher_historial as $voucher_anterior) {
+          if($voucher_anterior->iluminacionDireccionado){
+            $id_iluminacion_direccionado_anterior = $voucher_anterior->iluminacionDireccionado->id;
+            break;
+          }
+        }
+        $iluminacion_direccionado_anterior = IluminacionDireccionado::find($id_iluminacion_direccionado_anterior);
+
+        return view('direccionado_iluminacion.create', compact('voucher','iluminacion_direccionado_anterior'));
     }
     
     public function store(Request $request)

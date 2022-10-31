@@ -7,9 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 class IluminacionDireccionado extends Model
 {
     protected $fillable = [ 'firma','puesto','antiguedad','direccion_completa','observaciones','voucher_id','enfermedades','transtornos_congenitos',
-                            'enfermedades_profecionales','exposicion_anterior','exposicion_actual','cefaleas','vision_doble','mareo_vertigo',
-                            'conjuntivitis','vision_borrosa','inseguridad_de_pie','no_centrados','pupilas_anormales','conjuntivas_anormales',
-                            'corneas_anormales','motilidad_anormal','nistagmus_ausente','informe_ocular','av_correccion','av_sin_correccion'];
+                            //'enfermedades_profecionales','exposicion_anterior','exposicion_actual','cefaleas','vision_doble','mareo_vertigo',
+    'enfermedades_profecionales','exposicion_anterior','exp_actual_empresa','exp_actual_actividad','exp_actual_puesto','exp_actual_antiguedad','exp_actual_horario','cefaleas','vision_doble','mareo_vertigo',
+    'conjuntivitis','vision_borrosa','inseguridad_de_pie','no_centrados','pupilas_anormales','conjuntivas_anormales',
+    'corneas_anormales','motilidad_anormal','nistagmus_ausente','informe_ocular','av_correccion','av_sin_correccion'];
 
     public function voucher()
     {
@@ -31,15 +32,16 @@ class IluminacionDireccionado extends Model
                                         $this->enfermedades_profecionales,
                                         $this->exposicion_anterior,
                                         $this->exposicion_actual,
+                                        //"Empresa: ".$this->exp_actual_empresa.", actividad:".$this->exp_actual_actividad.", puesto:".$this->exp_actual_puesto.", antiguedad".$this->exp_actual_antiguedad." y horario: ".$this->exp_actual_horario,
 
                                         //EXAMEN CLINICO
                                         ' ',
                                         $this->cefaleas,
-                                         $this->vision_doble,
-                                         $this->mareo_vertigo,
-                                         $this->conjuntivitis,
-                                         $this->vision_borrosa,
-                                         $this->inseguridad_de_pie,
+                                        $this->vision_doble,
+                                        $this->mareo_vertigo,
+                                        $this->conjuntivitis,
+                                        $this->vision_borrosa,
+                                        $this->inseguridad_de_pie,
 
                                         //EXAMEN OCULAR
                                         ' ',

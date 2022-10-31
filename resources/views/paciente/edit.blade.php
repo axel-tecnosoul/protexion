@@ -13,7 +13,8 @@
         
         {!!Form::model($paciente, [
             'method'=>'PATCH',
-            'route'=>['paciente.update',$paciente->id]
+            'route'=>['paciente.update',$paciente->id],
+            'files' => true,
         ])!!}        
 
         {{Form::token()}}

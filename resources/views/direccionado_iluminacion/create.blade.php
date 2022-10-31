@@ -19,7 +19,70 @@
     .txt-center {
         text-align: -webkit-center;
     }
-</style>
+</style><?php
+
+$puesto="";
+$antiguedad="";
+$direccion_completa="";
+$enfermedades="";
+$transtornos_congenitos="";
+$enfermedades_profecionales="";
+$exposicion_anterior="";
+$exposicion_actual="";
+$exp_actual_empresa="";
+$exp_actual_actividad="";
+$exp_actual_puesto="";
+$exp_actual_antiguedad="";
+$exp_actual_horario="";
+$cefaleas="";
+$vision_doble="";
+$mareo_vertigo="";
+$conjuntivitis="";
+$vision_borrosa="";
+$inseguridad_de_pie="";
+$no_centrados="";
+$pupilas_anormales="";
+$conjuntivas_anormales="";
+$corneas_anormales="";
+$motilidad_anormal="";
+$nistagmus_ausente="";
+$informe_ocular="";
+$av_correccion="";
+$av_sin_correccion="";
+$observaciones="";
+if(isset($iluminacion_direccionado_anterior)){
+  //dd($iluminacion_direccionado_anterior);
+  $puesto=($iluminacion_direccionado_anterior->puesto) ?: "";
+  $antiguedad=($iluminacion_direccionado_anterior->antiguedad) ?: "";
+  $direccion_completa=($iluminacion_direccionado_anterior->direccion_completa) ?: "";
+  $enfermedades=($iluminacion_direccionado_anterior->enfermedades) ?: "";
+  $transtornos_congenitos=($iluminacion_direccionado_anterior->transtornos_congenitos) ?: "";
+  $enfermedades_profecionales=($iluminacion_direccionado_anterior->enfermedades_profecionales) ?: "";
+  $exposicion_anterior=($iluminacion_direccionado_anterior->exposicion_anterior) ?: "";
+  $exposicion_actual=($iluminacion_direccionado_anterior->exposicion_actual) ?: "";
+  $exp_actual_empresa=($iluminacion_direccionado_anterior->exp_actual_empresa) ?: "";
+  $exp_actual_actividad=($iluminacion_direccionado_anterior->exp_actual_actividad) ?: "";
+  $exp_actual_puesto=($iluminacion_direccionado_anterior->exp_actual_puesto) ?: "";
+  $exp_actual_antiguedad=($iluminacion_direccionado_anterior->exp_actual_antiguedad) ?: "";
+  $exp_actual_horario=($iluminacion_direccionado_anterior->exp_actual_horario) ?: "";
+  $cefaleas=($iluminacion_direccionado_anterior->cefaleas) ?: "";
+  $vision_doble=($iluminacion_direccionado_anterior->vision_doble) ?: "";
+  $mareo_vertigo=($iluminacion_direccionado_anterior->mareo_vertigo) ?: "";
+  $conjuntivitis=($iluminacion_direccionado_anterior->conjuntivitis) ?: "";
+  $vision_borrosa=($iluminacion_direccionado_anterior->vision_borrosa) ?: "";
+  $inseguridad_de_pie=($iluminacion_direccionado_anterior->inseguridad_de_pie) ?: "";
+  $no_centrados=($iluminacion_direccionado_anterior->no_centrados==1) ? "checked" : "";
+  $pupilas_anormales=($iluminacion_direccionado_anterior->pupilas_anormales==1) ? "checked" : "";
+  $conjuntivas_anormales=($iluminacion_direccionado_anterior->conjuntivas_anormales==1) ? "checked" : "";
+  $corneas_anormales=($iluminacion_direccionado_anterior->corneas_anormales==1) ? "checked" : "";
+  $motilidad_anormal=($iluminacion_direccionado_anterior->motilidad_anormal==1) ? "checked" : "";
+  $nistagmus_ausente=($iluminacion_direccionado_anterior->nistagmus_ausente==1) ? "checked" : "";
+  $informe_ocular=($iluminacion_direccionado_anterior->informe_ocular) ?: "";
+  $av_correccion=($iluminacion_direccionado_anterior->av_correccion) ?: "";
+  $av_sin_correccion=($iluminacion_direccionado_anterior->av_sin_correccion) ?: "";
+  $observaciones=($iluminacion_direccionado_anterior->observaciones) ?: "";
+}
+?>
 
 {!!Form::open(array(
     'url'=>'iluminacion_direccionados',
@@ -143,17 +206,17 @@
                                 <div class="row">
                                     <div class="form-group col">
                                         <label for="observacion1">Puesto de trabajo: </label>
-                                        <input type="text" maxlength="255" class="form-control" name="puesto" placeholder="Ingrese el puesto de trabajo...">
+                                        <input type="text" maxlength="255" class="form-control" name="puesto" value="<?=$puesto?>" placeholder="Ingrese el puesto de trabajo...">
                                     </div>
                                     <div class="form-group col">
                                         <label for="observacion1">Antigüedad (Años):</label>
-                                        <input type="number" max="99" class="form-control" name="antiguedad" placeholder="Ingrese la antiguedad...">
+                                        <input type="number" max="99" class="form-control" name="antiguedad" value="<?=$antiguedad?>" placeholder="Ingrese la antiguedad...">
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="form-group col">
                                         <label for="observacion1">Dirección completa:   </label>
-                                        <input type="text" maxlength="255" class="form-control" name="direccion_completa" placeholder="Lugar donde se desempeña el trabajador...">
+                                        <input type="text" maxlength="255" class="form-control" name="direccion_completa" value="<?=$direccion_completa?>" placeholder="Lugar donde se desempeña el trabajador...">
                                     </div>
                                 </div>
                             </div>
@@ -172,19 +235,19 @@
                                 <div class="row">
                                     <div class="form-group col">
                                         <label for="observacion1">Antecedentes de enfermedades:                                      </label>
-                                        <input type="text" maxlength="255" class="form-control" name="enfermedades" placeholder="Antecedentes...">
+                                        <input type="text" maxlength="255" class="form-control" name="enfermedades" value="<?=$enfermedades?>" placeholder="Antecedentes...">
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="form-group col">
                                         <label for="observacion1">Antecedentes de trastornos congénitos:                             </label>
-                                        <input type="text" maxlength="255" class="form-control" name="transtornos_congenitos" placeholder="Antecedentes...">
+                                        <input type="text" maxlength="255" class="form-control" name="transtornos_congenitos" value="<?=$transtornos_congenitos?>" placeholder="Antecedentes...">
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="form-group col">
                                         <label for="observacion1">Antecedentes de enfermedades profesionales o accidentes de trabajo:</label>
-                                        <input type="text" maxlength="255" class="form-control" name="enfermedades_profecionales" placeholder="Antecedentes...">
+                                        <input type="text" maxlength="255" class="form-control" name="enfermedades_profecionales" value="<?=$enfermedades_profecionales?>" placeholder="Antecedentes...">
                                     </div>
                                 </div>
                             </div>
@@ -203,7 +266,7 @@
                                 <div class="row">
                                     <div class="form-group col">
                                         <label for="">Exposición anterior (Empresa, puesto y tiempo):                            </label>
-                                        <input type="text" maxlength="255" class="form-control" name="exposicion_anterior" placeholder="Empresa puesto tiempo 1, empresa puesto tiempo 2, etc">
+                                        <input type="text" maxlength="255" class="form-control" name="exposicion_anterior" value="<?=$exposicion_anterior?>" placeholder="Empresa puesto tiempo 1, empresa puesto tiempo 2, etc">
                                     </div>
                                 </div>
                                 <div class="row">
@@ -213,31 +276,31 @@
                                 </div>
                                 <div class="row">
                                     <div class="form-group col">
-                                        <input type="text" maxlength="255" class="form-control" id="exposicion_actual" name="exposicion_actual" hidden>
+                                        <input type="text" maxlength="255" class="form-control" id="exposicion_actual" name="exposicion_actual" value="<?=$exposicion_actual?>" hidden>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="form-group col">
                                         <label for="">Empresa/Establecimiento:                     </label>
-                                        <input type="text" maxlength="25" class="form-control exp_actual" id="exp_act_1" name="exp_actual_empresa" placeholder="Empresa o establecimiento...">
+                                        <input type="text" maxlength="25" class="form-control exp_actual" id="exp_act_1" name="exp_actual_empresa" value="<?=$exp_actual_empresa?>" placeholder="Empresa o establecimiento...">
                                     </div>
                                     <div class="form-group col">
                                         <label for="">Actividad:                                    </label>
-                                        <input type="text" maxlength="60" class="form-control exp_actual" id="exp_act_2" name="exp_actual_actividad" placeholder="Actividad que desempeña...">
+                                        <input type="text" maxlength="60" class="form-control exp_actual" id="exp_act_2" name="exp_actual_actividad" value="<?=$exp_actual_actividad?>" placeholder="Actividad que desempeña...">
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="form-group col">
                                         <label for="">Puesto de Trabajo:                            </label>
-                                        <input type="text" maxlength="25" class="form-control exp_actual" id="exp_act_3" name="exp_actual_puesto" placeholder="Puesto de trabajo...">
+                                        <input type="text" maxlength="25" class="form-control exp_actual" id="exp_act_3" name="exp_actual_puesto" value="<?=$exp_actual_puesto?>" placeholder="Puesto de trabajo...">
                                     </div>
                                     <div class="form-group col">
                                         <label for="">Antigüedad en el puesto de trabajo (Años):    </label>
-                                        <input type="number" max="99" class="form-control exp_actual" id="exp_act_4" name="exp_actual_antiguedad" placeholder="Antigüedad...">
+                                        <input type="number" max="99" class="form-control exp_actual" id="exp_act_4" name="exp_actual_antiguedad" value="<?=$exp_actual_antiguedad?>" placeholder="Antigüedad...">
                                     </div>
                                     <div class="form-group col">
                                         <label for="">Horario de trabajo:                           </label>
-                                        <input type="text" maxlength="75" class="form-control exp_actual" id="exp_act_5" name="exp_actual_horario" placeholder="Ej: de 7:30 a 11:30">
+                                        <input type="text" maxlength="75" class="form-control exp_actual" id="exp_act_5" name="exp_actual_horario" value="<?=$exp_actual_horario?>" placeholder="Ej: de 7:30 a 11:30">
                                     </div>
                                 </div>
                             </div>
@@ -270,37 +333,37 @@
                                 <div class="row">
                                     <div class="form-group col-12">
                                         <label for="checkbox_cefaleas">Cefaleas: </label>
-                                        <input type="text" maxlength="255" class="form-control"  id="describir_cefaleas" name="cefaleas" placeholder="Descripción...">
+                                        <input type="text" maxlength="255" class="form-control"  id="describir_cefaleas" name="cefaleas" value="<?=$cefaleas?>" placeholder="Descripción...">
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="form-group col-12">
                                         <label for="checkbox_vision_doble">Visión doble: </label>
-                                        <input type="text" maxlength="255" class="form-control"  id="describir_vision_doble" name="vision_doble" placeholder="Descripción...">
+                                        <input type="text" maxlength="255" class="form-control"  id="describir_vision_doble" name="vision_doble" value="<?=$vision_doble?>" placeholder="Descripción...">
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="form-group col-12">
                                         <label for="checkbox_mareo_vertigo">Mareos / Vértigo: </label>
-                                        <input type="text" maxlength="255" class="form-control"  id="describir_mareo_vertigo" name="mareo_vertigo" placeholder="Descripción...">
+                                        <input type="text" maxlength="255" class="form-control"  id="describir_mareo_vertigo" name="mareo_vertigo" value="<?=$mareo_vertigo?>" placeholder="Descripción...">
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="form-group col-12">
                                         <label for="checkbox_conjuntivitis">Conjuntivitis: </label>
-                                        <input type="text" maxlength="255" class="form-control"  id="describir_conjuntivitis" name="conjuntivitis" placeholder="Descripción...">
+                                        <input type="text" maxlength="255" class="form-control"  id="describir_conjuntivitis" name="conjuntivitis" value="<?=$conjuntivitis?>" placeholder="Descripción...">
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="form-group col-12">
                                         <label for="checkbox_vision_borrosa">Visión borrosa: </label>
-                                        <input type="text" maxlength="255" class="form-control"  id="describir_vision_borrosa" name="vision_borrosa" placeholder="Descripción...">
+                                        <input type="text" maxlength="255" class="form-control"  id="describir_vision_borrosa" name="vision_borrosa" value="<?=$vision_borrosa?>" placeholder="Descripción...">
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="form-group col-12">
                                         <label for="checkbox_inseguridad_de_pie">Presencia de inseguridad en posición de pie: </label>
-                                        <input type="text" maxlength="255" class="form-control"  id="describir_inseguridad_de_pie" name="inseguridad_de_pie" placeholder="Descripción...">
+                                        <input type="text" maxlength="255" class="form-control"  id="describir_inseguridad_de_pie" name="inseguridad_de_pie" value="<?=$inseguridad_de_pie?>" placeholder="Descripción...">
                                     </div>
                                 </div>
                             </div>
@@ -323,36 +386,36 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-4 icheck-danger d-inline">
-                                        <input value=1 type="checkbox" name="no_centrados" id="checkbox_no_centrados">
+                                        <input value=1 type="checkbox" name="no_centrados" <?=$no_centrados?> id="checkbox_no_centrados">
                                         <label for="checkbox_no_centrados">No centrados</label>
                                     </div>
                                     <div class="col-4 icheck-danger d-inline">
-                                        <input value=1 type="checkbox" name="pupilas_anormales" id="checkbox_pupilas_anormales">
+                                        <input value=1 type="checkbox" name="pupilas_anormales" <?=$pupilas_anormales?> id="checkbox_pupilas_anormales">
                                         <label for="checkbox_pupilas_anormales">Pupilas anormales</label>
                                     </div>
                                     <div class="col-4 icheck-danger d-inline">
-                                        <input value=1 type="checkbox" name="conjuntivas_anormales" id="checkbox_conjuntivas_anormales">
+                                        <input value=1 type="checkbox" name="conjuntivas_anormales" <?=$conjuntivas_anormales?> id="checkbox_conjuntivas_anormales">
                                         <label for="checkbox_conjuntivas_anormales">Conjuntivas anormales</label>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-4 icheck-danger d-inline">
-                                        <input value=1 type="checkbox" name="corneas_anormales" id="checkbox_corneas_anormales">
+                                        <input value=1 type="checkbox" name="corneas_anormales" <?=$corneas_anormales?> id="checkbox_corneas_anormales">
                                         <label for="checkbox_corneas_anormales">Córneas anormales</label>
                                     </div>
                                     <div class="col-4 icheck-danger d-inline">
-                                        <input value=1 type="checkbox" name="motilidad_anormal" id="checkbox_motilidad_anormal">
+                                        <input value=1 type="checkbox" name="motilidad_anormal" <?=$motilidad_anormal?> id="checkbox_motilidad_anormal">
                                         <label for="checkbox_motilidad_anormal">Motilidad ocular anormal</label>
                                     </div>
                                     <div class="col-4 icheck-danger d-inline">
-                                        <input value=1 type="checkbox" name="nistagmus_ausente" id="checkbox_nistagmus_ausente">
+                                        <input value=1 type="checkbox" name="nistagmus_ausente" <?=$nistagmus_ausente?> id="checkbox_nistagmus_ausente">
                                         <label for="checkbox_nistagmus_ausente">Nistagmus Ausente</label>
                                     </div>
                                 </div>
                                 <div class="row" style="padding-top: 2%">
                                     <div class="form-group col">
                                         <label>Informe:</label>
-                                        <input type="text" maxlength="255" class="form-control" name="informe_ocular" placeholder="Informe...">
+                                        <input type="text" maxlength="255" class="form-control" name="informe_ocular" value="<?=$informe_ocular?>" placeholder="Informe...">
                                     </div>
                                 </div><hr>
                                 <div class="row">
@@ -363,11 +426,11 @@
                                 <div class="row">
                                     <div class="form-group col">
                                         <label>Con corrección:                                      </label>
-                                        <input type="text" maxlength="255" class="form-control" name="av_correccion" placeholder="Describa...">
+                                        <input type="text" maxlength="255" class="form-control" name="av_correccion" value="<?=$av_correccion?>" placeholder="Describa...">
                                     </div>
                                     <div class="form-group col">
                                         <label>Sin corrección:                                      </label>
-                                        <input type="text" maxlength="255" class="form-control" name="av_sin_correccion" placeholder="Describa...">
+                                        <input type="text" maxlength="255" class="form-control" name="av_sin_correccion" value="<?=$av_sin_correccion?>" placeholder="Describa...">
                                     </div>
                                 </div>
                                 <div class="row">
@@ -376,7 +439,7 @@
                                 <div class="row">
                                     <div class="form-group col">
                                         <label>Observaciones:                                      </label>
-                                        <input type="text" maxlength="255" class="form-control" name="observaciones" placeholder="Observaciones...">
+                                        <input type="text" maxlength="255" class="form-control" name="observaciones" value="<?=$observaciones?>" placeholder="Observaciones...">
                                     </div>
                                 </div>
                             </div>

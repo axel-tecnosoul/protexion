@@ -68,9 +68,21 @@ class DeclaracionJuradaController extends Controller
     public function create($id)
     {
         $voucher  = Voucher::find($id);
+
+        $voucher_historial = Voucher::wherePaciente_id($voucher->paciente_id)->orderBy("created_at","desc")->get();
+        $id_declaracion_jurada_anterior = 0;
+        foreach ($voucher_historial as $voucher_anterior) {
+          if($voucher_anterior->declaracionJurada){
+            //dd($voucher_anterior);
+            $id_declaracion_jurada_anterior = $voucher_anterior->declaracionJurada->id;
+            break;
+          }
+        }
+        $declaracion_jurada_anterior = DeclaracionJurada::find($id_declaracion_jurada_anterior);
+        //dd($voucher_historial,$id_declaracion_jurada_anterior,$declaracion_jurada_anterior);
         //trae a los puestos que no sean amdinistradores ni secretarias
         $personal_clinicas = PersonalClinica::whereNotIn('puesto_id', [1,2])->get();
-        return view('declaracion_jurada.create', compact('voucher','personal_clinicas'));
+        return view('declaracion_jurada.create', compact('voucher','personal_clinicas','declaracion_jurada_anterior'));
     }
 
     public function store(Request $request)
@@ -111,6 +123,8 @@ class DeclaracionJuradaController extends Controller
                 $antecedente_personal->fuma=$request->fuma;
                 $antecedente_personal->bebe=$request->bebe;
                 $antecedente_personal->actividad_fisica=$request->actividad_fisica;
+                $antecedente_personal->covid19=$request->covid19;
+                $antecedente_personal->vacunado=$request->vacunado;
                 $antecedente_personal->declaracion_jurada_id=$declaracion_jurada->id;
                 $antecedente_personal->save();
 

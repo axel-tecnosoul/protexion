@@ -38,10 +38,28 @@
 <body style="font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif; font-size: 7px;">
 
     <div id="content" class="container">
+        
         <div id="header" style="text-align: right">
             <img src="{{public_path('imagenes/logo.png')}}" alt="logo" width="200px">
         </div>
+        
         <div style="text-align: center; font-size: 20px;font-weight: bold; text-decoration: underline;">VOUCHER PACIENTE</div>
+
+        <div class="row">
+            <div class="col-12">
+                <div class="added" style="font-size: 20px;">
+                  <p class="text-left"> <strong> Nombre completo:</strong> {{$voucher->paciente->nombreCompleto()}} </p>
+                  <!-- <p style="font-size:100%" class="text-left"> <strong> CUIL:               </strong> {{$voucher->paciente->cuil                         }} </p>
+                  <p style="font-size:100%" class="text-left"> <strong> Fecha de nacimiento:</strong> {{$voucher->paciente->fecha_nacimiento()           }} </p> 
+                  <p style="font-size:100%" class="text-left"> <strong> Edad:               </strong> {{$voucher->paciente->edad()                       }} </p>
+                  <p style="font-size:100%" class="text-left"> <strong> Domicilio:          </strong> {{$voucher->paciente->domicilio ? $voucher->paciente->domicilio->direccion : " "        }} </p>
+                  <p style="font-size:100%" class="text-left"> <strong> Sexo:               </strong> {{$voucher->paciente->sexo ? $voucher->paciente->sexo->definicion : " "                 }} </p>
+                  <p style="font-size:100%" class="text-left"> <strong> Origen:             </strong> {{$voucher->paciente->origen ? $voucher->paciente->origen->definicion : " "             }} </p>
+                  <p style="font-size:100%" class="text-left"> <strong> Cuit de origen:     </strong> {{$voucher->paciente->origen ? $voucher->paciente->origen->cuit : " "                   }} </p>      
+                  <p style="font-size:100%" class="text-left"> <strong> Turno:              </strong> {{$voucher->turno ? \Carbon\Carbon::parse($voucher->turno)->format('d/m/Y') : " "                   }} </p>       -->
+                </div>
+            </div>
+        </div>
            
     </div> 
     @foreach ($tipo_estudios as $tipo)

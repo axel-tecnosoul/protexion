@@ -58,7 +58,17 @@ class HistoriaClinicaController extends Controller
         $obra_sociales = ObraSocial::all();
         $paises=Pais::all();
 
-        return view('historia_clinica.create', compact('voucher','pacientes','origenes','obra_sociales','paises'));
+        $voucher_historial = Voucher::wherePaciente_id($voucher->paciente_id)->orderBy("created_at","desc")->get();
+        $id_historia_clinica_anterior = 0;
+        foreach ($voucher_historial as $voucher_anterior) {
+          if($voucher_anterior->historiaClinica){
+            $id_historia_clinica_anterior = $voucher_anterior->historiaClinica->id;
+            break;
+          }
+        }
+        $historia_clinica_anterior = HistoriaClinica::find($id_historia_clinica_anterior);
+
+        return view('historia_clinica.create', compact('voucher','pacientes','origenes','obra_sociales','paises','historia_clinica_anterior'));
     }
 
     public function store(Request $request)

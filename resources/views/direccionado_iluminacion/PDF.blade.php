@@ -24,7 +24,7 @@
         h3{
             font-weight: bold;
             font-size: 12px;
-        }}
+        }
         label{
             font-weight: bold;
         }
@@ -156,6 +156,11 @@
                 <tr>
                     <td class="datos" style="text-align: left; width: 700px">
                         <label for="">Exposición actual: </label> {{$iluminacion->exposicion_actual}}
+                          Empresa: {{$iluminacion->exp_actual_empresa}},
+                          actividad: {{$iluminacion->exp_actual_actividad}},
+                          puesto: {{$iluminacion->exp_actual_puesto}},
+                          antiguedad: {{$iluminacion->exp_actual_antiguedad}},
+                          y horario: {{$iluminacion->exp_actual_horario}}
                         <!-- <p>{{$iluminacion->exposicion_actual}}</p> -->
                     </td>
                 </tr>

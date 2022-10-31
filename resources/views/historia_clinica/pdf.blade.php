@@ -682,14 +682,24 @@
                   @endif
               </td>
           </tr>
-          <tr>
+          <!-- <tr>
               <td colspan="6">
-                  <label for="">COVID 19:</label> {{$hc_formulario->respiratorio->covid19}}
+                  <label for="">COVID 19:</label>
+                  @if ($hc_formulario->respiratorio->covid19)
+                      {{$hc_formulario->respiratorio->covid19}}
+                  @else
+                      No
+                  @endif
               </td>
               <td colspan="6">
-                  <label for="">Vacunas:</label> {{$hc_formulario->respiratorio->vacunado}}
+                  <label for="">Vacunas:</label> 
+                  @if ($hc_formulario->respiratorio->vacunado)
+                      {{$hc_formulario->respiratorio->vacunado}}
+                  @else
+                      Ninguna
+                  @endif
               </td>
-          </tr>
+          </tr> -->
       </table>
       <!-- ABDOMEN -->
       <table class="table table-condensed table-hover" >

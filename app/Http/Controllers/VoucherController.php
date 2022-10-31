@@ -180,6 +180,15 @@ class VoucherController extends Controller
         //Obtener Voucher
         $voucher = Voucher::find($id);
 
+        $puede_imprimir=0;
+        if($voucher->declaracionJurada){
+          $puede_imprimir=1;
+        }
+        /*$id_iluminacion_direccionado_anterior = 0;
+        if($voucher_anterior->iluminacionDireccionado){
+          $id_iluminacion_direccionado_anterior = $voucher_anterior->iluminacionDireccionado->id;
+        }*/
+
         //Tipos de estudio en Voucher
         $tipo_estudios = $voucher->tiposEstudios();
 
@@ -237,7 +246,7 @@ class VoucherController extends Controller
         $estudios_sistema[] = $rutas;
         $estudios_sistema[] = $indice;
         $estudios_sistema[] = $id_estudios;
-        return view('voucher.show', compact('voucher', 'estudios_sistema','estudios_cargar', 'tipo_estudios'));
+        return view('voucher.show', compact('voucher', 'estudios_sistema','estudios_cargar', 'tipo_estudios', 'puede_imprimir'));
     }
 
     public function edit($id)

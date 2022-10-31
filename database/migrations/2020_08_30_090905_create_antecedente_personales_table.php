@@ -18,6 +18,8 @@ class CreateAntecedentePersonalesTable extends Migration
             $table->string('fuma')->nullable();
             $table->string('bebe')->nullable();
             $table->string('actividad_fisica')->nullable();
+            $table->string('covid19')->nullable();
+            $table->string('vacunado')->nullable();
 
             $table->unsignedBigInteger('declaracion_jurada_id');
             $table->foreign('declaracion_jurada_id')->references('id')->on('declaracion_juradas')->onDelete('restrict');

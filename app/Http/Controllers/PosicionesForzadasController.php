@@ -58,7 +58,19 @@ class PosicionesForzadasController extends Controller
         $voucher  = Voucher::find($id);
         $articulaciones = ['Hombro','Codo','Muñeca','Mano y dedos','Cadera','Rodilla','Tobillo'];
         $cuadro = 0;
-        return view('posiciones_forzadas.create', compact('pacientes','articulaciones','voucher','cuadro'));
+
+        $voucher_historial = Voucher::wherePaciente_id($voucher->paciente_id)->orderBy("created_at","desc")->get();
+        $id_posiciones_forzadas_anterior = 0;
+        foreach ($voucher_historial as $voucher_anterior) {
+          //var_dump($voucher_anterior->posicionesForzadas);
+          if($voucher_anterior->posicionesForzadas){
+            $id_posiciones_forzadas_anterior = $voucher_anterior->posicionesForzadas->id;
+            break;
+          }
+        }
+        $posiciones_forzadas_anterior = PosicionesForzada::find($id_posiciones_forzadas_anterior);
+
+        return view('posiciones_forzadas.create', compact('pacientes','articulaciones','voucher','cuadro','posiciones_forzadas_anterior'));
     }
 
     public function store(Request $request)

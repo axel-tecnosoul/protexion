@@ -10,6 +10,8 @@ protected $fillable = [
     'fuma',
     'bebe',
     'actividad_fisica',
+    'covid19',
+    'vacunado',
     'detalle1_p',
     'especificacion1_p',
     'detalle2_p',

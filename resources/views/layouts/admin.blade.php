@@ -227,6 +227,12 @@
                                 <p>Estudios</p>
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a href="{{ route('origen.exportar') }}" class="nav-link">
+                                <i class="nav-icon fas fa-file-excel"></i>
+                                <p>Exportar Empresas</p>
+                            </a>
+                        </li>
                         <!--
                             <li class="nav-header">GESTIÓN DE ACCESO</li>
                                 

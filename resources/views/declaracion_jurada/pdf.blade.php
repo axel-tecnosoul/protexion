@@ -195,6 +195,25 @@
                     @endif
                 </td>
             </tr>
+            <tr>
+              <td colspan="6">
+                  <label for="">COVID 19:</label> <!-- {{$declaracion_jurada->antecedentePersonal->covid19}} -->
+                  @if ($declaracion_jurada->antecedentePersonal->covid19)
+                      {{$declaracion_jurada->antecedentePersonal->covid19}}
+                  @else
+                      No
+                  @endif
+              </td>
+              <td colspan="6">
+                  <label for="">Vacunas:</label> 
+                  <!-- {{$declaracion_jurada->antecedentePersonal->vacunado}} -->
+                  @if ($declaracion_jurada->antecedentePersonal->vacunado)
+                      {{$declaracion_jurada->antecedentePersonal->vacunado}}
+                  @else
+                      Ninguna
+                  @endif
+              </td>
+          </tr>
         </table>
         <!-- ANTECEDENTES INFANCIA -->
         <table class="table table-condensed table-hover" >

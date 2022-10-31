@@ -33,7 +33,75 @@
     .txt-center {
         text-align: -webkit-center;
     }
-</style>
+</style><?php
+
+$aTiemposDeTrabajo=["Esporádico","Continuo > 2hs y < 4hs","Continuo > 4hs"];
+$aCiclosDeTrabajo=["hasta 30 segundos","30 segundos a 2 minutos","< 2 minutos"];
+$aManipManualCargas=["Menor a 1 Kg","Entre 1 Kg y 3 Kgs","Mayor a 3 Kgs"];
+$aFormaAparicionDolor=["Agudo","Insidioso","Ausente"];
+$aEvolucionDolor=["Continuo","Brotes","Cíclico"];
+$aGrados=["Grado 0: Ausencia de signos y síntomas.","Grado 1: Dolor en reposo y/o existencia de sintomatología sugestiva.","Grado 2: Grado 1 mas contractura y/o dolor a la movilización.","Grado 3: Grado 2 mas dolor a la palpación y/o percusión.","Grado 4: Grado 3 mas limitación funcional evidente clínicamente."];
+
+$puesto="";
+$antiguedad="";
+$nroTrabajo="";
+$tiempo="";
+$ciclo="";
+$cargas="";
+$pregunta1="";
+$pregunta2="";
+$pregunta3="";
+$pregunta4="";
+$pregunta5="";
+$pregunta6="";
+$pregunta7="";
+$pregunta8="";
+$observacion_tarea="";
+$forma="";
+$evolucion="";
+$observacion1_d="";
+$observacion2_d="";
+$pregunta1_d="";
+$pregunta2_d="";
+$pregunta3_d="";
+$pregunta4_d="";
+$pregunta5_d="";
+$grado="";
+$observacion1_s="";
+if(isset($posiciones_forzadas_anterior)){
+  $puesto=($posiciones_forzadas_anterior->puesto) ?: "";
+  $antiguedad=($posiciones_forzadas_anterior->antiguedad) ?: "";
+  $nroTrabajo=($posiciones_forzadas_anterior->nroTrabajo) ?: "";
+  /* Tarea */
+  $tiempo=($posiciones_forzadas_anterior->tarea->tiempo) ?: "";
+  $ciclo=($posiciones_forzadas_anterior->tarea->ciclo) ?: "";
+  $cargas=($posiciones_forzadas_anterior->tarea->cargas) ?: "";
+  /* Tipos de tarea */
+  $pregunta1=($posiciones_forzadas_anterior->tarea->pregunta1==1) ? "checked" : "";
+  $pregunta2=($posiciones_forzadas_anterior->tarea->pregunta2==1) ? "checked" : "";
+  $pregunta3=($posiciones_forzadas_anterior->tarea->pregunta3==1) ? "checked" : "";
+  $pregunta4=($posiciones_forzadas_anterior->tarea->pregunta4==1) ? "checked" : "";
+  $pregunta5=($posiciones_forzadas_anterior->tarea->pregunta5==1) ? "checked" : "";
+  $pregunta6=($posiciones_forzadas_anterior->tarea->pregunta6==1) ? "checked" : "";
+  $pregunta7=($posiciones_forzadas_anterior->tarea->pregunta7==1) ? "checked" : "";
+  $pregunta8=($posiciones_forzadas_anterior->tarea->pregunta8==1) ? "checked" : "";
+  $observacion_tarea=($posiciones_forzadas_anterior->tarea->observacion_tarea) ?: "";
+  /* Tipos de tarea */
+  //@include('posiciones_forzadas_anteriors.tabla_semiologia');
+  $dolor_articular=$posiciones_forzadas_anterior->dolor_articular;
+  $forma=($posiciones_forzadas_anterior->dolor->forma) ?: "";
+  $evolucion=($posiciones_forzadas_anterior->dolor->evolucion) ?: "";
+  $observacion1_d=($posiciones_forzadas_anterior->dolor->observacion1_d) ?: "";
+  $observacion2_d=($posiciones_forzadas_anterior->dolor->observacion2_d) ?: "";
+  $pregunta1_d=($posiciones_forzadas_anterior->dolor->pregunta1_d==1) ? "checked" : "";
+  $pregunta2_d=($posiciones_forzadas_anterior->dolor->pregunta2_d==1) ? "checked" : "";
+  $pregunta3_d=($posiciones_forzadas_anterior->dolor->pregunta3_d==1) ? "checked" : "";
+  $pregunta4_d=($posiciones_forzadas_anterior->dolor->pregunta4_d==1) ? "checked" : "";
+  $pregunta5_d=($posiciones_forzadas_anterior->dolor->pregunta5_d==1) ? "checked" : "";
+  $grado=($posiciones_forzadas_anterior->semiologica->grado) ?: "";
+  $observacion1_s=($posiciones_forzadas_anterior->semiologica->observacion1_s) ?: "";
+}
+?>
 
 <div class="row">
     <div class="col-12">
@@ -97,17 +165,17 @@
                                     <div class="row">
                                         <div class="form-group col">
                                             <label for="observacion1">Puesto de trabajo: </label>
-                                            <input type="text" class="form-control" name="puesto" placeholder="Ingrese el puesto de trabajo...">
+                                            <input type="text" class="form-control" name="puesto" value="<?=$puesto?>" placeholder="Ingrese el puesto de trabajo...">
                                         </div>
                                         <div class="form-group col">
                                             <label for="observacion1">Antigüedad (Años):</label>
-                                            <input type="number" class="form-control" name="antiguedad" placeholder="Ingrese la antiguedad...">
+                                            <input type="number" class="form-control" name="antiguedad" value="<?=$antiguedad?>" placeholder="Ingrese la antiguedad...">
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="form-group col">
                                             <label for="observacion1">Nº Horas/ días de trabajo:  </label>
-                                            <input type="text" class="form-control" name="nroTrabajo" placeholder="Ingrese Nº Horas/días de trabajo:">
+                                            <input type="text" class="form-control" name="nroTrabajo" value="<?=$nroTrabajo?>" placeholder="Ingrese Nº Horas/días de trabajo:">
                                         </div>
                                     </div>
                                 </div>
@@ -127,21 +195,36 @@
                                     <div class="form-group">
                                         <!-- Tiempo de Tarea -->
                                         <div class="form-group row">
-                                            <label class="col" for="tarea_1"> <u> Tiempo de Tarea:</u> </label>
-                                            <div class="col">
-                                                <label><input type="radio" name="tiempo" value="Esporádico"> Esporádico</label>
-                                            </div>
-                                            <div class="col">
+                                            <label class="col" for="tarea_1"> <u> Tiempo de Tarea:</u> </label><?php
+                                            foreach($aTiemposDeTrabajo as $tiempos){
+                                              $checked="";
+                                              if($tiempos==$tiempo){
+                                                $checked="checked";
+                                              }?>
+                                              <div class="col">
+                                                  <label><input type="radio" <?=$checked?> name="tiempo" value="<?=$tiempos?>"> <?=$tiempos?></label>
+                                              </div><?php
+                                            }?>
+                                            <!-- <div class="col">
                                                 <label><input type="radio" name="tiempo" value="Continuo > 2hs y < 4hs"> Continuo > 2hs y < 4hs</label>
                                             </div>
                                             <div class="col"> 
                                                 <label><input type="radio" name="tiempo" value="Continuo > 4hs"> Continuo > 4hs</label>
-                                            </div>
+                                            </div> -->
                                         </div><hr>
                                         <!-- Ciclo de trabajo: -->
                                         <div class="form-group row">
-                                            <label class="col" for="tarea_1"> <u> Ciclo de trabajo:</u> </label>
-                                            <div class="col"> 
+                                            <label class="col" for="tarea_1"> <u> Ciclo de trabajo:</u> </label><?php
+                                            foreach($aCiclosDeTrabajo as $ciclos){
+                                              $checked="";
+                                              if($ciclos==$ciclo){
+                                                $checked="checked";
+                                              }?>
+                                              <div class="col">
+                                                  <label><input type="radio" <?=$checked?> name="ciclo" value="<?=$ciclos?>"> <?=$ciclos?></label>
+                                              </div><?php
+                                            }?>
+                                            <!-- <div class="col"> 
                                                 <label><input type="radio" name="ciclo" value="Corto: hasta 30 segundos"> hasta 30 segundos</label>
                                             </div>
                                             <div class="col">
@@ -149,12 +232,22 @@
                                             </div>
                                             <div class="col">
                                                 <label><input type="radio" name="ciclo" value="Largo: < 2 minutos"> < 2 minutos</label>
-                                            </div>
+                                            </div> -->
                                         </div><hr>
                                         <!-- Manipulación manual de cargas: -->
                                         <div class="form-group row">
-                                            <label class="col" for="tarea_1"> <u> Manipulación manual de cargas:</u> </label>
-                                            <div class="col">
+                                            <label class="col" for="tarea_1"> <u> Manipulación manual de cargas:</u> </label><?php
+                                            foreach($aManipManualCargas as $manip_cargas){
+                                              $checked="";
+                                              //var_dump($cargas);
+                                              if($manip_cargas==$cargas){
+                                                $checked="checked";
+                                              }?>
+                                              <div class="col">
+                                                  <label><input type="radio" <?=$checked?> name="carga" value="<?=$manip_cargas?>"> <?=$manip_cargas?></label>
+                                              </div><?php
+                                            }?>
+                                            <!-- <div class="col">
                                                 <label><input type="radio" name="cargas" value="Menor a 1 Kg "> Menor a 1 Kg </label>
                                             </div>
                                             <div class="col">
@@ -162,54 +255,54 @@
                                             </div>
                                             <div class="col"> 
                                                 <label><input type="radio" name="cargas" value="Mayor a 3 Kgs"> Mayor a 3 Kgs</label>
-                                            </div>
+                                            </div> -->
                                         </div><hr>
                                         <label for="tipo_tarea"> <u> Tipo de tarea:</u> </label>
                                         <div class="form-group">
                                             <div class="row">
                                                 <div class="col icheck-danger d-inline">
-                                                    <input type="checkbox" name="pregunta1" value=1 id="checkboxPrimary8">
+                                                    <input type="checkbox" name="pregunta1" <?=$pregunta1?> value=1 id="checkboxPrimary8">
                                                     <label for="checkboxPrimary8">Movimiento de alcance repetidos por encima del hombro</label>
                                                 </div>
                                                 <div class="col icheck-danger d-inline">
-                                                    <input type="checkbox" name="pregunta2" value=1 id="checkboxPrimary10">
+                                                    <input type="checkbox" name="pregunta2" <?=$pregunta2?> value=1 id="checkboxPrimary10">
                                                     <label for="checkboxPrimary10">Movimiento de extensión o flexión forzados de muñeca</label>
                                                 </div>
                                             </div>
                                             <div class="row">
                                                 <div class="col icheck-danger d-inline">
-                                                    <input type="checkbox" name="pregunta3" value=1 id="checkboxPrimary12">
+                                                    <input type="checkbox" name="pregunta3" <?=$pregunta3?> value=1 id="checkboxPrimary12">
                                                     <label for="checkboxPrimary12">Flexión sostenida de columna</label>
                                                 </div>
                                                 <div class="col icheck-danger d-inline">
-                                                    <input type="checkbox" name="pregunta4" value=1 id="checkboxPrimary14">
+                                                    <input type="checkbox" name="pregunta4" <?=$pregunta4?> value=1 id="checkboxPrimary14">
                                                     <label for="checkboxPrimary14">Flexión extrema del codo</label>
                                                 </div>
                                             </div>
                                             <div class="row">
                                                 <div class="col icheck-danger d-inline">
-                                                    <input type="checkbox" name="pregunta5" value=1 id="checkboxPrimary16">
+                                                    <input type="checkbox" name="pregunta5" <?=$pregunta5?> value=1 id="checkboxPrimary16">
                                                     <label for="checkboxPrimary16">El cuello se mantiene flexionado</label>
                                                 </div>
                                                 <div class="col icheck-danger d-inline">
-                                                    <input type="checkbox" name="pregunta6" value=1 id="checkboxPrimary18">
+                                                    <input type="checkbox" name="pregunta6" <?=$pregunta6?> value=1 id="checkboxPrimary18">
                                                     <label for="checkboxPrimary18">Giros de columna</label>
                                                 </div>
                                             </div>
                                             <div class="row">
                                                 <div class="col icheck-danger d-inline">
-                                                    <input type="checkbox" name="pregunta7" value=1 id="checkboxPrimary20">
+                                                    <input type="checkbox" name="pregunta7" <?=$pregunta7?> value=1 id="checkboxPrimary20">
                                                     <label for="checkboxPrimary20">Rotación extrema del antebrazo</label>
                                                 </div>
                                                 <div class="col icheck-danger d-inline">
-                                                    <input type="checkbox" name="pregunta8" value=1 id="checkboxPrimary22">
+                                                    <input type="checkbox" name="pregunta8" <?=$pregunta8?> value=1 id="checkboxPrimary22">
                                                     <label for="checkboxPrimary22">Flexión mantenida de dedos</label>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label for="observacion_tarea">Otros, especificar: </label>
-                                            <input type="text" class="form-control" id="observacion_tarea"  name="observacion_tarea"  placeholder="Otros...">
+                                            <input type="text" class="form-control" id="observacion_tarea" name="observacion_tarea" value="<?=$observacion_tarea?>" placeholder="Otros...">
                                         </div>
                                     </div>
                                 </div>
@@ -218,66 +311,70 @@
                     <!-- / Tareas -->
                     <!-- Semiología -->
                         <div class="col-12">
-                            <div class="card ">
-                                <div class="card-header header-bg">
-                                    <h3 class="card-title">Semiología del Segmento Corporal Comprometido - Relación Movilidad – Dolor Articular y estado de masa muscular relacionada.</h3>
-                                    <div class="card-tools">
-                                        <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-plus"></i></button>
-                                    </div>
-                                </div>
-                                <div class="card-body">
-                                        <div class="container">
-                                            <div class="row">
-                                                <table class="table table-hover table-condensed table-bordered table-striped">
-                                                    <tr>
-                                                        <th colspan="2">
-                                                            Articulación
-                                                        </th>
-                                                        <th>Abducción</th>
-                                                        <th>Addución</th>
-                                                        <th>Flexión</th>
-                                                        <th>Extensión</th>
-                                                        <th>Rot. Externa</th>
-                                                        <th>Rot. Interna</th>
-                                                        <th>Irradiación</th>
-                                                        <th>Alt. Masa muscular</th>
-                                                    </tr>
-                                                <!-- Iteración por cada articulación -->
-                                                @foreach ($articulaciones as $art)
-                                                    <tr>
-                                                        <td rowspan="2" width="10%">{{$art}}</td>
-                                                        <!-- Iteración izquierda o derecha -->
-                                                        @for ($i = 0; $i < 2; $i++)
-                                                            @if ($i == 0)
-                                                                <td width="5%">Der.</td>
-                                                            @else
-                                                                <td width="5%">Izq.</td>
-                                                            @endif
-                                                            <!-- Iteración por cada cuadro -->
-                                                            @for ($j = $cuadro; $j < $cuadro+8; $j++)
-                                                                <td>
-                                                                    <div class="custom-control custom-checkbox">
-                                                                        <!-- Que cargue 0 si no se selecciona -->
-                                                                        <input type="text" hidden value=0 name={{$j}}>
-                                                                        <div class="icheck-danger d-inline">
-                                                                            <!-- Que cargue 1 si se selecciona -->
-                                                                            <input type="checkbox" name={{$j}} value=1 id="cuadro{{$j}}">
-                                                                            <label for="cuadro{{$j}}"></label>
-                                                                        </div>
-                                                                    </div>
-                                                                </td>
-                                                            @endfor
-                                                            <div hidden> {{$cuadro = $cuadro + 8}} </div>
-                                                        </tr>
-                                                        @endfor
-                                                @endforeach 
-                                                </table>
-                                            </div>
-                                        <div class="form-group">
-                                    </div>
-                                </div>
+                          <div class="card ">
+                            <div class="card-header header-bg">
+                              <h3 class="card-title">Semiología del Segmento Corporal Comprometido - Relación Movilidad – Dolor Articular y estado de masa muscular relacionada.</h3>
+                              <div class="card-tools">
+                                <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-plus"></i></button>
+                              </div>
                             </div>
-                        </div>
+                            <div class="card-body">
+                              <div class="container">
+                                <div class="row">
+                                  <table class="table table-hover table-condensed table-bordered table-striped">
+                                    <tr>
+                                      <th colspan="2">
+                                          Articulación
+                                      </th>
+                                      <th>Abducción</th>
+                                      <th>Addución</th>
+                                      <th>Flexión</th>
+                                      <th>Extensión</th>
+                                      <th>Rot. Externa</th>
+                                      <th>Rot. Interna</th>
+                                      <th>Irradiación</th>
+                                      <th>Alt. Masa muscular</th>
+                                    </tr>
+                                    <!-- Iteración por cada articulación -->
+                                    @foreach ($articulaciones as $art)
+                                      <tr>
+                                        <td rowspan="2" width="10%">{{$art}}</td>
+                                        <!-- Iteración izquierda o derecha -->
+                                        @for ($i = 0; $i < 2; $i++)
+                                          @if ($i == 0)
+                                            <td width="5%">Der.</td>
+                                          @else
+                                            <td width="5%">Izq.</td>
+                                          @endif
+                                          <!-- Iteración por cada cuadro -->
+                                          @for ($j = $cuadro; $j < $cuadro+8; $j++)<?php
+                                            $checked="";
+                                            if(isset($dolor_articular) and $dolor_articular[$j]==1){
+                                              $checked="checked";
+                                            }?>
+                                            <td>
+                                              <div class="custom-control custom-checkbox">
+                                                <!-- Que cargue 0 si no se selecciona -->
+                                                <input type="text" hidden value=0 name={{$j}}>
+                                                <div class="icheck-danger d-inline">
+                                                  <!-- Que cargue 1 si se selecciona -->
+                                                  <input type="checkbox" <?=$checked?> name={{$j}} value=1 id="cuadro{{$j}}">
+                                                  <label for="cuadro{{$j}}"></label>
+                                                </div>
+                                              </div>
+                                            </td>
+                                          @endfor
+                                          <div hidden> {{$cuadro = $cuadro + 8}} </div>
+                                        </tr>
+                                        @endfor
+                                    @endforeach 
+                                  </table>
+                                </div>
+                                <!-- <div class="form-group">
+                                </div> -->
+                              </div>
+                            </div>
+                          </div>
                         </div>
                     <!-- / Semiología -->
                     <!-- Características del dolor -->
@@ -292,8 +389,17 @@
                                 <div class="card-body">
                                     <!-- Por su forma de aparición -->
                                     <div class="form-group row">
-                                        <label class="col" for="dolor_1"> <u> Por su forma de aparición:</u> </label>
-                                        <div class="col">
+                                        <label class="col" for="dolor_1"> <u> Por su forma de aparición:</u> </label><?php
+                                        foreach($aFormaAparicionDolor as $formas){
+                                          $checked="";
+                                          if($formas==$forma){
+                                            $checked="checked";
+                                          }?>
+                                          <div class="col">
+                                              <label><input type="radio" <?=$checked?> name="forma" value="<?=$formas?>"> <?=$formas?></label>
+                                          </div><?php
+                                        }?>
+                                        <!-- <div class="col">
                                             <label><input type="radio" name="forma" value="Agudo"> Agudo</label>
                                         </div>
                                         <div class="col">
@@ -301,12 +407,21 @@
                                         </div>
                                         <div class="col"> 
                                             <label><input type="radio" name="forma" value="Ausente"> Ausente</label>
-                                        </div>
+                                        </div> -->
                                     </div><hr>
                                     <!-- Por su evolución -->
                                     <div class="form-group row">
-                                        <label class="col" for="dolor_1"> <u> Por su evolución:</u> </label>
-                                        <div class="col">
+                                        <label class="col" for="dolor_1"> <u> Por su evolución:</u> </label><?php
+                                        foreach($aEvolucionDolor as $evoluciones){
+                                          $checked="";
+                                          if($evoluciones==$evolucion){
+                                            $checked="checked";
+                                          }?>
+                                          <div class="col">
+                                              <label><input type="radio" <?=$checked?> name="evolucion" value="<?=$evoluciones?>"> <?=$evoluciones?></label>
+                                          </div><?php
+                                        }?>
+                                        <!-- <div class="col">
                                             <label><input type="radio" name="evolucion" value="Continuo"> Continuo</label>
                                         </div>
                                         <div class="col">
@@ -314,18 +429,18 @@
                                         </div>
                                         <div class="col"> 
                                             <label><input type="radio" name="evolucion" value="Cíclico"> Cíclico</label>
-                                        </div>
+                                        </div> -->
                                     </div><hr>       
                                     <div class="form-group row">
                                         <div class="col">
                                             <label for="observacion1">Puntos dolorosos: </label>
-                                            <input type="text" class="form-control" id="observacion1_d"  name="observacion1_d"  placeholder="Puntos dolorosos">
+                                            <input type="text" class="form-control" id="observacion1_d" name="observacion1_d" value="<?=$observacion1_d?>" placeholder="Puntos dolorosos">
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <div class="col">
                                             <label for="observacion1">Localización: </label>
-                                            <input type="text" class="form-control" id="observacion2_d"  name="observacion2_d"  placeholder="Localización">
+                                            <input type="text" class="form-control" id="observacion2_d" name="observacion2_d" value="<?=$observacion2_d?>" placeholder="Localización">
                                         </div>
                                     </div>
                                     <div class="row">
@@ -334,31 +449,31 @@
                                             <label for="signos_1"> <u> Otros signos y sintomas presentes en el segmento involucrado:</u> </label>
                                             <div class="form-group">
                                                 <div class="icheck-danger d-inline">
-                                                    <input type="checkbox" name="pregunta1_d" value=1 id="checkboxPrimary24">
+                                                    <input type="checkbox" name="pregunta1_d" <?=$pregunta1_d?> value=1 id="checkboxPrimary24">
                                                     <label for="checkboxPrimary24">Calambres musculares             </label> 
                                                 </div>
                                             </div>
                                             <div class="form-group">
                                                 <div class="icheck-danger d-inline">
-                                                    <input type="checkbox" name="pregunta2_d" value=1 id="checkboxPrimary26">
+                                                    <input type="checkbox" name="pregunta2_d" <?=$pregunta2_d?> value=1 id="checkboxPrimary26">
                                                     <label for="checkboxPrimary26">Parestesias                      </label>
                                                 </div>
                                             </div>
                                             <div class="form-group">
                                                 <div class="icheck-danger d-inline">
-                                                    <input type="checkbox" name="pregunta3_d" value=1 id="checkboxPrimary28">
+                                                    <input type="checkbox" name="pregunta3_d" <?=$pregunta3_d?> value=1 id="checkboxPrimary28">
                                                     <label for="checkboxPrimary28">Calor                            </label>
                                                 </div>
                                             </div>
                                             <div class="form-group">
                                                 <div class="icheck-danger d-inline">
-                                                    <input type="checkbox" name="pregunta4_d" value=1 id="checkboxPrimary30">
+                                                    <input type="checkbox" name="pregunta4_d" <?=$pregunta4_d?> value=1 id="checkboxPrimary30">
                                                     <label for="checkboxPrimary30">Cambios de coloración de la piel </label>
                                                 </div>
                                             </div>
                                             <div class="form-group">
                                                 <div class="icheck-danger d-inline">
-                                                    <input type="checkbox" name="pregunta5_d" value=1 id="checkboxPrimary32">
+                                                    <input type="checkbox" name="pregunta5_d" <?=$pregunta5_d?> value=1 id="checkboxPrimary32">
                                                     <label for="checkboxPrimary32">Tumefacción                      </label>
                                                 </div>
                                             </div>
@@ -369,8 +484,17 @@
                                             <div class="form-group row">
                                                 <div class="col-12">
                                                     <label for=""> <u> Caracterización semiológica:</u></label>
-                                                </div>
-                                                <div class="col-12">
+                                                </div><?php
+                                                foreach($aGrados as $grados){
+                                                  $checked="";
+                                                  if($grados==$grado){
+                                                    $checked="checked";
+                                                  }?>
+                                                  <div class="col-12">
+                                                      <label><input type="radio" <?=$checked?> name="grado" value="<?=$grados?>"> <?=$grados?></label>
+                                                  </div><?php
+                                                }?>
+                                                <!-- <div class="col-12">
                                                     <label><input type="radio" name="grado" value="Grado 0: Ausencia de signos y síntomas."> Grado 0: Ausencia de signos y síntomas.</label>
                                                 </div>
                                                 <div class="col-12">
@@ -384,14 +508,14 @@
                                                 </div>
                                                 <div class="col-12">
                                                     <label><input type="radio" name="grado" value="Grado 4: Grado 3 mas limitación funcional evidente clínicamente."> Grado 4: Grado 3 mas limitación funcional evidente clínicamente.</label>
-                                                </div>
+                                                </div> -->
                                             </div>    
                                         </div>
                                     </div>          
                                     <div class="form-group row">
                                         <div class="col">
                                             <label for="observacion1">Observación: </label>
-                                            <input type="text" class="form-control" id="observacion1_s"  name="observacion1_s"  placeholder="Observación">
+                                            <input type="text" class="form-control" id="observacion1_s" name="observacion1_s" value="<?=$observacion1_s?>" placeholder="Observación">
                                         </div>
                                     </div>
                                 </div>

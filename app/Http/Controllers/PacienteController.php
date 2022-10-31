@@ -266,6 +266,14 @@ class PacienteController extends Controller
         if($request->get('direccion')!=null) {
             $paciente->domicilio_id = $domicilio->id;
         }
+
+        if($request->file('imagen')){
+
+          $image = $request->imagen;
+          $image->move(public_path() . '/imagenes/paciente/', $image->getClientOriginalName());
+          $paciente->imagen = $image->getClientOriginalName();
+
+      }
         
         $paciente->update();
 
