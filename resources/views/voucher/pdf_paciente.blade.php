@@ -6,30 +6,21 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
     <style>
+        #content{
+          width: 45%;
+          height: 45%;
+          border: solid 1px;
+          padding: 5px;
+        }
+        #header{
+          height: 40px;
+        }
         .marco{
             border: rgb(0, 0, 0) 1px solid;
         }
         .tabla {
             border-collapse: collapse;
             padding: 1%;
-        }
-        .titulo{
-            background-color: brown;
-            color: white;
-            font-weight: bold;
-            font-size: 15px;
-            text-align: center;
-        }
-        .subtitulo{
-            font-weight: bold;
-            font-size: 20px;
-        }
-        .campos{
-            font-size: 10px;
-            font-weight: bold;
-        }
-        .datos{
-            font-size: 10px;
         }
     </style>
 
@@ -39,16 +30,20 @@
 
     <div id="content" class="container">
         
-        <div id="header" style="text-align: right">
-            <img src="{{public_path('imagenes/logo.png')}}" alt="logo" width="200px">
+        <div id="header">
+            <span style="float:left">
+                <img src="{{public_path('imagenes/logo.png')}}" alt="logo" width="100px">
+            </span>
+            <span style="float:right"><?=date("d M Y")?></span>
         </div>
         
-        <div style="text-align: center; font-size: 20px;font-weight: bold; text-decoration: underline;">VOUCHER PACIENTE</div>
+        <div style="text-align: center;font-size: 16px;font-weight: bold; text-decoration: underline;">VOUCHER PACIENTE</div>
 
         <div class="row">
             <div class="col-12">
-                <div class="added" style="font-size: 20px;">
-                  <p class="text-left"> <strong> Nombre completo:</strong> {{$voucher->paciente->nombreCompleto()}} </p>
+                <div class="added" style="font-size: 14px;">
+                  <div style="margin-top:10px" class="text-left"> <strong> Nombre completo:</strong> {{$voucher->paciente->nombreCompleto()}} </div>
+                  <div style="margin-top:10px" class="text-left"> <strong> Turno:</strong> <?=date("d M Y",strtotime($voucher->turno))?></div>
                   <!-- <p style="font-size:100%" class="text-left"> <strong> CUIL:               </strong> {{$voucher->paciente->cuil                         }} </p>
                   <p style="font-size:100%" class="text-left"> <strong> Fecha de nacimiento:</strong> {{$voucher->paciente->fecha_nacimiento()           }} </p> 
                   <p style="font-size:100%" class="text-left"> <strong> Edad:               </strong> {{$voucher->paciente->edad()                       }} </p>
@@ -61,8 +56,25 @@
             </div>
         </div>
            
-    </div> 
-    @foreach ($tipo_estudios as $tipo)
+    
+    <ul style="font-size: 12px;">
+      @foreach ($tipo_estudios as $tipo)
+          @if ($tipo->id != 2)
+              @foreach ($voucher->vouchersEstudios as $item)
+                  @if (($tipo->id == 3) || ($tipo->id == 4) )
+                      @if ($item->estudio->tipo_estudio_id == $tipo->id)
+                          <li>{{strtoupper($item->estudio->nombre)}}.</li>
+                      @endif
+                  @else
+                      @if ($tipo->nombre == strtoupper($item->estudio->nombre))
+                          <li>{{ $tipo->nombre}}</li>
+                      @endif  
+                  @endif
+              @endforeach
+          @endif
+      @endforeach
+    </ul>
+    <!-- @foreach ($tipo_estudios as $tipo)
         @if ($tipo->id != 2)
         <div hidden style="color: white">{{$i = -1}}</div>
         <div class="marco">
@@ -94,6 +106,7 @@
             </table>
         </div>
         @endif
-    @endforeach
+    @endforeach -->
+    </div>
 </body>
 </html>

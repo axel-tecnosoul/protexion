@@ -1,205 +1,200 @@
 @extends('layouts.admin')
-
-@section('titulo')
-<div class="box-header" style="text-align:center">
-    <a href="{{ asset('user') }}">
-        <button title="atras" class="btn btn-default btn-responsive pull-left">
-            <i class="fa fa-arrow-left"></i> Atras
-        </button>
-    </a>
-</div>
+<!-- Extiende de layout -->
+@section('navegacion')
+    <li class="breadcrumb-item"><a href="/protexion/public/voucher">Indice de Vouchers</a></li>
+    <li class="breadcrumb-item active">Editar Voucher</li>
 @endsection
 
 @section('content')
 
-    {!!Form::model($user, [
-        'method'=>'PATCH',
-        'route'=>['user.update',$user->id]
-    ])!!}
+  {!!Form::model($voucher, [
+      'method'=>'PATCH',
+      'route'=>['voucher.update',$voucher->id]
+  ])!!}
 
+  {{Form::token()}}<?php
+  $turno="";
+  if(isset($voucher)){
+    $turno=$voucher->turno;
+    //dd($voucher_estudio);
+  }
 
-    {{Form::token()}}
-    <div class="box-body">
-        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="background-color:#D2D6DE">
-            @include('errors.request')
-            @include('user.mensaje')
-            <div class="box">
-                <div class="box-header">
-                    <h4 class="box-title" >
-                        <i class="fa fa-id-card" aria-hidden="true"></i> Editar una persona
-                    </h4>
-                </div>
-                <div class="box-body">
-                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                        <div class="form-group">
-                            <label for="apellido">
-                                    Apellido
-                            </label>
-                            <input
-                                type="string"
-                                name="apellido"
-                                value="{{ $user->apellido }}"
-                                class="form-control"
-                                title="apellido de la persona"
-                                >
-                        </div>
-                    </div>
-
-                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                        <div class="form-group">
-                            <label for="name">
-                                    Nombres
-                            </label>
-                            <input
-                                type="string"
-                                name="name"
-                                value="{{ $user->name }}"
-                                class="form-control"
-                                title="nombre de la persona"
-                                >
-                        </div>
-                    </div>
-                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                        <div class="form-group">
-                            <label for="dni">
-                                Documento
-                            </label>
-                            <input
-                                type="integer"
-                                name="dni"
-                                value="{{ $user->dni }}"
-                                class="form-control"
-                                title="documento de la persona"
-                                >
-                        </div>
-                    </div>
-                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                        <div class="form-group">
-                            <label for="domicilio">
-                                    Domicilio
-                            </label>
-                            <input
-                                type="string"
-                                name="domicilio"
-                                value="{{ $user->domicilio }}"
-                                class="form-control"
-                                title="domicilio de la persona"
-                                >
-                        </div>
-                    </div>
-                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                        <div class="form-group">
-                            <label for="sexo_id">
-                                Sexo
-                            </label>
-                            <select
-                                id="sexo_id"
-                                name="sexo_id"
-                                class="form-control">
-                                    @foreach ($sexo as $s)
-                                        @if ($s->id==$user->sexo_id)
-                                            <option value="{{$s->id}}" selected>{{$s->descripcion}}</option>
-                                        @else
-                                             <option value="{{$s->id}}">{{$s->descripcion}}</option>
-                                        @endif
-                                    @endforeach
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                        <div class="form-group">
-                            <label for="telefono">
-                                Teléfono
-                            </label>
-                            <input
-                                type="string"
-                                name="telefono"
-                                value="{{ $user->telefono }}"
-                                class="form-control"
-                                title="número de telefono de la persona"
-                                >
-                        </div>
-                    </div>
-                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                        <div class="form-group">
-                            <label for="fecha_nac">
-                                    Fecha de nacimiento
-                            </label>
-                            <input
-                                type="date"
-                                name="fecha_nac"
-                                value="{{ $user->fecha_nac }}"
-                                class="form-control"
-                                title="fecha de nacimiento de la persona"
-                                >
-                        </div>
-                    </div>
-
-
-
-                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                        <div class="form-group">
-                            <label for="cuit">
-                                    Cuit
-                            </label>
-                            <input
-                                type="text"
-                                name="cuit"
-                                value="{{ $user->cuit }}"
-                                class="form-control"
-                                title="cuit de la persona"
-                                >
-                        </div>
-                    </div>
-                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                        <div class="form-group">
-                            <label for="email">
-                                Correo electónico
-                            </label>
-                            <input
-                                type="string"
-                                name="email"
-                                value="{{ $user->email }}"
-                                class="form-control"
-                                title="correo de la persona"
-                                >
-                        </div>
-                    </div>
-                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                        <div class="form-group">
-                            <label for="password">
-                                Contraseña
-                            </label>
-                            <input
-                                type="password"
-                                name="password"
-                                value="{{ $user->password }}"
-                                class="form-control"
-                                title="contraseña de la persona"
-                                >
-                        </div>
-                    </div>
-
-
-
-                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                        <div class="form-group">
-                            <label>
-
-                            </label>
-                            <br>
-                            <button title="Guardar" class="btn btn-danger btn-responsive" type="submit"> <i class="fa fa-check"></i> Guardar</button>
-                            <button title="Limpiar" class="btn btn-secondary btn-responsive" type="reset"><i class="fa fa-remove"></i> Cancelar</button>
-                        </div>
-                    </div>
-
-                 </div>
-                </div>
+  ?>
+  <div class="card card-outline">
+    <div class="card-header header-bg">
+      <div class="card-title">
+        <p style="font-size:130%"> <i class="fa fa-voucher" aria-hidden="true"></i> Datos Vouchers</p>
+      </div>
+    </div>
+    <div class="card-body fondo0">
+      <!-- HIDDEN -->
+      <input type="text" name="paciente_id" value="{{$paciente->id }}" hidden>
+      <!-- Fecha -->
+      <div class="col-12">
+        <div class="row">
+          <div class="col-12">
+            <div class="form-group">
+              <label> <p style="font-size:130%">Fecha: </p></label>
+              <input class="form-control" type="date" name="turno" required value="<?=$turno?>">
             </div>
+          </div> 
         </div>
-        {!!Form::close()!!}
+      </div>
+      <!-- / Fecha -->
+      <!-- Paciente -->
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <div class="card flex-fill" >
+          <div class="card-header header-bg">
+            <h3 class="card-title">Datos del paciente</h3>
+            <div class="card-tools">
+              <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-plus"></i></button>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-7">
+                <div> 
+                  <p style="font-size:100%" class="text-left"> <strong> Nombre completo:</strong> {{$paciente->nombreCompleto()}} </p>
+                  <p style="font-size:100%" class="text-left"> <strong> CUIL:</strong> {{$paciente->cuil}} </p>
+                  <p style="font-size:100%" class="text-left"> <strong> Fecha de nacimiento:</strong> {{$paciente->fecha_nacimiento()}} </p>
+                  <p style="font-size:100%" class="text-left"> <strong> Edad:</strong> {{$paciente->edad()}} </p>
+                  <p style="font-size:100%" class="text-left"> <strong> Domicilio:</strong> {{$paciente->domicilio ? $paciente->domicilio->direccion : " "}} </p>
+                  <p style="font-size:100%" class="text-left"> <strong> Sexo:</strong> {{$paciente->sexo ? $paciente->sexo->definicion : " "}} </p>
+                  <p style="font-size:100%" class="text-left"> <strong> Origen:</strong> {{$paciente->origen ? $paciente->origen->definicion : " "}} </p>
+                  <p style="font-size:100%" class="text-left"> <strong> Cuit de origen:</strong> {{$paciente->origen ? $paciente->origen->cuit : " "}} </p>      
+                </div>
+              </div>
+              <div class="col-4">
+                <div class="added"> 
+                  @if($paciente->imagen==null)
+                    <img class="img-thumbnail" height="200px" width="200px" src="{{ asset('imagenes/paciente/default.png')}}">
+                  @else
+                    <img class="img-thumbnail" height="200px" width="200px" src="{{$paciente->imagen}}">
+                  @endif 
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- / Paciente -->
+      <!-- Estudios -->
+      @foreach ($tipo_estudios as $tipo)
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+          <div class="card estudios"> <!--collapsed-card -->
+            <div class="card-header header-bg">
+              <div class="row">
+                <div class="col">
+                  <h3 class="card-title">{{$tipo->nombre}}</h3> 
+                </div>
+                <div style="text-align: right" class="col">
+                  <div class="icheck-danger d-inline">
+                    <input id="a{{$tipo->id}}" type="checkbox" onClick="ActivarCasilla(this,{{$tipo->id}});"/>
+                    <Label for="a{{$tipo->id}}">{{strtoupper("Seleccionar todo")}} </Label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="card-body" > <!--style="display: none;" -->
+              <div class="row"><?php
+                $c=$c2=0;
+                $idChecked = ["45","46","47","48","49","50","56","57"];
+                //dd($estudios)?>
+                @foreach ($estudios as $item)
+                  @if ($item->tipo_estudio_id == $tipo->id)
+                    <div class="col-6">
+                      <div class="custom-control custom-checkbox">
+                        <div class="icheck-danger d-inline"><?php
+                          $checked="";
+                          //if(in_array($item->id, $idChecked)){
+                          $c++;
+                          if(in_array($item->id,$voucher_estudio)){
+                            $checked="checked";
+                            $c2++;
+                          }?>
+                          <input class="{{$tipo->id}}" type="checkbox" name="{{$item->id}}" value=1 id="{{$item->id}}" <?=$checked?>>
+                          <label for="{{$item->id}}"> {{strtoupper($item->nombre)}} </label>
+                        </div>
+                      </div>
+                    </div>
+                  @endif
+                @endforeach
+                <script>
+                  c=parseInt("<?=$c?>")
+                  c2=parseInt("<?=$c2?>")
+                  if(c==c2){
+                    document.getElementById("a{{$tipo->id}}").checked=true;
+                  }
+                </script>
+              </div>
+            </div>
+          </div>
+        </div>
+      @endforeach
+      <!-- / Estudios-->
+    </div>
+  </div>
+  <div class="card  "> 
+    <div class="card-header header-bg">
+      <h3 class="card-title">Riesgos</h3>
+      <div class="card-tools">
+        <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-plus"></i></button>
+      </div>
+    </div>
+    <div class="card-body" > 
+      <div class="row">
+        @foreach ($riesgos as $riesgo)<?php
+          //dd($riesgo->id)?>
+          <div class="form-group col-12">
+            <input type="text" value=0  name="riesgos[{{$riesgo->id}}]" hidden>
+            <div class="icheck-danger d-inline"><?php
+              $checked="";
+              //if(in_array($item->id, $idChecked)){
+              if(in_array($riesgo->id,$voucher_riesgos)){
+                $checked="checked";
+              }?>
+              <input type="checkbox" <?=$checked?> value=1 id="riesgo{{$riesgo->id}}" name="riesgos[{{$riesgo->id}}]">
+              <label for="riesgo{{$riesgo->id}}">{{$riesgo->riesgo}}</label>
+            </div>
+          </div>
+        @endforeach
+      </div>
+    </div>
+  </div>
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <div class="form-group" style="text-align:center">
+      <a href="{{URL::action('PacienteController@voucher',$paciente->id)}}">
+        <button title="Cancelar" class="btn btn-secondary btn-lg" type="button"><i class="fas fa-arrow-left"></i> Cancelar</button>
+      </a>
+      <button title="Guardar" id="confirmar" class="btn btn-danger btn-lg" type="submit"> <i class="fa fa-check"></i> Guardar</button>
+    </div>
+  </div>
+{!!Form::close()!!}
 
-
-
-
-    @endsection
+@push('scripts')
+<script type="text/javascript">
+        function ActivarCasilla(casilla, id) 
+        {
+            miscasillas=document.getElementsByClassName(id); //Rescatamos controles tipo Input
+            for(i=0;i<miscasillas.length;i++) //Ejecutamos y recorremos los controles
+            {
+                if(miscasillas[i].type == "checkbox") // Ejecutamos si es una casilla de verificacion
+                {
+                    miscasillas[i].checked=casilla.checked; // Si el input es CheckBox se aplica la funcion ActivarCasilla
+                }
+            }
+        }
+    </script>
+<script>
+  $(document).ready(function () {
+    $(".card .estudios").each(function(){
+      /*let cant_checkboxes=$(this).find(".card-body").find("input[type='checkbox']").length;
+      let cant_checkboxes_checked=$(this).find(".card-body").find("input[type='checkbox']:checked").length;
+      if(cant_checkboxes==cant_checkboxes_checked){
+        $(this).find(".card-header").find("input[type='checkbox']").attr("checked",true)
+      }*/
+    })
+  });
+</script>
+@endpush
+@endsection

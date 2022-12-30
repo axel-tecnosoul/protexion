@@ -31,6 +31,29 @@ class VoucherEstudioController extends Controller
         }
         return back();
     }
+    public function archivo2(Request $request)
+    {   
+        $archivos = $request->file('anexo');
+        //Controla si hay un archivo en el request
+        if ($archivos) {
+            foreach ($archivos as $item) {
+                if ($item) {
+                        $nombre = $request->estudio
+                                ."_"
+                                .$request->voucher_estudio_id
+                                .$item->getClientOriginalName();
+                        
+                        $item->move(public_path().'/archivo/',$nombre);
+                        $ruta = public_path().'/archivo/'.$nombre;
+                        $archivo_adjunto = new ArchivoAdjunto();
+                        $archivo_adjunto->anexo = $ruta;
+                        $archivo_adjunto->voucher_estudio_id = $request->voucher_estudio_id;
+                        $archivo_adjunto->save();
+                }
+            }
+        }
+        return back();
+    }
 
     //Descarga archivos pasando el Id de voucherEstudios (Se usa para estudios de sistema)
     public function show($id)

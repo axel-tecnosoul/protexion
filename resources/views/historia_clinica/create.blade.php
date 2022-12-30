@@ -33,9 +33,12 @@
     }
 </style><?php
 
+$estatura=$altura_decla_jurada;
+$peso=$peso_decla_jurada;
+
 //HISTORIA CLINICA
-$estatura="";
-$peso="";
+$estatura_anterior="";
+$peso_anterior="";
 $sobrepeso="";
 $imc="";
 $medicacion_actual="";
@@ -113,8 +116,8 @@ $observacion1_an="";
 $observacion_an="";
 /* EXAMEN CLÌNICO */
 if(isset($historia_clinica_anterior)){
-  $estatura=($historia_clinica_anterior->examenClinico->estatura) ?: "";
-  $peso=($historia_clinica_anterior->examenClinico->peso) ?: "";
+  $estatura_anterior=($historia_clinica_anterior->examenClinico->estatura) ? "Historia Clinica Anterior: ".$historia_clinica_anterior->examenClinico->estatura : "";
+  $peso_anterior=($historia_clinica_anterior->examenClinico->peso) ? "Historia Clinica Anterior: ".$historia_clinica_anterior->examenClinico->peso : "";
   $sobrepeso=($historia_clinica_anterior->examenClinico->sobrepeso) ?: "";
   $imc=($historia_clinica_anterior->examenClinico->imc) ?: "";
   $medicacion_actual=($historia_clinica_anterior->examenClinico->medicacion_actual) ?: "";
@@ -279,10 +282,12 @@ if(isset($historia_clinica_anterior)){
                                     <div class="col">
                                         <label for="" class="form-label">Estatura (Mts): </label>
                                         <input class="form-control calculoIMC" type="number" step="0.01" id="estatura" name="estatura" value="<?=$estatura?>" placeholder="Estatura Ej. 1.72" required>
+                                        <label style="font-size: 13px;" class="form-label"><?=$estatura_anterior?></label>
                                     </div>
                                     <div class="col">
                                         <label for="" class="form-label">Peso (Kgs):</label>
                                         <input class="form-control calculoIMC" type="number" step="0.01" id="peso" name="peso" value="<?=$peso?>" placeholder="Peso" required>
+                                        <label style="font-size: 13px;" class="form-label"><?=$peso_anterior?></label>
                                     </div>
                                 </div>
                                 <div class="form-group row">
@@ -342,18 +347,26 @@ if(isset($historia_clinica_anterior)){
                                         <label for="">Observaciones:</label>
                                         <input class="form-control" type="text" name="tension_arterial" value="<?=$tension_arterial?>" placeholder="Observaciones...">
                                     </div>
-                                </div> <hr>
+                                </div>
                                 <div class="form-group row">
                                     <div class="col-4">
                                         <label for="">Pulso:</label>
                                     </div>
                                     <div class="col-3">
-                                        <label><input type="radio" name="pulso" <?=$checked_pulso_anormal?> value="A" required>Anormal</label>
+                                        <div class="icheck-danger d-inline">
+                                            <input type="radio" name="pulso" id="pulso_anormal" <?=$checked_pulso_anormal?> value="A" required>
+                                            <label for="pulso_anormal">Anormal</label>
+                                        </div>
+                                        <!-- <label><input type="radio" name="pulso" <?=$checked_pulso_anormal?> value="A" required>Anormal</label> -->
                                     </div>
                                     <div class="col-3">
-                                        <label><input type="radio" name="pulso" <?=$checked_pulso_normal?> value="N">Normal</label>
+                                        <div class="icheck-danger d-inline">
+                                            <input type="radio" name="pulso" id="pulso_normal" <?=$checked_pulso_normal?> value="N" required>
+                                            <label for="pulso_normal">Normal</label>
+                                        </div>
+                                        <!-- <label><input type="radio" name="pulso" <?=$checked_pulso_normal?> value="N">Normal</label> -->
                                     </div>
-                                </div><hr>
+                                </div>
                                 <div class="form-group row">
                                     <div class="col">
                                         <label for="" class="form-label">Várices:</label>
@@ -652,16 +665,23 @@ if(isset($historia_clinica_anterior)){
                                 </div>
                                 <!-- Ojo derecho -->
                                 <div class="form-group row">
-                                    <div class="col">
-                                        <label for="" class="form-label">Agudeza visual ojo derecho</label>
-                                        <input class="form-control" placeholder="Describa las anormalidades..." type="text" name="observacion5_of" value="<?=$observacion5_of?>">
+                                    <div class="col input-group">
+                                        <label for="" class="form-label w-100">Agudeza visual ojo derecho</label><br>
+                                        <!-- <input aria-label="Recipient's username" aria-describedby="basic-addon2"> -->
+                                        <input class="form-control" placeholder="Describa las anormalidades..." type="text" name="observacion5_of" value="<?=$observacion5_of?>" aria-describedby="basic-addon2">
+                                        <div class="input-group-append">
+                                          <span class="input-group-text" id="basic-addon2">/10</span>
+                                        </div>
                                     </div>
                                 </div>
                                 <!-- Ojo izquierdo -->
                                 <div class="form-group row">
-                                    <div class="col">
-                                        <label for="" class="form-label">Agudeza visual ojo izquierdo</label>
+                                    <div class="col input-group">
+                                        <label for="" class="form-label w-100">Agudeza visual ojo izquierdo</label>
                                         <input class="form-control" placeholder="Describa las anormalidades..." type="text" name="observacion6_of" value="<?=$observacion6_of?>">
+                                        <div class="input-group-append">
+                                          <span class="input-group-text" id="basic-addon2">/10</span>
+                                        </div>
                                     </div>
                                 </div>
                                 <!-- Usa lentes -->
@@ -1153,6 +1173,10 @@ if(isset($historia_clinica_anterior)){
 
         function calcular_imc(){
           let altura = $("#estatura").val();
+
+          if(altura>100){
+            altura/=100;
+          }
           let peso = $("#peso").val();
           let imc = peso/(altura*altura);
             

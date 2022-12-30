@@ -26,13 +26,25 @@
             </div> -->
             <div class="form-group row">
                 <div class="col-12">
-                    <label><input type="radio" name="aptitud_laboral" value="APTO SIN PREEXISTENCIAS"> APTO SIN PREEXISTENCIAS </label>
+                    <div class="icheck-danger">
+                        <input type="radio" name="aptitud_laboral" id="apto_sin_pre" value="APTO SIN PREEXISTENCIAS">
+                        <label for="apto_sin_pre">APTO SIN PREEXISTENCIAS</label>
+                    </div>
+                    <!-- <label><input type="radio" name="aptitud_laboral" value="APTO SIN PREEXISTENCIAS"> APTO SIN PREEXISTENCIAS </label> -->
                 </div>
                 <div class="col-12">
-                    <label><input type="radio" name="aptitud_laboral" value="APTO CON PREEXISTENCIAS"> APTO CON PREEXISTENCIAS </label>
+                    <div class="icheck-danger">
+                        <input type="radio" name="aptitud_laboral" id="apto_con_pre" value="APTO CON PREEXISTENCIAS">
+                        <label for="apto_con_pre">APTO CON PREEXISTENCIAS</label>
+                    </div>
+                    <!-- <label><input type="radio" name="aptitud_laboral" value="APTO CON PREEXISTENCIAS"> APTO CON PREEXISTENCIAS </label> -->
                 </div>
                 <div class="col-12">
-                    <label><input type="radio" name="aptitud_laboral" value="INCONVENIENTE SU INGRESO EN EL MOMENTO ACTUAL"> INCONVENIENTE SU INGRESO EN EL MOMENTO ACTUAL </label>
+                    <div class="icheck-danger">
+                        <input type="radio" name="aptitud_laboral" id="no_apto" value="INCONVENIENTE SU INGRESO EN EL MOMENTO ACTUAL">
+                        <label for="no_apto">INCONVENIENTE SU INGRESO EN EL MOMENTO ACTUAL</label>
+                    </div>
+                    <!-- <label><input type="radio" name="aptitud_laboral" value="INCONVENIENTE SU INGRESO EN EL MOMENTO ACTUAL"> INCONVENIENTE SU INGRESO EN EL MOMENTO ACTUAL </label> -->
                 </div>
             </div>
             <div class="row form-group">

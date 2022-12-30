@@ -9,7 +9,22 @@
         </div>
         <div class="card-body" > 
             <div class="row">
-                @for ($i = 0; $i < sizeof($riesgos); $i++)
+              @foreach ($riesgos as $riesgo)<?php
+                //dd($riesgo->id)?>
+                  <div class="form-group col-12">
+                      <input type="text" value=0  name="riesgos[{{$riesgo->id}}]" hidden>
+                      <div class="icheck-danger d-inline"><?php
+                          $checked="";
+                          //if(in_array($item->id, $idChecked)){
+                          if(in_array($riesgo->id,$voucher_riesgos)){
+                            $checked="checked";
+                          }?>
+                          <input type="checkbox" value=1 id="{{$riesgo->id}}" <?=$checked?> name="riesgos[{{$riesgo->id}}]">
+                          <label for="{{$riesgo->id}}">{{$riesgo->riesgo}}</label>
+                      </div>
+                  </div>
+                @endforeach
+                <!-- @for ($i = 0; $i < sizeof($riesgos); $i++)
                 <div class="form-group col-12">
                     <input type="text" value=0  name="riesgos[{{$i}}]" hidden>
                     <div class="icheck-danger d-inline">
@@ -17,7 +32,7 @@
                         <label for="{{$i}}">{{$riesgos[$i]}}</label>
                     </div>
                 </div>
-                @endfor
+                @endfor -->
             </div>
         </div>
     </div>

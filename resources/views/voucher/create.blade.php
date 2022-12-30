@@ -72,7 +72,8 @@
                     </div>
                 <!-- / Paciente -->
                 <!-- Estudios -->
-                    @foreach ($tipo_estudios as $tipo)
+                    @foreach ($tipo_estudios as $tipo)<?php
+                        var_dump($tipo->nombre)?>
                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                             <div class="card "> <!--collapsed-card -->
                                 <div class="card-header header-bg">
@@ -86,7 +87,6 @@
                                                 if($tipo->id==2){
                                                   $checked="checked";
                                                 }?>
-
                                                 <input id="a{{$tipo->id}}" type="checkbox" onClick="ActivarCasilla(this,{{$tipo->id}});" <?=$checked?>/>
                                                 <Label for="a{{$tipo->id}}">{{strtoupper("Seleccionar todo")}} </Label>
                                             </div>
@@ -95,7 +95,8 @@
                                 </div>
                                 <div class="card-body" > <!--style="display: none;" -->
                                     <div class="row">
-                                        <?php $idChecked = ["45","46","47","48","49","50","56","57"]; ?>
+                                        <?php $idChecked = ["45","46","47","48","49","50","56","57"]; 
+                                        //dd($estudios)?>
                                         @foreach ($estudios as $item)
                                             @if ($item->tipo_estudio_id == $tipo->id)
                                                 <div class="col-6">
@@ -120,6 +121,29 @@
                 <!-- / Estudios-->
             </div>
         </div>
+        <div class="card  "> 
+          <div class="card-header header-bg">
+              <h3 class="card-title">Riesgos</h3>
+              <div class="card-tools">
+                  <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-plus"></i></button>
+              </div>
+          </div>
+          <div class="card-body" > 
+            <div class="row">
+            
+              @foreach ($riesgos as $riesgo)<?php
+              //dd($riesgo->id)?>
+                <div class="form-group col-12">
+                    <input type="text" value=0  name="riesgos[{{$riesgo->id}}]" hidden>
+                    <div class="icheck-danger d-inline">
+                        <input type="checkbox" value=1 id="riesgo{{$riesgo->id}}" name="riesgos[{{$riesgo->id}}]">
+                        <label for="riesgo{{$riesgo->id}}">{{$riesgo->riesgo}}</label>
+                    </div>
+                </div>
+              @endforeach
+            </div>
+          </div>
+        </div>
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
             <div class="form-group" style="text-align:center">
                 <a href="/protexion/public/voucher">
@@ -141,55 +165,71 @@
     <script>
         $(document).ready(function(){
             //Voucher
-                var select1 = $("#paciente_id").select2({width:'100%'});
-                select1.data('select2').$selection.css('height', '34px');
+            var select1 = $("#paciente_id").select2({width:'100%'});
+            select1.data('select2').$selection.css('height', '34px');
 
 
-                $("#paciente_id").change(function(){
-                    mostrarDatos();
+            $("#paciente_id").change(function(){
+                mostrarDatos();
+            });
+
+            function mostrarDatos(){
+                paciente_id=$("#paciente_id").val();
+                /*   Aca iría el Ajax para obtener la cantidad por Paquete*/
+                $.ajax({
+                    type:'get',
+                    //url:'{!!URL::to('voucher/create/traerDatosPaciente')!!}',
+                    url:"{!!URL::to('voucher/create/traerDatosPaciente')!!}",
+                    data:{'id':paciente_id},
+                    success:function(data){
+
+                        let documento=data['documento'];
+                        let nombres=data['nombres'];
+                        let apellidos=data['apellidos'];
+                        let fecha_nacimiento=data['fecha_nacimiento'];
+                        let foto=data['foto'];
+                        let cuil=data['cuil'];
+                        let sexo=data['sexo'];
+
+                        datosPaciente=`
+                          <div class="added">
+                            <input type="hidden" value="${nombres}">
+                            <p style="font-size:140%" class="text-left">Nombre y Apellido del paciente: ${nombres}</p>
+                            <input type="hidden" value="${documento}">
+                            <p style="font-size:140%" class="text-left">Documento del paciente: ${documento}</p>
+                            <input type="hidden" value="${fecha_nacimiento}">
+                            <p style="font-size:140%" class="text-left">Fecha de nacimiento del paciente: ${fecha_nacimiento}</p>
+                            <input type="hidden" value="${cuil}">
+                            <p style="font-size:140%" class="text-left">CUIL: ${cuil}</p>
+                            <input type="hidden" value="${sexo}">
+                            <p style="font-size:140%" class="text-left">Sexo: ${sexo}</p>
+                            <input type="hidden" name="paciente_id" value="${paciente_id}">
+                          </div>`;
+                        fotoPaciente=`
+                          <div class="added">
+                            @if(`+foto+`==null)
+                              <img class="img-thumbnail" height="85px" width="85px" src="${foto}">
+                            @else
+                              <img class="img-thumbnail" height="350px" width="350px" src="{{ asset('imagenes/paciente/default.png')}}">
+                            @endif
+                          </div>`;
+
+                        //Limpiar datos agregadoss
+                        $('.added').remove();
+                        
+                        $("#datos_paciente").append(datosPaciente).hide().show('slow');
+                        $("#foto_paciente").append(fotoPaciente).hide().show('slow');
+                    },
+                    error:function(){
+                        console.log('no anda AJAX');
+                    }
                 });
 
-                function mostrarDatos()
-                {
-                    paciente_id=$("#paciente_id").val();
-                    
-                    /*   Aca iría el Ajax para obtener la cantidad por Paquete*/
-                    $.ajax({
-                        type:'get',
-                        url:'{!!URL::to('voucher/create/traerDatosPaciente')!!}',
-                        data:{'id':paciente_id},
-                        success:function(data){
-
-                            documento=data['documento'];
-                            nombres=data['nombres'];
-                            apellidos=data['apellidos'];
-                            fecha_nacimiento=data['fecha_nacimiento'];
-                            foto=data['foto'];
-                            cuil=data['cuil'];
-                            sexo=data['sexo'];
-
-                            datosPaciente='<div class="added"> <input type="hidden" value="'+nombres+'"><p style="font-size:140%" class="text-left">Nombre y Apellido del paciente: '+nombres+'</p><input type="hidden" value="'+documento+'"><p style="font-size:140%" class="text-left">Documento del paciente: '+documento+'</p><input type="hidden" value="'+fecha_nacimiento+'"><p style="font-size:140%" class="text-left">Fecha de nacimiento del paciente: '+fecha_nacimiento+'</p><input type="hidden"  value="'+cuil+'"><p style="font-size:140%" class="text-left">CUIL: '+cuil+'</p><input type="hidden" value="'+sexo+'"><p style="font-size:140%" class="text-left">Sexo: '+sexo+'</p><input type="hidden" name="paciente_id" value="'+paciente_id+'"></div>';
-                            fotoPaciente='<div class="added"> @if('+foto+'==null)<img class="img-thumbnail" height="85px" width="85px" src='+foto+'>@else<img class="img-thumbnail" height="350px" width="350px" src="{{ asset('imagenes/paciente/default.png')}}">@endif </div>';
-
-                            //Limpiar datos agregadoss
-                            $('.added').remove();
-                            
-                            $("#datos_paciente").append(datosPaciente).hide().show('slow');
-                            $("#foto_paciente").append(fotoPaciente).hide().show('slow');
-                        },
-                        error:function(){
-                            console.log('no anda AJAX');
-                        }
-                    });
-
-                }
-                function eliminarDelSelect2 ()
-                {
-                    $("#paciente_id option:selected").remove();
-
-                }
-            // 
-        });  
+            }
+            function eliminarDelSelect2 (){
+              $("#paciente_id option:selected").remove();
+            }
+        });
     </script>
 
     <script type="text/javascript">

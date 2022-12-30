@@ -19,10 +19,16 @@
     <div class="card">
       <div class="card-header fondo2">
         <div class="card-title">
-          <p style="font-size:130%"> <i class="fa fa-voucher" aria-hidden="true"></i>Datos de Voucher</p>
+          <p style="font-size:130%"> <i class="fa fa-voucher" aria-hidden="true"></i>Datos del Voucher #<span id="header_voucher_id">{{$voucher->id}}</span>
+            <a target="_blank" class="ml-2" href="{{ route('voucher.pdf_paciente',$voucher->id) }}">
+                <button title="exportar pdf paciente" class="btn fondo1 btn-responsive">
+                    <i class="fas fa-file-pdf"></i> Imprimir
+                </button>
+            </a>
+          </p>
         </div>
         <div class="card-tools">
-          @if ($voucher->aptitud)
+          @if (isset($voucher->aptitud->voucher_id))
             <!-- descargamos el archivo generado al crear el informe -->
             <a target="_blank" href=" {{ route('aptitudes.descargar',$voucher->aptitud->id)}}" class="btn fondo1">
               <i class="fas fa-file-pdf"></i> Informe Final
@@ -131,6 +137,9 @@
                         @if ($item->archivo_adjunto != "[]")
                           <td><label class="badge badge-success" style="font-size:90%">Cargado</label></td>
                           <td style="text-align: center">
+                            <button type="button" class="btn fondo2" data-toggle="modal" data-target="#archivoModal" data-whatever="[{{$item->estudio}}, {{$item}}]">
+                              <i class="fa fa-plus" ></i>
+                            </button>
                             <!-- Button trigger modal -->
                             <button type="button" class="btn fondo1 btn-responsive" data-toggle="modal" data-target="#modelAchivos{{$item->id}}">
                               <i class="fas fa-file-pdf"></i>
@@ -154,6 +163,92 @@
             </div>
           </div>
         </div>
+        <div class="row d-none">
+          <!-- ESTUDIOS CARGADOS -->
+          <div class="col">
+            <div class="card flex-fill">
+              <div style="text-align: center" class="card-header fondo2">ESTUDIOS CARGADOS</div>
+              <div class="card-body">
+                <table data-page-length='10' id="tablaDetalle" style="border:1px solid black; width:100%" class="table-sm table-bordered table-condensed table-hover ">
+                  <thead class="fondo2">
+                    <tr>
+                      <th style="width: 10%"> Tipo                  </th>
+                      <th style="width: 70%"> Estudio               </th>
+                      <th style="width: 10%"> Estado                </th>
+                      <th style="width: 10%"> Acción                </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr onmouseover="cambiar_color_over(this)" onmouseout="cambiar_color_out(this)">
+                      <td style="text-align: left">RESUMEN</td> 
+                      <td style="text-align: left"><?php
+                      foreach ($estudios_voucher as $tipo_estudio => $estudios) {
+                        if($tipo_estudio!="RADIOLOGIA"){
+                          echo "<b>".$tipo_estudio.":</b> ";
+                          echo implode(", ",$estudios);
+                          echo "<br>";
+                        }
+                      }?></td>
+                      @if ($item->archivo_adjunto != "[]")
+                        <td><label class="badge badge-success" style="font-size:90%">Cargado</label></td>
+                        <td style="text-align: center">
+                          <button type="button" class="btn fondo2" data-toggle="modal" data-target="#archivoModal" data-whatever="[{{$item->estudio}}, {{$item}}]">
+                            <i class="fa fa-plus" ></i>
+                          </button>
+                          <!-- Button trigger modal -->
+                          <button type="button" class="btn fondo1 btn-responsive" data-toggle="modal" data-target="#modelAchivos{{$item->id}}">
+                            <i class="fas fa-file-pdf"></i>
+                          </button>
+                          <!-- MODAL PARA MOSTRAR ARCHIVOS -->
+                          @include('voucher.modal_archivos')
+                        </td>
+                      @else
+                        <td><label class="badge badge-danger" style="font-size:90%">Pendiente</label></td>
+                        <td style="text-align: center">
+                          <button type="button" class="btn fondo2" data-toggle="modal" data-target="#archivoModal" data-whatever="[{{$item->estudio}}, {{$item}}]">
+                            <i class="fa fa-plus" ></i>
+                          </button>
+                        </td>
+                      @endif
+                    </tr><?php
+                    //var_dump($estudios_voucher);
+                    
+                    if(in_array("RADIOLOGIA",array_keys($estudios_voucher))){?>
+                      <tr onmouseover="cambiar_color_over(this)" onmouseout="cambiar_color_out(this)">
+                        <td style="text-align: left">RADIOLOGIA</td> 
+                        <td style="text-align: left"><?php
+                          echo implode(", ",$estudios_voucher["RADIOLOGIA"]);
+                          echo "<br>";?>
+                        </td>
+                        @if ($item->archivo_adjunto != "[]")
+                          <td><label class="badge badge-success" style="font-size:90%">Cargado</label></td>
+                          <td style="text-align: center">
+                            <button type="button" class="btn fondo2" data-toggle="modal" data-target="#archivoModal" data-whatever="[{{$item->estudio}}, {{$item}}]">
+                              <i class="fa fa-plus" ></i>
+                            </button>
+                            <!-- Button trigger modal -->
+                            <button type="button" class="btn fondo1 btn-responsive" data-toggle="modal" data-target="#modelAchivos{{$item->id}}">
+                              <i class="fas fa-file-pdf"></i>
+                            </button>
+                            <!-- MODAL PARA MOSTRAR ARCHIVOS -->
+                            @include('voucher.modal_archivos')
+                          </td>
+                        @else
+                          <td><label class="badge badge-danger" style="font-size:90%">Pendiente</label></td>
+                          <td style="text-align: center">
+                            <button type="button" class="btn fondo2" data-toggle="modal" data-target="#archivoModal">
+                              <i class="fa fa-plus" ></i>
+                            </button>
+                          </td>
+                        @endif
+                      </tr><?php
+                    }?>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -167,9 +262,10 @@
         var recipient = button.data('whatever') // Extract info from data-* attributes
         // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
         var modal = $(this)
-        modal.find('.modal-title').text('Carga de archivo de ' + recipient[0].nombre)
-        modal.find('#estudio').val(recipient[0].nombre)
-        modal.find('#voucher_estudio').val(recipient[1].id)
+        //modal.find('.modal-title').text('Carga de archivo de ' + recipient[0].nombre)
+        /*modal.find('#estudio').val(recipient[0].nombre)
+        modal.find('#voucher_estudio').val(recipient[1].id)*/
+        modal.find('#voucher_id').val($("#header_voucher_id").html())
       })
     </script>
   @endpush

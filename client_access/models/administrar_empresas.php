@@ -36,7 +36,8 @@ class Empresas{
 
   public function traerEmpresas(){
 
-    $queryTraerEmpresas = "SELECT u.id, u.usuario, u.clave, u.activo, u.tipo FROM usuarios u WHERE id != 1";
+    //$queryTraerEmpresas = "SELECT u.id, u.usuario, u.clave, u.activo, u.tipo FROM usuarios u WHERE id != 1";
+    $queryTraerEmpresas = "SELECT u.id, u.usuario, u.clave, u.activo, u.tipo, COUNT(au.id) AS cant_archivos FROM usuarios u LEFT JOIN archivos_usuario au ON au.id_usuario=u.id WHERE u.id != 1 GROUP BY u.id";
     $getEmpresas = $this->conexion->consultaRetorno($queryTraerEmpresas);
 
     $arrayEmpresas = array();
@@ -47,6 +48,7 @@ class Empresas{
         'clave'=>$rowEmpresas['clave'],
         'activo'=>$rowEmpresas['activo'],
         'tipo'=>$rowEmpresas['tipo'],
+        'cant_archivos'=>$rowEmpresas['cant_archivos'],
       );
     }
 
@@ -75,7 +77,8 @@ class Empresas{
     $destino=$archivo;
     copy($file['file']['tmp_name'],$destino);
     
-    include_once("../../vendor/PHPExcel/IOFactory.php");
+    $dirPHPExcel="../assets/";
+    include_once($dirPHPExcel."PHPExcel/IOFactory.php");
     $objPHPExcel = PHPExcel_IOFactory::load($archivo);
     $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
     
@@ -87,8 +90,8 @@ class Empresas{
     if (file_exists ($file)){//validacion para saber si el archivo ya existe previamente
       /*INVOCACION DE CLASES Y CONEXION A BASE DE DATOS*/
       /** Invocacion de Clases necesarias */
-      require_once('../../vendor/PHPExcel.php');
-      require_once('../../vendor/PHPExcel/Reader/Excel2007.php');
+      require_once($dirPHPExcel.'PHPExcel.php');
+      require_once($dirPHPExcel.'PHPExcel/Reader/Excel2007.php');
       //DATOS DE CONEXION A LA BASE DE DATOS
       //include 'conexion.php';
       //$pdo = Database::connect();

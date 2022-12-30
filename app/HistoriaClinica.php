@@ -166,8 +166,8 @@ class HistoriaClinica extends Model implements Auditable
                                         $this->oftalmologico->observacion2_of,
                                         $this->oftalmologico->observacion3_of,
                                         $this->oftalmologico->observacion4_of,
-                                        $this->oftalmologico->observacion5_of,
-                                        $this->oftalmologico->observacion6_of,
+                                        $this->oftalmologico->observacion5_of."/10",
+                                        $this->oftalmologico->observacion6_of."/10",
                                         $this->oftalmologico->pregunta7_of,
                                         $this->oftalmologico->observacion_of,
 
@@ -359,6 +359,8 @@ class HistoriaClinica extends Model implements Auditable
                             }
                             $vacio = true;
                             $diagnostico = $diagnostico.$label."<b>".$matriz[0][$i]."</b>";
+                            //var_dump($diagnostico);
+                            
                         }else{
                             $diagnostico = $diagnostico.$label." "."<b>".$matriz[0][$i]."</b>.<br> ";
                             $cargarObs=$matriz[0][$i];
@@ -372,6 +374,7 @@ class HistoriaClinica extends Model implements Auditable
                     }
                 }
             };
+            //die();
             return [$diagnostico,$obs];
             //
         //

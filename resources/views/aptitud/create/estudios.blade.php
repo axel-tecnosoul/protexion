@@ -2,7 +2,7 @@
     <div class="row">
         <!-- Declaracion Jurada -->
         @if ($declaracion_jurada)
-            <div class="col-6">
+            <div class="col-6 d-none">
                 <div class="card">
                     <div class="card-header fondo2">
                         Declaracion Jurada
@@ -94,14 +94,17 @@
                                     echo $diagnosticoP;
                                 @endphp
                                 <input type="hidden" id="lblPosicionesForzadas" value="Posiciones Forzadas: ">
-                                <!-- Tabla de semiologia -->
-                                <div class="card text-white bg-light">
-                                  <div class="card-body">
-                                    <!-- Tabla -->
-                                    @include('posiciones_forzadas.tabla_semiologia')
-                                    <!-- / Tabla -->
-                                  </div>
-                                </div>
+                                <!-- Tabla de semiologia --><?php
+                                //$posiciones_forzada->dolor_articular trae un string con muchos 0 y 1, si son todos 0 este if da falso y no entra, asi no se muestra estando vacío
+                                if($posiciones_forzada->dolor_articular!=0){?>
+                                  <div class="card text-white bg-light">
+                                    <div class="card-body">
+                                      <!-- Tabla -->
+                                      @include('posiciones_forzadas.tabla_semiologia')
+                                      <!-- / Tabla -->
+                                    </div>
+                                  </div><?php
+                                }?>
                             </div>
                             <!-- Preexistencia u observaciones -->
                             <div class="col-12">
@@ -162,48 +165,63 @@
         @endif
         <!-- Estudios por cargar -->
         <!-- HIDDEN -->
-        <input type="text" id="cantTipo" value={{sizeof($estudios)}} hidden>
-        @for ($i = 0; $i < sizeof($estudios); $i++)
-          @if (sizeof($estudios[$i][1])>0)
+        <input type="text" id="cantTipo" value={{sizeof($estudios)}} hidden><?php
+        //var_dump($estudios);
+        $i=$j=0;
+        foreach ($estudios as $tipo_estudio){
+          $id_tipo_estudio=$tipo_estudio[0]->id;
+          $nombre_tipo_estudio=$tipo_estudio[0]->nombre;
+          $estudios_tipo_estudio=$tipo_estudio[1];
+          //var_dump($estudios_tipo_estudio);
+          
+          if (sizeof($estudios_tipo_estudio)>0){?>
             <!-- HIDDEN -->
-            <input type="text" id="cantEstudio{{$i}}" value={{sizeof($estudios[$i][1])}} hidden>
+            <input type="text" id="cantEstudio{{$id_tipo_estudio}}" value={{sizeof($estudios_tipo_estudio)}} hidden>
             <div class="col-6">
                 <div class="card">
-                    <div class="card-header fondo2">
-                        {{$estudios[$i][0]->nombre}}
-                    </div>
+                    <div class="card-header fondo2">{{$nombre_tipo_estudio}}</div>
                     <div class="card-body">
-                        <!-- Inputs de estudios por cada tipo de estudio -->
-                          @for ($j = 0; $j < sizeof($estudios[$i][1]); $j++)
+                        <!-- Inputs de estudios por cada tipo de estudio --><?php
+                          foreach ($estudios_tipo_estudio as $estudio){
+                            $id_estudio=$estudio->id;
+                            $nombre_estudio=$estudio->nombre;
+                            //var_dump($id_estudio);
+                            
+                            $name="POinput_".$id_tipo_estudio."_".$id_estudio;?>
                             <div class="row form-group">
-                                <div class="col-10">
-                                    <label for="" id="POinput_{{$i}}_{{$j}}_label">{{$estudios[$i][1][$j]->nombre}}: </label>
-                                    <!-- <input type="hidden" id="POinput_{{$i}}_{{$j}}_hidden_label" value='{{$estudios[$i][1][$j]->nombre}}'> -->
-                                    <input class="form-control inputText" type="text"  id="POinput_{{$i}}_{{$j}}">
-                                    <!--  preexistencias observaciones -->
-                                </div><?php
+                                <div class="col-12 d-inline">
+                                    <label for="{{$name}}" class="w-100" id="{{$name}}_label">{{$nombre_estudio}}: </label>
+                                    <!-- <input type="hidden" id="{{$name}}_hidden_label" value='{{$nombre_estudio}}'> -->
+                                    <input class="form-control inputText d-inline w-50" name="{{$name}}" type="text" id="{{$name}}">
+                                    <!--  preexistencias observaciones --><?php
 
-                                $checkedObs="checked";
-                                $checkedPre="";?>
-
-                                @if (($estudios[$i][0]->nombre == "ANALISIS BIOQUIMICO") or ($estudios[$i][0]->nombre == "ANALISIS BIOQUIMICO ANEXO 01"))<?php
-                                    $checkedObs="";
-                                    $checkedPre="checked";?>
-                                @endif
-
-                                <div class="col-1">
-                                    <label><input class="radioObsPre" data-target="observaciones" type="radio" name="POinput_{{$i}}_{{$j}}_radio" id="POinput_{{$i}}_{{$j}}_check_obs" value="O" <?=$checkedObs?>>Obs</label>
-                                </div>
-                                <div class="col-1">
-                                    <label><input class="radioObsPre" data-target="preexistencias" type="radio" name="POinput_{{$i}}_{{$j}}_radio" id="POinput_{{$i}}_{{$j}}_check_pre" value="P" <?=$checkedPre?>>Pre</label>
+                                    $checkedObs="checked";
+                                    $checkedPre="";
+                                    if (($nombre_tipo_estudio == "ANALISIS BIOQUIMICO") or ($nombre_tipo_estudio == "ANALISIS BIOQUIMICO ANEXO 01")){
+                                        $checkedObs="checked";
+                                        $checkedPre="";
+                                    }?>
+                                
+                                    <div class="icheck-danger d-inline w-25 ml-2">
+                                        <input class="radioObsPre" data-target="observaciones" type="radio" name="{{$name}}_radio" id="{{$name}}_check_obs" value="O" <?=$checkedObs?>>
+                                        <label for="{{$name}}_check_obs">Obs</label>
+                                    </div>
+                                    <!-- <label><input class="radioObsPre" data-target="observaciones" type="radio" name="{{$name}}_radio" id="{{$name}}_check_obs" value="O" <?=$checkedObs?>>Obs</label> -->
+                                
+                                    <div class="icheck-danger d-inline w-25 ml-2">
+                                        <input class="radioObsPre" data-target="preexistencias" type="radio" name="{{$name}}_radio" id="{{$name}}_check_pre" value="P" <?=$checkedPre?>>
+                                        <label for="{{$name}}_check_pre">Pre</label>
+                                    </div>
+                                    <!-- <label><input class="radioObsPre" data-target="preexistencias" type="radio" name="{{$name}}_radio" id="{{$name}}_check_pre" value="P" <?=$checkedPre?>>Pre</label> -->
                                 </div>
                             </div>
-                            <hr>
-                          @endfor
+                            <hr><?php
+                          }?>
                     </div>
                 </div>
-            </div>
-          @endif
-        @endfor
+            </div><?php
+          }
+        }?>
+        
     </div>
 </div>

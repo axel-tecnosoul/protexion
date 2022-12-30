@@ -102,6 +102,7 @@ if (!isset($_SESSION['rowUsers']['id_usuario'])) {
                       <th class="text-center">#ID</th>
                       <th>Empresa</th>
                       <th>Password</th>
+                      <th>Cant. archivos</th>
                       <!-- <th>Tipo</th> -->
                       <!-- <th>Activo</th> -->
                       <th>Acciones</th>
@@ -221,6 +222,7 @@ if (!isset($_SESSION['rowUsers']['id_usuario'])) {
             {"data": "id_usuario"},
             {"data": "usuario"},
             {"data": "clave"},
+            {"data": "cant_archivos","class":"text-center"},
             //{"data": "tipo"},
             //{"data": "activo"},
             {"defaultContent" : "<div class='text-center'><div class='btn-group'><button class='btn btn-success btnFolder'><i class='fa fa-folder'></i></button></div></div>"},
@@ -232,6 +234,7 @@ if (!isset($_SESSION['rowUsers']['id_usuario'])) {
         $('#modalCRUD').on('hidden.bs.modal', function (e) {
           document.getElementById('dropMasArchivos').innerHTML="";
           document.getElementById('masAdjuntos').classList.toggle("d-none");
+          tablaEmpresas.ajax.reload(null, false);
         });
 
       });

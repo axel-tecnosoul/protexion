@@ -331,7 +331,14 @@
                                 <i class="nav-icon fas fa-user"></i>
                                 <p>Cuenta de Usuario</p>
                             </a>
-                        </li>   
+                        </li>
+
+                        <li class="nav-item">
+                            <a href="{{ route('ciudad.index') }}" class="nav-link">
+                                <i class="nav-icon fa fa-map-signs"></i>
+                                <p>Ciudades</p>
+                            </a>
+                        </li>
                         <!--
                         <li class="nav-item">
                             <a href="{{ route('estudios.index') }}" class="nav-link">

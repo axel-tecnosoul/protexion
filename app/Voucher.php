@@ -41,6 +41,11 @@ class Voucher extends Model implements Auditable
     {
         return $this->hasMany('App\Models\VoucherEstudio', 'voucher_id', 'id');
     }
+
+    public function vouchersRiesgos()
+    {
+        return $this->hasMany('App\Models\voucherRiesgos', 'voucher_id', 'id');
+    }
     
     public function historiaClinica()
     {
@@ -174,6 +179,7 @@ class Voucher extends Model implements Auditable
             $estudiosClasificados = [];
             $tipos = $this->tiposEstudios();
             $voucher_estudios = $this->vouchersEstudios;
+            //dd($voucher_estudios);
 
             //Por cada tipo
             for ($i=0; $i < sizeof($tipos); $i++) { 
@@ -193,12 +199,13 @@ class Voucher extends Model implements Auditable
         //Devuelve TRUE si ya se cargaron todos los estudios del Voucher
         public function voucherListo(){
             $listo = true;
-            foreach ($this->estudiosCargar() as $item) {
+            //comentamos este foreach para permitir cargar el informe final sin importar estos archivos
+            /*foreach ($this->estudiosCargar() as $item) {
                 //dd($item);
                 if ($item->archivo_adjunto == "[]") {
                     $listo = false;
                 }
-            }
+            }*/
             foreach ($this->estudiosSistema() as $item) {
                 //dd($item);
                 if ($item->archivo_adjunto == "[]") {

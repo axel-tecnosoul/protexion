@@ -483,10 +483,10 @@
           </tr>
           <tr>
               <td colspan="4">
-                  <label for="">Ojo derecho:</label> {{$hc_formulario->oftalmologico->observacion5_of}}
+                  <label for="">Ojo derecho:</label> {{$hc_formulario->oftalmologico->observacion5_of}}/10
               </td>
               <td colspan="4">
-                  <label for="">Ojo izquierdo:</label> {{$hc_formulario->oftalmologico->observacion6_of}}
+                  <label for="">Ojo izquierdo:</label> {{$hc_formulario->oftalmologico->observacion6_of}}/10
               </td>
               <td colspan="4">
                   <label for="">Usa Lentes:</label>                 

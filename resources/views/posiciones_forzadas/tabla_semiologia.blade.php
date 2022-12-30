@@ -31,7 +31,6 @@
     }
 
 </style>
-
 <p class="subtitulo">Semiología del Segmento Corporal Comprometido-Relación Movilidad-Dolor Articular y estado de M.M </p>
 <div style="padding-left: 5%; padding-top: 1%" >
     <table class="tabla" style="font-size: 10px">

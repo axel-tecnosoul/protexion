@@ -42,16 +42,21 @@
                         <td>{{ $voucher->paciente->nombreCompleto() }}</td>
                         <td>{{ \Carbon\Carbon::parse($voucher->turno)->format('d/m/Y') }}</td>
                         <td style="text-align: center" colspan="3">
+                            <a href="{{ route('voucher.edit',$voucher->id) }}">
+                                <button title="Editar voucher" class="btn fondo2 btn-responsive">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                            </a>
                             <a target="_blank" href="{{ route('voucher.pdf_paciente',$voucher->id) }}">
                                 <button title="exportar pdf paciente" class="btn fondo1 btn-responsive">
                                     <i class="fas fa-file-pdf"></i>
                                 </button>
                             </a>
-                            <a target="_blank" href="{{ route('voucher.pdf_medico',$voucher->id) }}">
+                            <!-- <a target="_blank" href="{{ route('voucher.pdf_medico',$voucher->id) }}">
                                 <button title="exportar pdf médico" class="btn fondo2 btn-responsive">
                                     <i class="fas fa-file-pdf"></i>
                                 </button>
-                            </a>
+                            </a> -->
                             <a href="{{ route('voucher.show',$voucher->id) }}">
                                 <button title="carpeta"  class="btn fondo3 btn-responsive">
                                     <i style="color: rgb(255, 255, 255)" class="fas fa-folder"></i>

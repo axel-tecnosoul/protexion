@@ -58,6 +58,14 @@ class HistoriaClinicaController extends Controller
         $obra_sociales = ObraSocial::all();
         $paises=Pais::all();
 
+        $peso_decla_jurada="";
+        $altura_decla_jurada="";
+        if($voucher->declaracionJurada){
+          $declaJurada  = DeclaracionJurada::find($voucher->declaracionJurada->id);
+          $peso_decla_jurada=$declaJurada->voucher->paciente->peso;
+          $altura_decla_jurada=$declaJurada->voucher->paciente->estatura;
+        }
+
         $voucher_historial = Voucher::wherePaciente_id($voucher->paciente_id)->orderBy("created_at","desc")->get();
         $id_historia_clinica_anterior = 0;
         foreach ($voucher_historial as $voucher_anterior) {
@@ -68,7 +76,7 @@ class HistoriaClinicaController extends Controller
         }
         $historia_clinica_anterior = HistoriaClinica::find($id_historia_clinica_anterior);
 
-        return view('historia_clinica.create', compact('voucher','pacientes','origenes','obra_sociales','paises','historia_clinica_anterior'));
+        return view('historia_clinica.create', compact('voucher','pacientes','origenes','obra_sociales','paises','historia_clinica_anterior','peso_decla_jurada','altura_decla_jurada'));
     }
 
     public function store(Request $request)

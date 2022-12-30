@@ -6,6 +6,9 @@ use App\Models\Aptitud;
 use App\Voucher;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use App\Models\VoucherRiesgos;
+use App\Models\VoucherEstudio;
+use App\Riesgos;
 use PDF;
 
 class AptitudController extends Controller
@@ -49,13 +52,18 @@ class AptitudController extends Controller
         }*/
         $datosAdicionales = "";
 
+        $voucher_riesgos=[];
+        foreach($voucher->vouchersRiesgos as $riesgo){
+          $voucher_riesgos[]=$riesgo->riesgo_id;
+        }
+
         //Tabla pf
         $articulaciones = ['Hombro','Codo','Muñeca','Mano y dedos','Cadera','Rodilla','Tobillo'];
         $cuadro = 0;
         
         return view('aptitud.create', compact('voucher','riesgos','estudios', 'datosAdicionales','articulaciones','cuadro',
                                               'declaracion_jurada','historia_clinica','posiciones_forzada','iluminacion_direccionado',
-                                              'diagnosticoD','diagnosticoH','diagnosticoP','diagnosticoI' ));
+                                              'diagnosticoD','diagnosticoH','diagnosticoP','diagnosticoI','voucher_riesgos' ));
     }
 
     public function store(Request $request)
@@ -72,24 +80,68 @@ class AptitudController extends Controller
                     "observaciones" => $request->observaciones
         ];
 
+        //dd($aptitudModel);
         //Cargar Aptitud
-        $aptitudDB = Aptitud::create($request->all());
+        $id=$request->voucher_id;
+
+        $aptitudModel->voucher_id=$request->voucher_id;
+        $aptitudModel->preexistencias=$request->preexistencias;
+        $aptitudModel->observaciones=$request->observaciones;
+        $aptitudModel->aptitud_laboral=$request->aptitud_laboral;
+        $aptitudModel->comentarios=$request->comentarios;
+        $aptitudModel->save();
+
+        $input_name="POinput";
+        foreach($request->all() as $key => $input){
+          $ex=explode("_",$key);
+          if($ex[0]==$input_name){
+            //$id_tipo_estudio=$ex[1];
+            $id_estudio=$ex[2];
+            $voucher_estudio=VoucherEstudio::whereVoucher_id($id)->whereEstudio_id($id_estudio)->first();
+            //dd($voucher_estudio);
+            if(isset($ex[3]) and $ex[3]=="radio"){
+              //es un radio
+              $voucher_estudio->pre_obs=$input;
+              $voucher_estudio->update();
+            }else{
+              $voucher_estudio->valor=$input;
+              $voucher_estudio->update();
+            }
+          }
+        }
+        //dd($request->all());
+        $riesgos=$request->riesgos;
+
+        $voucher_riesgo=VoucherRiesgos::whereVoucher_id($id)->delete();
+        //var_dump($voucher_riesgo);
+        
+        foreach ($riesgos as $key => $value) {
+          if($value==1){
+            //$voucher_riesgo = new VoucherRiesgos;
+            $voucher_riesgo = new VoucherRiesgos;
+            $voucher_riesgo->voucher_id = $id;
+            $voucher_riesgo->riesgo_id = $key;
+            $voucher_riesgo->save();
+          }
+        }
+        //$aptitudDB = Aptitud::create($request->all());
+        //dd($aptitudDB);
 
         //Generar PDF
-        $ruta = public_path().'/archivo/'."APTITUD".$aptitudDB->id.".pdf";
+        //$ruta = public_path().'/archivo/'."APTITUD".$aptitudDB->id.".pdf";
         //$ruta = public_path().'/archivo/'."APTITUD".$voucher->id.".pdf";
 
-        $pdf = PDF::loadView('aptitud.pdf',["voucher" => $voucher, 
+        /*$pdf = PDF::loadView('aptitud.pdf',["voucher" => $voucher, 
                                             "riesgos" => $aptitudModel->riesgos(), 
                                             "aptitud" => $aptitud]);
         $pdf->setPaper('a4','letter');
-        $pdf->save($ruta);
+        //$pdf->save($ruta);
 
         //Almacenar ruta de archivo en db
         $aptitudDB->pdf = $ruta;
-        $aptitudDB->save();
+        $aptitudDB->save();*/
 
-        return redirect()->route('voucher.show',$voucher->id);
+        return redirect()->route('voucher.show',$id);
 
     }
 
@@ -97,7 +149,33 @@ class AptitudController extends Controller
     public function descargar($id)
     {   
 
+        $aptitud = Aptitud::find($id);
+        $riesgos = Riesgos::all();
+
+        $voucher = Voucher::find($aptitud->voucher_id);
+        //dd($voucher);
+
+        $voucher_riesgos=[];
+        foreach($voucher->vouchersRiesgos as $riesgo){
+          $voucher_riesgos[]=$riesgo->riesgo_id;
+        }
+
+        /*return view('aptitud.pdf',["voucher" => $voucher, 
+                                                "riesgos" => $riesgos,
+                                                "voucher_riesgos" => $voucher_riesgos,
+                                                "aptitud" => $aptitud]);*/
+        $pdf = PDF::loadView('aptitud.pdf',["voucher" => $voucher, 
+                                            "riesgos" => $riesgos,
+                                            "voucher_riesgos" => $voucher_riesgos,
+                                            "aptitud" => $aptitud]);
+
+        $pdf->setPaper('a4','letter');
+        return $pdf->stream('aptitud.pdf');
+
         $aptitud = Aptitud::find($id); 
+        //dd($aptitud);
+        //return redirect()->route('aptitudes.pdf',$aptitud->id);
+        //return view('aptitudes.pdf', compact('aptitud'));
         return response()->file($aptitud->pdf);
 
     }
