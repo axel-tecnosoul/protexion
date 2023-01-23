@@ -9,6 +9,9 @@ use Illuminate\Http\Request;
 use App\Models\VoucherRiesgos;
 use App\Models\VoucherEstudio;
 use App\Riesgos;
+use App\HistoriaClinica;
+use App\PosicionesForzada;
+use App\Models\IluminacionDireccionado;
 use PDF;
 
 class AptitudController extends Controller
@@ -80,6 +83,31 @@ class AptitudController extends Controller
                     "observaciones" => $request->observaciones
         ];
 
+        if(isset($request->pre_historia_clinica) and isset($request->obs_historia_clinica)){
+          $historiaClinica=HistoriaClinica::findOrFail($voucher->historiaClinica->id);
+          $historiaClinica->informe_final_observaciones=$request->obs_historia_clinica;
+          $historiaClinica->informe_final_preexistencias=$request->pre_historia_clinica;
+          $historiaClinica->update();
+        }
+        if(isset($request->pre_posiciones_forzadas) and isset($request->obs_posiciones_forzadas)){
+          $posicionesForzada=PosicionesForzada::findOrFail($voucher->posicionesForzadas->id);
+          $posicionesForzada->informe_final_observaciones=$request->obs_posiciones_forzadas;
+          $posicionesForzada->informe_final_preexistencias=$request->pre_posiciones_forzadas;
+          $posicionesForzada->update();
+        }
+        if(isset($request->pre_iluminacion_insuficiente) and isset($request->obs_iluminacion_insuficiente)){
+          $iluminacionDireccionado=IluminacionDireccionado::findOrFail($voucher->iluminacionDireccionado->id);
+          $iluminacionDireccionado->informe_final_observaciones=$request->obs_iluminacion_insuficiente;
+          $iluminacionDireccionado->informe_final_preexistencias=$request->pre_iluminacion_insuficiente;
+          $iluminacionDireccionado->update();
+        }
+
+        /*var_dump($historiaClinica->id);
+        var_dump($posicionesForzada->id);
+        var_dump($iluminacionDireccionado->id);*/
+
+        //dd($request);
+        //dd($request->all());
         //dd($aptitudModel);
         //Cargar Aptitud
         $id=$request->voucher_id;
@@ -201,5 +229,154 @@ class AptitudController extends Controller
         $pdf->setPaper('a4','letter');
 
         return $pdf->stream('aptitud.pdf');
+    }
+
+    public function edit($id)
+    {   
+        $voucher  = Voucher::find($id);
+        //$declaracion_jurada=DeclaracionJurada::find($voucher->declaracionJurada->id);
+        //$aptitud = new Aptitud();
+        $aptitud = Aptitud::findOrFail($voucher->aptitud->id);
+        //dd($aptitud);
+        //Carga de riesgos
+        $riesgos = $aptitud->riesgos();
+
+        $voucher  = Voucher::find($id);
+        //Carga de estudios de sistema
+        $declaracion_jurada = $voucher->declaracionJurada;
+        $historia_clinica = $voucher->historiaClinica;
+        $posiciones_forzada = $voucher->posicionesForzadas;
+        $iluminacion_direccionado = $voucher->iluminacionDireccionado;
+
+        //dd($iluminacion_direccionado);
+
+        //Carga de diagnosticos
+        $voucher->declaracionJurada ? ($diagnosticoD = $declaracion_jurada->generarDiagnostico()) : ($diagnosticoD = " ");
+        $voucher->historiaClinica ? ($diagnosticoH = $historia_clinica->generarDiagnostico()) : ($diagnosticoH = " ");
+        $voucher->posicionesForzadas ? ($diagnosticoP = $posiciones_forzada->generarDiagnostico()) : ($diagnosticoP = " ");
+        $voucher->iluminacionDireccionado ? ($diagnosticoI = $iluminacion_direccionado->generarDiagnostico()) : ($diagnosticoI = " ");
+
+        //Carga de estudios clasificados por tipo
+        $estudios = $voucher->getEstudiosClasificados();
+        //dd($estudios);
+
+        //Carga de datos adicionales
+        /*if ($voucher->historiaClinica) {
+            $datosAdicionales = "IMC: ".$historia_clinica->examenClinico->imc.". ";
+            if ($historia_clinica->examenClinico->sobrepeso) {
+                $datosAdicionales = $datosAdicionales." Sobrepeso. ";
+            }
+            if ($historia_clinica->examenClinico->medicacion_actual) {
+                $datosAdicionales = $datosAdicionales." Medicación actual: ".$historia_clinica->examenClinico->medicacion_actual.". ";
+            }else {
+                $datosAdicionales = $datosAdicionales." Medicación actual: No. ";
+            }
+        } else {
+            $datosAdicionales = "";
+        }*/
+        $datosAdicionales = "";
+
+        $voucher_riesgos=[];
+        foreach($voucher->vouchersRiesgos as $riesgo){
+          $voucher_riesgos[]=$riesgo->riesgo_id;
+        }
+
+        //Tabla pf
+        $articulaciones = ['Hombro','Codo','Muñeca','Mano y dedos','Cadera','Rodilla','Tobillo'];
+        $cuadro = 0;
+        
+        return view('aptitud.edit', compact('voucher','riesgos','estudios', 'datosAdicionales','articulaciones','cuadro',
+                                              'declaracion_jurada','historia_clinica','posiciones_forzada','iluminacion_direccionado',
+                                              'diagnosticoD','diagnosticoH','diagnosticoP','diagnosticoI','voucher_riesgos','aptitud' ));
+    }
+
+    public function update(Request $request, $id)
+    {   
+        $aptitud = Aptitud::findOrFail($id);
+        //$aptitudModel = new Aptitud(); 
+        //Obtener voucher
+      
+        //dd($request->all());
+        $voucher = Voucher::find($request->voucher_id);
+        //Crear objeto aptitud
+        /*$aptitud = ["riesgos" => implode($request->riesgos),
+                    "comentarios" => $request->comentarios,
+                    "aptitud_laboral" => $request->aptitud_laboral,
+                    "fecha" => new Carbon(),
+                    "preexistencias" => $request->preexistencias,
+                    "observaciones" => $request->observaciones
+        ];*/
+
+        if(isset($request->pre_historia_clinica) and isset($request->obs_historia_clinica)){
+          $historiaClinica=HistoriaClinica::findOrFail($voucher->historiaClinica->id);
+          $historiaClinica->informe_final_observaciones=$request->obs_historia_clinica;
+          $historiaClinica->informe_final_preexistencias=$request->pre_historia_clinica;
+          $historiaClinica->update();
+        }
+        if(isset($request->pre_posiciones_forzadas) and isset($request->obs_posiciones_forzadas)){
+          $posicionesForzada=PosicionesForzada::findOrFail($voucher->posicionesForzadas->id);
+          $posicionesForzada->informe_final_observaciones=$request->obs_posiciones_forzadas;
+          $posicionesForzada->informe_final_preexistencias=$request->pre_posiciones_forzadas;
+          $posicionesForzada->update();
+        }
+        if(isset($request->pre_iluminacion_insuficiente) and isset($request->obs_iluminacion_insuficiente)){
+          $iluminacionDireccionado=IluminacionDireccionado::findOrFail($voucher->iluminacionDireccionado->id);
+          $iluminacionDireccionado->informe_final_observaciones=$request->obs_iluminacion_insuficiente;
+          $iluminacionDireccionado->informe_final_preexistencias=$request->pre_iluminacion_insuficiente;
+          $iluminacionDireccionado->update();
+        }
+
+        /*var_dump($historiaClinica->id);
+        var_dump($posicionesForzada->id);
+        var_dump($iluminacionDireccionado->id);*/
+
+        //dd($request);
+        //dd($request->all());
+        //dd($aptitudModel);
+        //Cargar Aptitud
+
+        //$aptitud->voucher_id=$request->voucher_id;
+        $aptitud->preexistencias=$request->preexistencias;
+        $aptitud->observaciones=$request->observaciones;
+        $aptitud->aptitud_laboral=$request->aptitud_laboral;
+        $aptitud->comentarios=$request->comentarios;
+        $aptitud->update();
+
+        $input_name="POinput";
+        foreach($request->all() as $key => $input){
+          $ex=explode("_",$key);
+          if($ex[0]==$input_name){
+            //$id_tipo_estudio=$ex[1];
+            $id_estudio=$ex[2];
+            $voucher_estudio=VoucherEstudio::whereVoucher_id($request->voucher_id)->whereEstudio_id($id_estudio)->first();
+            //dd($voucher_estudio);
+            if(isset($ex[3]) and $ex[3]=="radio"){
+              //es un radio
+              $voucher_estudio->pre_obs=$input;
+              $voucher_estudio->update();
+            }else{
+              $voucher_estudio->valor=$input;
+              $voucher_estudio->update();
+            }
+          }
+        }
+        //dd($request->all());
+        $riesgos=$request->riesgos;
+
+        $voucher_riesgo=VoucherRiesgos::whereVoucher_id($request->voucher_id)->delete();
+        //var_dump($voucher_riesgo);
+        
+        foreach ($riesgos as $key => $value) {
+          if($value==1){
+            //$voucher_riesgo = new VoucherRiesgos;
+            $voucher_riesgo = new VoucherRiesgos;
+            $voucher_riesgo->voucher_id = $request->voucher_id;
+            $voucher_riesgo->riesgo_id = $key;
+            $voucher_riesgo->save();
+          }
+        }
+
+        return redirect()->route('voucher.show',$request->voucher_id);
+
     }
 }

@@ -2,7 +2,7 @@
 
 @section('navegacion')
     <li class="breadcrumb-item"><a href="/protexion/public/home">Menu Principal</a></li>
-    <li class="breadcrumb-item active">Indice de Estudios</li>
+    <li class="breadcrumb-item active">Indice de Visitas</li>
 @endsection
 
 @section('content') <!-- Contenido -->
@@ -12,7 +12,7 @@
         @include('voucher.mensaje')
         <div class="card-header fondo2">
             <div class="card-title">
-                <p style="font-size:130%"> <i class="fa fa-id-card" aria-hidden="true"></i> Indice de Estudios</p>
+                <p style="font-size:130%"> <i class="fa fa-id-card" aria-hidden="true"></i> Indice de Visitas</p>
             </div>
         </div>
         <div class="card-body">
@@ -47,7 +47,7 @@
                         <td>{{ \Carbon\Carbon::parse($voucher->turno)->format('d/m/Y') }}</td>
                         <td style="text-align: center" colspan="3">
                             <a href="{{ route('voucher.edit',$voucher->id) }}">
-                                <button title="Editar voucher" class="btn fondo2 btn-responsive">
+                                <button title="Editar visita" class="btn fondo2 btn-responsive">
                                     <i class="fas fa-edit"></i>
                                 </button>
                             </a>

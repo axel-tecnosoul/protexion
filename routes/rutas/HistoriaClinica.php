@@ -4,7 +4,8 @@ Route::get('historia_clinica', 'HistoriaClinicaController@index')->name('histori
 Route::delete('historia_clinica/{historia_clinica}', 'HistoriaClinicaController@destroy')->name('historia_clinica.destroy');
 Route::get('historia_clinica/create/{voucher}', 'HistoriaClinicaController@create')->name('historia_clinica.create');
 Route::post('historia_clinica', 'HistoriaClinicaController@store')->name('historia_clinica.store');
-Route::get('historia_clinica/{historia_clinica}/edit', 'HistoriaClinicaController@edit')->name('historia_clinica.edit');
+//Route::get('historia_clinica/{historia_clinica}/edit', 'HistoriaClinicaController@edit')->name('historia_clinica.edit');
+Route::get('historia_clinica/edit/{voucher}', 'HistoriaClinicaController@edit')->name('historia_clinica.edit');
 Route::patch('historia_clinica/{historia_clinica}', 'HistoriaClinicaController@update')->name('historia_clinica.update');
 //PDF
 Route::get('historia_clinica/{historia_clinica}/pdf','HistoriaClinicaController@crearPDF')->name('historia_clinica.pdf');

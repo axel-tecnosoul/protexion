@@ -1,8 +1,8 @@
 @extends('layouts.admin')
 <!-- Extiende de layout -->
 @section('navegacion')
-    <li class="breadcrumb-item"><a href="/protexion/public/voucher">Indice de Vouchers</a></li>
-    <li class="breadcrumb-item active">Editar Voucher</li>
+    <li class="breadcrumb-item"><a href="/protexion/public/voucher">Indice de Visitas</a></li>
+    <li class="breadcrumb-item active">Editar Visita</li>
 @endsection
 
 @section('content')
@@ -23,7 +23,7 @@
   <div class="card card-outline">
     <div class="card-header header-bg">
       <div class="card-title">
-        <p style="font-size:130%"> <i class="fa fa-voucher" aria-hidden="true"></i> Datos Vouchers</p>
+        <p style="font-size:130%"> <i class="fa fa-voucher" aria-hidden="true"></i> Datos de la Visita</p>
       </div>
     </div>
     <div class="card-body fondo0">
@@ -105,15 +105,33 @@
                     <div class="col-6">
                       <div class="custom-control custom-checkbox">
                         <div class="icheck-danger d-inline"><?php
-                          $checked="";
-                          //if(in_array($item->id, $idChecked)){
-                          $c++;
-                          if(in_array($item->id,$voucher_estudio)){
-                            $checked="checked";
-                            $c2++;
+                          if($item->id==73){?>
+                            <input class="{{$tipo->id}}" type="hidden" name="{{$item->id}}" value=1 id="{{$item->id}}"><?php
+                          }else{
+                            $readonly=$checked="";
+                            $c++;
+                            //if(in_array($item->id,$voucher_estudio)){
+                            if(isset($voucher_estudio[$item->id])){
+                              //existe el estudio en el voucher
+                              $checked=" checked";
+                              $c2++;
+                              if($voucher_estudio[$item->id]=="si"){
+                                //el estudio ya fue completado
+                                //$readonly=" onclick='return false;' required";
+                                $readonly=" onclick='allwaysChecked(this);' required";
+                              }
+                            }
+                            if($item->id==56){
+                              //56 = Declaracion Jurada -> Va si o si
+                              //$readonly=" onclick='return false;' required";
+                              $readonly=" onclick='allwaysChecked(this);' required";
+                              if($checked==""){
+                                $checked=" checked";
+                              }
+                            }?>
+                            <input class="{{$tipo->id}}" type="checkbox" name="{{$item->id}}" value=1 id="{{$item->id}}" <?=$checked.$readonly?>>
+                            <label for="{{$item->id}}"> {{strtoupper($item->nombre)}} </label><?php
                           }?>
-                          <input class="{{$tipo->id}}" type="checkbox" name="{{$item->id}}" value=1 id="{{$item->id}}" <?=$checked?>>
-                          <label for="{{$item->id}}"> {{strtoupper($item->nombre)}} </label>
                         </div>
                       </div>
                     </div>
@@ -195,6 +213,11 @@
       }*/
     })
   });
+  function allwaysChecked(t){
+    if(!t.checked){
+      t.checked=true
+    }
+  }
 </script>
 @endpush
 @endsection

@@ -35,6 +35,7 @@ Route::middleware(['auth'])->group(function() {
     include 'rutas/ObraSocial.php';
     include 'rutas/PosicionesForzadas.php';
     include 'rutas/Voucher.php';
+    include 'rutas/VoucherMedico.php';
     include 'rutas/Perfil.php';
     include 'rutas/Personal.php';
     include 'rutas/Ciudad.php';

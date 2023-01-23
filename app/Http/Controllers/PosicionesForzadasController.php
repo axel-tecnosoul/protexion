@@ -162,4 +162,113 @@ class PosicionesForzadasController extends Controller
             //
             return redirect()->route('voucher.show',$voucher->id);
     }
+
+    public function edit($id)
+    {
+        $pacientes= Paciente::all();
+        $voucher  = Voucher::find($id);
+        $articulaciones = ['Hombro','Codo','Muñeca','Mano y dedos','Cadera','Rodilla','Tobillo'];
+        $cuadro = 0;
+
+        /*$voucher_historial = Voucher::wherePaciente_id($voucher->paciente_id)->orderBy("created_at","desc")->get();
+        $id_posiciones_forzadas_anterior = 0;
+        foreach ($voucher_historial as $voucher_anterior) {
+          //var_dump($voucher_anterior->posicionesForzadas);
+          if($voucher_anterior->posicionesForzadas){
+            $id_posiciones_forzadas_anterior = $voucher_anterior->posicionesForzadas->id;
+            break;
+          }
+        }
+        $posiciones_forzadas_anterior = PosicionesForzada::find($id_posiciones_forzadas_anterior);*/
+        $posiciones_forzadas=PosicionesForzada::find($voucher->posicionesForzadas->id);
+
+        return view('posiciones_forzadas.edit', compact('pacientes','articulaciones','voucher','cuadro','posiciones_forzadas'));
+    }
+
+    public function update(Request $request, $id)
+    {          
+            //Buscar y generar Models
+            $voucher=Voucher::find($request->voucher_id);
+            $posiciones_forzada=PosicionesForzada::FindOrFail($id);
+
+            //Almacenar Posiciones forzadas
+            $posiciones_forzada->puesto=$request->puesto;
+            $posiciones_forzada->antiguedad=$request->antiguedad;
+            $posiciones_forzada->nroTrabajo=$request->nroTrabajo;
+            //$posiciones_forzada->user_id=auth()->user()->id;
+            //$posiciones_forzada->voucher_id=$request->voucher_id;
+            //Tabla articulaciones
+                //Cada cuadro es representado por una posicion en el String
+                $dolor_articular = "";
+                for ($i=0; $i < 112; $i++) { 
+                    $dolor_articular = $dolor_articular.$request->$i;
+            }
+            $posiciones_forzada->dolor_articular = $dolor_articular;
+            $posiciones_forzada->update();
+            
+            //Tablas secundarias
+                //Tarea
+                $tarea=Tarea::FindOrFail($posiciones_forzada->tarea->id);
+                $tarea->tiempo=$request->tiempo;
+                $tarea->ciclo=$request->ciclo;
+                $tarea->cargas=$request->cargas;
+                $tarea->pregunta1 = $request->pregunta1;     
+                $tarea->pregunta2 = $request->pregunta2;     
+                $tarea->pregunta3 = $request->pregunta3;     
+                $tarea->pregunta4 = $request->pregunta4;     
+                $tarea->pregunta5 = $request->pregunta5;     
+                $tarea->pregunta6 = $request->pregunta6;     
+                $tarea->pregunta7 = $request->pregunta7;     
+                $tarea->pregunta8 = $request->pregunta8;        
+                $tarea->observacion_tarea=$request->observacion_tarea;
+                $tarea->posiciones_forzada_id=$posiciones_forzada->id;
+                $tarea->update();
+                //Dolor
+                $dolor=Dolor::FindOrFail($posiciones_forzada->dolor->id);
+                $dolor->forma = $request->forma;
+                $dolor->evolucion = $request->evolucion;
+                $dolor->pregunta1_d = $request->pregunta1_d;    
+                $dolor->pregunta2_d = $request->pregunta2_d;    
+                $dolor->pregunta3_d = $request->pregunta3_d;    
+                $dolor->pregunta4_d = $request->pregunta4_d;    
+                $dolor->pregunta5_d = $request->pregunta5_d;    
+                $dolor->observacion1_d= $request->observacion1_d;
+                $dolor->observacion2_d= $request->observacion2_d;
+                $dolor->posiciones_forzada_id=$posiciones_forzada->id;
+                $dolor->update();
+                //Semiologica
+                $semiologica=Semiologica::FindOrFail($posiciones_forzada->semiologica->id);
+                $semiologica->grado=$request->grado;
+                $semiologica->observacion1_s=$request->observacion1_s;
+                $semiologica->posiciones_forzada_id=$posiciones_forzada->id;
+                $semiologica->update();
+            //
+
+            //Generar PDF y enlazarlo
+                //Obtener voucher-estudio
+                /*foreach ($voucher->vouchersEstudios as $item) {
+                    if ($item->estudio->nombre == "POSICIONES FORZADAS") {
+                        $estudio = $item;
+                    }
+                }*/
+                //Ruta de PDF
+                //$ruta = public_path().'/archivo/'."POSICIONES FORZADAS".$estudio->id.".pdf";
+                //Generar PDF
+                //$articulaciones = ['Hombro','Codo','Muñeca','Mano y dedos','Cadera','Rodilla','Tobillo'];
+                //$cuadro = 0;
+                /*$pdf = PDF::loadView('posiciones_forzadas.pdf',[
+                    "posiciones_forzada"   =>  $posiciones_forzada,
+                    "articulaciones"       =>  $articulaciones,
+                    "cuadro"               =>  $cuadro
+                    ]);
+                $pdf->setPaper('a4','letter');
+                $pdf->stream($ruta);*/
+                //Almacenar archivo adjunto
+                /*$archivo_adjunto = ArchivoAdjunto::FindOrFail($posiciones_forzada->antecedenteFamiliar->id);
+                $archivo_adjunto->anexo = "ruta";
+                $archivo_adjunto->voucher_estudio_id = $estudio->id;
+                $archivo_adjunto->update();*/
+            //
+            return redirect()->route('voucher.show',$voucher->id);
+    }
 }

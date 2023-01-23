@@ -1,8 +1,8 @@
 @extends('layouts.admin')
   <!-- Extiende de layout -->
 @section('navegacion')
-    <li class="breadcrumb-item"><a href="/protexion/public/voucher">Indice de Vouchers</a></li>
-    <li class="breadcrumb-item active">Generar Voucher</li>
+    <li class="breadcrumb-item"><a href="/protexion/public/voucher">Indice de Visitas</a></li>
+    <li class="breadcrumb-item active">Generar Visita</li>
 @endsection
 
 @section('content')
@@ -15,7 +15,7 @@
         <div class="card card-outline">
             <div class="card-header header-bg">
                 <div class="card-title">
-                    <p style="font-size:130%"> <i class="fa fa-voucher" aria-hidden="true"></i> Datos Vouchers</p>
+                    <p style="font-size:130%"> <i class="fa fa-voucher" aria-hidden="true"></i> Datos de la Visita</p>
                 </div>
             </div>
             <div class="card-body fondo0">
@@ -73,7 +73,7 @@
                 <!-- / Paciente -->
                 <!-- Estudios -->
                     @foreach ($tipo_estudios as $tipo)<?php
-                        var_dump($tipo->nombre)?>
+                        //var_dump($tipo->nombre)?>
                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                             <div class="card "> <!--collapsed-card -->
                                 <div class="card-header header-bg">
@@ -102,12 +102,20 @@
                                                 <div class="col-6">
                                                     <div class="custom-control custom-checkbox">
                                                         <div class="icheck-danger d-inline">
-                                                            <?php $checked="" ?>
-                                                            @if(in_array($item->id, $idChecked))
-                                                                <?php $checked="checked"?>  
+                                                            <?php $readonly=$checked="" ?>
+                                                            @if($item->id==73)
+                                                              <input class="{{$tipo->id}}" type="hidden" name="{{$item->id}}" value = 1 id="{{$item->id}}">
+                                                            @else
+                                                              @if(in_array($item->id, $idChecked))
+                                                                  <?php $checked=" checked"?>
+                                                              @endif
+                                                              @if($item->id==56)
+                                                                  <!-- 56 = Declaracion Jurada -> Va si o si -->
+                                                                  <?php $readonly=" onclick='return false;' required";?>
+                                                              @endif
+                                                              <input class="{{$tipo->id}}" type="checkbox" name="{{$item->id}}" value = 1 id="{{$item->id}}" <?=$checked.$readonly?>>
+                                                              <label for="{{$item->id}}"> {{strtoupper($item->nombre)}} </label>
                                                             @endif
-                                                            <input class="{{$tipo->id}}" type="checkbox" name="{{$item->id}}" value = 1 id="{{$item->id}}" <?=$checked?>>
-                                                                <label for="{{$item->id}}"> {{strtoupper($item->nombre)}} </label>
                                                         </div>
                                                     </div>  
                                                 </div>         
@@ -164,7 +172,7 @@
     </script>
     <script>
         $(document).ready(function(){
-            //Voucher
+            //Visita
             var select1 = $("#paciente_id").select2({width:'100%'});
             select1.data('select2').$selection.css('height', '34px');
 
@@ -240,7 +248,9 @@
             {
                 if(miscasillas[i].type == "checkbox") // Ejecutamos si es una casilla de verificacion
                 {
-                    miscasillas[i].checked=casilla.checked; // Si el input es CheckBox se aplica la funcion ActivarCasilla
+                    if(miscasillas[i].id!=56){//56 = Declaracion Jurada -> Va si o si
+                        miscasillas[i].checked=casilla.checked; // Si el input es CheckBox se aplica la funcion ActivarCasilla
+                    }
                 }
             }
         }

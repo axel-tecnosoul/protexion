@@ -45,11 +45,11 @@
                     <div class="card-header fondo2">
                         Historia Clínica
                         <div class="card-tools">
-                            <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-plus"></i></button>
+                            <button type="button" class="btnCollapse btn btn-tool collapsed" data-toggle="collapse" href="#collapseExample"><i class="fas fa-plus"></i> Detalles</button>
                         </div>
                     </div>
-                    <div class="card-body">
-                        <div class="row form-group">
+                    <div class="card-body collapse" id="collapseExample">
+                        <div class="row">
                             <div class="col-12"><label for=""><u>Diagnóstico:</u> </label></div>
                             <div class="col">
                                 @php
@@ -57,18 +57,22 @@
                                 @endphp
                                 <input type="hidden" id="lblHistoriaClinica" value="Historia Clínica: ">
                             </div>
-                            <!-- Preexistencia u observaciones -->
-                            <div class="col-12">
-                                <hr>
-                                <div class="row">
-                                    <div class="col-6">
-                                        <label for="">Preexistencias</label>
-                                        <textarea class="form-control textArea" data-target="preexistencias" data-label="lblHistoriaClinica" name="" id="pre_historia_clinica" cols="15" rows="5"></textarea>
-                                    </div>
-                                    <div class="col-6">
-                                        <label for="">Observaciones</label>
-                                        <textarea class="form-control textArea" data-target="observaciones" data-label="lblHistoriaClinica" id="obs_historia_clinica" name="" cols="15" rows="5"><?=$diagnosticoH[1]?></textarea>
-                                    </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <!-- Preexistencia u observaciones -->
+                        <div class="col-12">
+                            <hr><?php
+                            $pre_historia_clinica=($historia_clinica->informe_final_preexistencias) ?: "";
+                            $obs_historia_clinica=($historia_clinica->informe_final_observaciones) ?: "";?>
+                            <div class="row">
+                                <div class="col-6">
+                                    <label for="">Preexistencias</label>
+                                    <textarea class="form-control textArea" data-target="preexistencias" data-label="lblHistoriaClinica" name="pre_historia_clinica" id="pre_historia_clinica" cols="15" rows="5"><?=$pre_historia_clinica?></textarea>
+                                </div>
+                                <div class="col-6">
+                                    <label for="">Observaciones</label>
+                                    <textarea class="form-control textArea" data-target="observaciones" data-label="lblHistoriaClinica" name="obs_historia_clinica" id="obs_historia_clinica" cols="15" rows="5"><?=$diagnosticoH[1]?><?=$obs_historia_clinica?></textarea>
                                 </div>
                             </div>
                         </div>
@@ -83,11 +87,11 @@
                     <div class="card-header fondo2">
                         Posiciones Forzadas
                         <div class="card-tools">
-                            <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-plus"></i></button>
+                            <button type="button" class="btnCollapse btn btn-tool collapsed" data-toggle="collapse" href="#collapseExample2"><i class="fas fa-plus"></i> Detalles</button>
                         </div>
                     </div>
-                    <div class="card-body">
-                        <div class="row form-group">
+                    <div class="card-body collapse" id="collapseExample2">
+                        <div class="row">
                             <div class="col-12"><label for=""><u>Diagnóstico:</u> </label></div>
                             <div class="col">
                                 @php
@@ -106,18 +110,22 @@
                                   </div><?php
                                 }?>
                             </div>
-                            <!-- Preexistencia u observaciones -->
-                            <div class="col-12">
-                                <hr>
-                                <div class="row">
-                                    <div class="col-6">
-                                        <label for="">Preexistencias</label>
-                                        <textarea class="form-control textArea" data-target="preexistencias" data-label="lblPosicionesForzadas" name="" id="pre_posiciones_forzadas" cols="15" rows="5"></textarea>
-                                    </div>
-                                    <div class="col-6">
-                                        <label for="">Observaciones</label>
-                                        <textarea class="form-control textArea" data-target="observaciones" data-label="lblPosicionesForzadas" id="obs_posiciones_forzadas" name="" cols="15" rows="5"></textarea>
-                                    </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <!-- Preexistencia u observaciones -->
+                        <div class="col-12">
+                            <hr><?php
+                            $pre_posiciones_forzadas=($posiciones_forzada->informe_final_preexistencias) ?: "";
+                            $obs_posiciones_forzadas=($posiciones_forzada->informe_final_observaciones) ?: "";?>
+                            <div class="row">
+                                <div class="col-6">
+                                    <label for="">Preexistencias</label>
+                                    <textarea class="form-control textArea" data-target="preexistencias" data-label="lblPosicionesForzadas" name="pre_posiciones_forzadas" id="pre_posiciones_forzadas" cols="15" rows="5"><?=$pre_posiciones_forzadas?></textarea>
+                                </div>
+                                <div class="col-6">
+                                    <label for="">Observaciones</label>
+                                    <textarea class="form-control textArea" data-target="observaciones" data-label="lblPosicionesForzadas" name="obs_posiciones_forzadas" id="obs_posiciones_forzadas" cols="15" rows="5"><?=$obs_posiciones_forzadas?></textarea>
                                 </div>
                             </div>
                         </div>
@@ -132,11 +140,11 @@
                     <div class="card-header fondo2">
                         Iluminacion Insuficiente
                         <div class="card-tools">
-                            <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-plus"></i></button>
+                            <button type="button" class="btnCollapse btn btn-tool collapsed" data-toggle="collapse" href="#collapseExample3"><i class="fas fa-plus"></i> Detalles</button>
                         </div>
                     </div>
-                    <div class="card-body">
-                        <div class="row form-group">
+                    <div class="card-body collapse" id="collapseExample3">
+                        <div class="row">
                             <div class="col-12"><label for=""><u>Diagnóstico:</u> </label></div>
                             <div class="col">
                                 @php
@@ -144,18 +152,22 @@
                                 @endphp
                                 <input type="hidden" id="lblIlumincacionInsuficiente" value="Ilumincacion Insuficiente: ">
                             </div>
-                            <!-- Preexistencia u observaciones -->
-                            <div class="col-12">
-                                <hr>
-                                <div class="row">
-                                    <div class="col-6">
-                                        <label for="">Preexistencias</label>
-                                        <textarea class="form-control textArea" data-target="preexistencias" data-label="lblIlumincacionInsuficiente" name="" id="pre_iluminacion_insuficiente" cols="15" rows="5"></textarea>
-                                    </div>
-                                    <div class="col-6">
-                                        <label for="">Observaciones</label>
-                                        <textarea class="form-control textArea" data-target="observaciones" data-label="lblIlumincacionInsuficiente" id="obs_iluminacion_insuficiente" name="" cols="15" rows="5"></textarea>
-                                    </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <!-- Preexistencia u observaciones -->
+                        <div class="col-12">
+                            <hr><?php
+                            $pre_iluminacion_insuficiente=($iluminacion_direccionado->informe_final_preexistencias) ?: "";
+                            $obs_iluminacion_insuficiente=($iluminacion_direccionado->informe_final_observaciones) ?: "";?>
+                            <div class="row">
+                                <div class="col-6">
+                                    <label for="">Preexistencias</label>
+                                    <textarea class="form-control textArea" data-target="preexistencias" data-label="lblIlumincacionInsuficiente" name="pre_iluminacion_insuficiente" id="pre_iluminacion_insuficiente" cols="15" rows="5"><?=$pre_iluminacion_insuficiente?></textarea>
+                                </div>
+                                <div class="col-6">
+                                    <label for="">Observaciones</label>
+                                    <textarea class="form-control textArea" data-target="observaciones" data-label="lblIlumincacionInsuficiente" name="obs_iluminacion_insuficiente" id="obs_iluminacion_insuficiente" cols="15" rows="5"><?=$obs_iluminacion_insuficiente?></textarea>
                                 </div>
                             </div>
                         </div>
@@ -183,16 +195,19 @@
                     <div class="card-body">
                         <!-- Inputs de estudios por cada tipo de estudio --><?php
                           foreach ($estudios_tipo_estudio as $estudio){
-                            $id_estudio=$estudio->id;
-                            $nombre_estudio=$estudio->nombre;
-                            //var_dump($id_estudio);
-                            
+                            $id_estudio=$estudio["estudio"]->id;
+                            $nombre_estudio=$estudio["estudio"]->nombre;
+                            //dd($estudio->pre_obs);
+                            //dd($nombre_estudio);
+                            //var_dump($estudio);
+                            //$valor="";
+                            $valor=($estudio["valor"]) ?: "";
                             $name="POinput_".$id_tipo_estudio."_".$id_estudio;?>
                             <div class="row form-group">
                                 <div class="col-12 d-inline">
                                     <label for="{{$name}}" class="w-100" id="{{$name}}_label">{{$nombre_estudio}}: </label>
                                     <!-- <input type="hidden" id="{{$name}}_hidden_label" value='{{$nombre_estudio}}'> -->
-                                    <input class="form-control inputText d-inline w-50" name="{{$name}}" type="text" id="{{$name}}">
+                                    <input class="form-control inputText d-inline w-50" name="{{$name}}" type="text" id="{{$name}}" value="<?=$valor?>">
                                     <!--  preexistencias observaciones --><?php
 
                                     $checkedObs="checked";
@@ -200,7 +215,17 @@
                                     if (($nombre_tipo_estudio == "ANALISIS BIOQUIMICO") or ($nombre_tipo_estudio == "ANALISIS BIOQUIMICO ANEXO 01")){
                                         $checkedObs="checked";
                                         $checkedPre="";
-                                    }?>
+                                    }
+
+                                    if($estudio["pre_obs"]=="P"){
+                                      $checkedObs="";
+                                      $checkedPre="checked";
+                                    }
+                                    if($estudio["pre_obs"]=="O"){
+                                      $checkedObs="checked";
+                                      $checkedPre="";
+                                    }
+                                    ?>
                                 
                                     <div class="icheck-danger d-inline w-25 ml-2">
                                         <input class="radioObsPre" data-target="observaciones" type="radio" name="{{$name}}_radio" id="{{$name}}_check_obs" value="O" <?=$checkedObs?>>
@@ -225,3 +250,24 @@
         
     </div>
 </div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function(event) {
+    let btnCollapse=document.querySelectorAll(".btnCollapse")
+    btnCollapse.forEach(function(elem) {
+      elem.addEventListener("click", function(event) {
+        let i=this.querySelectorAll("i");
+        let iconClasses=i[0].classList;
+        if(iconClasses.contains("fa-plus")){
+          iconClasses.remove("fa-plus")
+          iconClasses.add("fa-minus")
+        }else{
+          iconClasses.remove("fa-minus")
+          iconClasses.add("fa-plus")
+        }
+      })
+    });
+  });
+  
+ 
+</script>

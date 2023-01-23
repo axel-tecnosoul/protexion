@@ -86,7 +86,7 @@ class DeclaracionJuradaController extends Controller
     }
 
     public function store(Request $request)
-    {       
+    {
             //Crear y buscar los models
             $declaracion_jurada=new DeclaracionJurada();
             $voucher=Voucher::find($request->voucher_id);
@@ -195,5 +195,117 @@ class DeclaracionJuradaController extends Controller
             //
 
         return redirect()->route('voucher.show',$voucher->id);
+    }
+
+    public function edit($id)
+    {
+        $voucher  = Voucher::find($id);
+
+        $declaracion_jurada=DeclaracionJurada::find($voucher->declaracionJurada->id);
+
+        //trae a los puestos que no sean amdinistradores ni secretarias
+        $personal_clinicas = PersonalClinica::whereNotIn('puesto_id', [1,2])->get();
+        return view('declaracion_jurada.edit', compact('voucher','personal_clinicas','declaracion_jurada'));
+    }
+
+    public function update(Request $request, $id){
+
+      /*var_dump($id);
+      dd($request);*/
+        /*$personal=DeclaracionJurada::findOrFail($id);
+        $personal->nombre=$request->get('nombre');
+        $personal->codigo_postal=$request->get('codigo_postal');
+        $personal->provincia_id=$request->get('provincias_id');
+
+        $personal->update();
+
+        return redirect()->route('ciudad.index');*/
+
+        //Almacenar Declaracion jurada
+        $declaracion_jurada=DeclaracionJurada::findOrFail($id);
+        //dd($request);
+        $declaracion_jurada->personal_clinica_id=$request->personal_clinica_id;
+        //$declaracion_jurada->voucher_id=$request->voucher_id;
+        //$declaracion_jurada->ciudad_id=18; //Todos a Puerto Rico
+        $declaracion_jurada->fecha_realizacion=$request->fecha_realizacion;
+        $declaracion_jurada->update();
+
+        $voucher  = Voucher::find($request->voucher_id);
+        $paciente=Paciente::find($voucher->paciente_id);
+
+        //Actualizar paciente
+        $paciente->peso=$request->peso;
+        $paciente->estatura=$request->estatura;
+        $paciente->update();
+
+        //Tablas secundarias
+        $antecedente_familiar=AntecedenteFamiliar::findOrFail($declaracion_jurada->antecedenteFamiliar->id);
+        $antecedente_familiar->su_padre_vive=$request->su_padre_vive;
+        $antecedente_familiar->su_madre_vive=$request->su_madre_vive;
+        $antecedente_familiar->cancer=$request->cancer;
+        $antecedente_familiar->diabetes=$request->diabetes;
+        $antecedente_familiar->infarto=$request->infarto;
+        $antecedente_familiar->hipertension_Arterial=$request->hipertension_Arterial;
+        $antecedente_familiar->detalle=$request->detalle;
+        $antecedente_familiar->declaracion_jurada_id=$declaracion_jurada->id;
+        $antecedente_familiar->update();
+
+        $antecedente_personal=AntecedentePersonal::findOrFail($declaracion_jurada->antecedentePersonal->id);
+        $antecedente_personal->fuma=$request->fuma;
+        $antecedente_personal->bebe=$request->bebe;
+        $antecedente_personal->actividad_fisica=$request->actividad_fisica;
+        $antecedente_personal->covid19=$request->covid19;
+        $antecedente_personal->vacunado=$request->vacunado;
+        $antecedente_personal->declaracion_jurada_id=$declaracion_jurada->id;
+        $antecedente_personal->update();
+
+        $antecedente_medico_infancia=AntecedenteMedicoInfancia::findOrFail($declaracion_jurada->antecedenteMedicoInfancia->id);
+        $antecedente_medico_infancia->sarampion=$request->sarampion;
+        $antecedente_medico_infancia->rebeola=$request->rebeola;
+        $antecedente_medico_infancia->epilepsia=$request->epilepsia;
+        $antecedente_medico_infancia->varicela=$request->varicela;
+        $antecedente_medico_infancia->parotiditis=$request->parotiditis;
+        $antecedente_medico_infancia->cefalea_prolongada=$request->cefalea_prolongada;
+        $antecedente_medico_infancia->hepatitis=$request->hepatitis;
+        $antecedente_medico_infancia->gastritis=$request->gastritis;
+        $antecedente_medico_infancia->ulcera_gastrica=$request->ulcera_gastrica;
+        $antecedente_medico_infancia->hemorroide=$request->hemorroide;
+        $antecedente_medico_infancia->hemorragias=$request->hemorragias;
+        $antecedente_medico_infancia->neumonia=$request->neumonia;
+        $antecedente_medico_infancia->asma=$request->asma;
+        $antecedente_medico_infancia->tuberculosis=$request->tuberculosis;
+        $antecedente_medico_infancia->tos_cronica=$request->tos_cronica;
+        $antecedente_medico_infancia->catarro=$request->catarro;
+        $antecedente_medico_infancia->detalle1_m=$request->detalle1_m;
+        $antecedente_medico_infancia->declaracion_jurada_id=$declaracion_jurada->id;
+        $antecedente_medico_infancia->update();
+
+        $antecedente_reciente=AntecedenteReciente::findOrFail($declaracion_jurada->antecedenteReciente->id);
+        $antecedente_reciente->detalle1_reciente=$request->detalle1_reciente;
+        $antecedente_reciente->detalle2_reciente=$request->detalle2_reciente;
+        $antecedente_reciente->detalle3_reciente=$request->detalle3_reciente;
+        $antecedente_reciente->detalle4_reciente=$request->detalle4_reciente;
+        $antecedente_reciente->detalle5_reciente=$request->detalle5_reciente;
+        $antecedente_reciente->detalle6_reciente=$request->detalle6_reciente;
+        $antecedente_reciente->detalle7_reciente=$request->detalle7_reciente;
+        $antecedente_reciente->detalle8_reciente=$request->detalle8_reciente;
+        $antecedente_reciente->detalle9_reciente=$request->detalle9_reciente;
+        $antecedente_reciente->detalle10_reciente=$request->detalle10_reciente;
+        $antecedente_reciente->detalle11_reciente=$request->detalle11_reciente;
+        $antecedente_reciente->detalle12_reciente=$request->detalle12_reciente;
+        $antecedente_reciente->detalle13_reciente=$request->detalle13_reciente;
+        $antecedente_reciente->detalle14_reciente=$request->detalle14_reciente;
+        $antecedente_reciente->declaracion_jurada_id=$declaracion_jurada->id;
+        $antecedente_reciente->update();
+
+        $antecedente_quirurjico=AntecedenteQuirurjico::findOrFail($declaracion_jurada->antecedenteQuirurjico->id);
+        $antecedente_quirurjico->detalle1_q=$request->detalle1_q;
+        $antecedente_quirurjico->detalle2_q=$request->detalle2_q;
+        $antecedente_quirurjico->detalle3_q=$request->detalle3_q;
+        $antecedente_quirurjico->declaracion_jurada_id=$declaracion_jurada->id;
+        $antecedente_quirurjico->update();
+
+        return redirect()->route('voucher.show',$request->voucher_id);
+
     }
 }

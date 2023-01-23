@@ -220,9 +220,10 @@ class VoucherController extends Controller
           $tipo_estudio=$tipos_estudio[0]->nombre;
           //var_dump($tipo_estudio);
           foreach($tipos_estudio[1] as $estudios){
-            $estudio=$estudios->nombre;
+            $estudio=$estudios["estudio"]->nombre;
+            $id_estudio=$estudios["estudio"]->id;
             //var_dump($estudio);
-            $estudios_voucher[$tipo_estudio][]=$estudio;
+            $estudios_voucher[$tipo_estudio][$id_estudio]=$estudio;
           }
           //echo "<hr>";
         }
@@ -233,7 +234,8 @@ class VoucherController extends Controller
         $estudios_sistema = [];
         $estudios = [];
         $indice = [];
-        $rutas = [];
+        $rutasCreate = [];
+        $rutasEdit = [];
         $forms = [];
         $forms[] = array(   'DECLARACION JURADA',
                             'HISTORIA CLINICA',
@@ -255,6 +257,13 @@ class VoucherController extends Controller
                             '',
                             '',
                             'iluminacionDireccionado');
+
+        $forms[] = array(   'declaracion_jurada.edit',
+                            'historia_clinica.edit',
+                            'posiciones_forzadas.edit',
+                            'audiometrias.edit',
+                            'espiriometrias.edit',
+                            'iluminacion_direccionados.edit');
         $a = 0;
         //dd($voucher->vouchersEstudios);
         $id_estudios=[];
@@ -262,7 +271,8 @@ class VoucherController extends Controller
             for ($i=0; $i < sizeof($forms[0]); $i++) {
                 if ( $item->estudio->nombre == $forms[0][$i]) {
                     $estudios[] = $item;
-                    $rutas[] = $forms[1][$i];
+                    $rutasCreate[] = $forms[1][$i];
+                    $rutasEdit[] = $forms[3][$i];
                     $indice[] = $a;
 
                     $id_estudio=0;
@@ -277,11 +287,13 @@ class VoucherController extends Controller
             }
         }
         //var_dump($id_estudios);
+        //dd($id_estudios);
         
         $estudios_sistema[] = $estudios;
-        $estudios_sistema[] = $rutas;
+        $estudios_sistema[] = $rutasCreate;
         $estudios_sistema[] = $indice;
         $estudios_sistema[] = $id_estudios;
+        $estudios_sistema[] = $rutasEdit;
         return view('voucher.show', compact('voucher', 'estudios_sistema','estudios_cargar', 'tipo_estudios', 'puede_imprimir','estudios_voucher'));
     }
 
@@ -294,9 +306,26 @@ class VoucherController extends Controller
       $paciente =         Paciente::find($voucher->paciente->id);
 
       $voucher_estudio=[];
+      //dd($voucher->vouchersEstudios);
+      
       foreach($voucher->vouchersEstudios as $estudio){
-        $voucher_estudio[]=$estudio->estudio_id;
+        //var_dump($estudio->estudio_id);
+        //echo $estudio->estudio_id."<br>";
+        
+        $archivoAdjunto=ArchivoAdjunto::where('voucher_estudio_id', $estudio->id)->get();
+        //var_dump($archivoAdjunto);
+        //var_dump(count($archivoAdjunto));
+        $completo="no";
+        if(count($archivoAdjunto)>0){
+          //echo "TIENE ALGOOOOOOOOOOOOOOOOOOOOOOOOOOOO<br>";
+          //echo $estudio->estudio_id."<br>";
+          $completo="si";
+        }
+        
+        $voucher_estudio[$estudio->estudio_id]=$completo;
       }
+
+      //dd($voucher_estudio);
 
       $voucher_riesgos=[];
       foreach($voucher->vouchersRiesgos as $riesgo){
@@ -318,6 +347,8 @@ class VoucherController extends Controller
 
     public function update(Request $request, $id)
     {
+
+      //dd($request);
       $voucher=Voucher::findOrFail($id);
       $voucher->turno=$request->turno;
       $voucher->user_id=auth()->user()->id;
@@ -341,7 +372,7 @@ class VoucherController extends Controller
       }
 
 
-      $voucher_estudio=VoucherEstudio::whereVoucher_id($id)->delete();
+      //$voucher_estudio=VoucherEstudio::whereVoucher_id($id)->delete();
       //dd($voucher_estudio);
 
       //HARDCODEADISIMO
@@ -358,24 +389,31 @@ class VoucherController extends Controller
               $aux = $estudio->id;
               //Compara el aux con el campo de la request, que en la vista se establece que cada uno es el id de un Estudio distinto.
               if ($request->$aux == 1) {
-                  $voucher_estudio = new VoucherEstudio;
-                  $voucher_estudio->voucher_id = $id;
-                  $voucher_estudio->estudio_id = $estudio->id;
-                  $voucher_estudio->save();
 
-                  //Comprobar si se cargar estudios base
-                  if ($estudio->id == $voucher_estudio->estudio_id) {
-                      if ((strtoupper($estudio->tipoEstudio->nombre) == "ANALISIS BIOQUIMICO") or
-                          (strtoupper($estudio->tipoEstudio->nombre) == "ANALISIS BIOQUIMICO ANEXO 01") ) {
-                          $analisisB = true;
-                      }
-                      if (strtoupper($estudio->tipoEstudio->nombre) == "PSICOTECNICO") {
-                          $psicotecnico = true;
-                      }
-                      if (strtoupper($estudio->tipoEstudio->nombre) == "RADIOLOGIA") {
-                          $radiologia = true;
-                      }
+                  $voucher_estudio=VoucherEstudio::whereVoucher_id($id)->whereEstudio_id($aux)->get();
+                  //var_dump($voucher_estudio);
+                  if(count($voucher_estudio)==0){
+                    $voucher_estudio = new VoucherEstudio;
+                    $voucher_estudio->voucher_id = $id;
+                    $voucher_estudio->estudio_id = $estudio->id;
+                    $voucher_estudio->save();
+
+                    //Comprobar si se cargar estudios base
+                    if ($estudio->id == $voucher_estudio->estudio_id) {
+                        if ((strtoupper($estudio->tipoEstudio->nombre) == "ANALISIS BIOQUIMICO") or
+                            (strtoupper($estudio->tipoEstudio->nombre) == "ANALISIS BIOQUIMICO ANEXO 01") ) {
+                            $analisisB = true;
+                        }
+                        if (strtoupper($estudio->tipoEstudio->nombre) == "PSICOTECNICO") {
+                            $psicotecnico = true;
+                        }
+                        if (strtoupper($estudio->tipoEstudio->nombre) == "RADIOLOGIA") {
+                            $radiologia = true;
+                        }
+                    }
                   }
+              }else{
+                $voucher_estudio=VoucherEstudio::whereVoucher_id($id)->whereEstudio_id($aux)->delete();
               }
           }
           //Cargar estudios base
@@ -399,6 +437,7 @@ class VoucherController extends Controller
           }
 
       //$voucher->update();
+      //return false;
 
       return redirect()->route('paciente.voucher',$request->paciente_id);
     }

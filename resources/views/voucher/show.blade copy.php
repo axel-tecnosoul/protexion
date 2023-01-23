@@ -21,13 +21,8 @@
         <div class="card-title">
           <p style="font-size:130%"> <i class="fa fa-voucher" aria-hidden="true"></i>Datos de la Visita #<span id="header_voucher_id">{{$voucher->id}}</span>
             <a target="_blank" class="ml-2" href="{{ route('voucher.pdf_paciente',$voucher->id) }}">
-                <button title="Exportar pdf" class="btn fondo1 btn-responsive">
+                <button title="exportar pdf paciente" class="btn fondo1 btn-responsive">
                     <i class="fas fa-file-pdf"></i> Imprimir
-                </button>
-            </a>
-            <a href="{{ route('voucher.edit',$voucher->id) }}">
-                <button title="Editar voucher" class="btn btn-light btn-responsive">
-                    <i class="fas fa-edit"></i>
                 </button>
             </a>
           </p>
@@ -37,10 +32,6 @@
             <!-- descargamos el archivo generado al crear el informe -->
             <a target="_blank" href=" {{ route('aptitudes.descargar',$voucher->aptitud->id)}}" class="btn fondo1">
               <i class="fas fa-file-pdf"></i> Informe Final
-            </a>
-            <!-- boton para editar el informe final -->
-            <a title="Editar informe final" class="btn btn-light btn-responsive" href="{{ route('aptitudes.edit', $voucher->id)}}" >
-              <i class="fa fa-edit" ></i>
             </a>
           @else
             @if ($voucher->voucherListo())
@@ -88,7 +79,7 @@
                             </td>
                           @else<?php
                             //var_dump($estudios_sistema);
-                            //var_dump($estudios_sistema[0][$item]->estudio->id);
+                            //var_dump($estudios_sistema[0][$item]->estudio);
                             //var_dump($estudios_sistema[0][$item]->estudio->nombre)?>
                             <td style="width: 65%">{{ $estudios_sistema[0][$item]->estudio->nombre }}</td><?php
                             // @if ($estudios_sistema[0][$item]->archivo_adjunto != "[]") ?>
@@ -99,12 +90,8 @@
                                 $disabled="";
                                 $title="Imprimir";
                               }?>
+                              <!-- imprimir formulario -->
                               <td style="text-align: center" title="<?=$title?>">
-                                <!-- editar formulario -->
-                                <a title="Editar estudio" class="btn fondo2 btn-responsive" href="{{ route($estudios_sistema[4][$item], $voucher->id)}}">
-                                  <i class="fa fa-edit" ></i>
-                                </a>
-                                <!-- imprimir formulario -->
                                 <a target="_blank" href="<?=route($aRutasPDF[$estudios_sistema[0][$item]->estudio->nombre],$voucher->id)?>" class="btn fondo1 btn-responsive <?=$disabled?>">
                                   <i class="fas fa-file-pdf"></i>
                                 </a>
@@ -118,6 +105,55 @@
                               </td>
                             @endif
                           @endif
+                        @endif
+                      </tr>
+                    @endforeach
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <!-- ESTUDIOS CARGADOS OLD -->
+          <div class="col">
+            <div class="card flex-fill">
+              <div style="text-align: center" class="card-header fondo2">ESTUDIOS CARGADOS</div>
+              <div class="card-body">
+                <table data-page-length='10' id="tablaDetalle" style="border:1px solid black; width:100%" class="table-sm table-bordered table-condensed table-hover ">
+                  <thead class="fondo2">
+                    <tr>
+                      <th style="width: 30%"> Tipo                  </th>
+                      <th style="width: 30%"> Estudio               </th>
+                      <th style="width: 25%"> Estado                </th>
+                      <th style="width: 15%"> Acción                </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    @foreach ($estudios_cargar as $item)
+                      <tr>
+                        <td style="text-align: left"> {{($item->estudio->tipoEstudio->nombre) }}    </td> 
+                        <td style="text-align: left"> {{strtoupper($item->estudio->nombre)    }}    </td>
+                        @if ($item->archivo_adjunto != "[]")
+                          <td><label class="badge badge-success" style="font-size:90%">Cargado</label></td>
+                          <td style="text-align: center">
+                            <button type="button" class="btn fondo2" data-toggle="modal" data-target="#archivoModal" data-whatever="[{{$item->estudio}}, {{$item}}]">
+                              <i class="fa fa-plus" ></i>
+                            </button>
+                            <!-- Button trigger modal -->
+                            <button type="button" class="btn fondo1 btn-responsive" data-toggle="modal" data-target="#modelArchivos{{$item->id}}">
+                              <i class="fas fa-file-pdf"></i>
+                            </button>
+                            <!-- MODAL PARA MOSTRAR ARCHIVOS -->
+                            @include('voucher.modal_archivos')
+                          </td>
+                        @else
+                          <td><label class="badge badge-danger" style="font-size:90%">Pendiente</label></td>
+                          <td style="text-align: center">
+                            <button type="button" class="btn fondo2" data-toggle="modal" data-target="#archivoModal" data-whatever="[{{$item->estudio}}, {{$item}}]">
+                              <i class="fa fa-plus" ></i>
+                            </button>
+                          </td>
                         @endif
                       </tr>
                     @endforeach
@@ -143,65 +179,81 @@
                     </tr>
                   </thead>
                   <tbody>
-                    @foreach ($estudios_cargar as $item)
+                    <tr>
+                      <td style="text-align: left">RESUMEN</td> 
+                      <td style="text-align: left"><?php
+                      var_dump($estudios_voucher);
+                      
+                      foreach ($estudios_voucher as $tipo_estudio => $estudios) {
+                        if($tipo_estudio!="RADIOLOGIA"){
+                          echo "<b>".$tipo_estudio.":</b> ";
+                          echo implode(", ",$estudios);
+                          echo "<br>";
+                        }
+                      }
+                      var_dump($item);
+                      var_dump($item->archivo_adjunto);
+                      ?></td>
+                      @if ($item->archivo_adjunto != "[]")
+                        <td><label class="badge badge-success" style="font-size:90%">Cargado</label></td>
+                        <td style="text-align: center">
+                          <button type="button" class="btn fondo2" data-toggle="modal" data-target="#archivoModal" data-whatever="[{{$item->estudio}}, {{$item}}]">
+                            <i class="fa fa-plus" ></i>
+                          </button>
+                          <!-- Button trigger modal -->
+                          <button type="button" class="btn fondo1 btn-responsive" data-toggle="modal" data-target="#modelArchivos{{$item->id}}">
+                            <i class="fas fa-file-pdf"></i>
+                          </button>
+                          <!-- MODAL PARA MOSTRAR ARCHIVOS -->
+                          @include('voucher.modal_archivos')
+                        </td>
+                      @else
+                        <td><label class="badge badge-danger" style="font-size:90%">Pendiente</label></td>
+                        <td style="text-align: center">
+                          <button type="button" class="btn fondo2" data-toggle="modal" data-target="#archivoModal" data-whatever="[{{$item->estudio}}, {{$item}}]">
+                            <i class="fa fa-plus" ></i>
+                          </button>
+                        </td>
+                      @endif
+                    </tr><?php
+                    //var_dump($estudios_voucher);
+                    
+                    if(in_array("RADIOLOGIA",array_keys($estudios_voucher))){?>
                       <tr>
-                        <td style="text-align: left">{{($item->estudio->nombre) }}</td> 
+                        <td style="text-align: left">RADIOLOGIA</td> 
                         <td style="text-align: left"><?php
-                        //var_dump($item->estudio);
-                          if($item->estudio->nombre=="RADIOLOGIA"){
-                            echo implode(", ",$estudios_voucher["RADIOLOGIA"]);
-                            echo "<br>";
-                          }else{
-                            foreach ($estudios_voucher as $tipo_estudio => $estudios) {
-                              //var_dump($tipo_estudio);
-                              if($tipo_estudio!="RADIOLOGIA"){
-
-                                if($tipo_estudio=="COMPLEMENTARIO"){
-                                  if(count($estudios)){
-                                    //unset($estudios);
-                                    continue;
-                                  }
-                                  var_dump($estudios);
-                                  unset($estudios[73]);
-                                }
-                                echo "<b>".$tipo_estudio.":</b> ";
-                                echo implode(", ",$estudios);
-                                echo "<br>";
-                              }
-                            }
-                          }
-                          ?></td>
-                          @if ($item->archivo_adjunto != "[]")
-                            <td><label class="badge badge-success" style="font-size:90%">Cargado</label></td>
-                            <td style="text-align: center">
-                              <button type="button" class="btn fondo2" data-toggle="modal" data-target="#archivoModal" data-whatever="[{{$item->estudio}}, {{$item}}]">
-                                <i class="fa fa-plus" ></i>
-                              </button>
-                              <!-- Button trigger modal -->
-                              <button type="button" class="btn fondo1 btn-responsive" data-toggle="modal" data-target="#modelArchivos{{$item->id}}">
-                                <i class="fas fa-file-pdf"></i>
-                              </button>
-                              <!-- MODAL PARA MOSTRAR ARCHIVOS -->
-                              @include('voucher.modal_archivos')
-                            </td>
-                          @else
-                            <td><label class="badge badge-danger" style="font-size:90%">Pendiente</label></td>
-                            <td style="text-align: center">
-                              <button type="button" class="btn fondo2" data-toggle="modal" data-target="#archivoModal" data-whatever="[{{$item->estudio}}, {{$item}}]">
-                                <i class="fa fa-plus" ></i>
-                              </button>
-                            </td>
-                          @endif
-                        </tr><?php
-                      //var_dump($estudios_voucher);?>
-                    @endforeach
+                          echo implode(", ",$estudios_voucher["RADIOLOGIA"]);
+                          echo "<br>";?>
+                        </td>
+                        @if ($item->archivo_adjunto != "[]")
+                          <td><label class="badge badge-success" style="font-size:90%">Cargado</label></td>
+                          <td style="text-align: center">
+                            <button type="button" class="btn fondo2" data-toggle="modal" data-target="#archivoModal" data-whatever="[{{$item->estudio}}, {{$item}}]">
+                              <i class="fa fa-plus" ></i>
+                            </button>
+                            <!-- Button trigger modal -->
+                            <button type="button" class="btn fondo1 btn-responsive" data-toggle="modal" data-target="#modelArchivos{{$item->id}}">
+                              <i class="fas fa-file-pdf"></i>
+                            </button>
+                            <!-- MODAL PARA MOSTRAR ARCHIVOS -->
+                            @include('voucher.modal_archivos')
+                          </td>
+                        @else
+                          <td><label class="badge badge-danger" style="font-size:90%">Pendiente</label></td>
+                          <td style="text-align: center">
+                            <button type="button" class="btn fondo2" data-toggle="modal" data-target="#archivoModal">
+                              <i class="fa fa-plus" ></i>
+                            </button>
+                          </td>
+                        @endif
+                      </tr><?php
+                    }?>
                   </tbody>
                 </table>
               </div>
             </div>
           </div>
         </div>
-
       </div>
     </div>
   </div>
@@ -216,11 +268,8 @@
         // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
         var modal = $(this)
         //modal.find('.modal-title').text('Carga de archivo de ' + recipient[0].nombre)
-        console.log(recipient);
-        console.log(modal.find('#estudio').val(recipient[0].nombre))
-        console.log(recipient[0].nombre)
-        console.log(modal.find('#voucher_estudio').val(recipient[1].id))
-        console.log(recipient[1].id)
+        /*modal.find('#estudio').val(recipient[0].nombre)
+        modal.find('#voucher_estudio').val(recipient[1].id)*/
         modal.find('#voucher_id').val($("#header_voucher_id").html())
       })
     </script>

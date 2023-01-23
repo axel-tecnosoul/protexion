@@ -1,5 +1,5 @@
 <!-- Modal -->
-<div class="modal fade" id="modelAchivos{{$item->id}}" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+<div class="modal fade" id="modelArchivos{{$item->id}}" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <!-- HEADER -->
@@ -13,9 +13,16 @@
         <table class="table">
           <tbody>
             @for ($i = 0; $i < sizeof($item->archivo_adjunto); $i++)
+            <?php
+            $ruta=$item->archivo_adjunto[$i]->anexo;
+            //var_dump($ruta);
+            $ex=explode("/",$ruta);
+            $nombre_archivo=$ex[count($ex)-1];
+            ?>
               <tr>
                 <td style="text-align: left">
-                  <a href={{ route('voucherEstudio.descargar',$item->archivo_adjunto[$i]->id)}}>{{strtoupper($item->estudio->nombre)    }} {{ $i + 1 }}</a> 
+                  <!-- <a href={{ route('voucherEstudio.descargar',$item->archivo_adjunto[$i]->id)}}>{{strtoupper($item->estudio->nombre)    }} {{ $i + 1 }}</a> -->
+                  <a href={{ route('voucherEstudio.descargar',$item->archivo_adjunto[$i]->id)}}>{{strtoupper($nombre_archivo)}}</a>
                 </td>
               </tr>
             @endfor

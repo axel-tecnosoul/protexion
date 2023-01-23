@@ -17,7 +17,7 @@ class IluminacionDireccionado extends Model
         return $this->hasOne('App\Voucher', 'id', 'voucher_id');
     }
 
-    public function generarDiagnostico()
+    public function generarDiagnostico2()
     {
             // Generación de Diagnóstico
                 /* La generación deldiagnostico se realiza cargando dos arrays, uno con las etiquetas y otro con los atributos.
@@ -117,6 +117,94 @@ class IluminacionDireccionado extends Model
                     }
                 }
             };
+        return $diagnostico;
+    }
+
+    public function generarDiagnostico()
+    {
+      // Generación de Diagnóstico
+      /* La generación deldiagnostico se realiza cargando dos arrays, uno con las etiquetas y otro con los atributos.
+      Luego se procede a cargar sólo los atributos que fueron cargados cuando se generó el formulario*/
+      $diagnostico = "";
+      //Carga variables
+      $matriz = [
+        "ANTECEDENTES"=>[
+          'Enfermedades'=>$this->enfermedades,
+          'Transtornos congenitos'=>$this->transtornos_congenitos,
+          'Enfermedades profecionales'=>$this->enfermedades_profecionales,
+          'Exposicion al riesgo anterior'=>$this->exposicion_anterior,
+          'Exposicion al riesgo actual'=>$this->exposicion_actual,
+          //"Empresa: ".$this->exp_actual_empresa.", actividad:".$this->exp_actual_actividad.", puesto:".$this->exp_actual_puesto.", antiguedad".$this->exp_actual_antiguedad." y horario: ".$this->exp_actual_horario,
+        ],
+        "EXAMEN CLINICO"=>[
+          'Cefaleas'=>$this->cefaleas,
+          'Visión doble'=>$this->vision_doble,
+          'Mareo / vértigo'=>$this->mareo_vertigo,
+          'Conjuntivitis'=>$this->conjuntivitis,
+          'Vision borrosa'=>$this->vision_borrosa,
+          'Inseguridad en posición de pie'=>$this->inseguridad_de_pie,
+        ],
+        "EXAMEN OCULAR"=>[
+          'No centrados'=>$this->no_centrados,
+          'Pupilas anormales'=>$this->pupilas_anormales,
+          'Conjuntivas anormales'=>$this->conjuntivas_anormales,
+          'Corneas anormales'=>$this->corneas_anormales,
+          'Motilidad anormal'=>$this->motilidad_anormal,
+          'Nistagmus ausente'=>$this->nistagmus_ausente,
+          'Informe ocular'=>$this->informe_ocular,
+          'Agudeza visual con corrección'=>$this->av_correccion,
+          'Agudeza visual sin correccion'=>$this->av_sin_correccion,
+          'Observaciones'=>$this->observaciones,
+        ]
+      ];
+      //Carga de diagnostico
+
+      foreach ($matriz as $seccion => $valores) {
+        //var_dump($seccion);
+        //var_dump($valores);
+        $aux="";
+        $mostrarNombreSeccion=0;
+        foreach ($valores as $label => $valor) {
+          //if(!in_array($label,$arExcluidos)){
+            if($valor==1){
+              //$aux.=$label.": "" Si\n".
+              $aux.=$label.": <b>Si</b><br>";
+              $mostrarNombreSeccion=1;
+            }elseif ($valor == "") {
+              
+          }else{
+              $aux.=$label.": <b>".$valor."</b>.<br> ";
+              $mostrarNombreSeccion=1;
+          }
+
+          //}
+        }
+        if($mostrarNombreSeccion==1){
+          $aux="<b>".$seccion."</b><br>".$aux."<br>";
+        }
+        //echo $aux;
+        $diagnostico.=$aux;
+      }
+            /*$vacio = false;
+            for ($i=0; $i < sizeof($matriz[1]); $i++) {
+                if ($matriz[0][$i] != null) {
+                    if ($matriz[0][$i] == 1) {
+                        $diagnostico = $diagnostico.$matriz[1][$i].". ";
+                        $vacio = false;
+                    }else{
+                        if ($matriz[0][$i] == " ") {
+                            if ($vacio) {
+                                $diagnostico = $diagnostico.'Sin particularidades.';
+                            }
+                            $vacio = true;
+                            $diagnostico = $diagnostico.$matriz[1][$i]."<b>".$matriz[0][$i]."</b>";
+                        }else{
+                            $diagnostico = $diagnostico.$matriz[1][$i]." "."<b>".$matriz[0][$i]."</b><br>. ";
+                            $vacio = false;
+                        }
+                    }
+                }
+            };*/
         return $diagnostico;
     }
     

@@ -23,34 +23,44 @@
                 <div class="col-12">
                     <label><input type="radio" name="aptitud_laboral" value="APTO “E”: NO APTO"> APTO “E”: NO APTO </label>
                 </div>
-            </div> -->
-            <div class="form-group row">
-                <div class="col-12">
+            </div> --><?php
+            $aAptitudes=[
+              "apto_sin_pre"=>"APTO SIN PREEXISTENCIAS",
+              "apto_con_pre"=>"APTO CON PREEXISTENCIAS",
+              "no_apto"=>"INCONVENIENTE SU INGRESO EN EL MOMENTO ACTUAL"
+            ]?>
+            <div class="form-group row"><?php
+                foreach ($aAptitudes as $id => $value) {?>
+                    <div class="col-12">
+                        <div class="icheck-danger">
+                            <input type="radio" name="aptitud_laboral" id="<?=$id?>" value="<?=$value?>" <?php echo ($value==$aptitud->aptitud_laboral) ? "checked" : ""?>>
+                            <label for="<?=$id?>"><?=$value?></label>
+                        </div>
+                    </div><?php
+                }?>
+                <!-- <div class="col-12">
                     <div class="icheck-danger">
                         <input type="radio" name="aptitud_laboral" id="apto_sin_pre" value="APTO SIN PREEXISTENCIAS">
                         <label for="apto_sin_pre">APTO SIN PREEXISTENCIAS</label>
                     </div>
-                    <!-- <label><input type="radio" name="aptitud_laboral" value="APTO SIN PREEXISTENCIAS"> APTO SIN PREEXISTENCIAS </label> -->
                 </div>
                 <div class="col-12">
                     <div class="icheck-danger">
                         <input type="radio" name="aptitud_laboral" id="apto_con_pre" value="APTO CON PREEXISTENCIAS">
                         <label for="apto_con_pre">APTO CON PREEXISTENCIAS</label>
                     </div>
-                    <!-- <label><input type="radio" name="aptitud_laboral" value="APTO CON PREEXISTENCIAS"> APTO CON PREEXISTENCIAS </label> -->
                 </div>
                 <div class="col-12">
                     <div class="icheck-danger">
                         <input type="radio" name="aptitud_laboral" id="no_apto" value="INCONVENIENTE SU INGRESO EN EL MOMENTO ACTUAL">
                         <label for="no_apto">INCONVENIENTE SU INGRESO EN EL MOMENTO ACTUAL</label>
                     </div>
-                    <!-- <label><input type="radio" name="aptitud_laboral" value="INCONVENIENTE SU INGRESO EN EL MOMENTO ACTUAL"> INCONVENIENTE SU INGRESO EN EL MOMENTO ACTUAL </label> -->
-                </div>
+                </div> -->
             </div>
             <div class="row form-group">
                 <div class="col">
                     <label for="">COMENTARIOS SOBRE PATOLOGIAS NO RELACIONADAS CON EL TRABAJO: </label>
-                    <textarea class="form-control" name="comentarios" id="" cols="15" rows="5"></textarea>
+                    <textarea class="form-control" name="comentarios" id="" cols="15" rows="5"><?=$aptitud->comentarios?></textarea>
                 </div>
             </div>
         </div>

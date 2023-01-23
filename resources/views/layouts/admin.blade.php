@@ -224,7 +224,13 @@
                         <li class="nav-item">
                             <a href="{{ route('voucher.index') }}" class="nav-link">
                                 <i class="nav-icon fas fa-stethoscope"></i>
-                                <p>Estudios</p>
+                                <p>Visitas</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('voucher_medico.index') }}" class="nav-link">
+                                <i class="nav-icon fas fa-list-ol"></i>
+                                <p>Visitas por medico</p>
                             </a>
                         </li>
                         <li class="nav-item">

@@ -195,11 +195,11 @@ class DeclaracionJurada extends Model implements Auditable
                         $vacio = false;
                     }else{
                         if ($matriz[0][$i] == " ") {
-                            if ($vacio) {
+                            /*if ($vacio) {
                                 $diagnostico = $diagnostico.'Sin particularidades.';
                             }
                             $vacio = true;
-                            $diagnostico = $diagnostico.$matriz[1][$i]."<b>".$matriz[0][$i]."</b>";
+                            $diagnostico = $diagnostico.$matriz[1][$i]."<b>".$matriz[0][$i]."</b>";*/
                         }else{
                             $diagnostico = $diagnostico.$matriz[1][$i]." "."<b>".$matriz[0][$i]."</b>.<br> ";
                             $vacio = false;

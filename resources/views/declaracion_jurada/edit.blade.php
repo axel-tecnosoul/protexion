@@ -8,8 +8,8 @@
 @section('content')
 {!!Form::open(array(
     'id'=>'declaracion_jurada',
-    'url'=>'declaracion_jurada',
-    'method'=>'POST',
+    'route'=>['declaracion_jurada.update',$declaracion_jurada->id],
+    'method'=>'PATCH',
     'autocomplete'=>'off',
     'files' => true,
 ))!!}
@@ -133,62 +133,62 @@ $detalle14_reciente="";
 $detalle1_q="";
 $detalle2_q="";
 $detalle3_q="";
-if(isset($declaracion_jurada_anterior)){
-  $fecha=($declaracion_jurada_anterior->fecha_realizacion) ?: "";
-  $peso=($declaracion_jurada_anterior->voucher->paciente->peso) ?: "";
-  $estatura=($declaracion_jurada_anterior->voucher->paciente->estatura) ?: "";
+if(isset($declaracion_jurada)){
+  $fecha=($declaracion_jurada->fecha_realizacion) ?: "";
+  $peso=($declaracion_jurada->voucher->paciente->peso) ?: "";
+  $estatura=($declaracion_jurada->voucher->paciente->estatura) ?: "";
   //ANTECEDENTES FAMILIARES
-  $su_padre_vive=($declaracion_jurada_anterior->antecedenteFamiliar->su_padre_vive==1) ? "checked" : "";
-  $su_madre_vive=($declaracion_jurada_anterior->antecedenteFamiliar->su_madre_vive==1) ? "checked" : "";
-  $cancer=($declaracion_jurada_anterior->antecedenteFamiliar->cancer==1) ? "checked" : "";
-  $diabetes=($declaracion_jurada_anterior->antecedenteFamiliar->diabetes==1) ? "checked" : "";
-  $infarto=($declaracion_jurada_anterior->antecedenteFamiliar->infarto==1) ? "checked" : "";
-  $hipertension_Arterial=($declaracion_jurada_anterior->antecedenteFamiliar->hipertension_Arterial==1) ? "checked" : "";
-  $antecedenteFamiliarDetalle=$declaracion_jurada_anterior->antecedenteFamiliar->detalle;
+  $su_padre_vive=($declaracion_jurada->antecedenteFamiliar->su_padre_vive==1) ? "checked" : "";
+  $su_madre_vive=($declaracion_jurada->antecedenteFamiliar->su_madre_vive==1) ? "checked" : "";
+  $cancer=($declaracion_jurada->antecedenteFamiliar->cancer==1) ? "checked" : "";
+  $diabetes=($declaracion_jurada->antecedenteFamiliar->diabetes==1) ? "checked" : "";
+  $infarto=($declaracion_jurada->antecedenteFamiliar->infarto==1) ? "checked" : "";
+  $hipertension_Arterial=($declaracion_jurada->antecedenteFamiliar->hipertension_Arterial==1) ? "checked" : "";
+  $antecedenteFamiliarDetalle=$declaracion_jurada->antecedenteFamiliar->detalle;
   //ANTECEDENTES PERSONALES
-  $fuma=($declaracion_jurada_anterior->antecedentePersonal->fuma) ?: "";
-  $bebe=($declaracion_jurada_anterior->antecedentePersonal->bebe) ?: "";
-  $actividad_fisica=($declaracion_jurada_anterior->antecedentePersonal->actividad_fisica) ?: "";
-  $covid19=($declaracion_jurada_anterior->antecedentePersonal->covid19) ?: "";
-  $vacunado=($declaracion_jurada_anterior->antecedentePersonal->vacunado) ?: 0;
+  $fuma=($declaracion_jurada->antecedentePersonal->fuma) ?: "";
+  $bebe=($declaracion_jurada->antecedentePersonal->bebe) ?: "";
+  $actividad_fisica=($declaracion_jurada->antecedentePersonal->actividad_fisica) ?: "";
+  $covid19=($declaracion_jurada->antecedentePersonal->covid19) ?: "";
+  $vacunado=($declaracion_jurada->antecedentePersonal->vacunado) ?: 0;
   //ANTECEDENTES DE LA INFANCIA
-  $sarampion=($declaracion_jurada_anterior->antecedenteMedicoInfancia->sarampion==1) ? "checked" : "";
-  $rebeola=($declaracion_jurada_anterior->antecedenteMedicoInfancia->rebeola==1) ? "checked" : "";
-  $epilepsia=($declaracion_jurada_anterior->antecedenteMedicoInfancia->epilepsia==1) ? "checked" : "";
-  $varicela=($declaracion_jurada_anterior->antecedenteMedicoInfancia->varicela==1) ? "checked" : "";
-  $parotiditis=($declaracion_jurada_anterior->antecedenteMedicoInfancia->parotiditis==1) ? "checked" : "";
-  $cefalea_prolongada=($declaracion_jurada_anterior->antecedenteMedicoInfancia->cefalea_prolongada==1) ? "checked" : "";
-  $hepatitis=($declaracion_jurada_anterior->antecedenteMedicoInfancia->hepatitis==1) ? "checked" : "";
-  $gastritis=($declaracion_jurada_anterior->antecedenteMedicoInfancia->gastritis==1) ? "checked" : "";
-  $ulcera_gastrica=($declaracion_jurada_anterior->antecedenteMedicoInfancia->ulcera_gastrica==1) ? "checked" : "";
-  $hemorroide=($declaracion_jurada_anterior->antecedenteMedicoInfancia->hemorroide==1) ? "checked" : "";
-  $hemorragias=($declaracion_jurada_anterior->antecedenteMedicoInfancia->hemorragias==1) ? "checked" : "";
-  $neumonia=($declaracion_jurada_anterior->antecedenteMedicoInfancia->neumonia==1) ? "checked" : "";
-  $asma=($declaracion_jurada_anterior->antecedenteMedicoInfancia->asma==1) ? "checked" : "";
-  $tuberculosis=($declaracion_jurada_anterior->antecedenteMedicoInfancia->tuberculosis==1) ? "checked" : "";
-  $tos_cronica=($declaracion_jurada_anterior->antecedenteMedicoInfancia->tos_cronica==1) ? "checked" : "";
-  $catarro=($declaracion_jurada_anterior->antecedenteMedicoInfancia->catarro==1) ? "checked" : "";
-  $epilepsia=($declaracion_jurada_anterior->antecedenteMedicoInfancia->epilepsia==1) ? "checked" : "";
-  $antecedenteMedicoInfanciaDetalle=$declaracion_jurada_anterior->antecedenteMedicoInfancia->detalle1_m;
+  $sarampion=($declaracion_jurada->antecedenteMedicoInfancia->sarampion==1) ? "checked" : "";
+  $rebeola=($declaracion_jurada->antecedenteMedicoInfancia->rebeola==1) ? "checked" : "";
+  $epilepsia=($declaracion_jurada->antecedenteMedicoInfancia->epilepsia==1) ? "checked" : "";
+  $varicela=($declaracion_jurada->antecedenteMedicoInfancia->varicela==1) ? "checked" : "";
+  $parotiditis=($declaracion_jurada->antecedenteMedicoInfancia->parotiditis==1) ? "checked" : "";
+  $cefalea_prolongada=($declaracion_jurada->antecedenteMedicoInfancia->cefalea_prolongada==1) ? "checked" : "";
+  $hepatitis=($declaracion_jurada->antecedenteMedicoInfancia->hepatitis==1) ? "checked" : "";
+  $gastritis=($declaracion_jurada->antecedenteMedicoInfancia->gastritis==1) ? "checked" : "";
+  $ulcera_gastrica=($declaracion_jurada->antecedenteMedicoInfancia->ulcera_gastrica==1) ? "checked" : "";
+  $hemorroide=($declaracion_jurada->antecedenteMedicoInfancia->hemorroide==1) ? "checked" : "";
+  $hemorragias=($declaracion_jurada->antecedenteMedicoInfancia->hemorragias==1) ? "checked" : "";
+  $neumonia=($declaracion_jurada->antecedenteMedicoInfancia->neumonia==1) ? "checked" : "";
+  $asma=($declaracion_jurada->antecedenteMedicoInfancia->asma==1) ? "checked" : "";
+  $tuberculosis=($declaracion_jurada->antecedenteMedicoInfancia->tuberculosis==1) ? "checked" : "";
+  $tos_cronica=($declaracion_jurada->antecedenteMedicoInfancia->tos_cronica==1) ? "checked" : "";
+  $catarro=($declaracion_jurada->antecedenteMedicoInfancia->catarro==1) ? "checked" : "";
+  $epilepsia=($declaracion_jurada->antecedenteMedicoInfancia->epilepsia==1) ? "checked" : "";
+  $antecedenteMedicoInfanciaDetalle=$declaracion_jurada->antecedenteMedicoInfancia->detalle1_m;
   //ANTECEDENTES RECIENTES
-  $detalle1_reciente=($declaracion_jurada_anterior->antecedenteReciente->detalle1_reciente) ?: "";
-  $detalle2_reciente=($declaracion_jurada_anterior->antecedenteReciente->detalle2_reciente) ?: "";
-  $detalle3_reciente=($declaracion_jurada_anterior->antecedenteReciente->detalle3_reciente) ?: "";
-  $detalle4_reciente=($declaracion_jurada_anterior->antecedenteReciente->detalle4_reciente) ?: "";
-  $detalle5_reciente=($declaracion_jurada_anterior->antecedenteReciente->detalle5_reciente) ?: "";
-  $detalle6_reciente=($declaracion_jurada_anterior->antecedenteReciente->detalle6_reciente) ?: "";
-  $detalle7_reciente=($declaracion_jurada_anterior->antecedenteReciente->detalle7_reciente) ?: "";
-  $detalle8_reciente=($declaracion_jurada_anterior->antecedenteReciente->detalle8_reciente) ?: "";
-  $detalle9_reciente=($declaracion_jurada_anterior->antecedenteReciente->detalle9_reciente) ?: "";
-  $detalle10_reciente=($declaracion_jurada_anterior->antecedenteReciente->detalle10_reciente) ?: "";
-  $detalle11_reciente=($declaracion_jurada_anterior->antecedenteReciente->detalle11_reciente) ?: "";
-  $detalle12_reciente=($declaracion_jurada_anterior->antecedenteReciente->detalle12_reciente) ?: "";
-  $detalle13_reciente=($declaracion_jurada_anterior->antecedenteReciente->detalle13_reciente) ?: "";
-  $detalle14_reciente=($declaracion_jurada_anterior->antecedenteReciente->detalle14_reciente) ?: "";
+  $detalle1_reciente=($declaracion_jurada->antecedenteReciente->detalle1_reciente) ?: "";
+  $detalle2_reciente=($declaracion_jurada->antecedenteReciente->detalle2_reciente) ?: "";
+  $detalle3_reciente=($declaracion_jurada->antecedenteReciente->detalle3_reciente) ?: "";
+  $detalle4_reciente=($declaracion_jurada->antecedenteReciente->detalle4_reciente) ?: "";
+  $detalle5_reciente=($declaracion_jurada->antecedenteReciente->detalle5_reciente) ?: "";
+  $detalle6_reciente=($declaracion_jurada->antecedenteReciente->detalle6_reciente) ?: "";
+  $detalle7_reciente=($declaracion_jurada->antecedenteReciente->detalle7_reciente) ?: "";
+  $detalle8_reciente=($declaracion_jurada->antecedenteReciente->detalle8_reciente) ?: "";
+  $detalle9_reciente=($declaracion_jurada->antecedenteReciente->detalle9_reciente) ?: "";
+  $detalle10_reciente=($declaracion_jurada->antecedenteReciente->detalle10_reciente) ?: "";
+  $detalle11_reciente=($declaracion_jurada->antecedenteReciente->detalle11_reciente) ?: "";
+  $detalle12_reciente=($declaracion_jurada->antecedenteReciente->detalle12_reciente) ?: "";
+  $detalle13_reciente=($declaracion_jurada->antecedenteReciente->detalle13_reciente) ?: "";
+  $detalle14_reciente=($declaracion_jurada->antecedenteReciente->detalle14_reciente) ?: "";
   //ANTECEDENTE QUIRURJICO
-  $detalle1_q=($declaracion_jurada_anterior->antecedenteQuirurjico->detalle1_q) ?: "";
-  $detalle2_q=($declaracion_jurada_anterior->antecedenteQuirurjico->detalle2_q) ?: "";
-  $detalle3_q=($declaracion_jurada_anterior->antecedenteQuirurjico->detalle3_q) ?: "";
+  $detalle1_q=($declaracion_jurada->antecedenteQuirurjico->detalle1_q) ?: "";
+  $detalle2_q=($declaracion_jurada->antecedenteQuirurjico->detalle2_q) ?: "";
+  $detalle3_q=($declaracion_jurada->antecedenteQuirurjico->detalle3_q) ?: "";
 }
 
 
@@ -716,72 +716,6 @@ $dosis_vacuna=["Sin dosis","Con 1ra dosis","Con 2da dosis","Con 3ra dosis","Con 
                             </div>
                         </div>
                     </div>
-                    <!-- Firma -->
-                    <div class="col-12">
-                        <div class="card ">
-                            <div class="card-header fondo2">
-                                <h3 class="card-title">Firma del Paciente</h3>
-                                <div class="card-tools">
-                                    <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-plus"></i></button>
-                                </div>
-                            </div>
-                            <div class="card-body">
-                                <!-- Instrucciones -->
-                                <div class="row">
-                                    <div class="card text-white bg-light col" style="width: max-content">
-                                    <div class="card-body">
-                                        <h4 class="card-title"><b>Declaración:</b></h4><br>
-                                        <p> Por la presente declaro bajo juramento que los datos de la presente declaración, de mi puño y
-                                            letra, son reales y corresponden a mi Historia Clínica Personal. </p>
-                                    </div>
-                                    </div>
-                                </div>
-                                <div class="row justify-content-center">
-                                  <div class="form-group col-8">
-                                    <!-- Button trigger modal -->
-                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#agregarFirma">
-                                      Agregar firma
-                                    </button>
-
-                                    <!-- Modal -->
-                                    <div class="modal fade" id="agregarFirma" tabindex="-1" role="dialog" aria-labelledby="agregarFirmaLabel" aria-hidden="true">
-                                      <div class="modal-dialog" role="document">
-                                        <div class="modal-content">
-                                          <!-- <div class="modal-header">
-                                            <h5 class="modal-title" id="agregarFirmaLabel">Modal title</h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                              <span aria-hidden="true">&times;</span>
-                                            </button>
-                                          </div> -->
-                                          <div class="modal-body">
-                                            <div id="signature-pad" class="jay-signature-pad">
-                                              <div class="jay-signature-pad--body"><!--  style="width:550px;height:200px" -->
-                                                <canvas id="jay-signature-pad" style="border:1px solid;border-radius: 5px;"></canvas><!--  width="550px" height="200px"  -->
-                                              </div>
-                                              <!-- <div class="signature-pad--footer txt-center mt-2">
-                                                <div class="signature-pad--actions txt-center">
-                                                  <div> -->
-                                                    <!-- <br> -->
-                                                    <!--<button type="button" class="button save btn btn-dark" data-action="save-svg"><i class="fas fa-save"></i> Guardar como SVG</button>-->
-                                                  <!-- </div>
-                                                </div>
-                                              </div> -->
-                                            </div>
-                                          </div>
-                                          <div class="modal-footer">
-                                            <button type="button" class="button clear btn btn-dark" data-action="clear"><i class="fa fa-eraser" aria-hidden="true"></i>...Limpiar</button>
-                                            <button type="button" class="button btn btn-dark" data-action="change-color"><i class="fas fa-palette"></i> Cambiar color</button>
-                                            <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar/Continuar</button>
-                                          </div>
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <input type="hidden" name="firma" id="firma">
                 </div>
             </div>
             <div class="col-12">
@@ -804,73 +738,6 @@ $dosis_vacuna=["Sin dosis","Con 1ra dosis","Con 2da dosis","Con 3ra dosis","Con 
     <script>
         $(document).ready(function(){
 
-          //Firma
-            //var wrapper = document.getElementById("signature-pad");
-            var wrapper = document.getElementById("agregarFirma");
-            var clearButton = wrapper.querySelector("[data-action=clear]");
-            var changeColorButton = wrapper.querySelector("[data-action=change-color]");
-            var guardar = document.getElementById("confirmar");
-            var canvas = wrapper.querySelector("canvas");
-            //console.log(canvas);
-            var signaturePad = new SignaturePad(canvas, {
-                backgroundColor: 'rgb(255, 255, 255)'
-            });
-            //console.log(signaturePad);
-
-            $("#declaracion_jurada").submit(function(e){
-              e.preventDefault(); //evita el comportambiento normal del submit, es decir, recarga total de la página  
-              //alert("enviar")
-              if (signaturePad.isEmpty()) {
-                alert("Por favor ingrese una firma.");
-              } else {
-                var dataURL = signaturePad.toDataURL('image/svg+xml');
-                document.getElementById('firma').value = dataURL;
-                this.submit()
-              }
-            })
-
-            $('#agregarFirma').on('shown.bs.modal', function (e) {
-              var ctx = canvas.getContext("2d");
-              ctx.lineWidth = 1;
-              console.log(canvas.parentElement);
-              let w=canvas.parentElement.offsetWidth
-              //w=window.innerWidth
-              console.log(w);
-              let h=canvas.parentElement.offsetHeight
-              //h=window.innerHeight
-              console.log(h);
-              ctx.canvas.width  = w;
-              ctx.canvas.height = h;
-            })
-
-            $('#agregarFirma').on('show.bs.modal', function (e) {
-              // element which needs to enter full-screen mode
-              var element = document.querySelector("#agregarFirma");
-              // make the element go to full-screen mode
-              element.requestFullscreen()
-                .then(function() {
-                  // element has entered fullscreen mode successfully
-                })
-                .catch(function(error) {
-                  // element could not enter fullscreen mode
-                });
-            })
-
-            $('#agregarFirma').on('hide.bs.modal', function (e) {
-              document.exitFullscreen()
-            })
-            
-            clearButton.addEventListener("click", function (event) {
-                signaturePad.clear();
-            });
-            changeColorButton.addEventListener("click", function (event) {
-                var r = Math.round(Math.random() * 255);
-                var g = Math.round(Math.random() * 255);
-                var b = Math.round(Math.random() * 255);
-                var color = "rgb(" + r + "," + g + "," + b +")";
-                signaturePad.penColor = color;
-            });
-
         //Voucher
             var select1 = $("#voucher_id").select2({width:'100%'});
             select1.data('select2').$selection.css('height', '34px');
@@ -882,47 +749,6 @@ $dosis_vacuna=["Sin dosis","Con 1ra dosis","Con 2da dosis","Con 3ra dosis","Con 
             $("#voucher_id").change(function(){
                 mostrarDatos();
             });
-
-            /*function mostrarDatos(){
-                voucher_id=$("#voucher_id").val();
-                vouchers=$("#voucher_id option:selected").text();
-
-                var datosPaciente=null;
-                var fotoPaciente=null;
-
-                //   Aca iría el Ajax para obtener la cantidad por Paquete
-                $.ajax({
-                    type:'get',
-                    url:'{!!URL::to('declaracion_jurada/create/traerDatosPaciente')!!}',
-                    data:{'id':voucher_id},
-                    success:function(data){
-                        
-                        documento=data['documento'];
-                        nombres=data['nombres'];
-                        apellidos=data['apellidos'];
-                        fecha_nacimiento=data['fecha_nacimiento'];
-                        foto=data['foto'];
-                        cuil=data['cuil'];
-                        sexo=data['sexo'];
-
-
-                        datosPaciente='<div class="added"> <input type="hidden" value="'+nombres+'"><p style="font-size:140%" class="text-left">Nombre y Apellido del paciente: '+nombres+'</p><input type="hidden" value="'+documento+'"><p style="font-size:140%" class="text-left">Documento del paciente: '+documento+'</p><input type="hidden" value="'+fecha_nacimiento+'"><p style="font-size:140%" class="text-left">Fecha de nacimiento del paciente: '+fecha_nacimiento+'</p><input type="hidden"  value="'+cuil+'"><p style="font-size:140%" class="text-left">CUIL: '+cuil+'</p><input type="hidden" value="'+sexo+'"><p style="font-size:140%" class="text-left">Sexo: '+sexo+'</p><input type="hidden" name="voucher_id" value="'+voucher_id+'"></div>';
-                        fotoPaciente='<div class="added"> @if('+foto+'==null)<img class="img-thumbnail" height="85px" width="85px" src='+foto+'>@else<img class="img-thumbnail" height="350px" width="350px" src="{{ asset('imagenes/paciente/default.png')}}">@endif </div>';
-
-                        //Limpiar datos agregadoss
-                        $('.added').remove();
-
-                        $("#datos_paciente").append(datosPaciente).hide().show('slow');
-                        $("#foto_paciente").append(fotoPaciente).hide().show('slow');
-
-
-                    },
-                    error:function(){
-                        console.log('no anda AJAX');
-                    }
-                });
-
-            }*/
 
             function eliminarDelSelect2 (){
               $("#voucher_id option:selected").remove();

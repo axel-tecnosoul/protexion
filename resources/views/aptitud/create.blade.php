@@ -46,7 +46,7 @@
                 <!-- Guardar -->
                 <div class="form-group">
                     <input id="guardar" name="_token" value="{{ csrf_token() }}" type="hidden">
-                    <button class="btn btn-success btn-lg btn-block" id="confirmar"type="submit"><i class="fa fa-check"> </i>Cargar al formulario</button>
+                    <button class="btn btn-success btn-lg btn-block" id="confirmar"type="submit"><i class="fa fa-check"> </i>Cargar el formulario</button>
                 </div>
             </div>
          </div>
@@ -87,7 +87,7 @@
             if(aObsPre[target]==""){
               saltoLinea="";
             }
-            aObsPre[target]=aObsPre[target]+saltoLinea+label+valor;
+            aObsPre[target]=aObsPre[target]+saltoLinea+label+" "+valor;
           }
         });
         $(".inputText").each(function(){
@@ -102,7 +102,7 @@
             if(aObsPre[target]==""){
               saltoLinea="";
             }
-            aObsPre[target]=aObsPre[target]+saltoLinea+label+valor;
+            aObsPre[target]=aObsPre[target]+saltoLinea+label+" "+valor;
           }
         });
         $("#preexistencias").val(aObsPre["preexistencias"]);

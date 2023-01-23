@@ -7,34 +7,17 @@
 
 @section('content')
 {!!Form::open(array(
-    'url'=>'historia_clinica',
-    'method'=>'POST',
+    'route'=>['historia_clinica.update',$historia_clinica->id],
+    'method'=>'PATCH',
     'autocomplete'=>'off',
     'files' => true,
 ))!!}
 
 <style>
-    .jay-signature-pad {
-        position: relative;
-        display: -ms-flexbox;
-        -ms-flex-direction: column;
-        width: 100%;
-        height: 100%;
-        max-width: 600px;
-        max-height: 315px;
-        border: 1px solid #e8e8e8;
-        background-color: #fff;
-        box-shadow: 0 3px 20px rgba(0, 0, 0, 0.27), 0 0 40px rgba(0, 0, 0, 0.08) inset;
-        border-radius: 15px;
-        padding: 20px;
-    }
     .txt-center {
         text-align: -webkit-center;
     }
 </style><?php
-
-$estatura=$altura_decla_jurada;
-$peso=$peso_decla_jurada;
 
 //HISTORIA CLINICA
 $estatura_anterior="";
@@ -45,7 +28,6 @@ $medicacion_actual="";
 $frecuencia_cardiaca="";
 $sistolica="";
 $diastolica="";
-$tension_arterial="";
 $observacion_varices="";
 $checked_pulso_anormal="";
 $checked_pulso_normal="";
@@ -116,101 +98,103 @@ $observacion_ge="";
 $observacion1_an="";
 $observacion_an="";
 /* EXAMEN CLÌNICO */
-if(isset($historia_clinica_anterior)){
-  $estatura_anterior=($historia_clinica_anterior->examenClinico->estatura) ? "Historia Clinica Anterior: ".$historia_clinica_anterior->examenClinico->estatura : "";
-  $peso_anterior=($historia_clinica_anterior->examenClinico->peso) ? "Historia Clinica Anterior: ".$historia_clinica_anterior->examenClinico->peso : "";
-  $sobrepeso=($historia_clinica_anterior->examenClinico->sobrepeso) ?: "";
-  $imc=($historia_clinica_anterior->examenClinico->imc) ?: "";
-  $medicacion_actual=($historia_clinica_anterior->examenClinico->medicacion_actual) ?: "";
+if(isset($historia_clinica)){
+  //$estatura_anterior=($historia_clinica->examenClinico->estatura) ? "Historia Clinica Anterior: ".$historia_clinica->examenClinico->estatura : "";
+  //$peso_anterior=($historia_clinica->examenClinico->peso) ? "Historia Clinica Anterior: ".$historia_clinica->examenClinico->peso : "";
+  $estatura=($historia_clinica->examenClinico->estatura) ? $historia_clinica->examenClinico->estatura : "";;
+  $peso=($historia_clinica->examenClinico->peso) ? $historia_clinica->examenClinico->peso : "";;
+  $sobrepeso=($historia_clinica->examenClinico->sobrepeso) ?: "";
+  $imc=($historia_clinica->examenClinico->imc) ?: "";
+  $medicacion_actual=($historia_clinica->examenClinico->medicacion_actual) ?: "";
   /* CARDIOVASCULAR */
-  $frecuencia_cardiaca=($historia_clinica_anterior->cardiovascular->frecuencia_cardiaca) ?: "";
-  $sistolica=($historia_clinica_anterior->cardiovascular->sistolica) ?: "";
-  $diastolica=($historia_clinica_anterior->cardiovascular->diastolica) ?: "";
-  $tension_arterial=($historia_clinica_anterior->cardiovascular->tension_arterial) ?: "";  
-  $observacion_varices=($historia_clinica_anterior->cardiovascular->observacion_varices) ?: "";
-  $checked_pulso_anormal=($historia_clinica_anterior->cardiovascular->pulso=="A") ? "checked" : "";
-  $checked_pulso_normal=($historia_clinica_anterior->cardiovascular->pulso=="N") ? "checked" : "";
+  $frecuencia_cardiaca=($historia_clinica->cardiovascular->frecuencia_cardiaca) ?: "";
+  $sistolica=($historia_clinica->cardiovascular->sistolica) ?: "";
+  $diastolica=($historia_clinica->cardiovascular->diastolica) ?: "";
+  $tension_arterial=($historia_clinica->cardiovascular->tension_arterial) ?: "";  
+  $observacion_varices=($historia_clinica->cardiovascular->observacion_varices) ?: "";
+  $checked_pulso_anormal=($historia_clinica->cardiovascular->pulso=="A") ? "checked" : "";
+  $checked_pulso_normal=($historia_clinica->cardiovascular->pulso=="N") ? "checked" : "";
   /* PIEL*/
-  $observacion1_piel=($historia_clinica_anterior->piel->observacion1_piel) ?: "";
-  $obs_vesicula=($historia_clinica_anterior->piel->obs_vesicula) ?: "";
-  $obs_ulceras=($historia_clinica_anterior->piel->obs_ulceras) ?: "";
-  $obs_fisuras=($historia_clinica_anterior->piel->obs_fisuras) ?: "";
-  $obs_prurito=($historia_clinica_anterior->piel->obs_prurito) ?: "";
-  $obs_eczemas=($historia_clinica_anterior->piel->obs_eczemas) ?: "";
-  $obs_dertmatitis=($historia_clinica_anterior->piel->obs_dertmatitis) ?: "";
-  $obs_eritemas=($historia_clinica_anterior->piel->obs_eritemas) ?: "";
-  $obs_petequias=($historia_clinica_anterior->piel->obs_petequias) ?: "";
-  $tejido=($historia_clinica_anterior->piel->tejido) ?: "";
+  $observacion1_piel=($historia_clinica->piel->observacion1_piel) ?: "";
+  $obs_vesicula=($historia_clinica->piel->obs_vesicula) ?: "";
+  $obs_ulceras=($historia_clinica->piel->obs_ulceras) ?: "";
+  $obs_fisuras=($historia_clinica->piel->obs_fisuras) ?: "";
+  $obs_prurito=($historia_clinica->piel->obs_prurito) ?: "";
+  $obs_eczemas=($historia_clinica->piel->obs_eczemas) ?: "";
+  $obs_dertmatitis=($historia_clinica->piel->obs_dertmatitis) ?: "";
+  $obs_eritemas=($historia_clinica->piel->obs_eritemas) ?: "";
+  $obs_petequias=($historia_clinica->piel->obs_petequias) ?: "";
+  $tejido=($historia_clinica->piel->tejido) ?: "";
   /* OSTEOARTICULAR */
-  $observacion1_os=($historia_clinica_anterior->osteoarticular->observacion1_os) ?: "";
-  $observacion2_os=($historia_clinica_anterior->osteoarticular->observacion2_os) ?: "";
-  $observacion3_os=($historia_clinica_anterior->osteoarticular->observacion3_os) ?: "";
-  $observacion4_os=($historia_clinica_anterior->osteoarticular->observacion4_os) ?: "";
-  $observacion_os=($historia_clinica_anterior->osteoarticular->observacion_os) ?: "";
+  $observacion1_os=($historia_clinica->osteoarticular->observacion1_os) ?: "";
+  $observacion2_os=($historia_clinica->osteoarticular->observacion2_os) ?: "";
+  $observacion3_os=($historia_clinica->osteoarticular->observacion3_os) ?: "";
+  $observacion4_os=($historia_clinica->osteoarticular->observacion4_os) ?: "";
+  $observacion_os=($historia_clinica->osteoarticular->observacion_os) ?: "";
   /* COLUMNA VERTEBRAL */
-  $observacion1_col=($historia_clinica_anterior->columna->observacion1_col) ?: "";
-  $observacion2_col=($historia_clinica_anterior->columna->observacion2_col) ?: "";
-  $observacion3_col=($historia_clinica_anterior->columna->observacion3_col) ?: "";
-  $observacion4_col=($historia_clinica_anterior->columna->observacion4_col) ?: "";
-  $observacion_col=($historia_clinica_anterior->columna->observacion_col) ?: "";
+  $observacion1_col=($historia_clinica->columna->observacion1_col) ?: "";
+  $observacion2_col=($historia_clinica->columna->observacion2_col) ?: "";
+  $observacion3_col=($historia_clinica->columna->observacion3_col) ?: "";
+  $observacion4_col=($historia_clinica->columna->observacion4_col) ?: "";
+  $observacion_col=($historia_clinica->columna->observacion_col) ?: "";
   /*CABEZA Y CUELLO*/
-  $observacion1_cc=($historia_clinica_anterior->cabezaCuello->observacion1_cc) ?: "";
-  $observacion2_cc=($historia_clinica_anterior->cabezaCuello->observacion2_cc) ?: "";
-  $observacion3_cc=($historia_clinica_anterior->cabezaCuello->observacion3_cc) ?: "";
-  $observacion4_cc=($historia_clinica_anterior->cabezaCuello->observacion4_cc) ?: "";
-  $observacion5_cc=($historia_clinica_anterior->cabezaCuello->observacion5_cc) ?: "";
-  $observacion6_cc=($historia_clinica_anterior->cabezaCuello->observacion6_cc) ?: "";
+  $observacion1_cc=($historia_clinica->cabezaCuello->observacion1_cc) ?: "";
+  $observacion2_cc=($historia_clinica->cabezaCuello->observacion2_cc) ?: "";
+  $observacion3_cc=($historia_clinica->cabezaCuello->observacion3_cc) ?: "";
+  $observacion4_cc=($historia_clinica->cabezaCuello->observacion4_cc) ?: "";
+  $observacion5_cc=($historia_clinica->cabezaCuello->observacion5_cc) ?: "";
+  $observacion6_cc=($historia_clinica->cabezaCuello->observacion6_cc) ?: "";
   /*OFTALMOLOGICO*/
-  $observacion1_of=($historia_clinica_anterior->oftalmologico->observacion1_of) ?: "";
-  $observacion2_of=($historia_clinica_anterior->oftalmologico->observacion2_of) ?: "";
-  $observacion3_of=($historia_clinica_anterior->oftalmologico->observacion3_of) ?: "";
-  $observacion4_of=($historia_clinica_anterior->oftalmologico->observacion4_of) ?: "";
+  $observacion1_of=($historia_clinica->oftalmologico->observacion1_of) ?: "";
+  $observacion2_of=($historia_clinica->oftalmologico->observacion2_of) ?: "";
+  $observacion3_of=($historia_clinica->oftalmologico->observacion3_of) ?: "";
+  $observacion4_of=($historia_clinica->oftalmologico->observacion4_of) ?: "";
   /*Examen de Agudeza Visual*/
-  $observacion5_of=($historia_clinica_anterior->oftalmologico->observacion5_of) ?: "";
-  $observacion6_of=($historia_clinica_anterior->oftalmologico->observacion6_of) ?: "";
-  $usa_lentes=($historia_clinica_anterior->oftalmologico->pregunta7_of==1) ? "checked" : "";
-  $observacion_of=($historia_clinica_anterior->oftalmologico->observacion_of) ?: "";
+  $observacion5_of=($historia_clinica->oftalmologico->observacion5_of) ?: "";
+  $observacion6_of=($historia_clinica->oftalmologico->observacion6_of) ?: "";
+  $usa_lentes=($historia_clinica->oftalmologico->pregunta7_of==1) ? "checked" : "";
+  $observacion_of=($historia_clinica->oftalmologico->observacion_of) ?: "";
   /* NEUROLOGICO */
-  $observacion1_neu=($historia_clinica_anterior->neurologico->observacion1_neu) ?: "";
-  $observacion2_neu=($historia_clinica_anterior->neurologico->observacion2_neu) ?: "";
-  $observacion3_neu=($historia_clinica_anterior->neurologico->observacion3_neu) ?: "";
-  $observacion4_neu=($historia_clinica_anterior->neurologico->observacion4_neu) ?: "";
-  $observacion5_neu=($historia_clinica_anterior->neurologico->observacion5_neu) ?: "";
-  $observacion6_neu=($historia_clinica_anterior->neurologico->observacion6_neu) ?: "";
-  $observacion7_neu=($historia_clinica_anterior->neurologico->observacion7_neu) ?: "";
-  $observacion_neu=($historia_clinica_anterior->neurologico->observacion_neu) ?: "";
+  $observacion1_neu=($historia_clinica->neurologico->observacion1_neu) ?: "";
+  $observacion2_neu=($historia_clinica->neurologico->observacion2_neu) ?: "";
+  $observacion3_neu=($historia_clinica->neurologico->observacion3_neu) ?: "";
+  $observacion4_neu=($historia_clinica->neurologico->observacion4_neu) ?: "";
+  $observacion5_neu=($historia_clinica->neurologico->observacion5_neu) ?: "";
+  $observacion6_neu=($historia_clinica->neurologico->observacion6_neu) ?: "";
+  $observacion7_neu=($historia_clinica->neurologico->observacion7_neu) ?: "";
+  $observacion_neu=($historia_clinica->neurologico->observacion_neu) ?: "";
   /* ODONTOLOGICO */
-  $observacion1_od=($historia_clinica_anterior->odontologico->observacion1_od) ?: "";
-  $observacion2_od=($historia_clinica_anterior->odontologico->observacion2_od) ?: "";
-  $pregunta4_od=($historia_clinica_anterior->odontologico->pregunta4_od==1) ? "checked" : "";
-  //$usa_lentes=($historia_clinica_anterior->oftalmologico->pregunta7_of==1) ? "checked" : "";
-  $pregunta5_od=($historia_clinica_anterior->odontologico->pregunta5_od==1) ? "checked" : "";
-  //$usa_lentes=($historia_clinica_anterior->oftalmologico->pregunta7_of==1) ? "checked" : "";
-  $superior=($historia_clinica_anterior->odontologico->superior) ?: "";
-  $inferior=($historia_clinica_anterior->odontologico->inferior) ?: "";
-  $observacion_od=($historia_clinica_anterior->odontologico->observacion_od) ?: "";
+  $observacion1_od=($historia_clinica->odontologico->observacion1_od) ?: "";
+  $observacion2_od=($historia_clinica->odontologico->observacion2_od) ?: "";
+  $pregunta4_od=($historia_clinica->odontologico->pregunta4_od==1) ? "checked" : "";
+  //$usa_lentes=($historia_clinica->oftalmologico->pregunta7_of==1) ? "checked" : "";
+  $pregunta5_od=($historia_clinica->odontologico->pregunta5_od==1) ? "checked" : "";
+  //$usa_lentes=($historia_clinica->oftalmologico->pregunta7_of==1) ? "checked" : "";
+  $superior=($historia_clinica->odontologico->superior) ?: "";
+  $inferior=($historia_clinica->odontologico->inferior) ?: "";
+  $observacion_od=($historia_clinica->odontologico->observacion_od) ?: "";
   /* TORAX Y APARATO RESPIRATORIO */
-  $observacion1_re=($historia_clinica_anterior->respiratorio->observacion1_re) ?: "";
-  $observacion2_re=($historia_clinica_anterior->respiratorio->observacion2_re) ?: "";
+  $observacion1_re=($historia_clinica->respiratorio->observacion1_re) ?: "";
+  $observacion2_re=($historia_clinica->respiratorio->observacion2_re) ?: "";
   /* ABDOMEN */
-  $observacion1_ab=($historia_clinica_anterior->abdomen->observacion1_ab) ?: "";
-  $observacion2_ab=($historia_clinica_anterior->abdomen->observacion2_ab) ?: "";
-  $observacion3_ab=($historia_clinica_anterior->abdomen->observacion3_ab) ?: "";
-  $observacion4_ab=($historia_clinica_anterior->abdomen->observacion4_ab) ?: "";
-  $observacion5_ab=($historia_clinica_anterior->abdomen->observacion5_ab) ?: "";
-  $observacion6_ab=($historia_clinica_anterior->abdomen->observacion6_ab) ?: "";
-  $observacion_ab=($historia_clinica_anterior->abdomen->observacion_ab) ?: "";
+  $observacion1_ab=($historia_clinica->abdomen->observacion1_ab) ?: "";
+  $observacion2_ab=($historia_clinica->abdomen->observacion2_ab) ?: "";
+  $observacion3_ab=($historia_clinica->abdomen->observacion3_ab) ?: "";
+  $observacion4_ab=($historia_clinica->abdomen->observacion4_ab) ?: "";
+  $observacion5_ab=($historia_clinica->abdomen->observacion5_ab) ?: "";
+  $observacion6_ab=($historia_clinica->abdomen->observacion6_ab) ?: "";
+  $observacion_ab=($historia_clinica->abdomen->observacion_ab) ?: "";
   /* REGIONES INGUINALES */
-  $observacion1_in=($historia_clinica_anterior->regionInguinal->observacion1_in) ?: "";
-  $observacion2_in=($historia_clinica_anterior->regionInguinal->observacion2_in) ?: "";
-  $observacion3_in=($historia_clinica_anterior->regionInguinal->observacion3_in) ?: "";
-  $observacion_in=($historia_clinica_anterior->regionInguinal->observacion_in) ?: "";
+  $observacion1_in=($historia_clinica->regionInguinal->observacion1_in) ?: "";
+  $observacion2_in=($historia_clinica->regionInguinal->observacion2_in) ?: "";
+  $observacion3_in=($historia_clinica->regionInguinal->observacion3_in) ?: "";
+  $observacion_in=($historia_clinica->regionInguinal->observacion_in) ?: "";
   /* GENITALES */
-  $observacion1_ge=($historia_clinica_anterior->genital->observacion1_ge) ?: "";
-  $observacion_ge=($historia_clinica_anterior->genital->observacion_ge) ?: "";
+  $observacion1_ge=($historia_clinica->genital->observacion1_ge) ?: "";
+  $observacion_ge=($historia_clinica->genital->observacion_ge) ?: "";
   /* REGION ANAL */
-  $observacion1_an=($historia_clinica_anterior->regionAnal->observacion1_an) ?: "";
-  $observacion_an=($historia_clinica_anterior->regionAnal->observacion_an) ?: "";
+  $observacion1_an=($historia_clinica->regionAnal->observacion1_an) ?: "";
+  $observacion_an=($historia_clinica->regionAnal->observacion_an) ?: "";
 }
 ?>
 
@@ -1053,43 +1037,11 @@ if(isset($historia_clinica_anterior)){
                             </div>
                         </div>
                     </div>
-                    <!-- Firma -->
-                    <!-- <div class="col-12">
-                        <div class="card ">
-                            <div class="card-header fondo2">
-                                <h3 class="card-title">Firma del Paciente</h3>
-                                <div class="card-tools">
-                                    <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-plus"></i></button>
-                                </div>
-                            </div>
-                            <div class="card-body">
-                                <div class="row justify-content-center">
-                                    <div class="form-group">
-                                        <div id="signature-pad" class="jay-signature-pad">
-                                            <div class="jay-signature-pad--body">
-                                                <canvas id="jay-signature-pad" width=550 height=200></canvas>
-                                            </div>
-                                            <div class="signature-pad--footer txt-center">
-                                                <div class="signature-pad--actions txt-center">
-                                                    <div>
-                                                        <br>
-                                                        <button type="button" class="button clear btn btn-dark" data-action="clear"><i class="fa fa-eraser" aria-hidden="true"></i>...Limpiar</button>
-                                                        <button type="button" class="button btn btn-dark" data-action="change-color"><i class="fas fa-palette"></i> Cambiar color</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div> -->
-                    <input type="hidden" name="firma" id="firma">
                     <!-- Guardar -->
                     <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12" id="guardar">
                         <div class="form-group">
                             <input id="guardar" name="_token" value="{{ csrf_token() }}" type="hidden">
-                                <button class="btn btn-success btn-lg btn-block" id="confirmar"type="submit"><i class="fa fa-check"> </i>Cargar al formulario</button>
+                                <button class="btn btn-success btn-lg btn-block" id="confirmar"type="submit"><i class="fa fa-check"> </i>Modificar al formulario</button>
                         </div>
                     </div>
                 <!-- / Guardar -->
@@ -1106,66 +1058,6 @@ if(isset($historia_clinica_anterior)){
     <script>
         $(document).ready(function(){
           calcular_imc();
-            //Firma
-                /*var wrapper = document.getElementById("signature-pad");
-                var clearButton = wrapper.querySelector("[data-action=clear]");
-                var changeColorButton = wrapper.querySelector("[data-action=change-color]");
-                var guardar = document.getElementById("confirmar");
-                var canvas = wrapper.querySelector("canvas");
-                var signaturePad = new SignaturePad(canvas, {
-                    backgroundColor: 'rgb(255, 255, 255)'
-                });
-                function resizeCanvas() {
-                    var ratio =  Math.max(window.devicePixelRatio || 1, 1);
-                    canvas.width = canvas.offsetWidth * ratio;
-                    canvas.height = canvas.offsetHeight * ratio;
-                    canvas.getContext("2d").scale(ratio, ratio);
-                    signaturePad.clear();
-                }
-                window.onresize = resizeCanvas;
-                resizeCanvas();
-                function download(dataURL, filename) {
-                    var blob = dataURLToBlob(dataURL);
-                    var url = window.URL.createObjectURL(blob);
-                    var a = document.createElement("a");
-                    a.style = "display: none";
-                    a.href = url;
-                    a.download = filename;
-                    document.body.appendChild(a);
-                    a.click();
-                    window.URL.revokeObjectURL(url);
-                }
-                function dataURLToBlob(dataURL) {
-                    var parts = dataURL.split(';base64,');
-                    var contentType = parts[0].split(":")[1];
-                    var raw = window.atob(parts[1]);
-                    var rawLength = raw.length;
-                    var uInt8Array = new Uint8Array(rawLength);
-                    for (var i = 0; i < rawLength; ++i) {
-                        uInt8Array[i] = raw.charCodeAt(i);
-                    }
-                    return new Blob([uInt8Array], { type: contentType });
-                }
-                clearButton.addEventListener("click", function (event) {
-                    signaturePad.clear();
-                });
-                changeColorButton.addEventListener("click", function (event) {
-                    var r = Math.round(Math.random() * 255);
-                    var g = Math.round(Math.random() * 255);
-                    var b = Math.round(Math.random() * 255);
-                    var color = "rgb(" + r + "," + g + "," + b +")";
-                    signaturePad.penColor = color;
-                });
-
-                guardar.addEventListener("click", function (event) {
-                    if (signaturePad.isEmpty()) {
-                    alert("Please provide a signature first.");
-                    } else {
-                    var dataURL = signaturePad.toDataURL('image/svg+xml');
-                    document.getElementById('firma').value = dataURL;
-                    }
-                });*/
-            //
         });
 
         // Observaciones

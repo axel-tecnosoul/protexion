@@ -7,8 +7,8 @@
 
 @section('content')
 {!!Form::open(array(
-    'url'=>'posiciones_forzadas',
-    'method'=>'POST',
+    'route'=>['posiciones_forzadas.update',$posiciones_forzadas->id],
+    'method'=>'PATCH',
     'autocomplete'=>'off',
     'files' => true,
 ))!!}
@@ -16,20 +16,6 @@
 {{Form::token()}}
 
 <style>
-    .jay-signature-pad {
-        position: relative;
-        display: -ms-flexbox;
-        -ms-flex-direction: column;
-        width: 100%;
-        height: 100%;
-        max-width: 600px;
-        max-height: 315px;
-        border: 1px solid #e8e8e8;
-        background-color: #fff;
-        box-shadow: 0 3px 20px rgba(0, 0, 0, 0.27), 0 0 40px rgba(0, 0, 0, 0.08) inset;
-        border-radius: 15px;
-        padding: 20px;
-    }
     .txt-center {
         text-align: -webkit-center;
     }
@@ -68,38 +54,38 @@ $pregunta4_d="";
 $pregunta5_d="";
 $grado="";
 $observacion1_s="";
-if(isset($posiciones_forzadas_anterior)){
-  $puesto=($posiciones_forzadas_anterior->puesto) ?: "";
-  $antiguedad=($posiciones_forzadas_anterior->antiguedad) ?: "";
-  $nroTrabajo=($posiciones_forzadas_anterior->nroTrabajo) ?: "";
+if(isset($posiciones_forzadas)){
+  $puesto=($posiciones_forzadas->puesto) ?: "";
+  $antiguedad=($posiciones_forzadas->antiguedad) ?: "";
+  $nroTrabajo=($posiciones_forzadas->nroTrabajo) ?: "";
   /* Tarea */
-  $tiempo=($posiciones_forzadas_anterior->tarea->tiempo) ?: "";
-  $ciclo=($posiciones_forzadas_anterior->tarea->ciclo) ?: "";
-  $cargas=($posiciones_forzadas_anterior->tarea->cargas) ?: "";
+  $tiempo=($posiciones_forzadas->tarea->tiempo) ?: "";
+  $ciclo=($posiciones_forzadas->tarea->ciclo) ?: "";
+  $cargas=($posiciones_forzadas->tarea->cargas) ?: "";
   /* Tipos de tarea */
-  $pregunta1=($posiciones_forzadas_anterior->tarea->pregunta1==1) ? "checked" : "";
-  $pregunta2=($posiciones_forzadas_anterior->tarea->pregunta2==1) ? "checked" : "";
-  $pregunta3=($posiciones_forzadas_anterior->tarea->pregunta3==1) ? "checked" : "";
-  $pregunta4=($posiciones_forzadas_anterior->tarea->pregunta4==1) ? "checked" : "";
-  $pregunta5=($posiciones_forzadas_anterior->tarea->pregunta5==1) ? "checked" : "";
-  $pregunta6=($posiciones_forzadas_anterior->tarea->pregunta6==1) ? "checked" : "";
-  $pregunta7=($posiciones_forzadas_anterior->tarea->pregunta7==1) ? "checked" : "";
-  $pregunta8=($posiciones_forzadas_anterior->tarea->pregunta8==1) ? "checked" : "";
-  $observacion_tarea=($posiciones_forzadas_anterior->tarea->observacion_tarea) ?: "";
+  $pregunta1=($posiciones_forzadas->tarea->pregunta1==1) ? "checked" : "";
+  $pregunta2=($posiciones_forzadas->tarea->pregunta2==1) ? "checked" : "";
+  $pregunta3=($posiciones_forzadas->tarea->pregunta3==1) ? "checked" : "";
+  $pregunta4=($posiciones_forzadas->tarea->pregunta4==1) ? "checked" : "";
+  $pregunta5=($posiciones_forzadas->tarea->pregunta5==1) ? "checked" : "";
+  $pregunta6=($posiciones_forzadas->tarea->pregunta6==1) ? "checked" : "";
+  $pregunta7=($posiciones_forzadas->tarea->pregunta7==1) ? "checked" : "";
+  $pregunta8=($posiciones_forzadas->tarea->pregunta8==1) ? "checked" : "";
+  $observacion_tarea=($posiciones_forzadas->tarea->observacion_tarea) ?: "";
   /* Tipos de tarea */
-  //@include('posiciones_forzadas_anteriors.tabla_semiologia');
-  $dolor_articular=$posiciones_forzadas_anterior->dolor_articular;
-  $forma=($posiciones_forzadas_anterior->dolor->forma) ?: "";
-  $evolucion=($posiciones_forzadas_anterior->dolor->evolucion) ?: "";
-  $observacion1_d=($posiciones_forzadas_anterior->dolor->observacion1_d) ?: "";
-  $observacion2_d=($posiciones_forzadas_anterior->dolor->observacion2_d) ?: "";
-  $pregunta1_d=($posiciones_forzadas_anterior->dolor->pregunta1_d==1) ? "checked" : "";
-  $pregunta2_d=($posiciones_forzadas_anterior->dolor->pregunta2_d==1) ? "checked" : "";
-  $pregunta3_d=($posiciones_forzadas_anterior->dolor->pregunta3_d==1) ? "checked" : "";
-  $pregunta4_d=($posiciones_forzadas_anterior->dolor->pregunta4_d==1) ? "checked" : "";
-  $pregunta5_d=($posiciones_forzadas_anterior->dolor->pregunta5_d==1) ? "checked" : "";
-  $grado=($posiciones_forzadas_anterior->semiologica->grado) ?: "";
-  $observacion1_s=($posiciones_forzadas_anterior->semiologica->observacion1_s) ?: "";
+  //@include('posiciones_forzadass.tabla_semiologia');
+  $dolor_articular=$posiciones_forzadas->dolor_articular;
+  $forma=($posiciones_forzadas->dolor->forma) ?: "";
+  $evolucion=($posiciones_forzadas->dolor->evolucion) ?: "";
+  $observacion1_d=($posiciones_forzadas->dolor->observacion1_d) ?: "";
+  $observacion2_d=($posiciones_forzadas->dolor->observacion2_d) ?: "";
+  $pregunta1_d=($posiciones_forzadas->dolor->pregunta1_d==1) ? "checked" : "";
+  $pregunta2_d=($posiciones_forzadas->dolor->pregunta2_d==1) ? "checked" : "";
+  $pregunta3_d=($posiciones_forzadas->dolor->pregunta3_d==1) ? "checked" : "";
+  $pregunta4_d=($posiciones_forzadas->dolor->pregunta4_d==1) ? "checked" : "";
+  $pregunta5_d=($posiciones_forzadas->dolor->pregunta5_d==1) ? "checked" : "";
+  $grado=($posiciones_forzadas->semiologica->grado) ?: "";
+  $observacion1_s=($posiciones_forzadas->semiologica->observacion1_s) ?: "";
 }
 ?>
 
@@ -522,46 +508,13 @@ if(isset($posiciones_forzadas_anterior)){
                             </div>
                         </div>
                     <!-- / Características del dolor -->
-                    <!-- Firma -->
-                        <!-- <div class="col-12">
-                            <div class="card ">
-                                <div class="card-header header-bg">
-                                    <h3 class="card-title">Firma del Paciente</h3>
-                                    <div class="card-tools">
-                                        <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-plus"></i></button>
-                                    </div>
-                                </div>
-                                <div class="card-body">
-                                    <div class="row justify-content-center">
-                                        <div class="form-group">
-                                            <div id="signature-pad" class="jay-signature-pad">
-                                                <div class="jay-signature-pad--body">
-                                                    <canvas id="jay-signature-pad" width=550 height=200></canvas>
-                                                </div>
-                                                <div class="signature-pad--footer txt-center">
-                                                    <div class="signature-pad--actions txt-center">
-                                                        <div>
-                                                            <br>
-                                                            <button type="button" class="button clear btn btn-dark" data-action="clear"><i class="fa fa-eraser" aria-hidden="true"></i>...Limpiar</button>
-                                                            <button type="button" class="button btn btn-dark" data-action="change-color"><i class="fas fa-palette"></i> Cambiar color</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div> -->
-                        <input type="hidden" name="firma" id="firma">
-                    <!-- / Firma -->
                 </div>
             </div>
             <!-- Guardar -->
                 <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12" id="guardar">
                     <div class="form-group">
                         <input id="guardar" name="_token" value="{{ csrf_token() }}" type="hidden">
-                            <button class="btn btn-success btn-lg btn-block" id="confirmar"type="submit"><i class="fa fa-check"> </i>Cargar al formulario</button>
+                            <button class="btn btn-success btn-lg btn-block" id="confirmar"type="submit"><i class="fa fa-check"> </i>Modificar al formulario</button>
                     </div>
                 </div>
             <!-- / Guardar -->
@@ -573,86 +526,6 @@ if(isset($posiciones_forzadas_anterior)){
 @push('scripts')
     <script>
     $(document).ready(function(){
-        //Firma
-            /*var wrapper = document.getElementById("signature-pad");
-            var clearButton = wrapper.querySelector("[data-action=clear]");
-            var changeColorButton = wrapper.querySelector("[data-action=change-color]");
-            var guardar = document.getElementById("confirmar");
-            var canvas = wrapper.querySelector("canvas");
-            var signaturePad = new SignaturePad(canvas, {
-                backgroundColor: 'rgb(255, 255, 255)'
-            });
-            // Adjust canvas coordinate space taking into account pixel ratio,
-            // to make it look crisp on mobile devices.
-            // This also causes canvas to be cleared.
-            function resizeCanvas() {
-                // When zoomed out to less than 100%, for some very strange reason,
-                // some browsers report devicePixelRatio as less than 1
-                // and only part of the canvas is cleared then.
-                var ratio =  Math.max(window.devicePixelRatio || 1, 1);
-                // This part causes the canvas to be cleared
-                canvas.width = canvas.offsetWidth * ratio;
-                canvas.height = canvas.offsetHeight * ratio;
-                canvas.getContext("2d").scale(ratio, ratio);
-                // This library does not listen for canvas changes, so after the canvas is automatically
-                // cleared by the browser, SignaturePad#isEmpty might still return false, even though the
-                // canvas looks empty, because the internal data of this library wasn't cleared. To make sure
-                // that the state of this library is consistent with visual state of the canvas, you
-                // have to clear it manually.
-                signaturePad.clear();
-            }
-            // On mobile devices it might make more sense to listen to orientation change,
-            // rather than window resize events.
-            window.onresize = resizeCanvas;
-            resizeCanvas();
-            function download(dataURL, filename) {
-                var blob = dataURLToBlob(dataURL);
-                var url = window.URL.createObjectURL(blob);
-                var a = document.createElement("a");
-                a.style = "display: none";
-                a.href = url;
-                a.download = filename;
-                document.body.appendChild(a);
-                a.click();
-                window.URL.revokeObjectURL(url);
-            }
-            // One could simply use Canvas#toBlob method instead, but it's just to show
-            // that it can be done using result of SignaturePad#toDataURL.
-            function dataURLToBlob(dataURL) {
-                var parts = dataURL.split(';base64,');
-                var contentType = parts[0].split(":")[1];
-                var raw = window.atob(parts[1]);
-                var rawLength = raw.length;
-                var uInt8Array = new Uint8Array(rawLength);
-                for (var i = 0; i < rawLength; ++i) {
-                    uInt8Array[i] = raw.charCodeAt(i);
-                }
-                return new Blob([uInt8Array], { type: contentType });
-            }
-            clearButton.addEventListener("click", function (event) {
-                signaturePad.clear();
-            });
-            changeColorButton.addEventListener("click", function (event) {
-                var r = Math.round(Math.random() * 255);
-                var g = Math.round(Math.random() * 255);
-                var b = Math.round(Math.random() * 255);
-                var color = "rgb(" + r + "," + g + "," + b +")";
-                signaturePad.penColor = color;
-            });
-            guardar.addEventListener("click", function (event) {
-                if (signaturePad.isEmpty()) {
-                alert("Please provide a signature first.");
-                } else {
-                var dataURL = signaturePad.toDataURL('image/svg+xml');
-                document.getElementById('firma').value = dataURL;
-                //image = image.replace('data:image/png;base64,', '');
-                //save(dataURL, "signature.svg");
-                //var dataURL = signaturePad.toDataURL('image/svg+xml');
-                //download(dataURL, "signature.svg");
-                }
-            });*/
-
-        // 
         /*
         //Visita
             var select1 = $("#voucher_id").select2({width:'100%'});

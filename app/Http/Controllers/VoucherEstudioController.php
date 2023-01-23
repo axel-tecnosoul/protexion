@@ -15,13 +15,15 @@ class VoucherEstudioController extends Controller
         if ($archivos) {
             foreach ($archivos as $item) {
                 if ($item) {
-                        $nombre = $request->estudio
+                        /*$nombre = $request->estudio
                                 ."_"
                                 .$request->voucher_estudio_id
-                                .$item->getClientOriginalName();
+                                .$item->getClientOriginalName();*/
+                        $nombre = $item->getClientOriginalName();
                         
-                        $item->move(public_path().'/archivo/',$nombre);
-                        $ruta = public_path().'/archivo/'.$nombre;
+                        $ruta = public_path().'/archivo/'.$request->voucher_id."/".$request->estudio."/";
+                        $item->move($ruta,$nombre);
+                        $ruta.=$nombre;
                         $archivo_adjunto = new ArchivoAdjunto();
                         $archivo_adjunto->anexo = $ruta;
                         $archivo_adjunto->voucher_estudio_id = $request->voucher_estudio_id;

@@ -24,7 +24,7 @@
         }
     </style>
 
-    <title>VOUCHER PACIENTE</title>
+    <title>VISITA PACIENTE</title>
 </head>
 <body style="font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif; font-size: 7px;">
 
@@ -37,12 +37,12 @@
             <span style="float:right"><?=date("d M Y")?></span>
         </div>
         
-        <div style="text-align: center;font-size: 16px;font-weight: bold; text-decoration: underline;">VOUCHER PACIENTE</div>
+        <div style="text-align: center;font-size: 16px;font-weight: bold; text-decoration: underline;">VISITA PACIENTE</div>
 
         <div class="row">
             <div class="col-12">
                 <div class="added" style="font-size: 14px;">
-                  <div style="margin-top:10px" class="text-left"> <strong> Nombre completo:</strong> {{$voucher->paciente->nombreCompleto()}} </div>
+                  <div style="margin-top:10px" class="text-left"> <strong> Nombre:</strong> {{$voucher->paciente->nombreCompleto()}} </div>
                   <div style="margin-top:10px" class="text-left"> <strong> Turno:</strong> <?=date("d M Y",strtotime($voucher->turno))?></div>
                   <!-- <p style="font-size:100%" class="text-left"> <strong> CUIL:               </strong> {{$voucher->paciente->cuil                         }} </p>
                   <p style="font-size:100%" class="text-left"> <strong> Fecha de nacimiento:</strong> {{$voucher->paciente->fecha_nacimiento()           }} </p> 

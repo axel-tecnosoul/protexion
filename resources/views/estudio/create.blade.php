@@ -2,7 +2,7 @@
 
 @section('navegacion')
     <li class="breadcrumb-item"><a href="/protexion/public/estudios">Índice de Estudios</a></li>
-    <li class="breadcrumb-item active">Nuevo estudio</li>
+    <li class="breadcrumb-item active">Nueva Visita</li>
 @endsection
 
 @section('content')
@@ -19,7 +19,7 @@
         <div class="card">
             <div class="card-header">
                 <div class="card-title">
-                    <p style="font-size:130%"> <i class="fas fa-stethoscope"></i> Nuevo estudio</p>
+                    <p style="font-size:130%"> <i class="fas fa-stethoscope"></i> Nueva Visita</p>
                 </div>
             </div>
             <!-- /.card-header -->
