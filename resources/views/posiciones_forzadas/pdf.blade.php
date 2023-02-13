@@ -376,22 +376,22 @@
                 </td>
             </tr>
         </table> -->
-        <!-- Firma -->
-        <table class="table table-condensed table-hover" style="font-size: 12px;border-bottom:  0.1px solid rgb(202, 202, 202);">
+        <!-- FIRMAS -->
+        <table class="table table-condensed table-hover" >
             <tr >
-                <td style="width: 350px;text-align:center" colspan="6">
+                <td style="width: 350px;text-align: center" colspan="6">
                     <div>
-                        <img src="{{$declaracion_jurada->firma}}" width=130 height=130 alt="firma del paciente">
+                        <img src="{{$declaracion_jurada->firma}}" height=130 alt="firma del paciente"><!-- style="border:solid 1px black" -->
                     </div>
-                    <label>Firma del Paciente</label>
+                    <label style="font-weight: inherit;font-size: 12px;">Firma del Paciente</label>
                 </td>
                 <td style="width: 350px;text-align: center" colspan="6">
                     <div style="height:130px">
                         @if ($declaracion_jurada->personalClinica->foto)
-                            <img src="{{public_path('imagenes/firmas/'.$declaracion_jurada->personalClinica->foto)}}" width="130" height="130" alt="firma del médico"> 
+                            <img src="{{public_path('imagenes/firmas/'.$declaracion_jurada->personalClinica->foto)}}"  height="130" alt="firma del médico">
                         @endif
                     </div>
-                    <label>Firma del Médico examinador</label>
+                    <label style="font-weight: inherit;font-size: 12px;">Firma del Médico examinador</label>
                 </td>
             </tr>
         </table>

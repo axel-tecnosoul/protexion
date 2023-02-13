@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\DeclaracionJurada;
 use App\Models\Espiriometria;
 use App\Voucher;
 use Illuminate\Http\Request;
@@ -33,8 +34,10 @@ class EspiriometriaController extends Controller
     public function crearPDF($id)
     {
         $voucher= Voucher::find($id);
+        $declaracionJurada=DeclaracionJurada::find($voucher->declaracionJurada->id);
         $pdf = PDF::loadView('espiriometria.PDF',[
-            "voucher"   =>  $voucher
+            "voucher"   =>  $voucher,
+            "declaracion_jurada"   =>  $declaracionJurada
             ]);
         $pdf->setPaper('a4','letter');
         return $pdf->stream('espiriometria.pdf');

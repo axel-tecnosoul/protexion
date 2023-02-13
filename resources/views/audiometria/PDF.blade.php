@@ -41,7 +41,7 @@
         <div id="header" style="text-align: right; ">
             <img src="{{public_path('imagenes/logo.png')}}" alt="logo" width="200px">
         </div>
-        <h3 class="titulo" style="text-align: center">ESTUDIO FUNCIONAL DE LA AUDICIÓN</h3>
+        <h3 class="titulo" style="text-align: center;margin-top:5px">ESTUDIO FUNCIONAL DE LA AUDICIÓN</h3>
 
         <p class="campos" >Fecha: {{ \Carbon\Carbon::parse($voucher->turno)->format('d/m/Y') }}</p>
         <!-- Datos precargados -->
@@ -84,7 +84,7 @@
             </tbody>
         </table>
         <!-- / Datos precargados -->
-        <h3 class="titulo" style="text-align: center">ANTECEDENTES</h3>
+        <h3 class="titulo" style="text-align: center;margin-top:5px">ANTECEDENTES</h3>
         <table class="datos">
             <tbody>
                 <tr>
@@ -254,19 +254,19 @@
                 </tr>
             </tbody>
         </table>
-        <h3 class="titulo" style="text-align: center">AUDIOGRAMA</h3>
+        <h3 class="titulo" style="text-align: center;margin-top:5px">AUDIOGRAMA</h3>
 
         <div id="header" style="text-align:center">
             <img src="{{public_path('imagenes/TablaAudiograma.JPG')}}" width="700px">
         </div>
 
-        <h3 class="titulo" style="text-align: center">CONCLUSIÓN</h3>
+        <h3 class="titulo" style="text-align: center;margin-top:5px">CONCLUSIÓN</h3>
 
         <hr><br><hr><br><hr>
 
-        <br><br><br><br>
+        <!-- <br><br><br><br> -->
         <!-- FIRMAS -->
-        <table class="table table-condensed table-hover" style="width: 100%;text-align: center">
+        <!-- <table class="table table-condensed table-hover" style="width: 100%;text-align: center">
             <tr >
                 <td style="width: 50%;text-align: center">
                     <div>
@@ -279,6 +279,25 @@
                         <img src="{{$voucher->firma}}" width=130 height=130 alt="firma del medico">
                     </div>
                     <label>Firma y sello del medico examinador</label>
+                </td>
+            </tr>
+        </table> -->
+        <!-- FIRMAS -->
+        <table class="table table-condensed table-hover" >
+            <tr >
+                <td style="width: 350px;text-align: center" colspan="6">
+                    <div>
+                        <img src="{{$declaracion_jurada->firma}}" height=130 alt="firma del paciente"><!-- style="border:solid 1px black" -->
+                    </div>
+                    <label style="font-weight: inherit;font-size: 12px;">Firma del Paciente</label>
+                </td>
+                <td style="width: 350px;text-align: center" colspan="6">
+                    <div style="height:130px">
+                        @if ($declaracion_jurada->personalClinica->foto)
+                            <img src="{{public_path('imagenes/firmas/'.$declaracion_jurada->personalClinica->foto)}}"  height="130" alt="firma del médico">
+                        @endif
+                    </div>
+                    <label style="font-weight: inherit;font-size: 12px;">Firma y sello del medico examinador</label>
                 </td>
             </tr>
         </table>

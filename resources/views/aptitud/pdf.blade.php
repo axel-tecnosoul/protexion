@@ -140,8 +140,8 @@
         <td style="text-align: center; background-color: brown; color: #FFFFFF;width: 350px" colspan="6">OBSERVACIONES</td>
       </tr>
       <tr>
-        <td colspan="6"> <?=nl2br($aptitud->preexistencias)?></td>
-        <td colspan="6"> <?=nl2br($aptitud->observaciones)?></td>
+        <td colspan="6" style="vertical-align: top;"> <?=nl2br($aptitud->preexistencias)?></td>
+        <td colspan="6" style="vertical-align: top;"> <?=nl2br($aptitud->observaciones)?></td>
       </tr>
     </table>
     <!-- DECLARACION DE RIESGOS -->
@@ -195,6 +195,25 @@
           @endif
         </td>
       </tr>
+    </table>
+    <!-- FIRMAS -->
+    <table class="table table-condensed table-hover" >
+        <tr >
+            <td style="width: 350px;text-align: center" colspan="6">
+                <div>
+                    <img src="{{public_path('imagenes/firmas/firma Recalde chica.jpg')}}" height=130 alt="firma del paciente"><!-- style="border:solid 1px black" -->
+                </div>
+                <label style="font-weight: inherit;font-size: 12px;">Firma del Paciente</label>
+            </td>
+            <td style="width: 350px;text-align: center" colspan="6">
+                <div style="height:130px">
+                    @if ($declaracion_jurada->personalClinica->foto)
+                        <img src="{{public_path('imagenes/firmas/'.$declaracion_jurada->personalClinica->foto)}}"  height="130" alt="firma del médico">
+                    @endif
+                </div>
+                <label style="font-weight: inherit;font-size: 12px;">Firma del Médico examinador</label>
+            </td>
+        </tr>
     </table>
   </div>
 </body>

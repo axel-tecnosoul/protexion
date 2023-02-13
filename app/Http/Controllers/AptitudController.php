@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\DeclaracionJurada;
 use App\Models\Aptitud;
 use App\Voucher;
 use Carbon\Carbon;
@@ -66,7 +67,7 @@ class AptitudController extends Controller
         
         return view('aptitud.create', compact('voucher','riesgos','estudios', 'datosAdicionales','articulaciones','cuadro',
                                               'declaracion_jurada','historia_clinica','posiciones_forzada','iluminacion_direccionado',
-                                              'diagnosticoD','diagnosticoH','diagnosticoP','diagnosticoI','voucher_riesgos' ));
+                                              'diagnosticoD','diagnosticoH','diagnosticoP','diagnosticoI','voucher_riesgos', 'aptitud'));
     }
 
     public function store(Request $request)
@@ -181,6 +182,7 @@ class AptitudController extends Controller
         $riesgos = Riesgos::all();
 
         $voucher = Voucher::find($aptitud->voucher_id);
+        $declaracionJurada=DeclaracionJurada::find($voucher->declaracionJurada->id);
         //dd($voucher);
 
         $voucher_riesgos=[];
@@ -195,7 +197,9 @@ class AptitudController extends Controller
         $pdf = PDF::loadView('aptitud.pdf',["voucher" => $voucher, 
                                             "riesgos" => $riesgos,
                                             "voucher_riesgos" => $voucher_riesgos,
-                                            "aptitud" => $aptitud]);
+                                            "aptitud" => $aptitud,
+                                            "declaracion_jurada" => $declaracionJurada,
+        ]);
 
         $pdf->setPaper('a4','letter');
         return $pdf->stream('aptitud.pdf');
@@ -208,11 +212,12 @@ class AptitudController extends Controller
 
     }
 
-    
+    /* SE USA?? */
     public function crearPDF($id)
     {   
         $aptitudModel = new Aptitud(); 
         $voucher=Voucher::find($id);
+        $declaracionJurada=DeclaracionJurada::find($voucher->declaracionJurada->id);
         /*$aptitud = Aptitud::find($voucher->aptitud->id);
         var_dump($aptitud);*/
         
@@ -221,10 +226,12 @@ class AptitudController extends Controller
         //Carga de riesgos
         $riesgos = $aptitudModel->riesgos();
 
+        dd($declaracionJurada);
         $pdf = PDF::loadView('aptitud.pdf',[
-          "voucher" => $voucher, 
-          "riesgos" => $riesgos, 
-          //"aptitud" => $aptitud
+          "voucher" => $voucher,
+          "riesgos" => $riesgos,
+          "declaracion_jurada" => $declaracionJurada,
+          //"aptitud" => $aptitud,
         ]);
         $pdf->setPaper('a4','letter');
 

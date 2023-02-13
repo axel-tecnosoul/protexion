@@ -11,4 +11,5 @@ Route::get('ciudad/{ciudad}/eliminar', 'CiudadController@delete')->name('ciudad.
 Route::get('ciudad/eliminado', 'CiudadController@eliminados')->name('ciudad.eliminado');
 Route::get('ciudad/{ciudad}', 'CiudadController@restaurar')->name('ciudad.restaurar');
 Route::get('ciudad/create/encontrarEspecialidad', 'CiudadController@encontrarEspecialidad');
+Route::delete('ciudad/{id}','CiudadController@destroy')->name('ciudad.destroy');
 ?>

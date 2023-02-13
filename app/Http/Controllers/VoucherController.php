@@ -21,6 +21,7 @@ use App\Models\VoucherEstudio;
 use App\Models\VoucherRiesgos;
 use Carbon\Carbon;
 use PDF;
+use DB;
 
 class VoucherController extends Controller
 {
@@ -335,11 +336,15 @@ class VoucherController extends Controller
       $riesgos =         Riesgos::all();
 
       //Eliminar estudios con el mismo nombre que el tipo de estudio
-      for ($i=0; $i < sizeof($estudios); $i++) { 
+      /*for ($i=0; $i < sizeof($estudios); $i++) { 
         if (strtoupper($estudios[$i]->nombre)  == strtoupper($estudios[$i]->tipoEstudio->nombre))  {
+          //if($estudios[$i]->id!=66){
+            //echo "eliminamos";
             unset($estudios[$i]);
+          //}
         }
-      }
+      }*/
+      //die();
 
       return view("voucher.edit", compact(/*'pacientes', */'estudios', 'tipo_estudios', 'paciente','riesgos','voucher','voucher_estudio','voucher_riesgos'));
       //return view("ciudad.edit",["ciudad"=>$ciudad,"provincias"           =>  $provincias]);
@@ -387,33 +392,46 @@ class VoucherController extends Controller
           foreach ($estudios as $estudio) {
               //La variable aux toma el valor del id del Estudio
               $aux = $estudio->id;
+              //var_dump($aux);
               //Compara el aux con el campo de la request, que en la vista se establece que cada uno es el id de un Estudio distinto.
+              //var_dump($request->$aux);
+              
               if ($request->$aux == 1) {
-
+                  /* VINO EN EL REQUEST */
                   $voucher_estudio=VoucherEstudio::whereVoucher_id($id)->whereEstudio_id($aux)->get();
+                  //echo "encontrado: ".count($voucher_estudio)."<br><br>";
                   //var_dump($voucher_estudio);
                   if(count($voucher_estudio)==0){
-                    $voucher_estudio = new VoucherEstudio;
-                    $voucher_estudio->voucher_id = $id;
-                    $voucher_estudio->estudio_id = $estudio->id;
-                    $voucher_estudio->save();
+                      /* ES NUEVO Y LO INSERTAMOS */
+                      $voucher_estudio = new VoucherEstudio;
+                      $voucher_estudio->voucher_id = $id;
+                      $voucher_estudio->estudio_id = $estudio->id;
+                      $voucher_estudio->save();
 
-                    //Comprobar si se cargar estudios base
-                    if ($estudio->id == $voucher_estudio->estudio_id) {
-                        if ((strtoupper($estudio->tipoEstudio->nombre) == "ANALISIS BIOQUIMICO") or
-                            (strtoupper($estudio->tipoEstudio->nombre) == "ANALISIS BIOQUIMICO ANEXO 01") ) {
-                            $analisisB = true;
-                        }
-                        if (strtoupper($estudio->tipoEstudio->nombre) == "PSICOTECNICO") {
-                            $psicotecnico = true;
-                        }
-                        if (strtoupper($estudio->tipoEstudio->nombre) == "RADIOLOGIA") {
-                            $radiologia = true;
-                        }
-                    }
+                      //Comprobar si se cargar estudios base
+                      //var_dump($voucher_estudio->estudio_id);
+                      //var_dump($estudio->id);
+                      if ($estudio->id == $voucher_estudio->estudio_id) {
+                          if ((strtoupper($estudio->tipoEstudio->nombre) == "ANALISIS BIOQUIMICO") or
+                              (strtoupper($estudio->tipoEstudio->nombre) == "ANALISIS BIOQUIMICO ANEXO 01") ) {
+                              $analisisB = true;
+                          }
+                          if (strtoupper($estudio->tipoEstudio->nombre) == "PSICOTECNICO") {
+                              $psicotecnico = true;
+                          }
+                          //var_dump($estudio->tipoEstudio->nombre);
+                          if (strtoupper($estudio->tipoEstudio->nombre) == "RADIOLOGIA") {
+                              $radiologia = true;
+                          }
+                      }
+                  }else{
+                      /* YA ESTÁ INSERTADO, O SEA QUE NO SE MODIFICA NADA */
+                      //echo "YA ESTÁ INSERTADO, O SEA QUE NO SE MODIFICA NADA<br><br>";
                   }
               }else{
-                $voucher_estudio=VoucherEstudio::whereVoucher_id($id)->whereEstudio_id($aux)->delete();
+                  /* NO VINO EN EL REQUEST POR LO QUE LO ELIMINAMOS */
+                  //echo "ELIMINAR";
+                  $voucher_estudio=VoucherEstudio::whereVoucher_id($id)->whereEstudio_id($aux)->delete();
               }
           }
           //Cargar estudios base
@@ -421,22 +439,68 @@ class VoucherController extends Controller
               $voucher_estudio = new VoucherEstudio;
               $voucher_estudio->voucher_id = $id;
               $voucher_estudio->estudio_id = 1;
-              $voucher_estudio->save();
+              //$voucher_estudio->save();
+          }else{
+              //echo "VER CUANTOS HAY DE analisisB Y ELIMINAR el 1 SI NO SE ENCUENTRA<br><br>";
+              $query = DB::table('vouchers_estudios')
+                ->join('estudios', 'vouchers_estudios.estudio_id', '=', 'estudios.id')
+                ->select('vouchers_estudios.id AS vouchers_estudio_id','vouchers_estudios.estudio_id')
+                ->where('voucher_id', '=', $id)
+                ->where('tipo_estudio_id', '=', 1);
+              $voucher_estudio=$query->get(); //ejecuto la consulta
+              //var_dump($voucher_estudio);
+
+              if(count($voucher_estudio)==1 and $voucher_estudio[0]->estudio_id==1){
+                //echo "ELIMINAMOS";
+                $voucher_estudio=VoucherEstudio::whereId($voucher_estudio[0]->vouchers_estudio_id)->delete();
+              }
           }
           if ($psicotecnico) {
               $voucher_estudio = new VoucherEstudio;
               $voucher_estudio->voucher_id = $id;
               $voucher_estudio->estudio_id = 60;
-              $voucher_estudio->save();
+              //$voucher_estudio->save();
+          }else{
+              //echo "VER CUANTOS HAY DE psicotecnico Y ELIMINAR el 60 SI NO SE ENCUENTRA<br><br>";
+              //$voucher_estudio=VoucherEstudio::whereVoucher_id($id)->whereTipo_estudio_id(5)->get();
+              $query = DB::table('vouchers_estudios')
+                ->join('estudios', 'vouchers_estudios.estudio_id', '=', 'estudios.id')
+                ->select('vouchers_estudios.id AS vouchers_estudio_id','vouchers_estudios.estudio_id')
+                ->where('voucher_id', '=', $id)
+                ->where('tipo_estudio_id', '=', 5);
+              $voucher_estudio=$query->get(); //ejecuto la consulta
+              //var_dump($voucher_estudio);
+
+              if(count($voucher_estudio)==1 and $voucher_estudio[0]->estudio_id==60){
+                //echo "ELIMINAMOS";
+                $voucher_estudio=VoucherEstudio::whereId($voucher_estudio[0]->vouchers_estudio_id)->delete();
+              }
           }
+          //var_dump($radiologia);
           if ($radiologia) {
               $voucher_estudio = new VoucherEstudio;
               $voucher_estudio->voucher_id = $id;
               $voucher_estudio->estudio_id = 66;
-              $voucher_estudio->save();
-          }
+              //$voucher_estudio->save();
+          }else{
+              //echo "VER CUANTOS HAY DE radiología Y ELIMINAR el 66 SI NO SE ENCUENTRA<br><br>";
+              //$voucher_estudio=VoucherEstudio::whereVoucher_id($id)->whereTipo_estudio_id(6)->get();
+              $query = DB::table('vouchers_estudios')
+                ->join('estudios', 'vouchers_estudios.estudio_id', '=', 'estudios.id')
+                ->join('archivo_adjuntos', 'archivo_adjuntos.voucher_estudio_id', '=', 'vouchers_estudios.id')
+                ->select('vouchers_estudios.id AS vouchers_estudio_id','vouchers_estudios.estudio_id','archivo_adjuntos.anexo')
+                ->where('voucher_id', '=', $id)
+                ->where('tipo_estudio_id', '=', 6);
+              $voucher_estudio=$query->get(); //ejecuto la consulta
+              //var_dump($voucher_estudio);
 
-      //$voucher->update();
+              if(count($voucher_estudio)==1 and $voucher_estudio[0]->estudio_id==66 and $voucher_estudio[0]->anexo=="ruta"){
+                //echo "ELIMINAMOS";
+                $voucher_estudio=VoucherEstudio::whereId($voucher_estudio[0]->vouchers_estudio_id)->delete();
+              }
+          }
+          //die();
+
       //return false;
 
       return redirect()->route('paciente.voucher',$request->paciente_id);

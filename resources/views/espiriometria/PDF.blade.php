@@ -41,7 +41,6 @@
 
     <div id="content" class="container">
 
-
         <div id="header" style="text-align: right">
             <img src="{{public_path('imagenes/logo.png')}}" alt="logo" width="200px">
         </div>
@@ -52,7 +51,7 @@
         <p class="subtitulo">DATOS DE LA EMPRESA</p>
         <p class="datos"> <label class="campos" for="">Razón social:</label> {{$voucher->paciente->origen ? $voucher->paciente->origen->definicion : " "}} </p>
 
-        <p class="subtitulo">DATOS DE LA TRABAJADOR</p>
+        <p class="subtitulo">DATOS DEL TRABAJADOR</p>
 
         <table class="datos">
             <tbody>
@@ -101,8 +100,34 @@
         <div id="header" style="text-align:center">
             <img src="{{public_path('imagenes/DJ _Espir.JPG')}}" width="650px">
         </div>
-        <div id="header" style="text-align:center; padding-top: 7%">
+        <!-- <div id="header" style="text-align:center; padding-top: 7%">
             <img src="{{public_path('imagenes/Firma_esp.JPG')}}" width="650px">
+        </div> -->
+
+        <!-- FIRMAS -->
+        <table class="table" >
+            <tr >
+                <td style="width: 350px;text-align: center" colspan="6">
+                    <div>
+                        <img src="{{$declaracion_jurada->firma}}" height=130 alt="firma del paciente"><!-- style="border:solid 1px black" -->
+                    </div>
+                    <label style="font-weight: inherit;font-size: 12px;">Firma del Paciente</label>
+                </td>
+                <td style="width: 350px;text-align: center;" colspan="6">
+                    <div style="height:130px">
+                        @if ($declaracion_jurada->personalClinica->foto)
+                            <img src="{{public_path('imagenes/firmas/'.$declaracion_jurada->personalClinica->foto)}}"  height="130" alt="firma del médico">
+                        @endif
+                    </div>
+                    <label style="font-weight: inherit;font-size: 12px;">Firma del Médico</label>
+                </td>
+            </tr>
+        </table>
+        <div style="text-align: center;border-top: solid 1px black;position:fixed;bottom:50px;font-size:10px">
+            PROTEXIÓN "CENTRO MÉDICO LABORAL"<br>
+            Av. San Martin 1400, Esquina Rivadavia  - Puerto Rico Misiones - CP 3334<br>
+            Tel. (03743) 476272<br>
+            E-mail: info@protexionpr.com.ar; gerencia@protexionpr.com.ar<br>
         </div>
     </div>
 

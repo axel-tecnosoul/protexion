@@ -11,7 +11,7 @@
                     </div>
                 </div>
                 <div class="card-body" >
-                    <textarea class="form-control" name="preexistencias" id="preexistencias" cols="30" rows="10" readonly></textarea>
+                    <textarea class="form-control" name="preexistencias" id="preexistencias" cols="30" rows="10" readonly contenteditable="true"></textarea>
                 </div>
             </div>
         </div>
@@ -26,7 +26,7 @@
                     </div>
                 </div>
                 <div class="card-body" > 
-                    <textarea class="form-control" name="observaciones" id="observaciones" cols="30" rows="10" readonly></textarea>
+                    <textarea class="form-control" name="observaciones" id="observaciones" cols="30" rows="10" readonly contenteditable="true"></textarea>
                 </div>
             </div>
         </div>

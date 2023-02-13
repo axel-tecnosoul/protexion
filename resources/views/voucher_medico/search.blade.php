@@ -29,15 +29,14 @@
                   title="-Seleccione el tipo de estudio-">
                   -Seleccione el tipo de estudio-
               </option>
-              @foreach ($tipo_estudios as $tipo_estudio)
-                  <?php
+              @foreach ($aEstudios as $estudio)<?php
                   $selected="";
-                  if($tipo_estudio->id==$tipo_estudio_id){
+                  if($estudio["id"]==$tipo_estudio_id){
                     $selected="selected";
                   }?>
                   <option
                       {{$selected}}
-                      value="{{$tipo_estudio->id }}">{{$tipo_estudio->nombre}}
+                      value="{{$estudio['id'] }}">{{$estudio['nombre']}}
                   </option>
               @endforeach
             </select>

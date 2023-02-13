@@ -859,26 +859,25 @@
               </td>
           </tr>
       </table>
-      <!-- Firma -->
+      <!-- FIRMAS -->
       <table class="table table-condensed table-hover" >
-          <tr >
-              <td style="width: 350px;text-align:center" colspan="6">
-                  <div>
-                      <img src="{{$declaracion_jurada->firma}}" width=130 height=130 alt="firma del paciente">
-                      <!-- <img src="{{$hc_formulario->firma}}" width=130 height=130 alt="firma del paciente"> -->
-                  </div>
-                  <label>Firma del Paciente</label>
-              </td>
-              <td style="width: 350px;text-align: center" colspan="6">
-                  <div style="height:130px">
-                      @if ($declaracion_jurada->personalClinica->foto)
-                          <img src="{{public_path('imagenes/firmas/'.$declaracion_jurada->personalClinica->foto)}}" width="130" height="130" alt="firma del médico"> 
-                      @endif
-                  </div>
-                  <label>Firma del Médico</label>
-              </td>
-          </tr>
-      </table>
+            <tr >
+                <td style="width: 350px;text-align: center" colspan="6">
+                    <div>
+                        <img src="{{$declaracion_jurada->firma}}" height=130 alt="firma del paciente"><!-- style="border:solid 1px black" -->
+                    </div>
+                    <label style="font-weight: inherit;">Firma del Paciente</label>
+                </td>
+                <td style="width: 350px;text-align: center" colspan="6">
+                    <div style="height:130px">
+                        @if ($declaracion_jurada->personalClinica->foto)
+                            <img src="{{public_path('imagenes/firmas/'.$declaracion_jurada->personalClinica->foto)}}"  height="130" alt="firma del médico">
+                        @endif
+                    </div>
+                    <label style="font-weight: inherit;">Firma del Médico</label>
+                </td>
+            </tr>
+        </table>
     </div>
   
 </body>

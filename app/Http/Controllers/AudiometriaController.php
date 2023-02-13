@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\DeclaracionJurada;
 use App\Models\Audiometria;
 use App\Voucher;
 use PDF;
@@ -32,8 +33,10 @@ class AudiometriaController extends Controller
     public function crearPDF($id)
     {
         $voucher= Voucher::find($id);
+        $declaracionJurada=DeclaracionJurada::find($voucher->declaracionJurada->id);
         $pdf = PDF::loadView('audiometria.PDF',[
-            "voucher"   =>  $voucher
+            "voucher"   =>  $voucher,
+            "declaracion_jurada"   =>  $declaracionJurada
             ]);
         $pdf->setPaper('a4','letter');
 

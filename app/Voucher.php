@@ -84,10 +84,13 @@ class Voucher extends Model implements Auditable
                   $estudios[] = $item;
               }*/
               //new version
+              //var_dump($item->estudio->id);
+              
               if (in_array($item->estudio->id,[73,66])){
                 $estudios[] = $item;
               }
             }
+            //die();
             return $estudios;
         }
 
@@ -170,13 +173,16 @@ class Voucher extends Model implements Auditable
                     //dd($voucher_estudio);
                     //Si pertenece al tipo de estudio
                     if ($tipos[$i]->nombre == $voucher_estudio->estudio->tipoEstudio->nombre) {
-                        //Si el nombre del estudio es distinto al nombre del tipo de estudio
-                        if ((strtoupper($tipos[$i]->nombre)) != ( strtoupper($voucher_estudio->estudio->nombre)) ) {
-                            $estudiosClasificados[$i][1][]=[
-                              "estudio"=> $voucher_estudio->estudio,
-                              "valor"=> $voucher_estudio->valor,
-                              "pre_obs"=> $voucher_estudio->pre_obs,
-                            ];
+                        //$voucher_estudio->estudio->id = 73 es GENERAL que se usa solo para subir archivos
+                        if($voucher_estudio->estudio->id!=73){
+                            //Si el nombre del estudio es distinto al nombre del tipo de estudio
+                            if ((strtoupper($tipos[$i]->nombre)) != ( strtoupper($voucher_estudio->estudio->nombre)) ) {
+                                $estudiosClasificados[$i][1][]=[
+                                  "estudio"=> $voucher_estudio->estudio,
+                                  "valor"=> $voucher_estudio->valor,
+                                  "pre_obs"=> $voucher_estudio->pre_obs,
+                                ];
+                            }
                         }
                     }
                 }

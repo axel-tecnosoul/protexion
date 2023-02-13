@@ -340,18 +340,33 @@
                         </li>
 
                         <li class="nav-item">
+                            <a href="{{ route('empresa.index') }}" class="nav-link">
+                                <i class="nav-icon fa fa-building"></i>
+                                <p>Empresas</p>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
                             <a href="{{ route('ciudad.index') }}" class="nav-link">
                                 <i class="nav-icon fa fa-map-signs"></i>
                                 <p>Ciudades</p>
                             </a>
                         </li>
-                        <!--
+
                         <li class="nav-item">
                             <a href="{{ route('estudios.index') }}" class="nav-link">
-                                <i class="nav-icon fa fa-cogs"></i>
+                                <i class="nav-icon fa fa-file-alt"></i>
                                 <p>Estudios</p>
                             </a>
                         </li>
+
+                        <li class="nav-item">
+                            <a href="{{ route('riesgo.index') }}" class="nav-link">
+                                <i class="nav-icon fa fa-asterisk"></i>
+                                <p>Riesgos</p>
+                            </a>
+                        </li>
+                        <!--
                         <li class="nav-item">
                             <a href="{{ route('tipo_estudios.index') }}" class="nav-link">
                                 <i class="nav-icon fa fa-cogs"></i>
@@ -465,11 +480,11 @@
 
     <footer class="main-footer">
         <strong>Copyright &copy; 2020
-            <a href="http://adminlte.io">MiS Misiones Software</a>.
+            <a target="_blank" href="https://www.facebook.com/misionessoftware">MiS Misiones Software</a>.
         </strong>
             Todos los derechos reservados.
         <div class="float-right d-none d-sm-inline-block">
-            <b>Version</b> 1.0.0
+            <b>Version</b> 2.5.0
         </div>
     </footer>
 

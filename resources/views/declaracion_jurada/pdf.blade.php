@@ -6,10 +6,11 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <style>
         @page {
-            margin: 72px 25px 25px 30px;
+            /*margin: 72px 25px 25px 30px;*/
+            margin: 2cm 2cm 2cm 1cm;
         }
         table{
-          width: 100%;
+            width: 100%;
         }
         td{ 
             border-bottom:  0.1px solid rgb(202, 202, 202);
@@ -20,7 +21,7 @@
             font-weight: bold;
         }
         h3{
-          margin-top:0;
+            margin-top:0;
         }
         header {
             position: fixed;
@@ -35,6 +36,13 @@
             text-align: center;
             line-height: 35px;*/
         }
+        /*footer{
+          bottom: 0px;
+          position: fixed;
+        }*/
+        footer {
+          position: fixed; bottom: -60px; left: 0px; right: 0px; background-color: lightblue; height: 50px;
+        }
         /*main{
           margin-top: 20px;
         }*/
@@ -42,11 +50,11 @@
     <title>Declaracion Jurada</title>
 </head>
 <body>
-  <header>
-    <div style="text-align: right">
-      <img src="{{public_path('imagenes/logo.png')}}" alt="logo" width="200px">
-    </div>
-  </header>
+    <header>
+      <div style="text-align: right">
+        <img src="{{public_path('imagenes/logo.png')}}" alt="logo" width="200px">
+      </div>
+    </header>
     <div id="content" class="container">
         <!-- <div id="header" style="text-align: right">
             <img src="{{public_path('imagenes/logo.png')}}" alt="logo" width="200px">
@@ -564,26 +572,33 @@
         <p style="font-size: 12px">
             Por la presente declaro bajo juramento que los datos de la presente declaración, de mi puño y letra, son reales y corresponden a mi Historia Clínica Personal.
         </p>
-        <p style="font-size: 12px">Lugar y Fecha: Puerto Rico {{Carbon\Carbon::parse($declaracion_jurada->fecha_realizacion)->format('d/m/Y') }}</p>
+        <p style="font-size: 12px">
+            Lugar y Fecha: Puerto Rico {{Carbon\Carbon::parse($declaracion_jurada->fecha_realizacion)->format('d/m/Y') }}
+        </p>
         <!-- FIRMAS -->
         <table class="table table-condensed table-hover" >
             <tr >
                 <td style="width: 350px;text-align: center" colspan="6">
                     <div>
-                        <img src="{{$declaracion_jurada->firma}}" width=130 height=130 alt="firma del paciente">
+                        <img src="{{$declaracion_jurada->firma}}" height=130 alt="firma del paciente"><!-- style="border:solid 1px black" -->
                     </div>
-                    <label>Firma del Paciente</label>
+                    <label style="font-weight: inherit;font-size: 12px;">Firma del Paciente</label>
                 </td>
                 <td style="width: 350px;text-align: center" colspan="6">
                     <div style="height:130px">
                         @if ($declaracion_jurada->personalClinica->foto)
-                            <img src="{{public_path('imagenes/firmas/'.$declaracion_jurada->personalClinica->foto)}}" width="130" height="130" alt="firma del médico">
+                            <img src="{{public_path('imagenes/firmas/'.$declaracion_jurada->personalClinica->foto)}}"  height="130" alt="firma del médico">
                         @endif
                     </div>
-                    <label>Firma del Médico</label>
+                    <label style="font-weight: inherit;font-size: 12px;">Firma del Médico</label>
                 </td>
             </tr>
         </table>
     </div>
+    <footer>
+      <div style="text-align: right">
+        Pie de pagina
+      </div>
+    </footer>
 </body>
 </html>

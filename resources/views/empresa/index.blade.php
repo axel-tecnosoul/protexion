@@ -2,27 +2,28 @@
 
 @section('navegacion')
     <li class="breadcrumb-item"><a href="/protexion/public/home">Menu Principal</a></li>
-    <li class="breadcrumb-item active">Indice de Personal</li>
+    <li class="breadcrumb-item active">Indice de Empresa</li>
 @endsection
 
-
 @section('content') <!-- Contenido -->
-
 <div class="card">
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
         @include('errors.request')
         <div class="card-header header-bg">
             <div class="card-title">
-                <p style="font-size:130%"> <i class="fa fa-user-md" aria-hidden="true"></i> Indice de Personal</p>
+                <p style="font-size:130%"> <i class="fa fa-building" aria-hidden="true"></i> Indice de Empresa</p>
             </div>
             <div class="card-tools">
-                <a href= {{ route('personal.create')}}>
+                <a href= {{ route('empresa.create')}}>
                     <button class="btn fondo1">
                         <i class="fas fa-plus"></i> Nuevo
                     </button>
                 </a>
             </div>
         </div>
+        <!-- / Cabecera -->
+        @include('estudio.mensaje')
+        <!-- Body -->
         <div class="card-body">
             <!--div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                 <p>
@@ -41,35 +42,37 @@
                 <thead style="background-color:#222D32">
                     <tr>
                         <th width="10%" style="color:#F8F9F9">NRO</th>
-                        <th width="35%" style="color:#F8F9F9">APELLIDO Y NOMBRE</th>
-                        <th width="20%" style="color:#F8F9F9">DOCUMENTO</th>
-                        <th width="20%" style="color:#F8F9F9">PUESTO</th>
+                        <th width="40%" style="color:#F8F9F9">NOMBRE</th>
+                        <th width="35%" style="color:#F8F9F9">CUIT</th>
                         <th width="15%" style="color:#F8F9F9">OPCIONES</th>
 
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($personals as $personal)
+                    @foreach ($empresas as $empresa)
                     
                     <tr onmouseover="cambiar_color_over(this)" onmouseout="cambiar_color_out(this)">
-                        <td>{{ $personal->id }}</td>
-                        <td style="text-align: left">{{ $personal->nombreCompleto() }}</td>
-                        <td style="text-align: left">{{  number_format( (intval($personal->documento)/1000), 3, '.', '.') }}</td>
-                        <td style="text-align: left"> <label style="font-size:90%" class="badge badge-success">{{ $personal->puesto->nombre }}</label></td>
-                        <td style="text-align: center" colspan="3">
+                       
+                        <td style="text-align: center">{{ $empresa->id }}</td>
+                        <td style="text-align: left">{{ $empresa->definicion }}</td>
+                        <td style="text-align: left">{{ $empresa->cuit }}</td>
+                        <td colspan="3">
                             
-                            <a data-keyboard="false" data-target="#modal-show-{{ $personal->id }}" data-toggle="modal">
+                            <!-- <a data-keyboard="false" data-target="#modal-show-{{ $empresa->id }}" data-toggle="modal">
                                 <button title="ver" class="btn fondo1 btn-responsive">
                                     <i class="fa fa-eye"></i>
                                 </button>
-
-                            </a>
-                            @include('personal.modalshow')
-                            <a href="{{URL::action('PersonalClinicaController@edit',$personal->id)}}">
+                            </a> -->
+                            <a href="{{URL::action('EmpresaController@edit',$empresa->id)}}">
                                 <button title="editar" class="btn fondo2 btn-responsive">
                                     <i class="fa fa-edit"></i>
                                 </button>
                             </a>
+                            <form action="{{route('empresa.destroy',$empresa->id)}}" method="POST" style="display:inline;">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger"><i class="fa fa-fw fa-trash"></i></button>
+                            </form>
                         </td>
                     </tr>
                     @endforeach

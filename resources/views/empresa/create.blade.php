@@ -1,79 +1,51 @@
 @extends('layouts.admin')
 <!-- Extiende de layout -->
 @section('navegacion')
-    <li class="breadcrumb-item"><a href="/protexion/public/personal">Indice de Ciudad</a></li>
-    <li class="breadcrumb-item active">Crear Ciudad</li>
+    <li class="breadcrumb-item"><a href="/protexion/public/empresa">Indice de Empresa</a></li>
+    <li class="breadcrumb-item active">Crear Empresa</li>
 @endsection
 @section('content')
 
 <div class="row">
     <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
         @include('errors.request')
-        @include('personal.mensaje')
+        @include('empresa.mensaje')
         
-        {!!Form::open(array('url'=>'ciudad','method'=>'POST','autocomplete'=>'off'))!!}
+        {!!Form::open(array('url'=>'empresa','method'=>'POST','autocomplete'=>'off'))!!}
         {{Form::token()}}
 
         <div class="card card-dark">
             <div class="card-header">
                 <div class="card-title">
-                    <p style="font-size:130%"> <i class="fa fa-map-signs" aria-hidden="true"></i> Datos de la Ciudad</p>
+                    <p style="font-size:130%"> <i class="fa fa-building" aria-hidden="true"></i> Datos de la Empresa</p>
                 </div>
             </div>
             <div class="card-body">
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                     <div class="form-group">
-                        <label for="nombre"> Nombre</label>
+                        <label for="definicion"> Nombre</label>
                         <input
                             type="string"
-                            name="nombre"
+                            name="definicion"
                             maxlength="30"
-                            value="{{old('nombre')}}"
+                            value="{{old('definicion')}}"
                             class="form-control"
                             placeholder="Ingrese el nombre..."
                             title="Introduzca un nombre"
-                            onkeypress="return soloLetras(event)"
                             required>
                     </div>
                 </div>
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                     <div class="form-group">
-                        <label for="codigo_postal">Código postal</label>
+                        <label for="cuit">CUIT</label>
                         <input
                             type="string"
-                            name="codigo_postal"
+                            name="cuit"
                             maxlength="30"
-                            value="{{old('codigo_postal')}}"
+                            value="{{old('cuit')}}"
                             class="form-control"
-                            placeholder="Ingrese el codigo postal..."
-                            title="Introduzca el codigo postal"
-                            onkeypress="return soloNumeros(event)">
-                    </div>
-                </div>
-                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                    <div class="form-group">
-                        <label> Provincias</label>
-                        <select
-                            name="provincias_id"
-                            id="provincias_id"
-                            class="provincias_id form-control"
-                            required
-                            >
-                            <option
-                                value="0"
-                                disabled="true"
-                                selected="true"
-                                title="Seleccione un provincia"
-                                >
-                                -Seleccione un provincia-
-                            </option>
-                            @foreach ($provincias as $provincias)
-                                <option
-                                    value="{{$provincias->id }}">
-                                        {{$provincias->nombre}}
-                                </option>
-                            @endforeach
-                        </select>
+                            placeholder="Ingrese el cuit..."
+                            title="Introduzca el cuit">
                     </div>
                 </div>
                 
@@ -85,7 +57,7 @@
 </div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
     <div class="form-group" style="text-align:center">
-        <a href="/protexion/public/personal">
+        <a href="/protexion/public/empresa">
             <button title="Cancelar" class="btn btn-secondary btn-lg" type="button"><i class="fas fa-arrow-left"></i> Cancelar</button>
         </a>
         <button title="Guardar" id="confirmar" class="btn btn-danger btn-lg" type="submit"> <i class="fa fa-check"></i> Guardar</button>

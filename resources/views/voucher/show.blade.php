@@ -143,15 +143,21 @@
                     </tr>
                   </thead>
                   <tbody>
+                    <?php
+                    //dd($estudios_cargar)?>
                     @foreach ($estudios_cargar as $item)
                       <tr>
                         <td style="text-align: left">{{($item->estudio->nombre) }}</td> 
                         <td style="text-align: left"><?php
                         //var_dump($item->estudio);
                           if($item->estudio->nombre=="RADIOLOGIA"){
-                            echo implode(", ",$estudios_voucher["RADIOLOGIA"]);
-                            echo "<br>";
+                            if(isset($estudios_voucher["RADIOLOGIA"])){
+                              echo implode(", ",$estudios_voucher["RADIOLOGIA"]);
+                              echo "<br>";
+                            }
                           }else{
+                            //var_dump($estudios_voucher);
+                            
                             foreach ($estudios_voucher as $tipo_estudio => $estudios) {
                               //var_dump($tipo_estudio);
                               if($tipo_estudio!="RADIOLOGIA"){
@@ -159,9 +165,9 @@
                                 if($tipo_estudio=="COMPLEMENTARIO"){
                                   if(count($estudios)){
                                     //unset($estudios);
-                                    continue;
+                                    //continue;
                                   }
-                                  var_dump($estudios);
+                                  //var_dump($estudios);
                                   unset($estudios[73]);
                                 }
                                 echo "<b>".$tipo_estudio.":</b> ";

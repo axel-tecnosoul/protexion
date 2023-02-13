@@ -1,79 +1,62 @@
 @extends('layouts.admin')
 <!-- Extiende de layout -->
 @section('navegacion')
-    <li class="breadcrumb-item"><a href="/protexion/public/ciudad">Indice de Ciudad</a></li>
-    <li class="breadcrumb-item active">Editar Ciudad</li>
+    <li class="breadcrumb-item"><a href="/protexion/public/estudios">Indice de Estudio</a></li>
+    <li class="breadcrumb-item active">Editar Estudio</li>
 @endsection
 @section('content')
 
 <div class="row">
     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
         @include('errors.request')
-        @include('ciudad.mensaje')
+        @include('estudio.mensaje')
 
-        {!!Form::model($ciudad, ['method'=>'PATCH','route'=>['ciudad.update',$ciudad->id],'files' => true,])!!}
+        {!!Form::model($estudio, ['method'=>'PATCH','route'=>['estudios.update',$estudio->id],'files' => true,])!!}
         {{Form::token()}}
 
         <div class="card card-dark">
             <div class="card-header">
                 <div class="card-title">
-                    <p style="font-size:130%"> <i class="fa fa-map-signs" aria-hidden="true"></i> Editar Ciudad</p>
+                    <p style="font-size:130%"> <i class="fa fa-file-alt" aria-hidden="true"></i> Editar Estudio</p>
                 </div>
             </div>
             <div class="card-body">
+                <div class="form-group">
+                    <label>Seleccionar tipo de Estudio</label>
+                    <select 
+                        name="tipo_estudio_id"
+                        id="tipo_estudio_id"
+                        class="tipo_estudio_id custom-select"
+                        >
+                        <option
+                            value=null
+                            disabled="true"
+                            selected="true"
+                            title="-Seleccione tipo de estudio-">
+                            -Seleccione un tipo de estudio-
+                        </option>
+                        @foreach ($tipo_estudios as $item)<?php
+                            $selected="";
+                            if($estudio->tipo_estudio_id==$item->id){
+                              $selected="selected";
+                            }?>
+                            <option value="{{$item->id }}" <?=$selected?>>{{$item->nombre}}</option>
+                        @endforeach
+                    </select>
+                </div>
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                     <div class="form-group">
                         <label for="nombre">Nombre</label>
                         <input 
                             type="string"
                             name="nombre"
-                            value="{{ $ciudad->nombre}}"
+                            value="{{ $estudio->nombre}}"
                             class="form-control"
-                            title="Nombre de la ciudad"
-                            onkeypress="return soloLetras(event)">
+                            title="Nombre de la estudio">
                     </div>
                 </div>
-                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                    <div class="form-group">
-                        <label for="codigo_postal">Codigo Postal</label>
-                        <input 
-                            type="string"
-                            name="codigo_postal"
-                            value="{{ $ciudad->codigo_postal }}"
-                            class="form-control"
-                            title="Codigo postal"
-                            onkeypress="return soloNumeros(event)">
-                    </div>
-                </div>
-                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                    <div class="form-group">
-                    <label> Provincia</label>
-                            <select
-                                name="provincias_id"
-                                id="provincias_id"
-                                class="provincias_id form-control"
-                                required
-                                >
-                                <option
-                                    value="0"
-                                    disabled="true"
-                                    selected="true"
-                                    title="Seleccione una provincia"
-                                    >
-                                    -Seleccione una provincia-
-                                </option>
-                                @foreach ($provincias as $provincia)
-                                    @if ($provincia->id==$ciudad->provincia_id)
-                                        <option value="{{$provincia->id}}" selected>{{$provincia->nombre}}</option> 
-                                    @else
-                                        <option value="{{$provincia->id}}">{{$provincia->nombre}}</option>
-                                    @endif
-                                @endforeach
-                            </select>
-                    </div>
-                </div>
+                <input type="hidden" value="0" name="carga">
 
-                
             </div>
         </div>
 
@@ -87,7 +70,7 @@
 
         </label>
         <br>
-        <a href="/protexion/public/ciudad">
+        <a href="/protexion/public/estudio">
             <button title="Cancelar" class="btn btn-secondary btn-lg" type="button"><i class="fas fa-arrow-left"></i> Cancelar</button>
         </a>
         <button title="Guardar" id="confirmar" class="btn btn-danger btn-lg" type="submit"> <i class="fa fa-check"></i> Guardar</button>

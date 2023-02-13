@@ -99,15 +99,18 @@
               <div class="row"><?php
                 $c=$c2=0;
                 $idChecked = ["45","46","47","48","49","50","56","57"];
-                //dd($estudios)?>
+                //dd($estudios)
+                
+                // && $item->id != 66?>
                 @foreach ($estudios as $item)
-                  @if ($item->tipo_estudio_id == $tipo->id)
-                    <div class="col-6">
-                      <div class="custom-control custom-checkbox">
-                        <div class="icheck-danger d-inline"><?php
-                          if($item->id==73){?>
-                            <input class="{{$tipo->id}}" type="hidden" name="{{$item->id}}" value=1 id="{{$item->id}}"><?php
-                          }else{
+                  @if ($item->tipo_estudio_id == $tipo->id)<?php
+                    //var_dump($item->id);
+                    if($item->id==73 or strtoupper($item->nombre)==strtoupper($item->tipoEstudio->nombre)){?>
+                      <input class="{{$tipo->id}}" type="hidden" name="{{$item->id}}" value=1 id="{{$item->id}}"><?php
+                    }else{?>
+                      <div class="col-6">
+                        <div class="custom-control custom-checkbox">
+                          <div class="icheck-danger d-inline"><?php
                             $readonly=$checked="";
                             $c++;
                             //if(in_array($item->id,$voucher_estudio)){
@@ -130,11 +133,11 @@
                               }
                             }?>
                             <input class="{{$tipo->id}}" type="checkbox" name="{{$item->id}}" value=1 id="{{$item->id}}" <?=$checked.$readonly?>>
-                            <label for="{{$item->id}}"> {{strtoupper($item->nombre)}} </label><?php
-                          }?>
+                            <label for="{{$item->id}}"> {{strtoupper($item->nombre)}} </label>
+                          </div>
                         </div>
-                      </div>
-                    </div>
+                      </div><?php
+                    }?>
                   @endif
                 @endforeach
                 <script>

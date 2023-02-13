@@ -11,7 +11,7 @@ use DB;
 
 use Illuminate\Http\Request;
 use App\Voucher;
-use App\VoucherMedico;
+//use App\VoucherMedico;
 use App\User;
 use App\Paciente;
 use App\Models\VoucherEstudio;
@@ -32,6 +32,9 @@ class VoucherMedicoController extends Controller
     
     public function traerDatosPaciente($fecha,$tipo_estudio_id)
     {
+
+      $tipo_estudio_id=explode(".",$tipo_estudio_id);
+
       $query = DB::table('vouchers')
         ->join('vouchers_estudios', 'vouchers_estudios.voucher_id', '=', 'vouchers.id')
         ->join('estudios', 'vouchers_estudios.estudio_id', '=', 'estudios.id')
@@ -44,16 +47,31 @@ class VoucherMedicoController extends Controller
       if($fecha){
           $query = $query->where('turno','=',$fecha);
       }
-      if($tipo_estudio_id){
-          $query = $query->where('tipo_estudio_id','=',$tipo_estudio_id);
+      if($tipo_estudio_id[0]=="te"){
+          if($tipo_estudio_id[1]==1){
+              //$query = $query->orWhere('tipo_estudio_id','=',2);
+                $query = $query->where(function($query) {
+                  $query->where('tipo_estudio_id', '=', 1)
+                        ->orWhere('tipo_estudio_id', '=', 2);
+              });
+          }else{
+              $query = $query->where('tipo_estudio_id','=',$tipo_estudio_id[1]);
+          }
+      }elseif($tipo_estudio_id[0]=="e"){
+        $query = $query->where('estudio_id','=',$tipo_estudio_id[1]);
       }
       //dd($query);
       
       $vouchers_medico=$query->get(); //ejecuto la consulta
+      //$vouchers_medico=$query->dd(); //ejecuto la consulta
       $aVoucherMedico=[];
       foreach($vouchers_medico as $voucher){
         $paciente=Paciente::find($voucher->paciente_id);
-        $paciente=$paciente->nombreCompleto();
+
+        //$dniCuil=$paciente->cuil ?? number_format($paciente->documento,0,",",".");
+        $dni=number_format($paciente->documento,0,",",".");
+
+        $paciente="(".$dni.") ".$paciente->nombreCompleto();
         $aVoucherMedico[]=[
           "paciente" => $paciente,
           "estudio" => $voucher->nombre,
@@ -76,7 +94,34 @@ class VoucherMedicoController extends Controller
     public function index(Request $request)
     {
         //$vouchers = Voucher::all(); //obteneme todas los vouchers
+
+        //obtenemos todos los tipos de estudios
         $tipo_estudios=TipoEstudio::all();
+        //eliminamos los tipos de estudios que no se deben mostrar
+        $nuevo_tipo_estudios = $tipo_estudios->filter(function ($item) {
+          if (!in_array($item->id,[2,3])) {//2 => ANEXO 1, 3 => COMPLEMENTARIO
+              return $item;
+          }
+        });
+        //obtenemos los estudios del tipo de estudio "COMPLEMENTARIO"
+        $estudios_complementarios=Estudio::whereTipo_estudio_id(3)->get();
+        //creamos un nuevo array para poder manejar los tipos de estudios y los estudios complementarios
+        $aEstudios=[];
+        foreach ($nuevo_tipo_estudios->toArray() as $tipo_estudio) {
+          $aEstudios[]=[
+            "id"=>"te.".$tipo_estudio["id"],
+            "nombre"=>$tipo_estudio["nombre"]
+          ];
+        }
+        foreach ($estudios_complementarios->toArray() as $estudio) {
+          if($estudio["id"]!=73){
+            $aEstudios[]=[
+              "id"=>"e.".$estudio["id"],
+              "nombre"=>$estudio["nombre"]
+            ];
+          }
+        }
+        //dd($aEstudios);
 
         $fecha=date("Y-m-d");
         $tipo_estudio_id=0;
@@ -96,7 +141,7 @@ class VoucherMedicoController extends Controller
             "aPacientes"        => $aPacientes,
             "fecha"             => $fecha,
             "tipo_estudio_id"   => $tipo_estudio_id,
-            "tipo_estudios"     => $tipo_estudios
+            "aEstudios"         => $aEstudios
         ]);
     }
 

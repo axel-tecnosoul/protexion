@@ -39,6 +39,8 @@ Route::middleware(['auth'])->group(function() {
     include 'rutas/Perfil.php';
     include 'rutas/Personal.php';
     include 'rutas/Ciudad.php';
+    include 'rutas/Empresa.php';
+    include 'rutas/Riesgo.php';
 
     include 'rutas/Audiometria.php';
     include 'rutas/Espiriometria.php';

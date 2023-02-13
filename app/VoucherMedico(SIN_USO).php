@@ -7,7 +7,7 @@ use App\Models\Estudio;
 use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\Contracts\Auditable;
 
-class Voucher extends Model implements Auditable
+class VoucherMedico extends Model implements Auditable
 {
     use \OwenIt\Auditing\Auditable;
 

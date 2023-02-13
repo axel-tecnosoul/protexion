@@ -80,9 +80,10 @@
             let hidden_label=$(this).data("label");
             let label=$("#"+hidden_label).val().trim();
             let target=$(this).data("target");
-            console.log(hidden_label);
+            //console.log($("#"+hidden_label));
+            /*console.log(hidden_label);
             console.log(label);
-            console.log(target);
+            console.log(target);*/
             let saltoLinea="\n";
             if(aObsPre[target]==""){
               saltoLinea="";
@@ -90,19 +91,26 @@
             aObsPre[target]=aObsPre[target]+saltoLinea+label+" "+valor;
           }
         });
+        var lblBigLabelAux="";
         $(".inputText").each(function(){
           let valor=this.value.trim();
           //console.log(this);
           if(valor!="" && valor.length>0){
             let inputId=this.id;
             let label=$("#"+inputId+"_label").html().trim();
-            console.log(label);
+            let bigLabel=$(this).closest(".card").find(".card-header").html().trim();
+            let lblBigLabel=""
+            if(lblBigLabelAux!=bigLabel){
+              lblBigLabelAux=bigLabel
+              lblBigLabel="<b>"+bigLabel+":</b>\n"
+            }
+            //console.log(label);
             let target=$("input[name='"+inputId+"_radio']:checked").data("target");
             let saltoLinea="\n";
             if(aObsPre[target]==""){
               saltoLinea="";
             }
-            aObsPre[target]=aObsPre[target]+saltoLinea+label+" "+valor;
+            aObsPre[target]=aObsPre[target]+saltoLinea+lblBigLabel+label+" "+valor;
           }
         });
         $("#preexistencias").val(aObsPre["preexistencias"]);

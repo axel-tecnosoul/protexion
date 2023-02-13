@@ -45,18 +45,35 @@ class EstudioController extends Controller
     public function edit($id)
     {
 
+        $estudio=Estudio::findOrFail($id);
+        $tipo_estudios = TipoEstudio::all();
+        //$provincias=Provincia::all();
+
+        //return view("estudio.edit",["estudio"=>$estudio, 'tipo_estudios']);
+        return view("estudio.edit",compact("estudio", 'tipo_estudios'));
+
     }
 
-    public function update(Request $request, Estudio $estudio)
+    public function update(Request $request, $id)
     {
  
+        $estudio=Estudio::findOrFail($id);
+        $estudio->nombre=$request->get('nombre');
+        $estudio->tipo_estudio_id=$request->get('tipo_estudio_id');
+        //$estudio->provincia_id=$request->get('provincias_id');
+
+        $estudio->update();
+
+        return redirect()->route('estudios.index');
     }
 
     public function destroy($id)
     {
-        $estudio = Estudio::find($id)->delete();
-
-        return redirect()->route('estudios.index')
-            ->with('success', 'Estudio deleted successfully');
+        try { 
+            Estudio::find($id)->delete();
+        } catch(\Illuminate\Database\QueryException $ex){ 
+            return redirect()->route('estudios.index')->with('delete_user_error', 'El estudio no fue eliminado porque está siendo utilizado en otras tablas');
+        }
+        return redirect()->route('estudios.index')->with('delete_user', 'Estudio eliminado correctamente');
     }
 }

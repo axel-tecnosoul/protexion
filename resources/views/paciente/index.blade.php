@@ -30,7 +30,7 @@
             </div>
         </div>
         @if(Session::has('message'))
-        <p class="alert alert-info">{{ Session::get('message') }}</p>
+          <p class="alert alert-info">{{ Session::get('message') }}</p>
         @endif
         <div class="card-body">
             <!--div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
