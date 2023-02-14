@@ -7,14 +7,15 @@
     <style>
         @page {
             /*margin: 72px 25px 25px 30px;*/
-            margin: 2cm 2cm 2cm 1cm;
+            margin: 3cm 2cm 2cm 2cm;
         }
         table{
             width: 100%;
         }
         td{ 
             border-bottom:  0.1px solid rgb(202, 202, 202);
-            padding: 3px;
+            /* padding: 3px; */
+            padding: 5px;
             font-size: 12px;
         }
         label{
@@ -36,25 +37,55 @@
             text-align: center;
             line-height: 35px;*/
         }
-        /*footer{
-          bottom: 0px;
-          position: fixed;
-        }*/
         footer {
           position: fixed; bottom: -60px; left: 0px; right: 0px; background-color: lightblue; height: 50px;
         }
-        /*main{
-          margin-top: 20px;
-        }*/
+        #footer {
+          position: fixed;
+          left: 0;
+          right: 0;
+          color: #aaa;
+          font-size: 0.8em;
+          bottom: 0;
+          border-top: 0.1pt solid #aaa;
+          text-align: right;
+        }
+
+        .page-number {
+          text-align: center;
+        }
+
+        .page-number:before {
+          content: "Page " counter(page);
+        }
     </style>
     <title>Declaracion Jurada</title>
 </head>
 <body>
+
+    <div id="footer">
+      <!-- <div class="page-number"></div> -->
+      <span>
+        PROTEXIÓN "CENTRO MÉDICO LABORAL"<br>
+        Av. San Martín 1400- Puerto Rico,  Misiones - CP 3334
+        <!-- <br> -->
+        Tel. (03743) 476272 - Whatsapp: (03743) 483004<br>
+        E-mail: info@protexionpr.com.ar; gerencia@protexionpr.com.ar<br>
+      </span>
+    </div>
+    
+    <!-- <footer>
+      <div style="text-align: right">
+        Pie de pagina
+      </div>
+    </footer> -->
+
     <header>
       <div style="text-align: right">
         <img src="{{public_path('imagenes/logo.png')}}" alt="logo" width="200px">
       </div>
     </header>
+    
     <div id="content" class="container">
         <!-- <div id="header" style="text-align: right">
             <img src="{{public_path('imagenes/logo.png')}}" alt="logo" width="200px">
@@ -67,32 +98,32 @@
             </tr><?php
             //dd($declaracion_jurada->voucher->paciente->sexo)?>
             <tr style="text-align: left;">
-                <td style=" width: 350px" colspan="6"> <b> Nombre Completo:</b> {{$declaracion_jurada->voucher->paciente->nombreCompleto()}}</td>
-                <td style=" width: 350px" colspan="6"><b>Sexo:</b> {{$declaracion_jurada->voucher->paciente->sexo ? $declaracion_jurada->voucher->paciente->sexo->definicion : " " }}  </td>
+                <td style=" width: 150px" colspan="6"> <b> Nombre Completo:</b> {{$declaracion_jurada->voucher->paciente->nombreCompleto()}}</td>
+                <td style=" width: 150px" colspan="6"><b>Sexo:</b> {{$declaracion_jurada->voucher->paciente->sexo ? $declaracion_jurada->voucher->paciente->sexo->definicion : " " }}  </td>
             </tr>
             <tr style="text-align: left;" >
-                <td style=" width: 350px" colspan="6"> <b> Fecha de Nacimiento:</b> {{Carbon\Carbon::parse($declaracion_jurada->voucher->paciente->fecha_nacimiento)->format('d/M/Y') }}</td>
-                <td style=" width: 350px" colspan="6"> <b>Lugar:</b>  {{$declaracion_jurada->voucher->paciente->ciudad ? $declaracion_jurada->voucher->paciente->lugarNacimiento() : " " }} </td>
+                <td style=" width: 150px" colspan="6"> <b> Fecha de Nacimiento:</b> {{Carbon\Carbon::parse($declaracion_jurada->voucher->paciente->fecha_nacimiento)->format('d/M/Y') }}</td>
+                <td style=" width: 150px" colspan="6"> <b>Lugar:</b>  {{$declaracion_jurada->voucher->paciente->ciudad ? $declaracion_jurada->voucher->paciente->lugarNacimiento() : " " }} </td>
             </tr>
             <tr style="text-align: left;" >
-                <td style=" width: 350px" colspan="6"> <b> Documento de identidad: </b>    {{$declaracion_jurada->voucher->paciente->documentoIdentidad() }}           </td>
-                <td style=" width: 350px" colspan="6"> <b> Estado Civil:           </b>    {{$declaracion_jurada->voucher->paciente->estadoCivil ? $declaracion_jurada->voucher->paciente->estadoCivil->abreviatura : " "  }}       </td>
+                <td style=" width: 150px" colspan="6"> <b> Documento de identidad: </b>    {{$declaracion_jurada->voucher->paciente->documentoIdentidad() }}           </td>
+                <td style=" width: 150px" colspan="6"> <b> Estado Civil:           </b>    {{$declaracion_jurada->voucher->paciente->estadoCivil ? $declaracion_jurada->voucher->paciente->estadoCivil->abreviatura : " "  }}       </td>
             </tr>
             <tr style="text-align: left;" >
-                <td style=" width: 350px" colspan="6"> <b> Domicilio: </b>     {{$declaracion_jurada->voucher->paciente->domicilio ? $declaracion_jurada->voucher->paciente->direccion() : " "}}                               </td>
-                <td style=" width: 350px" colspan="6"> <b> CP:        </b>     {{$declaracion_jurada->voucher->paciente->domicilio ? $declaracion_jurada->voucher->paciente->domicilio->ciudad->codigo_postal : " "}}          </td>
+                <td style=" width: 150px" colspan="6"> <b> Domicilio: </b>     {{$declaracion_jurada->voucher->paciente->domicilio ? $declaracion_jurada->voucher->paciente->direccion() : " "}}                               </td>
+                <td style=" width: 150px" colspan="6"> <b> CP:        </b>     {{$declaracion_jurada->voucher->paciente->domicilio ? $declaracion_jurada->voucher->paciente->domicilio->ciudad->codigo_postal : " "}}          </td>
             </tr>
             <tr style="text-align: left;" >
-                <td style=" width: 350px" colspan="6"> <b> Provincia: </b>     {{$declaracion_jurada->voucher->paciente->domicilio ? $declaracion_jurada->voucher->paciente->domicilio->ciudad->provincia->nombre : " "}}      </td>
-                <td style=" width: 350px" colspan="6"> <b> Localidad: </b>     {{$declaracion_jurada->voucher->paciente->ciudad ? $declaracion_jurada->voucher->paciente->lugarNacimiento() : " " }} <!-- No corresponde ciudad, debe ir el domicilio -->      </td>
+                <td style=" width: 150px" colspan="6"> <b> Provincia: </b>     {{$declaracion_jurada->voucher->paciente->domicilio ? $declaracion_jurada->voucher->paciente->domicilio->ciudad->provincia->nombre : " "}}      </td>
+                <td style=" width: 150px" colspan="6"> <b> Localidad: </b>     {{$declaracion_jurada->voucher->paciente->ciudad ? $declaracion_jurada->voucher->paciente->lugarNacimiento() : " " }} <!-- No corresponde ciudad, debe ir el domicilio -->      </td>
             </tr>
             <tr style="text-align: left;" >
-                <td style=" width: 350px" colspan="6"> <b> Teléfono:      </b>     {{$declaracion_jurada->voucher->paciente->telefono }}      </td>
-                <td style=" width: 350px" colspan="6"> <b> Peso (Kgrs.):  </b>     {{$declaracion_jurada->voucher->paciente->peso }}          </td>
+                <td style=" width: 150px" colspan="6"> <b> Teléfono:      </b>     {{$declaracion_jurada->voucher->paciente->telefono }}      </td>
+                <td style=" width: 150px" colspan="6"> <b> Peso (Kgrs.):  </b>     {{$declaracion_jurada->voucher->paciente->peso }}          </td>
             </tr>
             <tr style="text-align: left;" >
-                <td style=" width: 350px" colspan="6"> <b> Estatura: (Mts.)    </b>   {{$declaracion_jurada->voucher->paciente->estatura }}        </td>
-                <td style=" width: 350px" colspan="6"> <b> Fecha último examen: </b>   {{Carbon\Carbon::parse($declaracion_jurada->fecha_realizacion)->format('d/M/Y') }} </td>
+                <td style=" width: 150px" colspan="6"> <b> Estatura: (Mts.)    </b>   {{$declaracion_jurada->voucher->paciente->estatura }}        </td>
+                <td style=" width: 150px" colspan="6"> <b> Fecha último examen: </b>   {{Carbon\Carbon::parse($declaracion_jurada->fecha_realizacion)->format('d/M/Y') }} </td>
             </tr>
         </table>
         <!-- ANTECEDENTES FAMILIARES -->
@@ -101,7 +132,7 @@
                 <td style="text-align: center; background-color: brown; color: #FFFFFF" colspan="12">ANTECEDENTES FAMILIARES</td>
             </tr>
             <tr style="text-align: left;">
-                <td style=" width: 350px" colspan="6">
+                <td style=" width: 150px" colspan="6">
                     <label for="">Su padre vive: </label>
                     @if ($declaracion_jurada->antecedenteFamiliar->su_padre_vive==true)
                         SI
@@ -109,7 +140,7 @@
                         NO
                     @endif
                 </td>
-                <td style=" width: 350px" colspan="6">
+                <td style=" width: 150px" colspan="6">
                     <label for="">Su madre vive:</label>
                     @if ($declaracion_jurada->antecedenteFamiliar->su_madre_vive==true)
                         SI
@@ -119,7 +150,7 @@
                 </td>
             </tr>
             <tr style="text-align: left;">
-                <td style=" width: 350px" colspan="12">
+                <td style=" width: 150px" colspan="12">
                     ¿Su madre o padre padece alguna de las siguientes afecciones?
                 </td>
             </tr>
@@ -171,7 +202,7 @@
         <!-- ANTECEDENTES PERSONALES -->
         <table class="table table-condensed table-hover" >
             <tr>
-                <td style="text-align: center; background-color: brown; color: #FFFFFF;width: 710px" colspan="12">ANTECEDENTES PERSONALES</td>
+                <td style="text-align: center; background-color: brown; color: #FFFFFF;width: 510px" colspan="12">ANTECEDENTES PERSONALES</td>
             </tr>
             <tr >
                 <td colspan="4">
@@ -226,7 +257,7 @@
         <!-- ANTECEDENTES INFANCIA -->
         <table class="table table-condensed table-hover" >
             <tr>
-                <td style="text-align: center; background-color: brown; color: #FFFFFF;width: 710px" colspan="12">ANTECEDENTES MÉDICOS DE LA INFANCIA</td>
+                <td style="text-align: center; background-color: brown; color: #FFFFFF;width: 510px" colspan="12">ANTECEDENTES MÉDICOS DE LA INFANCIA</td>
             </tr>
             <tr>
                 <td colspan="12">
@@ -379,7 +410,7 @@
         <!-- ANTECEDENTES RECIENTES -->
         <table class="table table-condensed table-hover" >
             <tr>
-                <td style="text-align: center; background-color: brown; color: #FFFFFF;width: 710px" colspan="12">ANTECEDENTES RECIENTES</td>
+                <td style="text-align: center; background-color: brown; color: #FFFFFF;width: 510px" colspan="12">ANTECEDENTES RECIENTES</td>
             </tr>
             <tr>
                 <td colspan="12">
@@ -530,7 +561,7 @@
         <!-- ANTECEDENTES QUIRURGICOS -->
         <table class="table table-condensed table-hover" >
             <tr>
-                <td style="text-align: center; background-color: brown; color: #FFFFFF;width: 710px" colspan="12">ANTECEDENTES QUIRURGICOS</td>
+                <td style="text-align: center; background-color: brown; color: #FFFFFF;width: 510px" colspan="12">ANTECEDENTES QUIRURGICOS</td>
             </tr>
             <tr >
                 <td colspan="12">
@@ -556,7 +587,7 @@
         <!-- ENFERMEDADES NO ESPECIFICADAS -->
         <table class="table table-condensed table-hover" >
             <tr>
-                <td style="text-align: center; background-color: brown; color: #FFFFFF;width: 710px" colspan="12">ENFERMEDADES NO ESPECIFICADAS</td>
+                <td style="text-align: center; background-color: brown; color: #FFFFFF;width: 510px" colspan="12">ENFERMEDADES NO ESPECIFICADAS</td>
             </tr>
             <tr >
                 <td colspan="12">
@@ -573,7 +604,7 @@
             Por la presente declaro bajo juramento que los datos de la presente declaración, de mi puño y letra, son reales y corresponden a mi Historia Clínica Personal.
         </p>
         <p style="font-size: 12px">
-            Lugar y Fecha: Puerto Rico {{Carbon\Carbon::parse($declaracion_jurada->fecha_realizacion)->format('d/m/Y') }}
+            <b>Lugar y Fecha:</b> Puerto Rico {{Carbon\Carbon::parse($declaracion_jurada->fecha_realizacion)->format('d/m/Y') }}
         </p>
         <!-- FIRMAS -->
         <table class="table table-condensed table-hover" >
@@ -595,10 +626,5 @@
             </tr>
         </table>
     </div>
-    <footer>
-      <div style="text-align: right">
-        Pie de pagina
-      </div>
-    </footer>
 </body>
 </html>

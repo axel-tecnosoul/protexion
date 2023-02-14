@@ -41,6 +41,10 @@ class AudiometriaController extends Controller
         $pdf->setPaper('a4','letter');
 
         return $pdf->stream('audiometria.pdf');
+        /*return view('audiometria.PDF',[
+          "voucher"   =>  $voucher,
+          "declaracion_jurada"   =>  $declaracionJurada
+          ]);*/
     }
 
     public function store(Request $request)

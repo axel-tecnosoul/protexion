@@ -1,108 +1,189 @@
 <!DOCTYPE html>
-<html lang="en" style='margin-top: 5px;margin-bottom: 5px'>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-
     <style>
+        @page {
+            /* margin: 72px 25px 25px 30px; */
+            margin: 3cm 2cm 2cm 2cm;
+        }
+        table{
+          width: 100%;
+        }
+        td{ 
+            border-bottom:  0.1px solid rgb(202, 202, 202);
+            /* padding: 3px; */
+            padding: 5px;
+            font-size: 12px;
+        }
+        #tbl_tipo_tarea td{
+            font-size: 11px;
+        }
+        /*label{
+            font-weight: bold;
+        }*/
+        .label-bold{
+            font-weight: bold;
+        }
+        h3{
+          margin-top:0;
+        }
         .marco{
             border: rgb(0, 0, 0) 1px solid;
         }
-        .tabla {
-            border-collapse: collapse;
-        }
-        .tabla th, .tabla td {
-            border: rgb(0, 0, 0) 1px solid;
-        }
-        .titulo{
-            font-weight: bold;
-            text-decoration: underline;
-            background-color: brown;
+        header {
+            position: fixed;
+            top: -72px;
+            left: 0;
+            right: 0;
+            height: 70px;
+
+            /** Extra personal styles **/
+            /*background-color: #03a9f4;
             color: white;
+            text-align: center;
+            line-height: 35px;*/
         }
-        .subtitulo{
-            font-weight: bold;
-            text-decoration: underline;
-            font-size: 12px;
+        footer {
+          position: fixed; bottom: -60px; left: 0px; right: 0px; background-color: lightblue; height: 50px;
         }
-        .campos{
-            font-size: 12px;
-            font-weight: bold;
+        #footer {
+          position: fixed;
+          left: 0;
+          right: 0;
+          color: #aaa;
+          font-size: 0.8em;
+          bottom: 0;
+          border-top: 0.1pt solid #aaa;
+          text-align: right;
         }
-        .datos{
-            font-size: 12px;
+
+        .page-number {
+          text-align: center;
+        }
+
+        .page-number:before {
+          content: "Page " counter(page);
+        }
+        hr{
+          margin-top: 0;
+          margin-bottom: 0;
         }
     </style>
 
     <title>ESPIROMETRIA</title>
 </head>
-<body style="font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;">
+<body>
+
+    <div id="footer">
+      <!-- <div class="page-number"></div> -->
+      <span>
+        PROTEXIÓN "CENTRO MÉDICO LABORAL"<br>
+        Av. San Martín 1400- Puerto Rico,  Misiones - CP 3334
+        <!-- <br> -->
+        Tel. (03743) 476272 - Whatsapp: (03743) 483004<br>
+        E-mail: info@protexionpr.com.ar; gerencia@protexionpr.com.ar<br>
+      </span>
+    </div>
+
+    <header>
+      <div style="text-align: right">
+        <img src="{{public_path('imagenes/logo.png')}}" alt="logo" width="200px">
+      </div>
+    </header>
 
     <div id="content" class="container">
 
-        <div id="header" style="text-align: right">
-            <img src="{{public_path('imagenes/logo.png')}}" alt="logo" width="200px">
-        </div>
-        <h3 class="titulo" style="text-align: center">ESTUDIO FUNCIONAL ESPIROMETRIA         </h3>
+        <!-- <h3 class="titulo" style="text-align: center">ESTUDIO FUNCIONAL ESPIROMETRIA         </h3>
 
         <p class="campos" >Fecha: _________/_________/_________</p>
-        <!-- Datos precargados -->
         <p class="subtitulo">DATOS DE LA EMPRESA</p>
         <p class="datos"> <label class="campos" for="">Razón social:</label> {{$voucher->paciente->origen ? $voucher->paciente->origen->definicion : " "}} </p>
 
-        <p class="subtitulo">DATOS DEL TRABAJADOR</p>
+        <p class="subtitulo">DATOS DEL TRABAJADOR</p> -->
 
         <table class="datos">
             <tbody>
                 <tr>
-                    <td style="text-align: left; width: 350px">
+                    <td style="text-align: center; background-color: brown; color: #FFFFFF;text-transform: uppercase;" colspan="3">ESTUDIO FUNCIONAL ESPIROMETRIA</td>
+                </tr>
+                <!-- <tr>
+                    <td colspan="2">Fecha: {{ \Carbon\Carbon::parse($voucher->turno)->format('d/m/Y') }}</td>
+                </tr>
+                <tr>
+                    <td colspan="2"><label class="label-bold"><u>DATOS DE LA EMPRESA</u></label></td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                      <label class="campos" for="">Razón social:</label> {{$voucher->paciente->origen ? $voucher->paciente->origen->definicion : " "}}
+                    </td>
+                </tr> -->
+                <tr>
+                    <td style="text-align: left; width: 130px">
+                      <!-- Fecha: {{ \Carbon\Carbon::parse($voucher->turno)->format('d/m/Y') }} -->
+                      Fecha: ______/______/______
+                    </td>
+                    <td style="text-align: right; width: 130px"><label>Razón social de la empresa: </label></td>
+                    <td style="text-align: left; width: 240px">{{$voucher->paciente->origen ? $voucher->paciente->origen->definicion : " "}}</td>
+                </tr>
+                <tr>
+                    <td colspan="3"><label class="label-bold"><u>DATOS DEL TRABAJADOR:</u></label></td>
+                </tr>
+                <tr>
+                    <td colspan="2" style="text-align: left;">
                         <label class="campos" for="">Apellido y nombre:  </label> {{$voucher->paciente->nombreCompleto()}}
                     </td>
-                    <td style="text-align: left; width: 350px">
+                    <td style="text-align: left;">
                         <label class="campos" for="">Fecha Nacimiento:   </label>{{$voucher->paciente->fecha_nacimiento()}}
                     </td>
                 </tr>
                 <tr>
-                    <td style="text-align: left; width: 350px">
+                    <td colspan="2" style="text-align: left;">
                         <label class="campos" for="">CUIL-DNI:  </label>{{$voucher->paciente->cuil ?? number_format($voucher->paciente->documento,0,",",".")}}
                     </td>
-                    <td style="text-align: left; width: 350px">
+                    <td style="text-align: left;">
                         <label class="campos" for="">           Edad:</label> {{$voucher->paciente->edad()}}
                     </td>
                 </tr>
                 <tr>
-                    <td style="text-align: left; width: 350px">
-                        <label class="campos" for="">           Peso:  </label>___________________________________
+                    <td colspan="2" style="text-align: left;">
+                        <label class="campos" for="">           Peso:  </label>
                     </td>
-                    <td style="text-align: left; width: 350px">
-                        <label class="campos" for="">           Altura:</label> ___________________________________
+                    <td style="text-align: left;">
+                        <label class="campos" for="">           Altura:</label> 
                     </td>
                 </tr>
                 <tr>
-                    <td style="text-align: left; width: 350px">
-                        <label class="campos" for="">           Oximetría:  </label>_______________________________
+                    <td colspan="2" style="text-align: left;">
+                        <label class="campos" for="">           Oximetría:  </label>
                     </td>
-                    <td style="text-align: left; width: 350px">
+                    <td style="text-align: left;">
                         <label class="campos" for="">           Satura al</label> _______%
                     </td>
                 </tr>
                 <tr>
-                    <td style="text-align: left; width: 350px">
+                    <td colspan="3" style="text-align: left;">
                         <label class="campos" for="">           Frecuencia Cardíaca:  </label> _______x´
                     </td>
                 </tr>
 
             </tbody>
         </table>
-        <hr>
-        <h3 class="titulo" style="text-align: center">DECLARACION JURADA        </h3>
-        <div id="header" style="text-align:center">
-            <img src="{{public_path('imagenes/DJ _Espir.JPG')}}" width="650px">
-        </div>
-        <!-- <div id="header" style="text-align:center; padding-top: 7%">
-            <img src="{{public_path('imagenes/Firma_esp.JPG')}}" width="650px">
-        </div> -->
+
+        <table class="datos">
+            <tbody>
+                <tr>
+                    <td style="text-align: center; background-color: brown; color: #FFFFFF;text-transform: uppercase;">DECLARACION JURADA</td>
+                </tr>
+                <tr>
+                    <td style="text-align: center;">
+                        <img src="{{public_path('imagenes/DJ _Espir.JPG')}}" width="550px">
+                    </td>
+                </tr>
+            </tbody>
+        </table>
 
         <!-- FIRMAS -->
         <table class="table" >
@@ -123,12 +204,12 @@
                 </td>
             </tr>
         </table>
-        <div style="text-align: center;border-top: solid 1px black;position:fixed;bottom:50px;font-size:10px">
+        <!-- <div style="text-align: center;border-top: solid 1px black;position:fixed;bottom:50px;font-size:10px">
             PROTEXIÓN "CENTRO MÉDICO LABORAL"<br>
             Av. San Martin 1400, Esquina Rivadavia  - Puerto Rico Misiones - CP 3334<br>
             Tel. (03743) 476272<br>
             E-mail: info@protexionpr.com.ar; gerencia@protexionpr.com.ar<br>
-        </div>
+        </div> -->
     </div>
 
 </body>

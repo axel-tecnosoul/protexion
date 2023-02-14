@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" style='margin-top: 5px;margin-bottom: 0px'>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,40 +9,38 @@
             /* margin: 72px 25px 25px 30px; */
             margin: 3cm 2cm 2cm 2cm;
         }
-        table{
-          width: 100%;
+        .tabla {
+            border-collapse: collapse;
         }
-        td{ 
-            border-bottom:  0.1px solid rgb(202, 202, 202);
-            /* padding: 3px; */
-            padding: 5px;
+        .tabla th, .tabla td {
+            border: rgb(0, 0, 0) 1px solid;
+        }
+        tbody td {
+            text-align: center;
+        }
+        tfoot th {
+            text-align: right;
+        }
+        .letra11{ 
             font-size: 12px;
         }
-        #tbl_tipo_tarea td{
-            font-size: 11px;
+        .letra10{ 
+            font-size: 10px;
+        }
+        .subtitulo{
+            font-weight: bold;
+            font-size: 12px;
+            background-color: brown;
+            color: white;
+            text-align: center;
+            margin: 0;
         }
         label{
             font-weight: bold;
         }
-        h3{
-          margin-top:0;
+        .hidden{
+            display: none;
         }
-        header {
-            position: fixed;
-            top: -72px;
-            left: 0;
-            right: 0;
-            height: 70px;
-
-            /** Extra personal styles **/
-            /*background-color: #03a9f4;
-            color: white;
-            text-align: center;
-            line-height: 35px;*/
-        }
-        /*main{
-          margin-top: 20px;
-        }*/
         footer {
           position: fixed; bottom: -60px; left: 0px; right: 0px; background-color: lightblue; height: 50px;
         }
@@ -64,13 +62,11 @@
         .page-number:before {
           content: "Page " counter(page);
         }
-        .letra9{
-          font-size: 9px;
-        }
+
     </style>
     <title>POSICIONES FORZADAS</title>
 </head>
-<body>
+<body style="font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;">
 
     <div id="footer">
       <!-- <div class="page-number"></div> -->
@@ -83,76 +79,72 @@
       </span>
     </div>
 
-    <header>
-      <div style="text-align: right">
+    <div id="header" style="text-align: right">
         <img src="{{public_path('imagenes/logo.png')}}" alt="logo" width="200px">
-      </div>
-    </header>
+    </div>
     
     <div id="content" class="container">
-        <h3 style="text-align: center;">Cuestionario Direccionado <br>
+        
+        <h3 style="text-align: center;margin: 0;">Cuestionario Direccionado <br>
             Agente de Riesgo: Gestos repetitivos y posiciones forzadas <br>
             Anexo V – Resolución SRT N° 37/2010 
         </h3>
-        <!-- <p class="subtitulo">Datos del </p> -->
+        <p class="subtitulo">Datos del paciente</p>
         <!-- Datos de PF -->
-        <table class="table table-condensed table-hover letra11">
-            <tbody>
-                <tr>
-                    <td style="text-align: center; background-color: brown; color: #FFFFFF" colspan="2">DATOS DEL PACIENTE</td>
-                </tr>
-                <tr>
-                    <td style="text-align: left; width: 255px">
-                        <label for=""> Empresa:                   </label>    
-                            {{$posiciones_forzada->voucher->paciente->origen ? $posiciones_forzada->voucher->paciente->origen->definicion : " " }}  
-                    </td>
-                    <td style="text-align: left; width: 255px">
-                        <label for=""> CUIT:                      </label>    
-                            {{$posiciones_forzada->voucher->paciente->origen ? $posiciones_forzada->voucher->paciente->origen->cuit : " "       }}  
-                    </td>
-                </tr>
-                <tr>
-                    <td style="text-align: left; width: 255px">
-                        <label for=""> Paciente:                  </label>    
-                            {{$posiciones_forzada->voucher->paciente->nombreCompleto()   }}  
-                    </td>
-                    <td style="text-align: left; width: 255px">
-                        <label for=""> CUIL:                      </label>    
-                            {{$posiciones_forzada->voucher->paciente->cuil ?? number_format($posiciones_forzada->voucher->paciente->documento,0,",",".")}}  
-                    </td>
-                </tr>
-                <tr>
-                    <td style="text-align: left; width: 255px">
-                        <label for=""> Puesto:                    </label>    
-                            {{$posiciones_forzada->puesto                                }}      
-                    </td>
-                    <td style="text-align: left; width: 255px">
-                        <label for=""> Antigüedad:                </label>    
-                            {{$posiciones_forzada->antiguedad                            }}      
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="2" style="text-align: left; width: 510px">
-                        <label for=""> Nº Horas/ días de trabajo: </label>    
-                            {{$posiciones_forzada->nroTrabajo                            }}  
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+            <table class="letra11" style="width: 510px">
+                <tbody>
+                    <tr>
+                        <td style="text-align: left; width: 200px">
+                           <label for=""> Empresa:                   </label>    
+                               {{$posiciones_forzada->voucher->paciente->origen ? $posiciones_forzada->voucher->paciente->origen->definicion : " " }}  
+                        </td>
+                        <td style="text-align: left; width: 200px">
+                           <label for=""> CUIT:                      </label>    
+                               {{$posiciones_forzada->voucher->paciente->origen ? $posiciones_forzada->voucher->paciente->origen->cuit : " "       }}  
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: left; width: 200px">
+                           <label for=""> Paciente:                  </label>    
+                               {{$posiciones_forzada->voucher->paciente->nombreCompleto()   }}  
+                        </td>
+                        <td style="text-align: left; width: 200px">
+                           <label for=""> CUIL:                      </label>    
+                               {{$posiciones_forzada->voucher->paciente->cuil ?? number_format($posiciones_forzada->voucher->paciente->documento,0,",",".")}}  
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: left; width: 200px">
+                           <label for=""> Puesto:                    </label>    
+                               {{$posiciones_forzada->puesto                                }}      
+                        </td>
+                        <td style="text-align: left; width: 200px">
+                           <label for=""> Antigüedad:                </label>    
+                               {{$posiciones_forzada->antiguedad                            }}      
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" style="text-align: left; width: 510px">
+                           <label for=""> Nº Horas/ días de trabajo: </label>    
+                               {{$posiciones_forzada->nroTrabajo                            }}  
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         <!-- / Datos de PF -->
         <hr>
         <!-- Tarea -->
             @if ($posiciones_forzada->tarea != null)
-                <table class="letra11">
+                <table class="letra11" style="width: 510px">
                     <tbody>
                         <tr>
                             <!-- Tiempo -->
-                            <td style="text-align: left; width: 255px">
+                            <td style="text-align: left; width: 205px">
                                 <label for="">Tiempo de tarea:</label>                                
                                 {{$posiciones_forzada->tarea->tiempo}}
                             </td>
                             <!-- Ciclo -->
-                            <td style="text-align: left; width: 255px">
+                            <td style="text-align: left; width: 205px">
                                 <label for="">Ciclo de trabajo:</label> 
                                 {{$posiciones_forzada->tarea->ciclo}}
                             </td>
@@ -166,20 +158,17 @@
                         </tr>
                     </tbody>
                 </table>
-                <!-- <hr> -->
+                <hr>
             <!-- Tipos de tarea -->
-                <table id="tbl_tipo_tarea">
+                <table class="letra10">
                     <tbody>
-                        <!-- <tr >
+                        <tr >
                             <td colspan="4" style="text-align: left; ">
                                 <p class="subtitulo">Tipo de tareas</p>
                             </td>
-                        </tr> -->
-                        <tr>
-                            <td style="text-align: center; background-color: brown; color: #FFFFFF" colspan="4">TIPO DE TAREAS</td>
                         </tr>
                         <tr>
-                            <td  style="width: 230px; text-align: left;">
+                            <td  style="width: 290px; text-align: left;">
                                     Movimiento de alcance repetidos por encima del hombro
                             </td>
                             <td style="width: 25px; border: rgb(0, 0, 0) 1px solid;">
@@ -192,12 +181,12 @@
                                     X
                                 @endif
                             </td>
-                            <td  style="width: 230px; text-align: left;">
+                            <td  style="width: 290px; text-align: left;">
                                     Movimiento de extensión o flexión forzados de muñeca
                             </td>
                         </tr>
                         <tr>
-                            <td  style="width: 230px; text-align: left;">
+                            <td  style="width: 290px; text-align: left;">
                                     Flexión sostenida de columna
                             </td>
                             <td style="width: 25px; border: rgb(0, 0, 0) 1px solid;">
@@ -210,12 +199,12 @@
                                     X
                                 @endif
                             </td>
-                            <td  style="width: 230px; text-align: left;">
+                            <td  style="width: 290px; text-align: left;">
                                     Flexión extrema del codo 
                             </td>
                         </tr>
                         <tr>
-                            <td  style="width: 230px; text-align: left;">
+                            <td  style="width: 290px; text-align: left;">
                                     El cuello se mantiene flexionado
                             </td>
                             <td style="width: 25px; border: rgb(0, 0, 0) 1px solid;">
@@ -228,12 +217,12 @@
                                     X
                                 @endif
                             </td>
-                            <td  style="width: 230px; text-align: left;">
+                            <td  style="width: 290px; text-align: left;">
                                     Giros de columna 
                             </td>
                         </tr>
                         <tr>
-                            <td  style="width: 230px; text-align: left;">
+                            <td  style="width: 290px; text-align: left;">
                                     Rotación extrema del antebrazo
                             </td>
                             <td style="width: 25px; border: rgb(0, 0, 0) 1px solid;">
@@ -246,12 +235,12 @@
                                     X
                                 @endif
                             </td>
-                            <td  style="width: 230px; text-align: left;">
+                            <td  style="width: 290px; text-align: left;">
                                     Flexión mantenida de dedos
                             </td>
                         </tr>
                         <tr>
-                            <td style="text-align: left" colspan="4">
+                            <td style="text-align: left">
                                 @if ($posiciones_forzada->tarea->observacion_tarea != null)
                                     Otros: {{$posiciones_forzada->tarea->observacion_tarea }} 
                                 @endif
@@ -263,21 +252,17 @@
             <!-- / Tipos de tarea -->
             @endif
         <!-- / Tarea -->
-        <!-- <hr> -->
+        <hr>
         <!-- Tabla -->
             @include('posiciones_forzadas.tabla_semiologia')
         <!-- / Tabla -->
-        <!-- <hr> -->
+        <hr>
         <!-- Dolor -->
             @if ($posiciones_forzada->dolor != null)
-            <!-- <p class="subtitulo">Características del Dolor</p> -->
-            <div style="page-break-after:always;"></div>
-            <table class="letra11">
+            <p class="subtitulo">Características del Dolor</p>
+            <table class="letra11" style="width: 510px">
                 <tbody>
                     <!-- Forma -->
-                    <tr>
-                        <td style="text-align: center; background-color: brown; color: #FFFFFF" colspan="2">CARACTERISTICAS DEL DOLOR</td>
-                    </tr>
                     <tr>
                         <td style="text-align: left; width: 255px">
                             <label for="">Por su forma de aparición:</label>
@@ -327,12 +312,9 @@
         <!-- <div style="page-break-after:always;"></div> -->
         <!-- Semiológica -->
             @if ($posiciones_forzada->semiologica != null)
-                <!-- <p class="subtitulo">Caracterización Semiológica </p> -->
-                <table class="tabla letra11">
+                <p class="subtitulo">Caracterización Semiológica </p>
+                <table class="tabla letra11" style="width: 510px">
                     <tbody>
-                        <tr>
-                            <td style="text-align: center; background-color: brown; color: #FFFFFF" colspan="3">CARACTERIZACIÓN SEMIOLÓGICA</td>
-                        </tr>
                         <tr>
                             <td style="text-align: left; width: 100px">
                                 Grado 0

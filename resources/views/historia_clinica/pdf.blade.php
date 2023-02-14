@@ -6,14 +6,16 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <style>
         @page {
-            margin: 72px 25px 25px 30px;
+            /* margin: 72px 25px 25px 30px; */
+            margin: 3cm 2cm 2cm 2cm;
         }
         table{
           width: 100%;
         }
         td{ 
             border-bottom:  0.1px solid rgb(202, 202, 202);
-            padding: 3px;
+            /* padding: 3px; */
+            padding: 5px;
             font-size: 12px;
         }
         label{
@@ -38,15 +40,48 @@
         /*main{
           margin-top: 20px;
         }*/
+        footer {
+          position: fixed; bottom: -60px; left: 0px; right: 0px; background-color: lightblue; height: 50px;
+        }
+        #footer {
+          position: fixed;
+          left: 0;
+          right: 0;
+          color: #aaa;
+          font-size: 0.8em;
+          bottom: 0;
+          border-top: 0.1pt solid #aaa;
+          text-align: right;
+        }
+
+        .page-number {
+          text-align: center;
+        }
+
+        .page-number:before {
+          content: "Page " counter(page);
+        }
     </style>
     <title>Formulario de Historia Clinica</title>
 </head>
 <body>
-  <header>
-    <div style="text-align: right">
-      <img src="{{public_path('imagenes/logo.png')}}" alt="logo" width="200px">
+
+    <div id="footer">
+      <!-- <div class="page-number"></div> -->
+      <span>
+        PROTEXIÓN "CENTRO MÉDICO LABORAL"<br>
+        Av. San Martín 1400- Puerto Rico,  Misiones - CP 3334
+        <!-- <br> -->
+        Tel. (03743) 476272 - Whatsapp: (03743) 483004<br>
+        E-mail: info@protexionpr.com.ar; gerencia@protexionpr.com.ar<br>
+      </span>
     </div>
-  </header>
+
+    <header>
+      <div style="text-align: right">
+        <img src="{{public_path('imagenes/logo.png')}}" alt="logo" width="200px">
+      </div>
+    </header>
   
     <div id="content" class="container">
       <h3 style="text-align: center;">HISTORIA CLINICA</h3>
@@ -56,15 +91,15 @@
               <td style="text-align: center; background-color: brown; color: #FFFFFF" colspan="12">DATOS DE LA EMPRESA</td>
           </tr>
           <tr style="text-align: left;">
-              <td style=" width: 350px" colspan="6">
+              <td style=" width: 150px" colspan="6">
                   <label>Razón Social:</label> {{$hc_formulario->voucher->paciente->origen ? $hc_formulario->voucher->paciente->origen->definicion : " "}}
               </td>
-              <td style=" width: 350px" colspan="6">
+              <td style=" width: 150px" colspan="6">
                   <label>CUIT:</label> {{$hc_formulario->voucher->paciente->origen ? $hc_formulario->voucher->paciente->origen->cuit : " "}} 
               </td>
           </tr>
           <tr style="text-align: left;">
-              <td style=" width: 350px" colspan="6">
+              <td style=" width: 150px" colspan="6">
                   <label>Domicilio:</label> 
                   @if ($hc_formulario->voucher->paciente->origen)
                       @if ($hc_formulario->voucher->paciente->origen->domicilio)
@@ -72,7 +107,7 @@
                       @endif
                   @endif 
               </td>
-              <td style=" width: 350px" colspan="6"></td>
+              <td style=" width: 150px" colspan="6"></td>
           </tr>
       </table>
       <!-- DATOS DEL TRABAJADOR -->
@@ -81,18 +116,18 @@
               <td style="text-align: center; background-color: brown; color: #FFFFFF" colspan="12">DATOS DEL TRABAJADOR</td>
           </tr>
           <tr style="text-align: left;">
-              <td style=" width: 350px" colspan="6">
+              <td style=" width: 150px" colspan="6">
                   <label>Apellidos y Nombres:</label> {{$hc_formulario->voucher->paciente->nombreCompleto()}}
               </td>
-              <td style=" width: 350px" colspan="6">
+              <td style=" width: 150px" colspan="6">
                   <label>Fecha de nacimiento:</label> {{Carbon\Carbon::parse($hc_formulario->voucher->paciente->fecha_nacimiento)->format('d/m/Y') }} ({{Carbon\Carbon::parse($hc_formulario->voucher->paciente->fecha_nacimiento)->age }} años)
               </td>
           </tr>
           <tr style="text-align: left;">
-              <td style=" width: 350px" colspan="6">
+              <td style=" width: 150px" colspan="6">
                   <label>CUIL:</label> {{$hc_formulario->voucher->paciente->cuil ?? number_format($hc_formulario->voucher->paciente->documento,0,",",".")}}
               </td>
-              <td style=" width: 350px" colspan="6">
+              <td style=" width: 150px" colspan="6">
                   <label>Sexo:</label> {{$hc_formulario->voucher->paciente->sexo ? $hc_formulario->voucher->paciente->sexo->definicion : " " }}
               </td>
           </tr>
@@ -100,7 +135,7 @@
       <!-- EXAMEN CLÌNICO -->
       <table class="table table-condensed table-hover" >
           <tr>
-              <td style="text-align: center; background-color: brown; color: #FFFFFF; width: 710px" colspan="12">EXAMEN CLÍNICO</td>
+              <td style="text-align: center; background-color: brown; color: #FFFFFF; width: 510px" colspan="12">EXAMEN CLÍNICO</td>
           </tr>
           <tr style="text-align: left;">
               <td colspan="3">
@@ -136,7 +171,7 @@
       <!-- CARDIOVASCULAR -->
       <table class="table table-condensed table-hover" >
           <tr>
-              <td style="text-align: center; background-color: brown; color: #FFFFFF; width: 710px" colspan="12">CARDIOVASCULAR</td>
+              <td style="text-align: center; background-color: brown; color: #FFFFFF; width: 510px" colspan="12">CARDIOVASCULAR</td>
           </tr>
           <tr style="text-align: left;">
               <td colspan="12">
@@ -176,7 +211,7 @@
       <!-- PIEL-->
       <table class="table table-condensed table-hover" >
           <tr>
-              <td style="text-align: center; background-color: brown; color: #FFFFFF; width: 710px" colspan="12">PIEL</td>
+              <td style="text-align: center; background-color: brown; color: #FFFFFF; width: 510px" colspan="12">PIEL</td>
           </tr>
           <tr>
               <td colspan="6">
@@ -272,7 +307,7 @@
       <!-- OSTEOARTICULAR -->
       <table class="table table-condensed table-hover" >
           <tr>
-              <td style="text-align: center; background-color: brown; color: #FFFFFF; width: 710px" colspan="12">OSTEOARTICULAR</td>
+              <td style="text-align: center; background-color: brown; color: #FFFFFF; width: 510px" colspan="12">OSTEOARTICULAR</td>
           </tr>
           <tr>
               <td colspan="6">
@@ -324,7 +359,7 @@
       <!-- COLUMNA VERTEBRAL -->
       <table class="table table-condensed table-hover" >
           <tr>
-              <td style="text-align: center; background-color: brown; color: #FFFFFF; width: 710px" colspan="12">COLUMNA VERTEBRAL</td>
+              <td style="text-align: center; background-color: brown; color: #FFFFFF; width: 510px" colspan="12">COLUMNA VERTEBRAL</td>
           </tr>
           <tr>
               <td colspan="6">
@@ -376,7 +411,7 @@
       <!--CABEZA Y CUELLO-->
       <table class="table table-condensed table-hover" >
           <tr>
-              <td style="text-align: center; background-color: brown; color: #FFFFFF; width: 710px" colspan="12">CABEZA Y CUELLO</td>
+              <td style="text-align: center; background-color: brown; color: #FFFFFF; width: 510px" colspan="12">CABEZA Y CUELLO</td>
           </tr>
           <tr>
               <td colspan="6">
@@ -434,9 +469,10 @@
           </tr>
       </table>
       <!--OFTALMOLOGICO-->
-      <table class="table table-condensed table-hover" style="page-break-after:always;">
+      <!-- style="page-break-after:always;" -->
+      <table class="table table-condensed table-hover">
           <tr>
-              <td style="text-align: center; background-color: brown; color: #FFFFFF; width: 710px" colspan="12">OFTALMOLOGICO</td>
+              <td style="text-align: center; background-color: brown; color: #FFFFFF; width: 510px" colspan="12">OFTALMOLOGICO</td>
           </tr>
           <tr>
               <td colspan="6">
@@ -512,7 +548,7 @@
       <!-- NEUROLOGICO -->
       <table class="table table-condensed table-hover">
           <tr>
-              <td style="text-align: center; background-color: brown; color: #FFFFFF; width: 710px" colspan="12">NEUROLOGICO</td>
+              <td style="text-align: center; background-color: brown; color: #FFFFFF; width: 510px" colspan="12">NEUROLOGICO</td>
           </tr>
           <tr>
               <td colspan="6">
@@ -590,7 +626,7 @@
       <!-- ODONTOLOGICO -->
       <table class="table table-condensed table-hover" >
           <tr>
-              <td style="text-align: center; background-color: brown; color: #FFFFFF; width: 710px" colspan="12">ODONTOLOGICO</td>
+              <td style="text-align: center; background-color: brown; color: #FFFFFF; width: 510px" colspan="12">ODONTOLOGICO</td>
           </tr>
           <tr>
               <td colspan="6">
@@ -660,7 +696,7 @@
       <!-- TORAX Y APARATO RESPIRATORIO -->
       <table class="table table-condensed table-hover" >
           <tr>
-              <td style="text-align: center; background-color: brown; color: #FFFFFF; width: 710px" colspan="12">TORAX Y APARATO RESPIRATORIO</td>
+              <td style="text-align: center; background-color: brown; color: #FFFFFF; width: 510px" colspan="12">TORAX Y APARATO RESPIRATORIO</td>
           </tr>
           <tr>
               <td colspan="6">
@@ -702,7 +738,7 @@
       <!-- ABDOMEN -->
       <table class="table table-condensed table-hover" >
           <tr>
-              <td style="text-align: center; background-color: brown; color: #FFFFFF; width: 710px" colspan="12">ABDOMEN</td>
+              <td style="text-align: center; background-color: brown; color: #FFFFFF; width: 510px" colspan="12">ABDOMEN</td>
           </tr>
           <tr>
               <td colspan="6">
@@ -772,7 +808,7 @@
       <!-- REGIONES INGUINALES -->
       <table class="table table-condensed table-hover" >
           <tr>
-              <td style="text-align: center; background-color: brown; color: #FFFFFF; width: 710px" colspan="12">REGIONES INGUINALES</td>
+              <td style="text-align: center; background-color: brown; color: #FFFFFF; width: 510px" colspan="12">REGIONES INGUINALES</td>
           </tr>
           <tr>
               <td colspan="6">
@@ -814,7 +850,7 @@
       <!-- GENITALES -->
       <table class="table table-condensed table-hover" >
           <tr>
-              <td style="text-align: center; background-color: brown; color: #FFFFFF; width: 710px" colspan="12">GENITALES</td>
+              <td style="text-align: center; background-color: brown; color: #FFFFFF; width: 510px" colspan="12">GENITALES</td>
           </tr>
           <tr>
               <td colspan="6">
@@ -838,7 +874,7 @@
       <!-- REGION ANAL -->
       <table class="table table-condensed table-hover" >
           <tr>
-              <td style="text-align: center; background-color: brown; color: #FFFFFF; width: 710px" colspan="12">REGION ANAL</td>
+              <td style="text-align: center; background-color: brown; color: #FFFFFF; width: 510px" colspan="12">REGION ANAL</td>
           </tr>
           <tr>
               <td colspan="6">
@@ -862,13 +898,13 @@
       <!-- FIRMAS -->
       <table class="table table-condensed table-hover" >
             <tr >
-                <td style="width: 350px;text-align: center" colspan="6">
+                <td style="width: 150px;text-align: center" colspan="6">
                     <div>
                         <img src="{{$declaracion_jurada->firma}}" height=130 alt="firma del paciente"><!-- style="border:solid 1px black" -->
                     </div>
                     <label style="font-weight: inherit;">Firma del Paciente</label>
                 </td>
-                <td style="width: 350px;text-align: center" colspan="6">
+                <td style="width: 150px;text-align: center" colspan="6">
                     <div style="height:130px">
                         @if ($declaracion_jurada->personalClinica->foto)
                             <img src="{{public_path('imagenes/firmas/'.$declaracion_jurada->personalClinica->foto)}}"  height="130" alt="firma del médico">

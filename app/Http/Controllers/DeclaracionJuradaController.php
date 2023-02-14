@@ -60,7 +60,7 @@ class DeclaracionJuradaController extends Controller
           ->stream('declaracion_jurada.pdf', [ "Attachment" => 0]);
 
         //$pdf->setPaper('a4','letter');
-        //return $pdf->stream('declaracion_jurada.pdf', array("Attachment" => false));
+        //return view('declaracion_jurada.pdf', $data);
         //$pdf->render();
         return $pdf;
     }

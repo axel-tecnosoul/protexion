@@ -31,11 +31,14 @@
     }
 
 </style>
-<p class="subtitulo">Semiología del Segmento Corporal Comprometido-Relación Movilidad-Dolor Articular y estado de M.M </p>
-<div style="padding-left: 5%; padding-top: 1%" >
+<!-- <p class="subtitulo">Semiología del Segmento Corporal Comprometido-Relación Movilidad-Dolor Articular y estado de M.M </p> -->
+<div style="padding-left: 0; padding-top: 1%" >
     <table class="tabla" style="font-size: 10px">
         <!-- Titulos -->
             <thead>
+                <tr>
+                    <td style="text-align: center; background-color: brown; color: #FFFFFF" colspan="10">Semiología del Segmento Corporal Comprometido-Relación Movilidad-Dolor Articular y estado de M.M</td>
+                </tr>
                 <tr>
                     <th scope="col" colspan="2">Articulación</th>
                     <th style="width: 60px">Abduc.</th>

@@ -50,6 +50,12 @@ class PosicionesForzadasController extends Controller
         ]);
         $pdf->setPaper('a4','letter');
         return $pdf->stream('posiciones-forzadas.pdf');
+        /*return view('posiciones_forzadas.pdf',[
+            "posiciones_forzada"   =>  $posiciones_forzada,
+            "articulaciones"       =>  $articulaciones,
+            "cuadro"               =>  $cuadro,
+            "declaracion_jurada"   =>  $declaracionJurada,
+        ]);*/
     }
 
     public function create($id)
