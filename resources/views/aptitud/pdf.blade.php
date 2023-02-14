@@ -9,6 +9,9 @@
             /* margin: 72px 25px 25px 30px; */
             margin: 3cm 2cm 2cm 2cm;
         }
+        #resultado{
+          /*background-color:#ffff0080;*/
+        }
         table{
           width: 100%;
         }
@@ -173,7 +176,7 @@
           <td style="text-align: center; background-color: brown; color: #FFFFFF" colspan="12">RESULTADO</td>
         </tr>
         <tr style="text-align: center;font-size: 22px;font-weight: bold;">
-          <td style="font-size: 18px" class="text-center bold" colspan="12">
+          <td id="resultado" style="font-size: 18px;" class="text-center bold" colspan="12">
             {{$aptitud["aptitud_laboral"]}}
           </td>
         </tr>
@@ -248,6 +251,7 @@
               <td style="width: 250px;text-align: center" colspan="6">
                   <div>
                       <img src="{{public_path('imagenes/firmas/firma Recalde chica.jpg')}}" height=130 alt="firma del paciente"><!-- style="border:solid 1px black" -->
+                      <!-- <img src="../../../public/imagenes/firmas/firma Recalde chica.jpg" height=130 alt="firma del paciente"> -->
                   </div>
                   <!-- <label style="font-weight: inherit;font-size: 12px;">Firma del Paciente</label> -->
               </td>
