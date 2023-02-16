@@ -207,9 +207,7 @@
                         </div>
                     </div>-->
                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                        <label for="origen_id">
-                            Procedencia
-                        </label>
+                        <label for="origen_id">Empresa</label>
                         <div class="form-group inline">
                             <select
                                 name="origen_id"
@@ -220,8 +218,8 @@
                                     value="0"
                                     disabled="true"
                                     selected="true"
-                                    title="-Seleccione la procedencia-">
-                                    -Seleccione la procedencia-
+                                    title="-Seleccione la empresa-">
+                                    -Seleccione la empresa-
                                 </option>
                                 @foreach ($origenes as $origen)
                                     <option
@@ -230,7 +228,7 @@
                                 @endforeach
                             </select>
                             <a data-target="#modal-agregarOrigen" data-toggle="modal">
-                                <button title="agregar procedencia" class="btn btn-dark btn-md">
+                                <button title="agregar empresa" class="btn btn-dark btn-md">
                                     <i class="fa fa-plus"></i>
                                 </button>
                             </a>

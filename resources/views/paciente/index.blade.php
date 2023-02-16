@@ -51,7 +51,7 @@
                     <tr  class="text-uppercase">
                         <th width="10%" style="color:#F8F9F9">Documento</th>
                         <th width="25%" style="color:#F8F9F9">Apellido y Nombre</th>
-                        <th width="15%" style="color:#F8F9F9">Origen</th>
+                        <th width="15%" style="color:#F8F9F9">Empresa</th>
                         <!-- <th width="15%" style="color:#F8F9F9">Obra social</th> -->
                         <th width="15%" style="color:#F8F9F9">Foto de perfil</th>
                         <th width="20%" style="color:#F8F9F9">Opciones</th>

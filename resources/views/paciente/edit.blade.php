@@ -220,9 +220,7 @@
                     
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                     <div class="form-group">
-                        <label for="origen_id">
-                            Procedencia
-                        </label>
+                        <label for="origen_id">Empresa</label>
                         <select
                             id="origen_id"
                             name="origen_id"
@@ -231,9 +229,9 @@
                                 value="0"
                                 disabled="true"
                                 selected="true"
-                                title="Seleccione una procedencia"
+                                title="Seleccione una empresa"
                                 >
-                                -Seleccione una procedencia-
+                                -Seleccione una empresa-
                             </option>
                                 @foreach ($origenes as $origen)
                                     @if ($origen->id==$paciente->origen_id)
