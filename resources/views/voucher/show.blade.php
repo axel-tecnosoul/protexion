@@ -80,7 +80,7 @@
                         @if ($estudios_sistema[0][$item]->estudio->nombre == "ESPIRIOMETRIA")
                           <td style="width: 65%">ESPIRIOMETRIA (FORMULARIO)</td>
                           <td style="text-align: center" title="<?=$title?>">
-                            <a target="_blank" href="{{ route('espiriometrias.pdf',$voucher->id) }}" class="btn fondo1 btn-responsive" <?=$disabled?>>
+                            <a target="_blank" href="{{ route('espiriometrias.pdf',$voucher->id) }}" class="btn fondo1 btn-responsive <?=$disabled?>">
                               <i class="fas fa-file-pdf"></i>
                             </a>
                           </td>
@@ -88,7 +88,7 @@
                           @if ($estudios_sistema[0][$item]->estudio->nombre == "AUDIOMETRIA")
                             <td style="width: 65%">AUDIOMETRIA (FORMULARIO)</td>
                             <td style="text-align: center" title="<?=$title?>">
-                              <a target="_blank" href="{{ route('audiometrias.pdf',$voucher->id) }}" class="btn fondo1 btn-responsive" <?=$disabled?>>
+                              <a target="_blank" href="{{ route('audiometrias.pdf',$voucher->id) }}" class="btn fondo1 btn-responsive <?=$disabled?>">
                                 <i class="fas fa-file-pdf"></i>
                               </a>
                             </td>
