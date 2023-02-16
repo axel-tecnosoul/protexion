@@ -300,9 +300,9 @@
                 </td>
                 <td style="width: 250px;text-align: center" colspan="6">
                     <div style="height:130px">
-                        @if ($declaracion_jurada->personalClinica->foto)
+                        <!-- @if ($declaracion_jurada->personalClinica->foto)
                             <img src="{{public_path('imagenes/firmas/'.$declaracion_jurada->personalClinica->foto)}}"  height="130" alt="firma del médico">
-                        @endif
+                        @endif -->
                     </div>
                     <label style="font-weight: inherit;font-size: 12px;">Firma y sello del medico examinador</label>
                 </td>

@@ -52,6 +52,7 @@ class DeclaracionJuradaController extends Controller
     {
         $voucher=Voucher::find($id);
         $declaracion_jurada=DeclaracionJurada::find($voucher->declaracionJurada->id);
+        //dd($declaracion_jurada->antecedenteFamiliar);
         $data = [
           'declaracion_jurada' => $declaracion_jurada
         ];

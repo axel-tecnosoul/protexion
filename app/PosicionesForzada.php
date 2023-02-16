@@ -202,10 +202,10 @@ class PosicionesForzada extends Model
               $mostrarNombreSeccion=1;
             }elseif ($valor == "") {
               
-          }else{
-              $aux.=$label.": <b>".$valor."</b>.<br> ";
-              $mostrarNombreSeccion=1;
-          }
+            }else{
+                $aux.=$label.": <b>".$valor."</b>.<br> ";
+                $mostrarNombreSeccion=1;
+            }
 
           //}
         }
@@ -216,6 +216,13 @@ class PosicionesForzada extends Model
         $diagnostico.=$aux;
       }
       
+      $obs="";
+      if($this->semiologica->grado){
+        $obs.=$this->semiologica->grado;
+      }
+      if($this->semiologica->observacion1_s){
+        $obs.=$this->semiologica->observacion1_s;
+      }
       /*$vacio = true;
       for ($i=0; $i < sizeof($matriz[1]); $i++) {
           if ($matriz[0][$i] != null) {
@@ -236,6 +243,7 @@ class PosicionesForzada extends Model
               }
           }
       };*/
-      return $diagnostico;
+      //return $diagnostico;
+      return [$diagnostico,$obs];
     }
 }

@@ -185,12 +185,40 @@
       <!-- PREEXISTENCIA Y OBSERVACIONES -->
       <table class="table table-condensed table-hover" >
         <tr>
-          <td style="text-align: center; background-color: brown; color: #FFFFFF;width: 250px" colspan="6">PREEXISTENCIAS</td>
-          <td style="text-align: center; background-color: brown; color: #FFFFFF;width: 250px" colspan="6">OBSERVACIONES</td>
+          <td colspan="2" style="text-align: center; background-color: brown; color: #FFFFFF;">PREEXISTENCIAS</td>
         </tr>
         <tr>
-          <td colspan="6" style="vertical-align: top;"> <?=nl2br($aptitud->preexistencias)?></td>
-          <td colspan="6" style="vertical-align: top;"> <?=nl2br($aptitud->observaciones)?></td>
+          <td colspan="2" style="vertical-align: top;"> <?=nl2br($aptitud->preexistencias)?></td>
+        </tr>
+        <tr>
+          <td colspan="2" style="text-align: center; background-color: brown; color: #FFFFFF;">OBSERVACIONES</td>
+        </tr>
+        <tr><?php
+          $aObs=explode("\r\n",$aptitud->observaciones);
+          $cant_total=count($aObs);
+          if($cant_total>7){
+            $cant_x_col=ceil($cant_total/2);
+            $newArObs=array_chunk($aObs, $cant_x_col);
+            $width_col1=50;
+          }else{
+            $newArObs=[
+              0=>$aObs,
+              1=>[]
+            ];
+            $width_col1=100;
+          }
+          //dd(count($aObs),$cant_x_col,$aObs,$newArObs);?>
+          <td style="vertical-align: top;width:<?=$width_col1?>%;"><?php
+          echo implode("<br>",$newArObs[0])
+          /*foreach($aObs as $value){?>
+              <div style="width: 50%;display: inline-block;"><?=$value?></div><?php
+          };*/
+          //nl2br($aptitud->observaciones)?></td>
+          <td style="vertical-align: top;"><?php
+          //dd($newArObs[1]);
+            if($newArObs[1][0]=="") unset($newArObs[1][0]);
+            echo implode("<br>",$newArObs[1])
+          ?></td>
         </tr>
       </table>
       <!-- DECLARACION DE RIESGOS -->

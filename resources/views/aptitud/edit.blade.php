@@ -80,6 +80,14 @@
             let hidden_label=$(this).data("label");
             let label=$("#"+hidden_label).val().trim();
             let target=$(this).data("target");
+            console.log(label);
+            boldLabel="<b>"+label+"</b>"
+            if(aObsPre[target]!=""){
+              //boldLabel="\n"+boldLabel//SOLO PARA SEPARAR LAS LINEAS
+            }
+            if(label=="HISTORIA CLINICA:" && target=="observaciones"){
+              boldLabel=""
+            }
             //console.log($("#"+hidden_label));
             /*console.log(hidden_label);
             console.log(label);
@@ -88,7 +96,7 @@
             if(aObsPre[target]==""){
               saltoLinea="";
             }
-            aObsPre[target]=aObsPre[target]+saltoLinea+label+" "+valor;
+            aObsPre[target]=aObsPre[target]+saltoLinea+boldLabel+valor;
           }
         });
         var lblBigLabelAux="";
@@ -99,8 +107,18 @@
             let inputId=this.id;
             let label=$("#"+inputId+"_label").html().trim();
             let bigLabel=$(this).closest(".card").find(".card-header").html().trim();
+            console.log(bigLabel);
+            if(bigLabel=="ANALISIS BIOQUIMICO ANEXO 01"){
+              bigLabel="ANALISIS BIOQUIMICO";
+            }
+            if(bigLabel=="COMPLEMENTARIO" || bigLabel=="Historia Clínica"){
+              bigLabel=""
+            }
+            //label=""
+            //label+="\n"
+            label="<b>"+label+"</b>"
             let lblBigLabel=""
-            if(lblBigLabelAux!=bigLabel){
+            if(lblBigLabelAux!=bigLabel && bigLabel!="RADIOLOGIA"){
               lblBigLabelAux=bigLabel
               lblBigLabel="<b>"+bigLabel+":</b>\n"
             }

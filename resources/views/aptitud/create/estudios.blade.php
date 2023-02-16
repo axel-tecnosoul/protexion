@@ -42,8 +42,9 @@
         @if ($historia_clinica)
             <div class="col-6">
                 <div class="card">
-                    <div class="card-header fondo2">
-                        Historia Clínica
+                    <div class="card-header fondo2"><?php
+                        $titulo=strtoupper("Historia Clinica");
+                        echo $titulo?>
                         <div class="card-tools">
                             <button type="button" class="btnCollapse btn btn-tool collapsed" data-toggle="collapse" href="#collapseExample"><i class="fas fa-plus"></i> Detalles</button>
                         </div>
@@ -55,7 +56,7 @@
                                 @php
                                     echo $diagnosticoH[0];
                                 @endphp
-                                <input type="hidden" id="lblHistoriaClinica" value="Historia Clínica: ">
+                                <input type="hidden" id="lblHistoriaClinica" value="<?=$titulo?>: ">
                             </div>
                         </div>
                     </div>
@@ -64,15 +65,21 @@
                         <div class="col-12">
                             <hr><?php
                             $pre_historia_clinica=($historia_clinica->informe_final_preexistencias) ?: "";
-                            $obs_historia_clinica=($historia_clinica->informe_final_observaciones) ?: "";?>
+                            $obs_historia_clinica=($historia_clinica->informe_final_observaciones) ?: "";
+                            //var_dump($diagnosticoH[1]);
+                            //$diagnosticoH=str_replace("<br><br>","<br>",$diagnosticoH[1]);
+                            $diagnosticoH=str_replace("<br>","\n",$diagnosticoH[1]);
+                            //var_dump($diagnosticoH);
+                            //echo "<hr>";
+                            //echo nl2br($diagnosticoH);?>
                             <div class="row">
-                                <div class="col-6">
+                                <div class="col-12">
                                     <label for="">Preexistencias</label>
-                                    <textarea class="form-control textArea" data-target="preexistencias" data-label="lblHistoriaClinica" name="pre_historia_clinica" id="pre_historia_clinica" cols="15" rows="5"><?=$pre_historia_clinica?></textarea>
+                                    <textarea class="form-control textArea" data-target="preexistencias" data-label="lblHistoriaClinica" name="pre_historia_clinica" id="pre_historia_clinica" cols="15" rows="3"><?=$pre_historia_clinica?></textarea>
                                 </div>
-                                <div class="col-6">
+                                <div class="col-12">
                                     <label for="">Observaciones</label>
-                                    <textarea class="form-control textArea" data-target="observaciones" data-label="lblHistoriaClinica" name="obs_historia_clinica" id="obs_historia_clinica" cols="15" rows="5"><?=$diagnosticoH[1]?><?=$obs_historia_clinica?></textarea>
+                                    <textarea class="form-control textArea" data-target="observaciones" data-label="lblHistoriaClinica" name="obs_historia_clinica" id="obs_historia_clinica" cols="15" rows="5"><?=$diagnosticoH?><?php //echo $obs_historia_clinica?></textarea>
                                 </div>
                             </div>
                         </div>
@@ -84,8 +91,9 @@
         @if ($posiciones_forzada)
             <div class="col-6">
                 <div class="card">
-                    <div class="card-header fondo2">
-                        Posiciones Forzadas
+                    <div class="card-header fondo2"><?php
+                        $titulo=strtoupper("Posiciones Forzadas");
+                        echo $titulo?>
                         <div class="card-tools">
                             <button type="button" class="btnCollapse btn btn-tool collapsed" data-toggle="collapse" href="#collapseExample2"><i class="fas fa-plus"></i> Detalles</button>
                         </div>
@@ -95,9 +103,9 @@
                             <div class="col-12"><label for=""><u>Diagnóstico:</u> </label></div>
                             <div class="col">
                                 @php
-                                    echo $diagnosticoP;
+                                    echo $diagnosticoP[0];
                                 @endphp
-                                <input type="hidden" id="lblPosicionesForzadas" value="Posiciones Forzadas: ">
+                                <input type="hidden" id="lblPosicionesForzadas" value="<?=$titulo?>: ">
                                 <!-- Tabla de semiologia --><?php
                                 //$posiciones_forzada->dolor_articular trae un string con muchos 0 y 1, si son todos 0 este if da falso y no entra, asi no se muestra estando vacío
                                 if($posiciones_forzada->dolor_articular!=0){?>
@@ -117,15 +125,17 @@
                         <div class="col-12">
                             <hr><?php
                             $pre_posiciones_forzadas=($posiciones_forzada->informe_final_preexistencias) ?: "";
-                            $obs_posiciones_forzadas=($posiciones_forzada->informe_final_observaciones) ?: "";?>
+                            $obs_posiciones_forzadas=($posiciones_forzada->informe_final_observaciones) ?: "";
+                            
+                            $diagnosticoP=str_replace("<br>","\n",$diagnosticoP[1]);?>
                             <div class="row">
-                                <div class="col-6">
+                                <div class="col-12">
                                     <label for="">Preexistencias</label>
-                                    <textarea class="form-control textArea" data-target="preexistencias" data-label="lblPosicionesForzadas" name="pre_posiciones_forzadas" id="pre_posiciones_forzadas" cols="15" rows="5"><?=$pre_posiciones_forzadas?></textarea>
+                                    <textarea class="form-control textArea" data-target="preexistencias" data-label="lblPosicionesForzadas" name="pre_posiciones_forzadas" id="pre_posiciones_forzadas" cols="15" rows="3"><?=$pre_posiciones_forzadas?></textarea>
                                 </div>
-                                <div class="col-6">
+                                <div class="col-12">
                                     <label for="">Observaciones</label>
-                                    <textarea class="form-control textArea" data-target="observaciones" data-label="lblPosicionesForzadas" name="obs_posiciones_forzadas" id="obs_posiciones_forzadas" cols="15" rows="5"><?=$obs_posiciones_forzadas?></textarea>
+                                    <textarea class="form-control textArea" data-target="observaciones" data-label="lblPosicionesForzadas" name="obs_posiciones_forzadas" id="obs_posiciones_forzadas" cols="15" rows="5"><?=$diagnosticoP//$obs_posiciones_forzadas?></textarea>
                                 </div>
                             </div>
                         </div>
@@ -137,8 +147,9 @@
         @if ($iluminacion_direccionado)
             <div class="col-6">
                 <div class="card">
-                    <div class="card-header fondo2">
-                        Iluminacion Insuficiente
+                    <div class="card-header fondo2"><?php
+                        $titulo=strtoupper("Iluminacion Insuficiente");
+                        echo $titulo?>
                         <div class="card-tools">
                             <button type="button" class="btnCollapse btn btn-tool collapsed" data-toggle="collapse" href="#collapseExample3"><i class="fas fa-plus"></i> Detalles</button>
                         </div>
@@ -148,9 +159,9 @@
                             <div class="col-12"><label for=""><u>Diagnóstico:</u> </label></div>
                             <div class="col">
                                 @php
-                                    echo $diagnosticoI;
+                                    echo $diagnosticoI[0];
                                 @endphp
-                                <input type="hidden" id="lblIlumincacionInsuficiente" value="Ilumincacion Insuficiente: ">
+                                <input type="hidden" id="lblIlumincacionInsuficiente" value="<?=$titulo?>: ">
                             </div>
                         </div>
                     </div>
@@ -159,15 +170,17 @@
                         <div class="col-12">
                             <hr><?php
                             $pre_iluminacion_insuficiente=($iluminacion_direccionado->informe_final_preexistencias) ?: "";
-                            $obs_iluminacion_insuficiente=($iluminacion_direccionado->informe_final_observaciones) ?: "";?>
+                            $obs_iluminacion_insuficiente=($iluminacion_direccionado->informe_final_observaciones) ?: "";
+                            
+                            $diagnosticoI=str_replace("<br>","\n",$diagnosticoI[1]);?>
                             <div class="row">
-                                <div class="col-6">
+                                <div class="col-12">
                                     <label for="">Preexistencias</label>
-                                    <textarea class="form-control textArea" data-target="preexistencias" data-label="lblIlumincacionInsuficiente" name="pre_iluminacion_insuficiente" id="pre_iluminacion_insuficiente" cols="15" rows="5"><?=$pre_iluminacion_insuficiente?></textarea>
+                                    <textarea class="form-control textArea" data-target="preexistencias" data-label="lblIlumincacionInsuficiente" name="pre_iluminacion_insuficiente" id="pre_iluminacion_insuficiente" cols="15" rows="3"><?=$pre_iluminacion_insuficiente?></textarea>
                                 </div>
-                                <div class="col-6">
+                                <div class="col-12">
                                     <label for="">Observaciones</label>
-                                    <textarea class="form-control textArea" data-target="observaciones" data-label="lblIlumincacionInsuficiente" name="obs_iluminacion_insuficiente" id="obs_iluminacion_insuficiente" cols="15" rows="5"><?=$obs_iluminacion_insuficiente?></textarea>
+                                    <textarea class="form-control textArea" data-target="observaciones" data-label="lblIlumincacionInsuficiente" name="obs_iluminacion_insuficiente" id="obs_iluminacion_insuficiente" cols="15" rows="5"><?=$diagnosticoI//$obs_iluminacion_insuficiente?></textarea>
                                 </div>
                             </div>
                         </div>

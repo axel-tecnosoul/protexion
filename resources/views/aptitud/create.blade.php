@@ -90,7 +90,7 @@
             aObsPre[target]=aObsPre[target]+saltoLinea+label+" "+valor;
           }
         });
-        $(".inputText").each(function(){
+        /*$(".inputText").each(function(){
           let valor=this.value.trim();
           //console.log(this);
           if(valor!="" && valor.length>0){
@@ -103,6 +103,35 @@
               saltoLinea="";
             }
             aObsPre[target]=aObsPre[target]+saltoLinea+label+" "+valor;
+          }
+        });*/
+        var lblBigLabelAux="";
+        $(".inputText").each(function(){
+          let valor=this.value.trim();
+          //console.log(this);
+          if(valor!="" && valor.length>0){
+            let inputId=this.id;
+            let label=$("#"+inputId+"_label").html().trim();
+            let bigLabel=$(this).closest(".card").find(".card-header").html().trim();
+            if(bigLabel=="ANALISIS BIOQUIMICO ANEXO 01"){
+              bigLabel="ANALISIS BIOQUIMICO";
+            }
+            if(bigLabel=="COMPLEMENTARIO" || bigLabel=="Historia Clínica:"){
+              bigLabel=""
+              label="<b>"+label+"</b>"
+            }
+            let lblBigLabel=""
+            if(lblBigLabelAux!=bigLabel && bigLabel!="RADIOLOGIA"){
+              lblBigLabelAux=bigLabel
+              lblBigLabel="<b>"+bigLabel+":</b>\n"
+            }
+            //console.log(label);
+            let target=$("input[name='"+inputId+"_radio']:checked").data("target");
+            let saltoLinea="\n";
+            if(aObsPre[target]==""){
+              saltoLinea="";
+            }
+            aObsPre[target]=aObsPre[target]+saltoLinea+lblBigLabel+label+" "+valor;
           }
         });
         $("#preexistencias").val(aObsPre["preexistencias"]);

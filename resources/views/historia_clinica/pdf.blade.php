@@ -153,7 +153,25 @@
                   @endif
               </td>
               <td colspan="3">
-                  <label for="">IMC:</label> {{$hc_formulario->examenClinico->imc}}1
+                  <label for="">IMC:</label><?php
+                  $estatura=$hc_formulario->examenClinico->estatura;
+                  if($estatura>100){
+                    $estatura/=100;
+                  }
+                  $peso=$hc_formulario->examenClinico->peso;
+                  $imc=number_format($peso/($estatura*$estatura),2);
+      
+                  $datosAdicionales = "IMC: ".$imc;
+                  //Calculo de IMC
+                  if ($imc >= "30") {
+                    $descripcionIMC='Sobrepeso';
+                  } elseif ($imc <= "18") {
+                    $descripcionIMC='Muy bajo';
+                  } else {
+                    $descripcionIMC='Normal';
+                  }
+                  echo $imc?> 
+                  <!-- {{$hc_formulario->examenClinico->imc}} -->
               </td>
           </tr>
           <tr>

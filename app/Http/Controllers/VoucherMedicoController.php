@@ -152,9 +152,19 @@ class VoucherMedicoController extends Controller
       $tipo_estudio_id=$request->tipo_estudio_id;
       //if(is_null($fecha)) $fecha=date("Y-m-d");
 
-      $tipo_estudio=TipoEstudio::find($tipo_estudio_id);
+      //dd($request->fecha);
 
       $aPacientes=$this->traerDatosPaciente($fecha,$tipo_estudio_id);
+
+      $tipo_estudio_id=explode(".",$tipo_estudio_id);
+      
+      if($tipo_estudio_id[0]=="te"){
+          $tipo_estudio=TipoEstudio::find($tipo_estudio_id[1]);
+      }elseif($tipo_estudio_id[0]=="e"){
+          $tipo_estudio=Estudio::find($tipo_estudio_id[1]);
+      }
+
+      //dd($tipo_estudio);
 
       //return view('voucher_medico.pdf_medico', compact('aPacientes', 'tipo_estudio', 'fecha','tipo_estudio_id'));
       $pdf = PDF::loadView('voucher_medico.pdf_medico',[

@@ -235,8 +235,11 @@
                 </td>
             </tr>
             <tr>
+              <!-- 
+                A ULTIMA HORA PIDIERON QUE vacuas VAYA EN DONDE ESTA covid 19 Y VISCEVERSA
+                -->
               <td colspan="6">
-                  <label for="">COVID 19:</label> <!-- {{$declaracion_jurada->antecedentePersonal->covid19}} -->
+                  <label for="">Vacunas:</label> <!-- {{$declaracion_jurada->antecedentePersonal->covid19}} -->
                   @if ($declaracion_jurada->antecedentePersonal->covid19)
                       {{$declaracion_jurada->antecedentePersonal->covid19}}
                   @else
@@ -244,7 +247,7 @@
                   @endif
               </td>
               <td colspan="6">
-                  <label for="">Vacunas:</label> 
+                  <label for="">COVID 19:</label> 
                   <!-- {{$declaracion_jurada->antecedentePersonal->vacunado}} -->
                   @if ($declaracion_jurada->antecedentePersonal->vacunado)
                       {{$declaracion_jurada->antecedentePersonal->vacunado}}

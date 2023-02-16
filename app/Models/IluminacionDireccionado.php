@@ -162,18 +162,28 @@ class IluminacionDireccionado extends Model
       foreach ($matriz as $seccion => $valores) {
         //var_dump($seccion);
         //var_dump($valores);
-        $aux="";
+        $aux2=$aux="";
         $mostrarNombreSeccion=0;
         foreach ($valores as $label => $valor) {
           //if(!in_array($label,$arExcluidos)){
-            if($valor==1){
-              //$aux.=$label.": "" Si\n".
-              $aux.=$label.": <b>Si</b><br>";
-              $mostrarNombreSeccion=1;
-            }elseif ($valor == "") {
+          if($valor==1){
+            //$aux.=$label.": "" Si\n".
+            $aux.=$label.": <b>Si</b><br>";
+            if($seccion=="EXAMEN OCULAR" and !in_array($label,['Agudeza visual con corrección','Agudeza visual sin correccion'])){
+              $aux2.=$label.": Si<br>";
+            }
+            $mostrarNombreSeccion=1;
+          }elseif ($valor == "") {
               
           }else{
               $aux.=$label.": <b>".$valor."</b>.<br> ";
+              if($seccion=="EXAMEN OCULAR" and in_array($label,['Informe ocular','Observaciones'])){
+                if($label=='Observaciones'){
+                  $aux2.=$valor."<br>";
+                }else{
+                  $aux2.=$label.": ".$valor."<br>";
+                }
+              }
               $mostrarNombreSeccion=1;
           }
 
@@ -181,6 +191,7 @@ class IluminacionDireccionado extends Model
         }
         if($mostrarNombreSeccion==1){
           $aux="<b>".$seccion."</b><br>".$aux."<br>";
+          $aux2="<b>".$seccion."</b><br>".$aux2."<br>";
         }
         //echo $aux;
         $diagnostico.=$aux;
@@ -205,7 +216,8 @@ class IluminacionDireccionado extends Model
                     }
                 }
             };*/
-        return $diagnostico;
+        //return $diagnostico;
+        return [$diagnostico,$aux2];
     }
     
 }

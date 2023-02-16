@@ -41,20 +41,36 @@ class AptitudController extends Controller
         $estudios = $voucher->getEstudiosClasificados();
 
         //Carga de datos adicionales
-        /*if ($voucher->historiaClinica) {
-            $datosAdicionales = "IMC: ".$historia_clinica->examenClinico->imc.". ";
-            if ($historia_clinica->examenClinico->sobrepeso) {
-                $datosAdicionales = $datosAdicionales." Sobrepeso. ";
-            }
-            if ($historia_clinica->examenClinico->medicacion_actual) {
-                $datosAdicionales = $datosAdicionales." Medicación actual: ".$historia_clinica->examenClinico->medicacion_actual.". ";
-            }else {
-                $datosAdicionales = $datosAdicionales." Medicación actual: No. ";
-            }
-        } else {
-            $datosAdicionales = "";
-        }*/
         $datosAdicionales = "";
+        /*$datosAdicionales = "IMC: ".$historia_clinica->examenClinico->imc.". ";
+        if ($historia_clinica->examenClinico->sobrepeso) {
+            $datosAdicionales.=" Sobrepeso. ";
+        }*/
+        /*if ($voucher->historiaClinica) {
+            $estatura=$historia_clinica->examenClinico->estatura;
+            if($estatura>100){
+              $estatura/=100;
+            }
+            $peso=$historia_clinica->examenClinico->peso;
+            $imc=number_format($peso/($estatura*$estatura),2);
+
+            $datosAdicionales = "IMC: ".$imc;
+            //Calculo de IMC
+            if ($imc >= "30") {
+              $descripcionIMC='Sobrepeso';
+            } elseif ($imc <= "18") {
+              $descripcionIMC='Muy bajo';
+            } else {
+              $descripcionIMC='Normal';
+            }
+            $datosAdicionales.=" (".$descripcionIMC.").";
+
+            if ($historia_clinica->examenClinico->medicacion_actual) {
+                $datosAdicionales.=" Medicación actual: ".$historia_clinica->examenClinico->medicacion_actual.". ";
+            }else {
+                $datosAdicionales.=" Medicación actual: No posee. ";
+            }
+        }*/
 
         $voucher_riesgos=[];
         foreach($voucher->vouchersRiesgos as $riesgo){
@@ -246,6 +262,7 @@ class AptitudController extends Controller
         //$aptitud = new Aptitud();
         $aptitud = Aptitud::findOrFail($voucher->aptitud->id);
         //dd($aptitud);
+        //dd($aptitud->observaciones,nl2br($aptitud->observaciones),explode("\r\n",$aptitud->observaciones));
         //Carga de riesgos
         $riesgos = $aptitud->riesgos();
 
@@ -264,25 +281,42 @@ class AptitudController extends Controller
         $voucher->posicionesForzadas ? ($diagnosticoP = $posiciones_forzada->generarDiagnostico()) : ($diagnosticoP = " ");
         $voucher->iluminacionDireccionado ? ($diagnosticoI = $iluminacion_direccionado->generarDiagnostico()) : ($diagnosticoI = " ");
 
+        //dd($diagnosticoH);
+
         //Carga de estudios clasificados por tipo
         $estudios = $voucher->getEstudiosClasificados();
         //dd($estudios);
 
         //Carga de datos adicionales
-        /*if ($voucher->historiaClinica) {
-            $datosAdicionales = "IMC: ".$historia_clinica->examenClinico->imc.". ";
-            if ($historia_clinica->examenClinico->sobrepeso) {
-                $datosAdicionales = $datosAdicionales." Sobrepeso. ";
-            }
-            if ($historia_clinica->examenClinico->medicacion_actual) {
-                $datosAdicionales = $datosAdicionales." Medicación actual: ".$historia_clinica->examenClinico->medicacion_actual.". ";
-            }else {
-                $datosAdicionales = $datosAdicionales." Medicación actual: No. ";
-            }
-        } else {
-            $datosAdicionales = "";
-        }*/
         $datosAdicionales = "";
+        /*if ($historia_clinica->examenClinico->sobrepeso) {
+            $datosAdicionales.=" Sobrepeso. ";
+        }*/
+        /*if ($voucher->historiaClinica) {
+            $estatura=$historia_clinica->examenClinico->estatura;
+            if($estatura>100){
+              $estatura/=100;
+            }
+            $peso=$historia_clinica->examenClinico->peso;
+            $imc=number_format($peso/($estatura*$estatura),2);
+
+            $datosAdicionales = "IMC: ".$imc;
+            //Calculo de IMC
+            if ($imc >= "30") {
+              $descripcionIMC='Sobrepeso';
+            } elseif ($imc <= "18") {
+              $descripcionIMC='Muy bajo';
+            } else {
+              $descripcionIMC='Normal';
+            }
+            $datosAdicionales.=" (".$descripcionIMC.").";
+            
+            if ($historia_clinica->examenClinico->medicacion_actual) {
+                $datosAdicionales.=" Medicación actual: ".$historia_clinica->examenClinico->medicacion_actual.". ";
+            }else {
+                $datosAdicionales.=" Medicación actual: No posee. ";
+            }
+        }*/
 
         $voucher_riesgos=[];
         foreach($voucher->vouchersRiesgos as $riesgo){

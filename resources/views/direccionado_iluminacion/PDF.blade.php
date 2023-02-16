@@ -240,19 +240,22 @@
                 <tr>
                     <td class="datos" style="text-align: left; width: 510px;border-bottom: solid 1px">
                         <label for=""> Antecedentes de enfermedades:</label> 
-                        <p>{{$iluminacion->enfermedades}}</p>
+                        <!-- <p>{{$iluminacion->enfermedades}}</p> -->
+                        {{$iluminacion->enfermedades}}
                     </td>
                 </tr>
                 <tr>
                     <td class="datos" style="text-align: left; width: 510px;border-bottom: solid 1px">
                         <label for=""> Antecedentes de trastornos congénitos:</label> 
-                        <p>{{$iluminacion->transtornos_congenitos}}</p>
+                        <!-- <p>{{$iluminacion->transtornos_congenitos}}</p> -->
+                        {{$iluminacion->transtornos_congenitos}}
                     </td>
                 </tr>
                 <tr>
                     <td class="datos" style="text-align: left; width: 510px">
                         <label for=""> Antecedentes de enfermedades profesionales o accidentes de trabajo:</label> 
-                        <p>{{$iluminacion->enfermedades_profecionales}}</p>
+                        <!-- <p>{{$iluminacion->enfermedades_profecionales}}</p> -->
+                        {{$iluminacion->enfermedades_profecionales}}
                     </td>
                 </tr>
             </tbody>

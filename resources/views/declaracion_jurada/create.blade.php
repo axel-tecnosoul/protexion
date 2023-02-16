@@ -401,14 +401,17 @@ $dosis_vacuna=["Sin dosis","Con 1ra dosis","Con 2da dosis","Con 3ra dosis","Con 
                                         </label>
                                         <input type="text" class="form-control" name="actividad_fisica" id="actividad_fisica" value="<?=$actividad_fisica?>" placeholder="Describa e ingrese la cantidad si corresponde...">
                                     </div>
-                                    <!-- Covid 1 -->
+                                    <!-- Covid 19 -->
+                                    <!-- 
+                                      A ULTIMA HORA PIDIERON QUE vacuas VAYA EN DONDE ESTA covid 19 Y VISCEVERSA
+                                     -->
                                     <div class="form-group row">
-                                        <label for="covid19" class="form-label">COVID 19</label>
+                                        <label for="covid19" class="form-label">Vacunas</label>
                                         <input class="form-control" placeholder="Describa las anormalidades..." type="text" name="covid19" id="covid19" value="<?=$covid19?>">
                                     </div>
                                     <!-- Vacunas -->
                                     <div class="form-group row">
-                                        <label for="vacunado" class="form-label">Vacunas</label>
+                                        <label for="vacunado" class="form-label">COVID 19</label>
                                         <!-- <input class="form-control" placeholder="Describa las dosis..." type="text" name="vacunado" id="vacunado"> -->
                                         <select class="form-control" name="vacunado" id="vacunado">
                                           <option value="0">Seleccione las dosis...</option><?php

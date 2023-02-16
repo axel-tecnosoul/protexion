@@ -69,20 +69,26 @@
               <div class="card-body">
                 <table id="tablaEstudios" style="width:100%" class="table-sm table-bordered table-condensed table-hover">
                   <tbody>
-                    @foreach ($estudios_sistema[2] as $item)
+                    @foreach ($estudios_sistema[2] as $item)<?php
+                      $disabled="disabled";
+                      $title="Cargue la declaracion jurada para poder imprimir estos documentos";
+                      if($puede_imprimir==1){
+                        $disabled="";
+                        $title="Imprimir";
+                      }?>
                       <tr>
                         @if ($estudios_sistema[0][$item]->estudio->nombre == "ESPIRIOMETRIA")
                           <td style="width: 65%">ESPIRIOMETRIA (FORMULARIO)</td>
-                          <td style="text-align: center">
-                            <a target="_blank" href="{{ route('espiriometrias.pdf',$voucher->id) }}" class="btn fondo1 btn-responsive">
+                          <td style="text-align: center" title="<?=$title?>">
+                            <a target="_blank" href="{{ route('espiriometrias.pdf',$voucher->id) }}" class="btn fondo1 btn-responsive" <?=$disabled?>>
                               <i class="fas fa-file-pdf"></i>
                             </a>
                           </td>
                         @else
                           @if ($estudios_sistema[0][$item]->estudio->nombre == "AUDIOMETRIA")
                             <td style="width: 65%">AUDIOMETRIA (FORMULARIO)</td>
-                            <td style="text-align: center">
-                              <a target="_blank" href="{{ route('audiometrias.pdf',$voucher->id) }}" class="btn fondo1 btn-responsive">
+                            <td style="text-align: center" title="<?=$title?>">
+                              <a target="_blank" href="{{ route('audiometrias.pdf',$voucher->id) }}" class="btn fondo1 btn-responsive" <?=$disabled?>>
                                 <i class="fas fa-file-pdf"></i>
                               </a>
                             </td>
@@ -92,13 +98,7 @@
                             //var_dump($estudios_sistema[0][$item]->estudio->nombre)?>
                             <td style="width: 65%">{{ $estudios_sistema[0][$item]->estudio->nombre }}</td><?php
                             // @if ($estudios_sistema[0][$item]->archivo_adjunto != "[]") ?>
-                            @if ($estudios_sistema[3][$item] > 0)<?php
-                              $disabled="disabled";
-                              $title="Cargue la declaracion jurada para poder imprimir estos documentos";
-                              if($puede_imprimir==1){
-                                $disabled="";
-                                $title="Imprimir";
-                              }?>
+                            @if ($estudios_sistema[3][$item] > 0)
                               <td style="text-align: center" title="<?=$title?>">
                                 <!-- editar formulario -->
                                 <a title="Editar estudio" class="btn fondo2 btn-responsive" href="{{ route($estudios_sistema[4][$item], $voucher->id)}}">

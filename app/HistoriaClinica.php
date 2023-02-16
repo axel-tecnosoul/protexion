@@ -385,7 +385,7 @@ class HistoriaClinica extends Model implements Auditable
       // Generación de Diagnóstico
       /* La generación del diagnostico se realiza cargando dos arrays, uno con las etiquetas y otro con los atributos.
       Luego se procede a cargar sólo los atributos que fueron cargados cuando se generó el formulario*/
-      $diagnostico = "";
+      $obs=$diagnostico = "";
       //Carga variables
       $matriz = [
         "EXAMEN CLINICO"=>[
@@ -496,34 +496,99 @@ class HistoriaClinica extends Model implements Auditable
       ];
       //Carga de diagnostico
       $vacio = false;
-      $obs="";
       $arExcluidos=["Estatura","Peso","Ojo derecho","Ojo izquierdo","Usa lentes","Pulso","Frecuencia cardíaca"];
 
       foreach ($matriz as $seccion => $valores) {
         //var_dump($seccion);
         //var_dump($valores);
-        $aux="";
+        $aux2=$aux="";
         $mostrarNombreSeccion=0;
         foreach ($valores as $label => $valor) {
           //if(!in_array($label,$arExcluidos)){
             if($valor==1){
               //$aux.=$label.": "" Si\n".
               $aux.=$label.": <b>Si</b><br>";
+              $aux2.=$label.": Si<br>";
               $mostrarNombreSeccion=1;
             }elseif ($valor == "") {
               
-          }else{
-              $aux.=$label.": <b>".$valor."</b>.<br> ";
-              $mostrarNombreSeccion=1;
-          }
+            }else{
+                if($label!="IMC"){
+                  $aux.=$label.": <b>".$valor."</b>.<br>";
+                  if($label=="Observaciones"){
+                    $aux2.=$valor.".<br>";
+                  }else{
+                    $aux2.=$label.": ".$valor.".<br>";
+                  }
+                  $mostrarNombreSeccion=1;
+                }
+
+                if ($label=="Estatura") {
+                    $peso=$matriz["EXAMEN CLINICO"]["Peso"];
+                    $estatura=$matriz["EXAMEN CLINICO"]["Estatura"];
+                    if($estatura>100){
+                      $estatura/=100;
+                    }
+                    $imc=number_format($peso/($estatura*$estatura),2);
+        
+                    //Calculo de IMC
+                    if ($imc >= "30") {
+                      $descripcionIMC='Sobrepeso';
+                    } elseif ($imc <= "18") {
+                      $descripcionIMC='Muy bajo';
+                    } else {
+                      $descripcionIMC='Normal';
+                    }
+                    $mostrar_imc="IMC: ".$imc.=" (".$descripcionIMC.").<br>";
+                    $aux.=$mostrar_imc;
+                    $aux2.=$mostrar_imc;
+        
+                    /*if ($historia_clinica->examenClinico->medicacion_actual) {
+                        $datosAdicionales.=" Medicación actual: ".$historia_clinica->examenClinico->medicacion_actual.". ";
+                    }else {
+                        $datosAdicionales.=" Medicación actual: No posee. ";
+                    }*/
+                }
+                /*if ($voucher->historiaClinica) {
+                    $estatura=$historia_clinica->examenClinico->estatura;
+                    if($estatura>100){
+                      $estatura/=100;
+                    }
+                    $peso=$historia_clinica->examenClinico->peso;
+                    $imc=number_format($peso/($estatura*$estatura),2);
+        
+                    $datosAdicionales = "IMC: ".$imc;
+                    //Calculo de IMC
+                    if ($imc >= "30") {
+                      $descripcionIMC='Sobrepeso';
+                    } elseif ($imc <= "18") {
+                      $descripcionIMC='Muy bajo';
+                    } else {
+                      $descripcionIMC='Normal';
+                    }
+                    $datosAdicionales.=" (".$descripcionIMC.").";
+        
+                    if ($historia_clinica->examenClinico->medicacion_actual) {
+                        $datosAdicionales.=" Medicación actual: ".$historia_clinica->examenClinico->medicacion_actual.". ";
+                    }else {
+                        $datosAdicionales.=" Medicación actual: No posee. ";
+                    }
+                }*/
+            }
 
           //}
         }
         if($mostrarNombreSeccion==1){
-          $aux="<b>".$seccion."</b><br>".$aux."<br>";
+          //CON SALTOS DE LINEA AL FINAL
+          /*$aux="<b>".$seccion."</b><br>".$aux."<br>";
+          $aux2="<b>".$seccion."</b><br>".$aux2."<br>";*/
+          //SIN SALTOS DE LINEA AL FINAL
+          $aux="<b>".$seccion."</b><br>".$aux;
+          $aux2="<b>".$seccion."</b><br>".$aux2;
         }
         //echo $aux;
         $diagnostico.=$aux;
+        $obs.=$aux2;
       }
       
       /*for ($i=0; $i < sizeof($matriz[1]); $i++) {
@@ -559,6 +624,7 @@ class HistoriaClinica extends Model implements Auditable
       };*/
       //echo $diagnostico;
       //die();
+      //dd($diagnostico,$obs);
       return [$diagnostico,$obs];
 
     }
