@@ -43,7 +43,7 @@
                     @foreach ($vouchers as $voucher)
                     <tr onmouseover="cambiar_color_over(this)" onmouseout="cambiar_color_out(this)">
                         <td>{{ $voucher->codigo }}</td>
-                        <td>{{ $voucher->paciente->nombreCompleto() }}</td>
+                        <td style="text-align: left">{{ $voucher->paciente->nombreCompleto() }}</td>
                         <td>{{ \Carbon\Carbon::parse($voucher->turno)->format('d/m/Y') }}</td>
                         <td style="text-align: center" colspan="3">
                             <a href="{{ route('voucher.edit',$voucher->id) }}">
