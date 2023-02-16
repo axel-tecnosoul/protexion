@@ -31,7 +31,7 @@
               </option>
               @foreach ($aEstudios as $estudio)<?php
                   $selected="";
-                  if($estudio["id"]==$tipo_estudio_id){
+                  if($estudio["id"]===$tipo_estudio_id){
                     $selected="selected";
                   }?>
                   <option
