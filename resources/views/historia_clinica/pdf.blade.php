@@ -385,7 +385,7 @@
                   @if ($hc_formulario->columna->observacion1_col)
                       {{$hc_formulario->columna->observacion1_col}}
                   @else
-                      No
+                      Si
                   @endif
               </td>
               <td colspan="6">

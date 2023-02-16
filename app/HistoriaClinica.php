@@ -513,7 +513,11 @@ class HistoriaClinica extends Model implements Auditable
             }elseif ($valor == "") {
               
             }else{
-                if($label!="IMC"){
+              $mostrarColumnaExamenNormal=1;
+              if($seccion=="COLUMNA VERTEBRAL" and $label=='Examen normal' and in_array($valor,["SI","si","Si","sI",""," "])){
+                $mostrarColumnaExamenNormal=0;
+              }
+                if($label!="IMC" or $mostrarColumnaExamenNormal==0){
                   $aux.=$label.": <b>".$valor."</b>.<br>";
                   if($label=="Observaciones"){
                     $aux2.=$valor.".<br>";

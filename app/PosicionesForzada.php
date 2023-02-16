@@ -218,7 +218,9 @@ class PosicionesForzada extends Model
       
       $obs="";
       if($this->semiologica->grado){
-        $obs.=$this->semiologica->grado;
+        if($this->semiologica->grado!="Grado 0: Ausencia de signos y síntomas."){
+          $obs.=$this->semiologica->grado;
+        }
       }
       if($this->semiologica->observacion1_s){
         $obs.=$this->semiologica->observacion1_s;
