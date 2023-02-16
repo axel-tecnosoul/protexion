@@ -118,7 +118,7 @@
             //label+="\n"
             label="<b>"+label+"</b>"
             let lblBigLabel=""
-            if(lblBigLabelAux!=bigLabel && bigLabel!="RADIOLOGIA"){
+            if(bigLabel!="" && lblBigLabelAux!=bigLabel && bigLabel!="RADIOLOGIA"){
               lblBigLabelAux=bigLabel
               lblBigLabel="<b>"+bigLabel+":</b>\n"
             }
