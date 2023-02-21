@@ -293,14 +293,16 @@
         <table class="table table-condensed table-hover" >
             <tr >
                 <td style="width: 250px;text-align: center" colspan="6">
-                    <div>
-                        <img src="{{$declaracion_jurada->firma}}" height=130 alt="firma del paciente"><!-- style="border:solid 1px black" -->
+                    <div style="height:130px">
+                        @if ($declaracion_jurada)
+                          <img src="{{$declaracion_jurada->firma}}" height=130 alt="firma del paciente"><!-- style="border:solid 1px black" -->
+                        @endif
                     </div>
                     <label style="font-weight: inherit;font-size: 12px;">Firma del Paciente</label>
                 </td>
                 <td style="width: 250px;text-align: center" colspan="6">
                     <div style="height:130px">
-                        <!-- @if ($declaracion_jurada->personalClinica->foto)
+                        <!-- @if ($declaracion_jurada)
                             <img src="{{public_path('imagenes/firmas/'.$declaracion_jurada->personalClinica->foto)}}"  height="130" alt="firma del médico">
                         @endif -->
                     </div>

@@ -73,7 +73,7 @@ class DeclaracionJuradaController extends Controller
         $voucher_historial = Voucher::wherePaciente_id($voucher->paciente_id)->orderBy("created_at","desc")->get();
         $id_declaracion_jurada_anterior = 0;
         foreach ($voucher_historial as $voucher_anterior) {
-          if($voucher_anterior->declaracionJurada){
+          if($voucher_anterior->anulado==0 and $voucher_anterior->declaracionJurada){
             //dd($voucher_anterior);
             $id_declaracion_jurada_anterior = $voucher_anterior->declaracionJurada->id;
             break;

@@ -69,7 +69,7 @@ class PosicionesForzadasController extends Controller
         $id_posiciones_forzadas_anterior = 0;
         foreach ($voucher_historial as $voucher_anterior) {
           //var_dump($voucher_anterior->posicionesForzadas);
-          if($voucher_anterior->posicionesForzadas){
+          if($voucher_anterior->anulado==0 and $voucher_anterior->posicionesForzadas){
             $id_posiciones_forzadas_anterior = $voucher_anterior->posicionesForzadas->id;
             break;
           }

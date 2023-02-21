@@ -38,7 +38,7 @@ class IluminacionDireccionadoController extends Controller
         $voucher_historial = Voucher::wherePaciente_id($voucher->paciente_id)->orderBy("created_at","desc")->get();
         $id_iluminacion_direccionado_anterior = 0;
         foreach ($voucher_historial as $voucher_anterior) {
-          if($voucher_anterior->iluminacionDireccionado){
+          if($voucher_anterior->anulado==0 and $voucher_anterior->iluminacionDireccionado){
             $id_iluminacion_direccionado_anterior = $voucher_anterior->iluminacionDireccionado->id;
             break;
           }

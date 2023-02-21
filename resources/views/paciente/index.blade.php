@@ -82,16 +82,13 @@
                         </td>
 
                         <td style="text-align: center" colspan="3">
-                            
 
                             <a data-keyboard="false" data-target="#modal-show-{{ $paciente->id }}" data-toggle="modal">
                                 <button title="editar" class="btn fondo1 btn-md">
                                     <i class="fa fa-eye"></i>
                                 </button>
-
                             </a>
 
-              
                             <a href="{{URL::action('PacienteController@edit',$paciente->id)}}">
                                 <button title="editar" class="btn fondo2 btn-responsive">
                                     <i class="fa fa-edit"></i>

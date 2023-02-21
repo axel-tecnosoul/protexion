@@ -87,8 +87,8 @@
                         @else
                           @if ($estudios_sistema[0][$item]->estudio->nombre == "AUDIOMETRIA")
                             <td style="width: 65%">AUDIOMETRIA (FORMULARIO)</td>
-                            <td style="text-align: center" title="<?=$title?>">
-                              <a target="_blank" href="{{ route('audiometrias.pdf',$voucher->id) }}" class="btn fondo1 btn-responsive <?=$disabled?>">
+                            <td style="text-align: center" title="Imprimir">
+                              <a target="_blank" href="{{ route('audiometrias.pdf',$voucher->id) }}" class="btn fondo1 btn-responsive">
                                 <i class="fas fa-file-pdf"></i>
                               </a>
                             </td>

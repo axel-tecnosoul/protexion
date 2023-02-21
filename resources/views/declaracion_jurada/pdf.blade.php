@@ -119,11 +119,11 @@
             </tr>
             <tr style="text-align: left;" >
                 <td style=" width: 150px" colspan="6"> <b> Teléfono:      </b>     {{$declaracion_jurada->voucher->paciente->telefono }}      </td>
-                <td style=" width: 150px" colspan="6"> <b> Peso (Kgrs.):  </b>     {{$declaracion_jurada->voucher->paciente->peso }}          </td>
+                <td style=" width: 150px" colspan="6"> <b> Fecha último examen: </b>   {{Carbon\Carbon::parse($declaracion_jurada->fecha_realizacion)->format('d/M/Y') }} </td>
             </tr>
             <tr style="text-align: left;" >
                 <td style=" width: 150px" colspan="6"> <b> Estatura: (Mts.)    </b>   {{$declaracion_jurada->voucher->paciente->estatura }}        </td>
-                <td style=" width: 150px" colspan="6"> <b> Fecha último examen: </b>   {{Carbon\Carbon::parse($declaracion_jurada->fecha_realizacion)->format('d/M/Y') }} </td>
+                <td style=" width: 150px" colspan="6"> <b> Peso (Kgrs.):  </b>     {{$declaracion_jurada->voucher->paciente->peso }}          </td>
             </tr>
         </table>
         <!-- ANTECEDENTES FAMILIARES -->

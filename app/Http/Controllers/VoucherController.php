@@ -64,27 +64,18 @@ class VoucherController extends Controller
         {
             //dd($request->all());
             $sql = Voucher::select('vouchers.*'); //inicio la consulta sobre una determinada tabla
-
-            if($request->desde)
-            {
+            $sql = $sql->where('anulado','=',0);
+            if($request->desde){
                 $sql = $sql->where('turno','>=',$request->desde);
             }            
-            if($request->hasta)
-            {
+            if($request->hasta){
                 $sql = $sql->where('turno','<=',$request->hasta);
             }
-
-
             $vouchers=$sql->orderBy('turno','desc')->get(); //ejecuto la consulta
-
-
         }
         else //si nunca filtre, (si no existió request)
         {
-
-            $vouchers=Voucher::whereTurno($today)->orderBy('codigo','desc')->get(); //que me obtenga directamente todos los grupos
-
-
+            $vouchers=Voucher::whereAnulado(0)->whereTurno($today)->orderBy('codigo','desc')->get(); //que me obtenga directamente todos los grupos
         }
 
         //$vouchers = Voucher::orderBy('id', 'desc')->get();
@@ -509,6 +500,19 @@ class VoucherController extends Controller
     public function destroy($id)
     {
         //
+        //dd($id);
+        //dd($request);
+        $voucher=Voucher::findOrFail($id);
+        $voucher->anulado=1;
+        //$voucher->paciente_id = $request->paciente_id;
+        $voucher->update();
+
+        return redirect()->route('voucher.index');
+        /*return view('voucher.index',[
+          "vouchers"         =>  $vouchers,
+          "desde"             =>  $desde,
+          "hasta"             =>  $hasta
+        ]);*/
     }
 
     public function pdf_paciente($id)

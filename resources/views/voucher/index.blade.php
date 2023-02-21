@@ -32,10 +32,10 @@
             <table id="tablaDetalle" style="border:1px solid black; width:100%" class="table table-bordered table-condensed table-hover">
                 <thead style="background-color:#222D32">
                     <tr class="text-uppercase">
-                        <th width="20%" style="color:#F8F9F9" >Código</th>
+                        <th width="17%" style="color:#F8F9F9" >Código</th>
                         <th width="40%" style="color:#F8F9F9" >Paciente</th>
-                        <th width="20%" style="color:#F8F9F9" >Fecha</th>
-                        <th width="20%" style="color:#F8F9F9" >Opciones</th>
+                        <th width="17%" style="color:#F8F9F9" >Fecha</th>
+                        <th width="26%" style="color:#F8F9F9" >Opciones</th>
 
                     </tr>
                 </thead>
@@ -66,6 +66,11 @@
                                     <i style="color: rgb(255, 255, 255)" class="fas fa-folder"></i>
                                 </button>
                             </a>
+                            <form action="{{route('voucher.destroy',$voucher->id)}}" method="POST" style="display:inline;">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn fondo1 btn-responsive"><i class="fa fa-fw fa-trash"></i></button>
+                            </form>
                         </td>
                     </tr>
                     @endforeach
