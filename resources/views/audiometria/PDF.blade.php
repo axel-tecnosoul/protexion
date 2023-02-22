@@ -136,7 +136,15 @@
                 </tr>
                 <tr>
                     <td colspan="2" style="text-align: left;">
-                        <label class="campos" for="">CUIL - DNI:  </label>{{$voucher->paciente->cuil ?? number_format($voucher->paciente->documento,0,",",".")}}
+                        <label class="campos" for="">CUIL - DNI:  </label><?php
+                        if(empty($voucher->paciente->cuil)){
+                          if(!empty($voucher->paciente->documento)){
+                            echo number_format($voucher->paciente->documento,0,",",".");
+                          }
+                        }else{
+                          echo $voucher->paciente->cuil;
+                        }?>
+                        
                     </td>
                     <td style="text-align: left;">
                         <label class="campos" for="">Ambiente: </label> CABINA

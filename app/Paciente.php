@@ -84,13 +84,21 @@ class Paciente extends Model implements Auditable
 
     public function fecha_nacimiento()
     {   
+      if($this->fecha_nacimiento){
         $fecha = new Carbon($this->fecha_nacimiento);
         return $fecha->format('d/m/Y');
+      }else{
+        return "";
+      }
     }
 
     public function edad(){
+      if($this->fecha_nacimiento){
         $edad = new Carbon($this->fecha_nacimiento);
         return $edad->diffInYears();
+      }else{
+        return "";
+      }
     }
 
     public function domicilio()

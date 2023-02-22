@@ -311,8 +311,18 @@ class PacienteController extends Controller
 
     public function voucher($id){
         $paciente = Paciente::find($id);
-        $vouchers = Voucher::wherePaciente_id($id)->orderBy('turno','desc')->get();;
+        $vouchers = Voucher::whereAnulado(0)->wherePaciente_id($id)->orderBy('turno','desc')->get();;
         return view("paciente.vouchers", compact('vouchers','paciente'));
+    }
+
+    public function destroy_voucher($id,$paciente)
+    {
+        $voucher=Voucher::findOrFail($id);
+        $voucher->anulado=1;
+        //$voucher->paciente_id = $request->paciente_id;
+        $voucher->update();
+
+        return redirect()->route('paciente.voucher',[$paciente]);
     }
 
     public function importExcelOriginal(Request $request){

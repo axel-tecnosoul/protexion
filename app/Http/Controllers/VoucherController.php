@@ -499,7 +499,6 @@ class VoucherController extends Controller
 
     public function destroy($id)
     {
-        //
         //dd($id);
         //dd($request);
         $voucher=Voucher::findOrFail($id);
@@ -508,11 +507,6 @@ class VoucherController extends Controller
         $voucher->update();
 
         return redirect()->route('voucher.index');
-        /*return view('voucher.index',[
-          "vouchers"         =>  $vouchers,
-          "desde"             =>  $desde,
-          "hasta"             =>  $hasta
-        ]);*/
     }
 
     public function pdf_paciente($id)
