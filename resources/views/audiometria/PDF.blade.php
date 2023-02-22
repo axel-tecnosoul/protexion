@@ -128,7 +128,7 @@
                 </tr>
                 <tr>
                     <td colspan="2" style="text-align: left;">
-                        <label class="campos" for="">Apellido y nombre:  </label> {{$voucher->paciente->nombreCompleto()}}
+                        <label class="campos" for="">Apellido y Nombre:  </label> {{$voucher->paciente->nombreCompleto()}}
                     </td>
                     <td style="text-align: left;">
                         <label class="campos" for="">Fecha Nacimiento:   </label>{{$voucher->paciente->fecha_nacimiento()}}
