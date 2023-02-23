@@ -44,8 +44,9 @@
           position: fixed;
           left: 0;
           right: 0;
-          color: #aaa;
-          font-size: 0.8em;
+          /*color: #aaa;*/
+          color: #4d4d4d;
+          font-size: 0.7em;
           bottom: 0;
           border-top: 0.1pt solid #aaa;
           text-align: right;

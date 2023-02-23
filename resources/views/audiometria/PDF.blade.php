@@ -15,7 +15,7 @@
         td{ 
             border-bottom:  0.1px solid rgb(202, 202, 202);
             /* padding: 3px; */
-            padding: 4.9px;
+            padding: 4.6px;
             font-size: 12px;
         }
         #tbl_tipo_tarea td{
@@ -53,8 +53,9 @@
           position: fixed;
           left: 0;
           right: 0;
-          color: #aaa;
-          font-size: 0.8em;
+          /*color: #aaa;*/
+          color: #4d4d4d;
+          font-size: 0.7em;
           bottom: 0;
           border-top: 0.1pt solid #aaa;
           text-align: right;
@@ -123,10 +124,14 @@
                     <td style="text-align: right; width: 140px"><label>Razón social de la empresa: </label></td>
                     <td style="text-align: left; width: 240px">{{$voucher->paciente->origen ? $voucher->paciente->origen->definicion : " "}}</td>
                 </tr>
+            </tbody>
+        </table>
+        <table class="datos">
+            <tbody>
                 <tr>
                     <td colspan="3"><label class="label-bold"><u>DATOS DEL TRABAJADOR:</u></label></td>
                 </tr>
-                <tr>
+                <!-- <tr>
                     <td colspan="2" style="text-align: left;">
                         <label class="campos" for="">Apellido y Nombre:  </label> {{$voucher->paciente->nombreCompleto()}}
                     </td>
@@ -161,6 +166,36 @@
                 <tr>
                     <td colspan="3" style="text-align: left;">
                         <label class="campos" for="">Audiómetro utilizado:</label> KAMPLEX
+                    </td>
+                </tr> -->
+                <tr>
+                    <td style="text-align: left;">
+                        <label class="campos" for="">Apellido y Nombre:  </label> {{$voucher->paciente->nombreCompleto()}}
+                    </td>
+                    <td style="text-align: left;">
+                        <label class="campos" for="">Fecha Nacimiento:   </label>{{$voucher->paciente->fecha_nacimiento()}}
+                    </td>
+                    <td style="text-align: left;">
+                        <label class="campos" for="">CUIL - DNI:  </label><?php
+                        if(empty($voucher->paciente->cuil)){
+                          if(!empty($voucher->paciente->documento)){
+                            echo number_format($voucher->paciente->documento,0,",",".");
+                          }
+                        }else{
+                          echo $voucher->paciente->cuil;
+                        }?>
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td style="text-align: left;">
+                        <label class="campos" for="">Antigüedad:</label>
+                    </td>
+                    <td style="text-align: left;">
+                        <label class="campos" for="">Audiómetro:</label> KAMPLEX
+                    </td>
+                    <td style="text-align: left;">
+                        <label class="campos" for="">Ambiente: </label> CABINA
                     </td>
                 </tr>
             </tbody>
@@ -261,7 +296,7 @@
               </tr>
               <tr>
                   <td style="text-align: center;">
-                      <img src="{{public_path('imagenes/TablaAudiograma.JPG')}}" width="550px">
+                      <img src="{{public_path('imagenes/TablaAudiograma.png')}}" width="605px">
                   </td>
               </tr>
               <tr>

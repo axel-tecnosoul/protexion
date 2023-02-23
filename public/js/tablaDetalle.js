@@ -20,8 +20,9 @@ $(document).ready(function() {
             "infoFiltered":""
 
         },
-        "pageLength" : 5,
-        "lengthMenu": "[[5, 10], [5, 10]]"
+        "pageLength" : 10,
+        "lengthMenu": [[5, 10, 25, 50, 100], [5, 10, 25, 50, 100]]
+        //"lengthMenu": [5, 10, 25, 50, 100]
     });
     cambiar_color_over(celda);
 } );
