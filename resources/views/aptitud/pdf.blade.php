@@ -193,7 +193,12 @@
           <td colspan="2" style="text-align: center; background-color: brown; color: #FFFFFF;">PREEXISTENCIAS</td>
         </tr>
         <tr>
-          <td colspan="2" style="vertical-align: top;"> <?=nl2br($aptitud->preexistencias)?></td>
+          <td colspan="2" style="vertical-align: top;"><?php
+          if($aptitud->preexistencias){
+            nl2br($aptitud->preexistencias);
+          }else{
+            echo "No registra preexistencias";
+          }?></td>
         </tr>
         <tr>
           <td colspan="2" style="text-align: center; background-color: brown; color: #FFFFFF;">OBSERVACIONES</td>
@@ -211,19 +216,12 @@
               1=>[]
             ];
             $width_col1=100;
-          }
-          //dd(count($aObs),$cant_x_col,$aObs,$newArObs);?>
-          <td style="vertical-align: top;width:<?=$width_col1?>%;"><?php
-          echo implode("<br>",$newArObs[0])
-          /*foreach($aObs as $value){?>
-              <div style="width: 50%;display: inline-block;"><?=$value?></div><?php
-          };*/
-          //nl2br($aptitud->observaciones)?></td>
+          }?>
+          <td style="vertical-align: top;width:<?=$width_col1?>%;"><?=implode("<br>",$newArObs[0])?></td>
           <td style="vertical-align: top;"><?php
-          //dd($newArObs[1]);
-            if($newArObs[1][0]=="") unset($newArObs[1][0]);
-            echo implode("<br>",$newArObs[1])
-          ?></td>
+            if(isset($newArObs[1][0]) and $newArObs[1][0]=="") unset($newArObs[1][0]);
+            echo implode("<br>",$newArObs[1])?>
+          </td>
         </tr>
       </table>
       <!-- DECLARACION DE RIESGOS -->
@@ -231,38 +229,20 @@
         <tr>
           <td style="text-align: center; background-color: brown; color: #FFFFFF;width: 510px" colspan="12">DECLARACION DE RIESGOS</td>
         </tr><?php
-        /*foreach ($riesgos as $riesgo) {
-          if(in_array($riesgo->id,$voucher_riesgos)){?>
-            <tr style="text-align: left;">
-              <td class="fila_riesgos" colspan="11">{{$riesgo->riesgo}}</td>
-              <td class="fila_riesgos" colspan="1"><label for="">Si</label></td>
-            </tr><?php
-          }
-        }*/
         $cant_riesgos=count($voucher_riesgos);
         if($cant_riesgos>3){
           $aRiesgos=$riesgos->toArray();
           $auxRiesgos=[];
           $mitad=ceil($cant_riesgos/2);
           //var_dump($mitad);
-          
           //var_dump($voucher_riesgos);
-          
           for($i=0;$i<count($aRiesgos);$i++) {
             //echo "<label>".$aRiesgos[$i]["riesgo"]."</label><br>";
-              if(in_array($aRiesgos[$i]["id"],$voucher_riesgos)){
-                $auxRiesgos[]=$aRiesgos[$i]["riesgo"];/*?>
-                  <tr style="text-align: left;">
-                    <td class="fila_riesgos" colspan="6">{{$i." ".$aRiesgos[$i]["riesgo"]}}</td>
-                    <td class="fila_riesgos" colspan="6"><?php
-                    if(isset($aRiesgos[$i+1])){
-                      echo $aRiesgos[$i+1]["riesgo"];
-                    }?></td>
-                  </tr><?php*/
-              }
+            if(in_array($aRiesgos[$i]["id"],$voucher_riesgos)){
+              $auxRiesgos[]=$aRiesgos[$i]["riesgo"];
+            }
           }
           //var_dump($auxRiesgos);
-          
           //for($i=0;$i<count($auxRiesgos);$i+=2) {
           for($i=0;$i<$mitad;$i++) {?>
             <tr style="text-align: left;">
@@ -274,31 +254,6 @@
               }?></td>
             </tr><?php
           }
-          /*  $cant_x_col=ceil($cant_riesgos/2);
-            $newArRiesgos=array_chunk($auxRiesgos, $cant_x_col);
-          ?>
-          <tr style="text-align: left;">
-            <td style="vertical-align: top;" colspan="6">
-              <table class="table table-condensed table-hover"><?php
-                foreach ($newArRiesgos[0] as $key => $value) {?>
-                  <tr>
-                    <td colspan="12"><?=$value?></td>
-                  </tr><?php
-                }?>
-              </table><?php
-              //echo implode("<br>",$newArRiesgos[0])?>
-            </td>
-            <td style="vertical-align: top;" colspan="6">
-              <table class="table table-condensed table-hover"><?php
-                foreach ($newArRiesgos[1] as $key => $value) {?>
-                  <tr>
-                    <td colspan="12"><?=$value?></td>
-                  </tr><?php
-                }?>
-              </table><?php
-              //echo implode("<br>",$newArRiesgos[1])?><?php
-            ?></td>
-          </tr><?php*/
         }else{
             foreach ($riesgos as $riesgo) {
               if(in_array($riesgo->id,$voucher_riesgos)){?>
@@ -308,27 +263,6 @@
               }
             }
         }
-        /*@for ($i = 0; $i < strlen($aptitud["riesgos"]); $i++)
-            @if ($aptitud["riesgos"][$i] == "1")
-                <tr style="text-align: left;">
-                    <td colspan="11">
-                        {{$riesgos[$i]}}
-                    </td>
-                    <td colspan="1">
-                        <label for="">Si</label>
-                    </td>
-                </tr>
-            @else
-                <tr style="text-align: left;">
-                    <td colspan="11">
-                        {{$riesgos[$i]}}
-                    </td>
-                    <td colspan="1">
-                        <label for="">No</label>
-                    </td>
-                </tr>
-            @endif
-        @endfor*/
         ?>
       </table>
 

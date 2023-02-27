@@ -123,8 +123,8 @@
                 </tr> -->
                 <tr>
                     <td style="text-align: left; width: 130px">
-                      <!-- Fecha: {{ \Carbon\Carbon::parse($voucher->turno)->format('d/m/Y') }} -->
-                      Fecha: ______/______/______
+                      Fecha: {{ \Carbon\Carbon::parse($voucher->turno)->format('d/m/Y') }}
+                      <!-- Fecha: ______/______/______ -->
                     </td>
                     <td style="text-align: right; width: 130px"><label>Razón social de la empresa: </label></td>
                     <td style="text-align: left; width: 240px">{{$voucher->paciente->origen ? $voucher->paciente->origen->definicion : " "}}</td>

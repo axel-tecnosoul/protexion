@@ -398,6 +398,8 @@ class HistoriaClinica extends Model implements Auditable
         "CARDIOVASCULAR"=>[
           'Frecuencia cardíaca'=>$this->cardiovascular->frecuencia_cardiaca,
           'Tensión arterial'=>$this->cardiovascular->tension_arterial,
+          'Diastólica'=>$this->cardiovascular->diastolica,
+          'Sistólica'=>$this->cardiovascular->sistolica,
           'Pulso'=>($this->cardiovascular->pulso=="A") ? "Anormal" : "Normal",//$this->cardiovascular->pulso,
           'Várices'=>$this->cardiovascular->observacion_varices,
         ],
@@ -458,10 +460,10 @@ class HistoriaClinica extends Model implements Auditable
         "ODONTOLOGICO"=>[
           'Encias y mucosas'=>$this->odontologico->observacion1_od,
           'Esmalte dental'=>$this->odontologico->observacion2_od,
-          'Superior'=>$this->odontologico->pregunta4_od, 
-          'Inferior'=>$this->odontologico->pregunta5_od,
-          'Caries'=>$this->odontologico->superior,
-          'Faltan piezas dentarias'=>$this->odontologico->inferior,
+          'Superior'=>$this->odontologico->superior, 
+          'Inferior'=>$this->odontologico->inferior,
+          'Caries'=>$this->odontologico->pregunta4_od,
+          'Faltan piezas dentarias'=>$this->odontologico->pregunta5_od,
           'Observaciones'=>$this->odontologico->observacion_od,
         ],
         "TORAX Y APARTO RESPIRATORIO"=>[
@@ -513,71 +515,75 @@ class HistoriaClinica extends Model implements Auditable
             }elseif ($valor == "") {
               
             }else{
+              //echo $label."<br>";
+              if($label=="Superior" or $label=="Inferior"){
+                $label="Protesis ".$label;
+              }
               $mostrarColumnaExamenNormal=1;
               if($seccion=="COLUMNA VERTEBRAL" and $label=='Examen normal' and in_array($valor,["SI","si","Si","sI",""," "])){
                 $mostrarColumnaExamenNormal=0;
               }
-                if($label!="IMC" or $mostrarColumnaExamenNormal==0){
-                  $aux.=$label.": <b>".$valor."</b>.<br>";
-                  if($label=="Observaciones"){
-                    $aux2.=$valor.".<br>";
-                  }else{
-                    $aux2.=$label.": ".$valor.".<br>";
-                  }
-                  $mostrarNombreSeccion=1;
+              if($label!="IMC" or $mostrarColumnaExamenNormal==0){
+                $aux.=$label.": <b>".$valor."</b>.<br>";
+                if($label=="Observaciones"){
+                  $aux2.=$valor.".<br>";
+                }else{
+                  $aux2.=$label.": ".$valor.".<br>";
                 }
+                $mostrarNombreSeccion=1;
+              }
 
-                if ($label=="Estatura") {
-                    $peso=$matriz["EXAMEN CLINICO"]["Peso"];
-                    $estatura=$matriz["EXAMEN CLINICO"]["Estatura"];
-                    if($estatura>100){
-                      $estatura/=100;
-                    }
-                    $imc=number_format($peso/($estatura*$estatura),2);
-        
-                    //Calculo de IMC
-                    if ($imc >= "30") {
-                      $descripcionIMC='Sobrepeso';
-                    } elseif ($imc <= "18") {
-                      $descripcionIMC='Muy bajo';
-                    } else {
-                      $descripcionIMC='Normal';
-                    }
-                    $mostrar_imc="IMC: ".$imc.=" (".$descripcionIMC.").<br>";
-                    $aux.=$mostrar_imc;
-                    $aux2.=$mostrar_imc;
-        
-                    /*if ($historia_clinica->examenClinico->medicacion_actual) {
-                        $datosAdicionales.=" Medicación actual: ".$historia_clinica->examenClinico->medicacion_actual.". ";
-                    }else {
-                        $datosAdicionales.=" Medicación actual: No posee. ";
-                    }*/
+              if ($label=="Estatura") {
+                $peso=$matriz["EXAMEN CLINICO"]["Peso"];
+                $estatura=$matriz["EXAMEN CLINICO"]["Estatura"];
+                if($estatura>100){
+                  $estatura/=100;
                 }
-                /*if ($voucher->historiaClinica) {
-                    $estatura=$historia_clinica->examenClinico->estatura;
-                    if($estatura>100){
-                      $estatura/=100;
-                    }
-                    $peso=$historia_clinica->examenClinico->peso;
-                    $imc=number_format($peso/($estatura*$estatura),2);
-        
-                    $datosAdicionales = "IMC: ".$imc;
-                    //Calculo de IMC
-                    if ($imc >= "30") {
-                      $descripcionIMC='Sobrepeso';
-                    } elseif ($imc <= "18") {
-                      $descripcionIMC='Muy bajo';
-                    } else {
-                      $descripcionIMC='Normal';
-                    }
-                    $datosAdicionales.=" (".$descripcionIMC.").";
-        
-                    if ($historia_clinica->examenClinico->medicacion_actual) {
-                        $datosAdicionales.=" Medicación actual: ".$historia_clinica->examenClinico->medicacion_actual.". ";
-                    }else {
-                        $datosAdicionales.=" Medicación actual: No posee. ";
-                    }
+                $imc=number_format($peso/($estatura*$estatura),2);
+    
+                //Calculo de IMC
+                if ($imc >= "30") {
+                  $descripcionIMC='Sobrepeso';
+                } elseif ($imc <= "18") {
+                  $descripcionIMC='Muy bajo';
+                } else {
+                  $descripcionIMC='Normal';
+                }
+                $mostrar_imc="IMC: ".$imc.=" (".$descripcionIMC.").<br>";
+                $aux.=$mostrar_imc;
+                $aux2.=$mostrar_imc;
+    
+                /*if ($historia_clinica->examenClinico->medicacion_actual) {
+                    $datosAdicionales.=" Medicación actual: ".$historia_clinica->examenClinico->medicacion_actual.". ";
+                }else {
+                    $datosAdicionales.=" Medicación actual: No posee. ";
                 }*/
+              }
+              /*if ($voucher->historiaClinica) {
+                  $estatura=$historia_clinica->examenClinico->estatura;
+                  if($estatura>100){
+                    $estatura/=100;
+                  }
+                  $peso=$historia_clinica->examenClinico->peso;
+                  $imc=number_format($peso/($estatura*$estatura),2);
+      
+                  $datosAdicionales = "IMC: ".$imc;
+                  //Calculo de IMC
+                  if ($imc >= "30") {
+                    $descripcionIMC='Sobrepeso';
+                  } elseif ($imc <= "18") {
+                    $descripcionIMC='Muy bajo';
+                  } else {
+                    $descripcionIMC='Normal';
+                  }
+                  $datosAdicionales.=" (".$descripcionIMC.").";
+      
+                  if ($historia_clinica->examenClinico->medicacion_actual) {
+                      $datosAdicionales.=" Medicación actual: ".$historia_clinica->examenClinico->medicacion_actual.". ";
+                  }else {
+                      $datosAdicionales.=" Medicación actual: No posee. ";
+                  }
+              }*/
             }
 
           //}

@@ -103,7 +103,7 @@
                 <td style=" width: 150px" colspan="6"><b>Sexo:</b> {{$declaracion_jurada->voucher->paciente->sexo ? $declaracion_jurada->voucher->paciente->sexo->definicion : " " }}  </td>
             </tr>
             <tr style="text-align: left;" >
-                <td style=" width: 150px" colspan="6"> <b> Fecha de Nacimiento:</b> {{Carbon\Carbon::parse($declaracion_jurada->voucher->paciente->fecha_nacimiento)->format('d/M/Y') }}</td>
+                <td style=" width: 150px" colspan="6"> <b> Fecha de Nacimiento:</b> {{Carbon\Carbon::parse($declaracion_jurada->voucher->paciente->fecha_nacimiento)->format('d/m/Y') }}</td>
                 <td style=" width: 150px" colspan="6"> <b>Lugar:</b>  {{$declaracion_jurada->voucher->paciente->ciudad ? $declaracion_jurada->voucher->paciente->lugarNacimiento() : " " }} </td>
             </tr>
             <tr style="text-align: left;" >
@@ -120,7 +120,10 @@
             </tr>
             <tr style="text-align: left;" >
                 <td style=" width: 150px" colspan="6"> <b> Teléfono:      </b>     {{$declaracion_jurada->voucher->paciente->telefono }}      </td>
-                <td style=" width: 150px" colspan="6"> <b> Fecha último examen: </b>   {{Carbon\Carbon::parse($declaracion_jurada->fecha_realizacion)->format('d/M/Y') }} </td>
+                <td style=" width: 150px" colspan="6"> <b> Fecha último examen: </b><?php
+                if($declaracion_jurada->fecha_realizacion){
+                  echo Carbon\Carbon::parse($declaracion_jurada->fecha_realizacion)->format('d/m/Y');
+                }?> </td>
             </tr>
             <tr style="text-align: left;" >
                 <td style=" width: 150px" colspan="6"> <b> Estatura: (Mts.)    </b>   {{$declaracion_jurada->voucher->paciente->estatura }}        </td>

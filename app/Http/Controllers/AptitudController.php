@@ -205,7 +205,7 @@ class AptitudController extends Controller
         foreach($voucher->vouchersRiesgos as $riesgo){
           $voucher_riesgos[]=$riesgo->riesgo_id;
         }
-
+        
         /*return view('aptitud.pdf',["voucher" => $voucher, 
                                                 "riesgos" => $riesgos,
                                                 "voucher_riesgos" => $voucher_riesgos,
@@ -217,7 +217,6 @@ class AptitudController extends Controller
                                             "aptitud" => $aptitud,
                                             "declaracion_jurada" => $declaracionJurada,
         ]);
-
         $pdf->setPaper('a4','letter');
         return $pdf->stream('aptitud.pdf');
 
