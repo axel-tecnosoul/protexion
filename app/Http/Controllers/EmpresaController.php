@@ -5,8 +5,11 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Empresa;
+use App\Pais;
+use App\Domicilio;
 //use App\Sexo;
-//use App\Provincia;
+use App\Provincia;
+use App\Ciudad;
 //use App\Especialidad;
 //use App\Estado;
 use Intervention\Image\Facades\Image;
@@ -85,7 +88,9 @@ class EmpresaController extends Controller
 
         //$sexos=Sexo::all();
         //$provincias=Provincia::all();
+        $paises=Pais::all();
         return view("empresa.create", [
+          "paises"             =>  $paises,
             //"sexos"             =>  $sexos,
             //"provincias"           =>  $provincias
         ]);
@@ -110,18 +115,17 @@ class EmpresaController extends Controller
             //'provincias_id'         => 'required'
         ]);
 
+        $direccion = new Domicilio;
+        $direccion->direccion = $request->get('direccionOrigen');
+        $direccion->ciudad_id = $request->get('ciudad_idOrigen');
+        $direccion->save();
+
         //Creo los datos de la persona
         $empresa = new Empresa;
         $empresa->definicion=$request->get('definicion');
         $empresa->cuit=$request->get('cuit');
-        /*$empresa->documento=$request->get('documento');
-        $empresa->fecha_nacimiento=$request->get('fecha_nacimiento');
-        $empresa->nro_matricula=$request->get('nro_matricula');
-        $empresa->sexo_id=$request->get('sexo_id');*/
-        //$empresa->provincia_id=$request->get('provincias_id');
-        /*$empresa->especialidad_id=$request->get('especialidad_id');
-        $empresa->cuenta=false;
-        $empresa->estado_id=1; //Habilitado*/
+        //$empresa->domicilio_id=$request->get('domicilio_id');
+        $empresa->domicilio_id=$direccion->id;
 
         $empresa->save();
 
@@ -152,10 +156,18 @@ class EmpresaController extends Controller
     public function edit($id)
     {
         $empresa=Empresa::findOrFail($id);
-        //$provincias=Provincia::all();
+        $paises=Pais::all();
+        $provincias=Provincia::all();
+        $ciudades=Ciudad::all();
 
+        //dd($empresa->domicilio);
 
-        return view("empresa.edit",["empresa"=>$empresa]);
+        return view("empresa.edit",[
+          "empresa"=>$empresa,
+          "paises"=>$paises,
+          "provincias"=>$provincias,
+          "ciudades"=>$ciudades,
+        ]);
     }
 
 
@@ -170,9 +182,16 @@ class EmpresaController extends Controller
     public function update(Request $request, $id)
     {
 
+        $direccion=Domicilio::findOrFail($id);
+        $direccion->direccion = $request->get('direccionOrigen');
+        $direccion->ciudad_id = $request->get('ciudad_idOrigen');
+        $direccion->update();
+
+
         $empresa=Empresa::findOrFail($id);
         $empresa->definicion=$request->get('definicion');
         $empresa->cuit=$request->get('cuit');
+        $empresa->domicilio_id=$direccion->id;
         //$empresa->provincia_id=$request->get('provincias_id');
 
         $empresa->update();

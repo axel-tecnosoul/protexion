@@ -15,4 +15,9 @@ class Empresa extends Model implements Auditable
 
     protected $table = 'origenes';
 
+    public function domicilio()
+    {
+        return $this->hasOne('App\Domicilio', 'id', 'domicilio_id');
+    }
+
 }

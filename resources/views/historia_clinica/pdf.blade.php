@@ -99,7 +99,7 @@
                   <label>CUIT:</label> {{$hc_formulario->voucher->paciente->origen ? $hc_formulario->voucher->paciente->origen->cuit : " "}} 
               </td>
           </tr>
-          <tr style="text-align: left;">
+          <!-- <tr style="text-align: left;">
               <td style=" width: 150px" colspan="6">
                   <label>Domicilio:</label> 
                   @if ($hc_formulario->voucher->paciente->origen)
@@ -109,7 +109,7 @@
                   @endif 
               </td>
               <td style=" width: 150px" colspan="6"></td>
-          </tr>
+          </tr> -->
       </table>
       <!-- DATOS DEL TRABAJADOR -->
       <table class="table table-condensed table-hover" >

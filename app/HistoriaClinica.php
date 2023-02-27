@@ -391,9 +391,10 @@ class HistoriaClinica extends Model implements Auditable
         "EXAMEN CLINICO"=>[
           'Peso'=>$this->examenClinico->peso,
           'Estatura'=>$this->examenClinico->estatura,
-          'Sobrepeso'=>$this->examenClinico->sobrepeso,
+          //'Sobrepeso'=>$this->examenClinico->sobrepeso,
           'IMC'=>$this->examenClinico->imc,
-          'Medicación actual'=>($this->examenClinico->medicacion_actual) ? $this->examenClinico->medicacion_actual : "No posee"//$this->examenClinico->medicacion_actual,
+          //'Medicación actual'=>($this->examenClinico->medicacion_actual) ? $this->examenClinico->medicacion_actual : "No posee"//$this->examenClinico->medicacion_actual,
+          'Medicación actual'=>$this->examenClinico->medicacion_actual
         ],
         "CARDIOVASCULAR"=>[
           'Frecuencia cardíaca'=>$this->cardiovascular->frecuencia_cardiaca,
@@ -523,13 +524,16 @@ class HistoriaClinica extends Model implements Auditable
               if($seccion=="COLUMNA VERTEBRAL" and $label=='Examen normal' and in_array($valor,["SI","si","Si","sI",""," "])){
                 $mostrarColumnaExamenNormal=0;
               }
+              if($label=="Frecuencia cardíaca"){
+                $valor.=" x'";
+              }
 
               if($label=="Sistólica"){
                 continue;
               }
               if($label=="Diastólica"){
                 $label="Tensión arterial";
-                $valor=$valor."/".$matriz["CARDIOVASCULAR"]["Sistólica"];
+                $valor=$matriz["CARDIOVASCULAR"]["Sistólica"]."/".$valor;
               }
               //aca es donde mostramos todo
               if($label!="IMC" or $mostrarColumnaExamenNormal==0){

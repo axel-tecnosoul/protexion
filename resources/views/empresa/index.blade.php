@@ -42,8 +42,10 @@
                 <thead style="background-color:#222D32">
                     <tr>
                         <th width="10%" style="color:#F8F9F9">NRO</th>
-                        <th width="40%" style="color:#F8F9F9">NOMBRE</th>
-                        <th width="35%" style="color:#F8F9F9">CUIT</th>
+                        <th width="25%" style="color:#F8F9F9">NOMBRE</th>
+                        <th width="15%" style="color:#F8F9F9">CUIT</th>
+                        <th width="15%" style="color:#F8F9F9">LOCALIDAD</th>
+                        <th width="20%" style="color:#F8F9F9">DOMICILIO</th>
                         <th width="15%" style="color:#F8F9F9">OPCIONES</th>
 
                     </tr>
@@ -56,6 +58,14 @@
                         <td style="text-align: center">{{ $empresa->id }}</td>
                         <td style="text-align: left">{{ $empresa->definicion }}</td>
                         <td style="text-align: left">{{ $empresa->cuit }}</td>
+                        <td style="text-align: left"><?php
+                        if(isset($empresa->domicilio->ciudad)){
+                          echo $empresa->domicilio->ciudad->nombre;
+                        }?></td>
+                        <td style="text-align: left"><?php
+                        if(isset($empresa->domicilio->direccion)){
+                          echo $empresa->domicilio->direccion;
+                        }?></td>
                         <td colspan="3">
                             
                             <!-- <a data-keyboard="false" data-target="#modal-show-{{ $empresa->id }}" data-toggle="modal">
