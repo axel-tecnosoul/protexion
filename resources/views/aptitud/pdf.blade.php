@@ -195,7 +195,7 @@
         <tr>
           <td colspan="2" style="vertical-align: top;"><?php
           if($aptitud->preexistencias){
-            nl2br($aptitud->preexistencias);
+            echo nl2br($aptitud->preexistencias);
           }else{
             echo "No registra preexistencias";
           }?></td>
