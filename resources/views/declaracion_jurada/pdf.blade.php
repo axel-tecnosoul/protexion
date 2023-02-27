@@ -122,9 +122,9 @@ use phpDocumentor\Reflection\DocBlock\Tags\Var_;
             </tr>
             <tr style="text-align: left;" >
                 <td style=" width: 150px" colspan="6"> <b> Provincia: </b>     {{$declaracion_jurada->voucher->paciente->domicilio ? $declaracion_jurada->voucher->paciente->domicilio->ciudad->provincia->nombre : " "}}      </td>
-                <!-- <td style=" width: 150px" colspan="6"> <b> Localidad: </b>     {{$declaracion_jurada->voucher->paciente->ciudad->nombre }} -->
+                <!-- <td style=" width: 150px" colspan="6"> <b> Localidad: </b>     {{$declaracion_jurada->voucher->paciente->ciudad }} -->
                 <?php
-                //var_dump($declaracion_jurada->voucher->paciente->domicilio->ciudad->nombre);?>
+                //var_dump($declaracion_jurada->voucher->paciente->domicilio->ciudad);?>
                 
                 <td style=" width: 150px" colspan="6"> <b> Localidad: </b>     {{$declaracion_jurada->voucher->paciente->domicilio ? $declaracion_jurada->voucher->paciente->domicilio->ciudad->nombre : " " }} <!-- No corresponde ciudad, debe ir el domicilio -->      </td>
             </tr>
