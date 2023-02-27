@@ -109,7 +109,7 @@ use phpDocumentor\Reflection\DocBlock\Tags\Var_;
             <tr style="text-align: left;" >
                 <td style=" width: 150px" colspan="6"> <b> Fecha de Nacimiento:</b> {{Carbon\Carbon::parse($declaracion_jurada->voucher->paciente->fecha_nacimiento)->format('d/m/Y') }}</td>
                 <td style=" width: 150px" colspan="6">
-                  <!-- <b>Lugar:</b>  {{$declaracion_jurada->voucher->paciente->lugarNacimiento()}} -->
+                  <!-- <b>Lugar:</b>  <?php //echo $declaracion_jurada->voucher->paciente->lugarNacimiento()?> -->
                 </td>
             </tr>
             <tr style="text-align: left;" >
