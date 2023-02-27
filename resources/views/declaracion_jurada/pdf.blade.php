@@ -116,8 +116,8 @@
             </tr>
             <tr style="text-align: left;" >
                 <td style=" width: 150px" colspan="6"> <b> Provincia: </b>     {{$declaracion_jurada->voucher->paciente->domicilio ? $declaracion_jurada->voucher->paciente->domicilio->ciudad->provincia->nombre : " "}}      </td>
-                <td style=" width: 150px" colspan="6"> <b> Localidad: </b>     {{$declaracion_jurada->voucher->paciente->ciudad->nombre }}
-                <!-- <td style=" width: 150px" colspan="6"> <b> Localidad: </b>     {{$declaracion_jurada->voucher->paciente->ciudad ? $declaracion_jurada->voucher->paciente->lugarNacimiento() : " " }} --><!-- No corresponde ciudad, debe ir el domicilio -->      </td>
+                <!-- <td style=" width: 150px" colspan="6"> <b> Localidad: </b>     {{$declaracion_jurada->voucher->paciente->ciudad->nombre }} -->
+                <td style=" width: 150px" colspan="6"> <b> Localidad: </b>     {{$declaracion_jurada->voucher->paciente->ciudad ? $declaracion_jurada->voucher->paciente->nombre() : " " }} <!-- No corresponde ciudad, debe ir el domicilio -->      </td>
             </tr>
             <tr style="text-align: left;" >
                 <td style=" width: 150px" colspan="6"> <b> Teléfono:      </b>     {{$declaracion_jurada->voucher->paciente->telefono }}      </td>
