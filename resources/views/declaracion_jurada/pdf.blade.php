@@ -104,11 +104,11 @@
             </tr>
             <tr style="text-align: left;" >
                 <td style=" width: 150px" colspan="6"> <b> Fecha de Nacimiento:</b> {{Carbon\Carbon::parse($declaracion_jurada->voucher->paciente->fecha_nacimiento)->format('d/m/Y') }}</td>
-                <td style=" width: 150px" colspan="6"> <b>Lugar:</b>  {{$declaracion_jurada->voucher->paciente->ciudad ? $declaracion_jurada->voucher->paciente->lugarNacimiento() : " " }} </td>
+                <td style=" width: 150px" colspan="6"> <b>Lugar:</b>  {{$declaracion_jurada->voucher->paciente->lugarNacimiento()}} </td>
             </tr>
             <tr style="text-align: left;" >
                 <td style=" width: 150px" colspan="6"> <b> Documento de identidad: </b>    {{$declaracion_jurada->voucher->paciente->documentoIdentidad() }}           </td>
-                <td style=" width: 150px" colspan="6"> <b> Estado Civil:           </b>    {{$declaracion_jurada->voucher->paciente->estadoCivil ? $declaracion_jurada->voucher->paciente->estadoCivil->abreviatura : " "  }}       </td>
+                <td style=" width: 150px" colspan="6"> <b> Estado Civil:           </b>    {{$declaracion_jurada->voucher->paciente->estadoCivil ? $declaracion_jurada->voucher->paciente->estadoCivil->definicion : " "  }}       </td>
             </tr>
             <tr style="text-align: left;" >
                 <td style=" width: 150px" colspan="6"> <b> Domicilio: </b>     {{$declaracion_jurada->voucher->paciente->domicilio ? $declaracion_jurada->voucher->paciente->direccion() : " "}}                               </td>
@@ -116,7 +116,8 @@
             </tr>
             <tr style="text-align: left;" >
                 <td style=" width: 150px" colspan="6"> <b> Provincia: </b>     {{$declaracion_jurada->voucher->paciente->domicilio ? $declaracion_jurada->voucher->paciente->domicilio->ciudad->provincia->nombre : " "}}      </td>
-                <td style=" width: 150px" colspan="6"> <b> Localidad: </b>     {{$declaracion_jurada->voucher->paciente->ciudad ? $declaracion_jurada->voucher->paciente->lugarNacimiento() : " " }} <!-- No corresponde ciudad, debe ir el domicilio -->      </td>
+                <td style=" width: 150px" colspan="6"> <b> Localidad: </b>     {{$declaracion_jurada->voucher->paciente->ciudad->nombre }}
+                <!-- <td style=" width: 150px" colspan="6"> <b> Localidad: </b>     {{$declaracion_jurada->voucher->paciente->ciudad ? $declaracion_jurada->voucher->paciente->lugarNacimiento() : " " }} --><!-- No corresponde ciudad, debe ir el domicilio -->      </td>
             </tr>
             <tr style="text-align: left;" >
                 <td style=" width: 150px" colspan="6"> <b> Teléfono:      </b>     {{$declaracion_jurada->voucher->paciente->telefono }}      </td>

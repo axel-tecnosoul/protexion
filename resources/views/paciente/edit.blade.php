@@ -18,7 +18,9 @@
         ])!!}        
 
         {{Form::token()}}
-
+<?php
+//var_dump($paciente);
+?>
         <div class="card card-dark">
             <div class="card-header">
                 <div class="card-title">
@@ -181,8 +183,8 @@
                                         -Seleccione un estado civil-
                                     </option>
                                         @foreach ($estado_civiles as $estado_civil)
-                                            @if ($paciente->estadoCivil != null)
-                                                @if ($estado_civil->id==$paciente->estado_civil)
+                                            @if ($paciente->estado_civil_id != null)
+                                                @if ($estado_civil->id==$paciente->estado_civil_id)
                                                     <option value="{{$estado_civil->id}}" selected>{{$estado_civil->definicion}}</option>
                                                 @else
                                                     <option value="{{$estado_civil->id}}">{{$estado_civil->definicion}}</option>
@@ -208,7 +210,10 @@
                             value="{{old('imagen')}}"
                             class="form-control"
                             >
-                    </div>
+                    </div><?php
+                    if($paciente->imagen){?>
+                      <img src="{{ asset('imagenes/paciente/'.$paciente->imagen)}}" width="150px" class="img-circle elevation-2" alt="User Image"><?php
+                    }?>
                 </div>               
             </div>
         </div>

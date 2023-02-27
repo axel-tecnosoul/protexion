@@ -397,9 +397,9 @@ class HistoriaClinica extends Model implements Auditable
         ],
         "CARDIOVASCULAR"=>[
           'Frecuencia cardíaca'=>$this->cardiovascular->frecuencia_cardiaca,
-          'Tensión arterial'=>$this->cardiovascular->tension_arterial,
           'Diastólica'=>$this->cardiovascular->diastolica,
           'Sistólica'=>$this->cardiovascular->sistolica,
+          'Observaciones'=>$this->cardiovascular->tension_arterial,
           'Pulso'=>($this->cardiovascular->pulso=="A") ? "Anormal" : "Normal",//$this->cardiovascular->pulso,
           'Várices'=>$this->cardiovascular->observacion_varices,
         ],
@@ -523,6 +523,15 @@ class HistoriaClinica extends Model implements Auditable
               if($seccion=="COLUMNA VERTEBRAL" and $label=='Examen normal' and in_array($valor,["SI","si","Si","sI",""," "])){
                 $mostrarColumnaExamenNormal=0;
               }
+
+              if($label=="Sistólica"){
+                continue;
+              }
+              if($label=="Diastólica"){
+                $label="Tensión arterial";
+                $valor=$valor."/".$matriz["CARDIOVASCULAR"]["Sistólica"];
+              }
+              //aca es donde mostramos todo
               if($label!="IMC" or $mostrarColumnaExamenNormal==0){
                 $aux.=$label.": <b>".$valor."</b>.<br>";
                 if($label=="Observaciones"){

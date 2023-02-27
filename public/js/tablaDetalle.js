@@ -28,10 +28,8 @@ $(document).ready(function() {
 } );
 
 function cambiar_color_over(celda){
-celda.style.backgroundColor="#A7A7A7"
+  celda.style.backgroundColor="#A7A7A7"
 }
 function cambiar_color_out(celda){
-celda.style.backgroundColor="#FFFFFF"
-
-
+  celda.style.backgroundColor="#FFFFFF"
 }

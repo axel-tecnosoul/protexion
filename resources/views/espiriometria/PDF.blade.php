@@ -158,17 +158,17 @@
                 </tr>
                 <tr>
                     <td colspan="2" style="text-align: left;">
-                        <label class="campos" for="">           Oximetría:  </label>
+                        <label class="campos" for="">           Oximetría: Satura al </label> _______%
                     </td>
                     <td style="text-align: left;">
-                        <label class="campos" for="">           Satura al</label> _______%
+                        <label class="campos" for="">           Frecuencia Cardíaca:  </label> _______x´</label>
                     </td>
                 </tr>
-                <tr>
+                <!-- <tr>
                     <td colspan="3" style="text-align: left;">
-                        <label class="campos" for="">           Frecuencia Cardíaca:  </label> _______x´
+                        <label class="campos" for="">           
                     </td>
-                </tr>
+                </tr> -->
 
             </tbody>
         </table>
@@ -180,7 +180,7 @@
                 </tr>
                 <tr>
                     <td style="text-align: center;">
-                        <img src="{{public_path('imagenes/DJ _Espir.JPG')}}" width="550px">
+                        <img src="{{public_path('imagenes/DJ _Espir.JPG')}}" width="600px">
                     </td>
                 </tr>
             </tbody>
