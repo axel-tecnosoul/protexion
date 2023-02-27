@@ -193,31 +193,14 @@
               <td style="text-align: center; background-color: brown; color: #FFFFFF; width: 510px" colspan="12">CARDIOVASCULAR</td>
           </tr>
           <tr style="text-align: left;">
-              <td colspan="12">
+              <td colspan="4">
                   <label for="">Frecuencia Cardíaca:</label> {{$hc_formulario->cardiovascular->frecuencia_cardiaca}} x'
               </td>
-          </tr>
-          <tr style="text-align: left;">
-              <td colspan="6">
+              <td colspan="4">
                   <!-- <label for="">Tensión Arterial:</label> {{$hc_formulario->cardiovascular->tension_arterial}} -->
                   <label for="">Tensión Arterial:</label> {{$hc_formulario->cardiovascular->sistolica}} / {{$hc_formulario->cardiovascular->diastolica}}
               </td>
-              <td colspan="6">
-                  @if ($hc_formulario->cardiovascular->tension_arterial)
-                    <label for="">Observaciones:</label> {{$hc_formulario->cardiovascular->tension_arterial}}
-                  @endif
-              </td>
-          </tr>
-          <tr style="text-align: left;">
-              <td colspan="6">
-                  <label for="">Várices:</label> <!--{{$hc_formulario->cardiovascular->observacion_varices}} -->
-                  @if ($hc_formulario->cardiovascular->observacion_varices)
-                      {{$hc_formulario->cardiovascular->observacion_varices}}
-                  @else
-                      No
-                  @endif
-              </td>
-              <td colspan="6">
+              <td colspan="4">
                   <label for="">Pulso:</label> <!--{{$hc_formulario->cardiovascular->pulso}}-->
                   @if ($hc_formulario->cardiovascular->pulso == "A")
                       Anormal
@@ -225,6 +208,22 @@
                       Normal
                   @endif
               </td>
+          </tr>
+          <tr style="text-align: left;">
+              <td colspan="4">
+                  <label for="">Várices:</label> <!--{{$hc_formulario->cardiovascular->observacion_varices}} -->
+                  @if ($hc_formulario->cardiovascular->observacion_varices)
+                      {{$hc_formulario->cardiovascular->observacion_varices}}
+                  @else
+                      No
+                  @endif
+              </td>
+              <td colspan="8">
+                  @if ($hc_formulario->cardiovascular->tension_arterial)
+                    <label for="">Observaciones:</label> {{$hc_formulario->cardiovascular->tension_arterial}}
+                  @endif
+              </td>
+
           </tr>
       </table>
       <!-- PIEL-->
