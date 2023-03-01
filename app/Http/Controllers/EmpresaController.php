@@ -110,8 +110,8 @@ class EmpresaController extends Controller
             //'documento'         => 'required|unique:personal_clinicas,documento,except,id',
             'definicion'           => 'required',
             'cuit'         => 'required',
-            //'fecha_nacimiento'  => 'required',
-            //'sexo_id'           => 'required',
+            'direccionOrigen'  => 'required',
+            'ciudad_idOrigen'           => 'required',
             //'provincias_id'         => 'required'
         ]);
 
@@ -181,6 +181,15 @@ class EmpresaController extends Controller
      */
     public function update(Request $request, $id)
     {
+
+        $this->validate($request, [
+            //'documento'         => 'required|unique:personal_clinicas,documento,except,id',
+            'definicion'           => 'required',
+            'cuit'         => 'required',
+            'direccionOrigen'  => 'required',
+            'ciudad_idOrigen'           => 'required',
+            //'provincias_id'         => 'required'
+        ]);
 
         $direccion=Domicilio::findOrFail($id);
         $direccion->direccion = $request->get('direccionOrigen');

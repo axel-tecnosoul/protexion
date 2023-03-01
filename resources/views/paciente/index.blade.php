@@ -61,24 +61,21 @@
                 <tbody>
                     @foreach ($pacientes as $paciente)
                     <tr onmouseover="cambiar_color_over(this)" onmouseout="cambiar_color_out(this)">
-                        <td><?php if($paciente->documento == null)
-                                    echo(" ");
-                                else echo(number_format( (intval($paciente->documento)/1000), 3, '.', '.'))?></td>
-                        <td>{{ $paciente->nombreCompleto() }}</td>
-                        <td><?php if($paciente->origen == null)
-                                        echo(" ");
-                                    else echo($paciente->origen->definicion)?></td>
-                        <!-- <td><?php if($paciente->obraSocial == null)
-                                        echo(" ");
-                                    else echo($paciente->obraSocial->abreviatura)?></td> -->
+                        <td><?php
+                          if($paciente->documento == null) echo(" ");
+                          else echo(number_format( (intval($paciente->documento)/1000), 3, '.', '.'))?>
+                        </td>
+                        <td style="text-align: left">{{ $paciente->nombreCompleto() }}</td>
+                        <td style="text-align: left"><?php
+                          if($paciente->origen == null) echo(" ");
+                          else echo($paciente->origen->definicion)?>
+                        </td>
                         <td style="text-align: center">
-                            @if($paciente->imagen == null)
-                                <img src="{{ asset('imagenes/paciente/default.png')}}" width="50px" class="img-circle elevation-2" alt="User Image">
-                            @else
-                                <img src="{{ asset('imagenes/paciente/'.$paciente->imagen)}}" width="50px" class="img-circle elevation-2" alt="User Image">
-                            @endif
-
-
+                          @if($paciente->imagen == null)
+                            <img src="{{ asset('imagenes/paciente/default.png')}}" width="50px" class="img-circle elevation-2" alt="User Image">
+                          @else
+                            <img src="{{ asset('imagenes/paciente/'.$paciente->imagen)}}" width="50px" class="img-circle elevation-2" alt="User Image">
+                          @endif
                         </td>
 
                         <td style="text-align: center" colspan="3">

@@ -618,7 +618,7 @@ use phpDocumentor\Reflection\DocBlock\Tags\Var_;
             </tr>
         </table>
         <p style="font-size: 12px">
-            Por la presente declaro bajo juramento que los datos de la presente declaración, de mi puño y letra, son reales y corresponden a mi Historia Clínica Personal.
+            Por la presente declaro bajo juramento que los datos de la presente declaración son reales y corresponden a mi Historia Clínica Personal.
         </p>
         <p style="font-size: 12px">
             <b>Lugar y Fecha:</b> Puerto Rico {{Carbon\Carbon::parse($declaracion_jurada->fecha_realizacion)->format('d/m/Y') }}

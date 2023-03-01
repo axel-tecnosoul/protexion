@@ -5,7 +5,7 @@
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => '15fb99cc52247bd86d245f4d05000c10e5c5e8af',
+        'reference' => '0fb8bd73210178fcff77a99698ed580a0f0db464',
         'name' => 'laravel/laravel',
         'dev' => true,
     ),
@@ -344,12 +344,12 @@
             ),
         ),
         'intervention/image' => array(
-            'pretty_version' => '2.6.1',
-            'version' => '2.6.1.0',
+            'pretty_version' => '2.7.2',
+            'version' => '2.7.2.0',
             'type' => 'library',
             'install_path' => __DIR__ . '/../intervention/image',
             'aliases' => array(),
-            'reference' => '0925f10b259679b5d8ca58f3a2add9255ffcda45',
+            'reference' => '04be355f8d6734c826045d02a1079ad658322dad',
             'dev_requirement' => false,
         ),
         'jakub-onderka/php-console-color' => array(
@@ -385,7 +385,7 @@
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => '15fb99cc52247bd86d245f4d05000c10e5c5e8af',
+            'reference' => '0fb8bd73210178fcff77a99698ed580a0f0db464',
             'dev_requirement' => false,
         ),
         'laravel/tinker' => array(

@@ -45,13 +45,14 @@
                             value="{{old('cuit')}}"
                             class="form-control"
                             placeholder="Ingrese el cuit..."
-                            title="Introduzca el cuit">
+                            title="Introduzca el cuit"
+                            required>
                     </div>
                 </div>
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                     <div class="form-group">
                         <label>Pais</label>
-                        <select name="pais_idOrigen" id="pais_idOrigen" class="pais_idOrigen form-control">
+                        <select name="pais_idOrigen" id="pais_idOrigen" class="pais_idOrigen form-control" required>
                             <option value="0" disabled="true" selected="true" title="Seleccione un pais">-Seleccione un pais-</option>
                             @foreach ($paises as $pais)
                                 <option value="{{$pais->id }}">{{$pais->nombre}}</option>
@@ -62,7 +63,7 @@
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                     <div class="form-group">
                         <label>Provincia</label>
-                        <select name="provincia_idOrigen" id="provincia_idOrigen" class="provincia_idOrigen form-control">
+                        <select name="provincia_idOrigen" id="provincia_idOrigen" class="provincia_idOrigen form-control" required>
                             <option value="0" disabled="true" selected="true" title="Seleccione una provincia">-Seleccione una provincia-</option>
                         </select>
                     </div>
@@ -70,12 +71,12 @@
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                     <div class="form-group">
                         <label>Ciudad</label>
-                        <select name="ciudad_idOrigen" id="ciudad_idOrigen" class="ciudad_idOrigen form-control">
+                        <select name="ciudad_idOrigen" id="ciudad_idOrigen" class="ciudad_idOrigen form-control" required>
                             <option value="0" disabled="true" selected="true" title="Seleccione una ciudad">-Seleccione una ciudad-</option>
                         </select>
                     </div>
                 </div>
-                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" required>
                     <div class="form-group">
                         <label>Domicilio</label>
                         <input class="form-control" id="direccionOrigen" name="direccionOrigen" type="text" placeholder="direccion">

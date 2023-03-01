@@ -206,11 +206,7 @@ class AptitudController extends Controller
           $voucher_riesgos[]=$riesgo->riesgo_id;
         }
         
-        /*return view('aptitud.pdf',["voucher" => $voucher, 
-                                                "riesgos" => $riesgos,
-                                                "voucher_riesgos" => $voucher_riesgos,
-                                                "aptitud" => $aptitud,
-                                                "declaracion_jurada" => $declaracionJurada]);*/
+        //return view('aptitud.pdf',["voucher" => $voucher, "riesgos" => $riesgos,"voucher_riesgos" => $voucher_riesgos,"aptitud" => $aptitud,"declaracion_jurada" => $declaracionJurada]);
         $pdf = PDF::loadView('aptitud.pdf',["voucher" => $voucher, 
                                             "riesgos" => $riesgos,
                                             "voucher_riesgos" => $voucher_riesgos,

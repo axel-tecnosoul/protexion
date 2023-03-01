@@ -18,6 +18,8 @@ use App\Voucher;
 use App\Http\Requests\PacienteRequest;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\PacientesImport;
+use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image;
 
 class PacienteController extends Controller
 {
@@ -176,7 +178,6 @@ class PacienteController extends Controller
         if($request->get('estado_civil_id')!=null){
             $paciente->estado_civil_id=$request->get('estado_civil_id');
         }
-        $paciente->estado_id=1; //habilitado
         if($request->get('ciudad_id')!=null){
             $paciente->ciudad_id=$request->get('ciudad_id');
         }
@@ -186,14 +187,40 @@ class PacienteController extends Controller
         $paciente->estado_id=1; //Habilitado
         if($request->file('imagen')){
 
-            $image = $request->imagen;
-            $image->move(public_path() . '/imagenes/paciente/', $image->getClientOriginalName());
-            $paciente->imagen = $image->getClientOriginalName();
+          $imagen = $request->file('imagen');
+          $nombre_imagen = $imagen->getClientOriginalName();
+          //$ruta_imagen = public_path('imagenes/paciente/' . $nombre_imagen);
+
+          // Redimensionar la imagen
+          $imagen_temp = Image::make($imagen->getRealPath())->resize(300, null, function ($constraint) {
+              $constraint->aspectRatio();
+          });
+
+          $exif = exif_read_data($imagen->getPathname());
+          //var_dump($exif);
+          // Corregir la orientación de la imagen si es necesario
+          if (!empty($exif['Orientation'])) {
+            switch ($exif['Orientation']) {
+              case 3:
+                $imagen_temp->rotate(180);
+                break;
+              case 6:
+                $imagen_temp->rotate(-90);
+                break;
+              case 8:
+                $imagen_temp->rotate(90);
+                break;
+            }
+          }
+          //dd($image_resize);
+          $imagen_temp->save(public_path('imagenes/paciente/' . $nombre_imagen));
+          $paciente->imagen = $nombre_imagen;
 
         }
         $paciente->save();
         return redirect()->route('paciente.index');
     }
+
     /**
      * Display the specified resource.
      *
@@ -269,11 +296,36 @@ class PacienteController extends Controller
 
         if($request->file('imagen')){
 
-          $image = $request->imagen;
-          $image->move(public_path() . '/imagenes/paciente/', $image->getClientOriginalName());
-          $paciente->imagen = $image->getClientOriginalName();
+          $imagen = $request->file('imagen');
+          $nombre_imagen = $imagen->getClientOriginalName();
+          //$ruta_imagen = public_path('imagenes/paciente/' . $nombre_imagen);
 
-      }
+          // Redimensionar la imagen
+          $imagen_temp = Image::make($imagen->getRealPath())->resize(300, null, function ($constraint) {
+              $constraint->aspectRatio();
+          });
+
+          $exif = exif_read_data($imagen->getPathname());
+          //var_dump($exif);
+          // Corregir la orientación de la imagen si es necesario
+          if (!empty($exif['Orientation'])) {
+            switch ($exif['Orientation']) {
+              case 3:
+                $imagen_temp->rotate(180);
+                break;
+              case 6:
+                $imagen_temp->rotate(-90);
+                break;
+              case 8:
+                $imagen_temp->rotate(90);
+                break;
+            }
+          }
+          //dd($image_resize);
+          $imagen_temp->save(public_path('imagenes/paciente/' . $nombre_imagen));
+          $paciente->imagen = $nombre_imagen;
+
+        }
         
         $paciente->update();
 

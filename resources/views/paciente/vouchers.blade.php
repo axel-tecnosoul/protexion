@@ -29,10 +29,11 @@
             <table id="tablaDetalle" style="border:1px solid black; width:100%" class="table table-bordered table-condensed table-hover">
                 <thead style="background-color:#222D32">
                     <tr class="text-uppercase">
-                    <th width="15%" style="color:#F8F9F9" >Código</th>
-                        <th width="34%" style="color:#F8F9F9" >Paciente</th>
+                        <th width="10%" style="color:#F8F9F9" >Código</th>
+                        <th width="24%" style="color:#F8F9F9" >Paciente</th>
+                        <th width="20%" style="color:#F8F9F9" >Empresa</th>
                         <th width="10%" style="color:#F8F9F9" >HHCC</th>
-                        <th width="15%" style="color:#F8F9F9" >Fecha</th>
+                        <th width="10%" style="color:#F8F9F9" >Fecha</th>
                         <th width="26%" style="color:#F8F9F9" >Opciones</th>
                     </tr>
                 </thead>
@@ -41,6 +42,11 @@
                     <tr onmouseover="cambiar_color_over(this)" onmouseout="cambiar_color_out(this)">
                         <td>{{ $voucher->codigo }}</td>
                         <td style="text-align: left">{{ $voucher->paciente->nombreCompleto() }}</td>
+                        <td style="text-align: left"><?php
+                          if($voucher->paciente->origen){
+                            echo $voucher->paciente->origen->definicion;
+                          }?>
+                        </td>
                         <td style="text-align: left"><?php
                         if($voucher->historiaClinica){
                           echo '<label style="font-size:90%" class="badge badge-success">REALIZADA</label>';

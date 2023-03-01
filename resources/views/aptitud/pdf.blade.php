@@ -75,6 +75,9 @@
           padding-top: 0;
           /*border-bottom: 0;*/
         }
+        #tablaConFoto tr td{
+          padding: 2px;
+        }
     </style>
     <title>Informe Final de Aptitud</title>
 </head>
@@ -114,69 +117,65 @@
       </table>
 
       <!-- DATOS DE EMPRESA -->
-      <table class="table table-condensed table-hover" >
+      <table class="table table-condensed table-hover" id="tablaConFoto" >
         <tr>
-          <td style="text-align: center; background-color: brown; color: #FFFFFF" colspan="12">DATOS DE LA EMPRESA</td>
+          <td style="text-align: center; background-color: brown; color: #FFFFFF; width:400px;padding:4.9px" colspan="12">DATOS DE LA EMPRESA Y DEL PACIENTE</td>
         </tr>
-        <tr style="text-align: left;">
-          <td style=" width: 250px" colspan="6">
+        <tr style="text-align: left">
+          <td style="width: 150px;" colspan="11">
             <label>Razón Social:</label> {{$voucher->paciente->origen ? $voucher->paciente->origen->definicion : " "}}
           </td>
-          <td style=" width: 250px" colspan="6">
+          <td style="text-align: center; width:110px" rowspan="5"><?php
+              if($voucher->paciente->imagen){
+                $nombreImagen = 'imagenes/paciente/'.$voucher->paciente->imagen;
+                //$nombreImagen = '../../../public/imagenes/paciente/'.$voucher->paciente->imagen;
+                //$imagenBase64 = "data:image/png;base64," . base64_encode(file_get_contents($nombreImagen));?>
+                <img src="<?=$nombreImagen?>" width="90px" style="margin:0" alt="User Image"><?php
+              }?>
+          </td>
+        </tr>
+        <tr style="text-align: left">
+          <td style=" width: 150px" colspan="11">
             <label>CUIT:</label> {{$voucher->paciente->origen ? $voucher->paciente->origen->cuit : " "}} 
           </td>
         </tr>
+        <tr style="text-align: left">
+          <td style=" width: 300px" colspan="11">
+            <label>Domicilio:</label> <?php
+            if ($voucher->paciente->origen){
+              if ($voucher->paciente->origen->domicilio){
+                echo $voucher->paciente->origen->domicilio->direccion;
+                if ($voucher->paciente->origen->domicilio->ciudad){
+                  echo ", ".$voucher->paciente->origen->domicilio->ciudad->nombre;
+                  if ($voucher->paciente->origen->domicilio->ciudad->provincia){
+                    echo ", ".$voucher->paciente->origen->domicilio->ciudad->provincia->nombre;
+                  }
+                }
+              }
+            }?>
+          </td>
+        </tr>
+        <!-- DATOS DE TRABAJADOR -->
+        <!-- <tr>
+          <td style="text-align: center; background-color: brown; color: #FFFFFF" colspan="11">INFORME FINAL EXAMENES PREOCUPACIONALES</td>
+        </tr> -->
         <tr style="text-align: left;">
-          <td style=" width: 250px" colspan="6">
-            <label>Domicilio:</label> 
-            @if ($voucher->paciente->origen)
-              @if ($voucher->paciente->origen->domicilio)
-                {{$voucher->paciente->origen->domicilio->direccion}}
-              @endif
-            @endif 
+          <td style="width: 150px" colspan="8">
+            <label>Apellidos y Nombres:</label> {{$voucher->paciente->nombreCompleto()}}
           </td>
-          <td colspan="3"><label for="">Localidad:</label>
-            @if ($voucher->paciente->origen)
-              @if ($voucher->paciente->origen->domicilio)
-                @if ($voucher->paciente->origen->domicilio->ciudad)
-                  {{$voucher->paciente->origen->domicilio->ciudad->nombre}}
-                @endif
-              @endif
-            @endif 
+          <td style="width: 75px" colspan="3">
+            <label>Edad:</label> {{$voucher->paciente->edad()}} años
           </td>
-          <td colspan="3"><label for="">Provincia:</label> 
-            @if ($voucher->paciente->origen)
-              @if ($voucher->paciente->origen->domicilio)
-                @if ($voucher->paciente->origen->domicilio->ciudad)
-                  @if ($voucher->paciente->origen->domicilio->ciudad->provincia)
-                    {{$voucher->paciente->origen->domicilio->ciudad->provincia->nombre}}
-                  @endif
-                @endif
-              @endif
-            @endif 
+        </tr>
+        <tr style="text-align: left;">
+          <td style="width: 75px" colspan="11">
+            <label>CUIL:</label> {{$voucher->paciente->cuil ?? number_format($voucher->paciente->documento,0,",",".")}}
           </td>
         </tr>
       </table>
 
-      <!-- DATOS DE TRABAJADOR -->
+      <!-- RESULTADO -->
       <table class="table table-condensed table-hover" >
-        <tr>
-          <td style="text-align: center; background-color: brown; color: #FFFFFF" colspan="12">INFORME FINAL EXAMENES PREOCUPACIONALES</td>
-        </tr>
-        <tr style="text-align: left;">
-          <td style=" width: 250px" colspan="6">
-            <label>Apellidos y Nombres:</label> {{$voucher->paciente->nombreCompleto()}}
-          </td>
-          <td  colspan="3">
-            <label>Edad:</label> {{$voucher->paciente->edad()}}
-          </td>
-          <td  colspan="3">
-            <label>CUIL:</label> {{$voucher->paciente->cuil ?? number_format($voucher->paciente->documento,0,",",".")}}
-          </td>
-          <!-- <td  colspan="2">
-            <label>Turno:</label> {{Carbon\Carbon::parse($voucher->turno)->format('d/m/Y') }}
-          </td> -->
-        </tr>
         <tr>
           <td style="text-align: center; background-color: brown; color: #FFFFFF" colspan="12">RESULTADO</td>
         </tr>

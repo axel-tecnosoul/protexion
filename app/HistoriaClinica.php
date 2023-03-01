@@ -522,6 +522,7 @@ class HistoriaClinica extends Model implements Auditable
               }
               $mostrarColumnaExamenNormal=1;
               if($seccion=="COLUMNA VERTEBRAL" and $label=='Examen normal' and in_array($valor,["SI","si","Si","sI",""," "])){
+                //var_dump("entramos");
                 $mostrarColumnaExamenNormal=0;
               }
               if($label=="Frecuencia cardíaca"){
@@ -536,7 +537,7 @@ class HistoriaClinica extends Model implements Auditable
                 $valor=$matriz["CARDIOVASCULAR"]["Sistólica"]."/".$valor;
               }
               //aca es donde mostramos todo
-              if($label!="IMC" or $mostrarColumnaExamenNormal==0){
+              if($label!="IMC" and $mostrarColumnaExamenNormal==1){
                 $aux.=$label.": <b>".$valor."</b>.<br>";
                 if($label=="Observaciones"){
                   $aux2.=$valor.".<br>";
@@ -555,7 +556,9 @@ class HistoriaClinica extends Model implements Auditable
                 $imc=number_format($peso/($estatura*$estatura),2);
     
                 //Calculo de IMC
-                if ($imc >= "30") {
+                if ($imc >= "35") {
+                  $descripcionIMC='Obesidad';
+                } elseif ($imc >= "30") {
                   $descripcionIMC='Sobrepeso';
                 } elseif ($imc <= "18") {
                   $descripcionIMC='Muy bajo';
@@ -613,6 +616,9 @@ class HistoriaClinica extends Model implements Auditable
         $diagnostico.=$aux;
         $obs.=$aux2;
       }
+      /*var_dump($diagnostico);
+      var_dump($obs);
+      die();*/
       
       /*for ($i=0; $i < sizeof($matriz[1]); $i++) {
           if ($matriz[0][$i] != null) {

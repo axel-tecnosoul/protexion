@@ -29,7 +29,8 @@
                             name="definicion"
                             value="{{ $empresa->definicion}}"
                             class="form-control"
-                            title="Nombre de la empresa">
+                            title="Nombre de la empresa"
+                            required>
                     </div>
                 </div>
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -40,13 +41,14 @@
                             name="cuit"
                             value="{{ $empresa->cuit }}"
                             class="form-control"
-                            title="CUIT">
+                            title="CUIT"
+                            required>
                     </div>
                 </div>
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                     <div class="form-group">
                         <label>Pais</label>
-                        <select name="pais_idOrigen" id="pais_idOrigen" class="pais_idOrigen form-control">
+                        <select name="pais_idOrigen" id="pais_idOrigen" class="pais_idOrigen form-control" required>
                             <option value="0" disabled="true" selected="true" title="Seleccione un pais">-Seleccione un pais-</option>
                             @foreach ($paises as $pais)
                                 <option value="{{$pais->id }}"<?php
@@ -61,7 +63,7 @@
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                     <div class="form-group">
                         <label>Provincia</label>
-                        <select name="provincia_idOrigen" id="provincia_idOrigen" class="provincia_idOrigen form-control">
+                        <select name="provincia_idOrigen" id="provincia_idOrigen" class="provincia_idOrigen form-control" required>
                             <option value="0" disabled="true" selected="true" title="Seleccione una provincia">-Seleccione una provincia-</option>
                             @foreach ($provincias as $provincia)
                                 <option value="{{$provincia->id }}"<?php
@@ -76,7 +78,7 @@
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                     <div class="form-group">
                         <label>Ciudad</label>
-                        <select name="ciudad_idOrigen" id="ciudad_idOrigen" class="ciudad_idOrigen form-control">
+                        <select name="ciudad_idOrigen" id="ciudad_idOrigen" class="ciudad_idOrigen form-control" required>
                             <option value="0" disabled="true" selected="true" title="Seleccione una ciudad">-Seleccione una ciudad-</option>
                             @foreach ($ciudades as $ciudad)
                                 <option value="{{$ciudad->id }}"<?php
@@ -91,7 +93,7 @@
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                     <div class="form-group">
                         <label>Domicilio</label>
-                        <input class="form-control" id="direccionOrigen" name="direccionOrigen" type="text" value="<?=$empresa->domicilio->direccion?>" placeholder="direccion">
+                        <input class="form-control" id="direccionOrigen" name="direccionOrigen" type="text" value="<?=$empresa->domicilio->direccion?>" placeholder="direccion" required>
                     </div>
                 </div>
             </div>
