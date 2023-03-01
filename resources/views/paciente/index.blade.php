@@ -111,11 +111,6 @@
     </div>
 </div>
 @push('scripts')
-
-    <script src="{{asset('js/tablaDetalle.js')}}"></script>
-
-
-
+  <script src="{{asset('js/tablaDetalle.js')}}"></script>
 @endpush
 @endsection
-

@@ -1,5 +1,9 @@
 $(document).ready(function() {
     $('#tablaDetalle').DataTable({
+        "pageLength" : 50,
+        //"lengthMenu": [[5, 10, 25, 50, 100], [5, 10, 25, 50, 100]]
+        //"lengthMenu": [5, 10, 25, 50, 100],
+        "lengthMenu": [ 10, 25, 50, 75, 100 ],
         "aaSorting":[],
         "language":{
             "info":"_TOTAL_ registros",
@@ -8,10 +12,10 @@ $(document).ready(function() {
                 "next":"Siguiente",
                 "previous":"Anterior"
             },
-            "lengthMenu":'Mostrar <select>'+
+            /*"lengthMenu":'Mostrar <select>'+
                 '<option value="5">5</option>'+
                 '<option value="10">10</option>'+
-                '<select> registros',
+                '<select> registros',*/
             "loadingRecords":"Cargando...",
             "processing":"Procesando...",
             "emptyTable":"No hay datos",
@@ -19,10 +23,7 @@ $(document).ready(function() {
             "infoEmpty":"",
             "infoFiltered":""
 
-        },
-        "pageLength" : 10,
-        "lengthMenu": [[5, 10, 25, 50, 100], [5, 10, 25, 50, 100]]
-        //"lengthMenu": [5, 10, 25, 50, 100]
+        }
     });
     cambiar_color_over(celda);
 } );
