@@ -125,12 +125,12 @@
           <td style="width: 150px;" colspan="11">
             <label>Razón Social:</label> {{$voucher->paciente->origen ? $voucher->paciente->origen->definicion : " "}}
           </td>
-          <td style="text-align: center; width:150px" rowspan="5"><?php
+          <td style="text-align: center; width:200px" rowspan="5"><?php
               if($voucher->paciente->imagen){
                 $nombreImagen = 'imagenes/paciente/'.$voucher->paciente->imagen;
                 //$nombreImagen = '../../../public/imagenes/paciente/'.$voucher->paciente->imagen;
                 //$imagenBase64 = "data:image/png;base64," . base64_encode(file_get_contents($nombreImagen));?>
-                <img src="<?=$nombreImagen?>" width="150px" style="margin:0" alt="User Image"><?php
+                <img src="<?=$nombreImagen?>" width="200px" style="margin:0" alt="User Image"><?php
               }?>
           </td>
         </tr>
