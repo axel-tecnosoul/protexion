@@ -558,7 +558,7 @@ class HistoriaClinica extends Model implements Auditable
                 //Calculo de IMC
                 if ($imc >= "35") {
                   $descripcionIMC='Obesidad';
-                } elseif ($imc >= "30") {
+                } elseif ($imc >= "25") {
                   $descripcionIMC='Sobrepeso';
                 } elseif ($imc <= "18") {
                   $descripcionIMC='Muy bajo';

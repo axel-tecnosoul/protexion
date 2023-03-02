@@ -1184,13 +1184,16 @@ if(isset($historia_clinica_anterior)){
           //Redondeo
           $("#imc").val(imc.toFixed(2));
 
-          //Calculo de IMC
-          if (imc >= "30") {
+          console.log(imc);
+          if (imc >= 35) {
+            $("#sobrepeso").prop('checked', true);
+            $("#descripcionIMC").val('Obesidad');
+          } else if (imc >= 25) {
             $("#sobrepeso").prop('checked', true);
             $("#descripcionIMC").val('Sobrepeso');
           } else {
             $("#sobrepeso").prop('checked', false);
-            if (imc <= "18") {
+            if (imc <= 18) {
               $("#descripcionIMC").val('Muy bajo');
             } else {
               $("#descripcionIMC").val('Normal');
