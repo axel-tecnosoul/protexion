@@ -18,7 +18,7 @@ if (!isset($_SESSION['rowUsers']['id_usuario'])) {
     <meta name="description" content="endless admin is super flexible, powerful, clean &amp; modern responsive bootstrap 4 admin template with unlimited possibilities.">
     <meta name="keywords" content="admin template, endless admin template, dashboard template, flat admin template, responsive admin template, web app">
     <meta name="author" content="pixelstrap">
-    <link rel="icon" href="assets/images/favicon.png" type="image/x-icon">
+    <link rel="icon" href="assets/images/favicon.ico" type="image/x-icon">
     <!--<link rel="shortcut icon" href="assets/images/favicon.png" type="image/x-icon">-->
     <title>Empresas</title>
     <!-- Google font-->
