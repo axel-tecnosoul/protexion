@@ -30,9 +30,10 @@
   $(".dropzone").dropzone({
     url: "./models/administrar_empresas.php",
     addRemoveLinks: false,
-    acceptedFiles: "image/*,application/pdf,.doc,.docx,.xls,.xlsx,.csv,.tsv,.ppt,.pptx,.pages,.odt,.rtf",
+    acceptedFiles: "image/*,application/pdf,.doc,.docx,.xls,.xlsx,.csv,.tsv,.ppt,.pptx,.pages,.odt,.rtf,.pdf,.txt",
     maxFilesize: 10,
     maxFiles: 10,
+    uploadMultiple: true,
     dictRemoveFile: "Eliminar",
     init: function(){
       this.on("addedfile", function(file){
@@ -43,6 +44,17 @@
         var index = arrayFiles.indexOf(file);
         arrayFiles.splice(index, 1);
         //console.log("arrayFiles", arrayFiles);
+      });
+      this.on("queuecomplete", function() {
+        // todos los archivos han sido cargados
+        console.log("Todos los archivos han sido cargados.");
+        // hacer algo cuando todos los archivos se han cargado
+        $("#btnGuardar").removeClass("disabled")
+      });
+      this.on("processingmultiple", function(files) {
+        console.log("deshabilitamos el boton guardar");
+        $("#btnGuardar").addClass("disabled")
+        // Aquí puedes realizar alguna acción mientras los archivos están siendo procesados
       });
     }
   });

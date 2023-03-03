@@ -1,4 +1,8 @@
 <?php
+ini_set('max_execution_time', 0);
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 session_start();
 extract($_REQUEST);
 require_once('conexion.php');
@@ -167,19 +171,44 @@ class Empresas{
       for ($i=0; $i < $cantAdjuntos; $i++) { 
         $indice = "file".$i;
         $nombreADJ = $_FILES[$indice]['name'];
-
-        //INSERTO DATOS EN LA TABLA ADJUNTOS ORDEN_COMPRA
-        $queryInsertAdjuntos = "INSERT INTO archivos_usuario (id_usuario, archivo)VALUES($id_empresa, '$nombreADJ')";
-        $insertAdjuntos = $this->conexion->consultaSimple($queryInsertAdjuntos);
         
-        //INGRESO ARCHIVOS EN EL DIRECTORIO
-        $directorio = "../views/archivos_empresas/$id_empresa/";
-        //$path = "sample/path/newfolder";
-        if (!file_exists($directorio)) {
-            mkdir($directorio, 0777, true);
+        $subidaOK=false;
+        if (is_uploaded_file($_FILES[$indice]['tmp_name'])) {
+          //INGRESO ARCHIVOS EN EL DIRECTORIO
+          $directorio = "../views/archivos_empresas/$id_empresa/";
+          //$path = "sample/path/newfolder";
+          if (!file_exists($directorio)) {
+              mkdir($directorio, 0777, true);
+          }
+          /*var_dump($_FILES);
+          echo "<hr>";
+          var_dump($_FILES[$indice]['tmp_name']);
+          echo "<hr>";
+          var_dump($directorio.$nombreADJ);
+          echo "<hr>";*/
+
+          $subidaOK=move_uploaded_file($_FILES[$indice]['tmp_name'], $directorio.$nombreADJ);
+          //$ruta_completa_imagen = $directorio.$nombreFinalArchivo;
+
+          //var_dump($subidaOK);
+          
+          if($subidaOK){
+            //INSERTO DATOS EN LA TABLA ADJUNTOS ORDEN_COMPRA
+            $queryInsertAdjuntos = "INSERT INTO archivos_usuario (id_usuario, archivo)VALUES($id_empresa, '$nombreADJ')";
+            $insertAdjuntos = $this->conexion->consultaSimple($queryInsertAdjuntos);
+
+            $mensajeError=$this->conexion->conectar->error;
+            echo $mensajeError;
+            if($mensajeError!=""){
+              echo "<br><br>".$queryInsertAdjuntos;
+            }
+          }else{
+            if($_FILES[$indice]['error']){
+              return "Ha ocurrido un error: Cod. ".$_FILES[$indice]['error'];
+            }
+          }
+          return $subidaOK;
         }
-        move_uploaded_file($_FILES[$indice]['tmp_name'], $directorio.$nombreADJ);
-        //$ruta_completa_imagen = $directorio.$nombreFinalArchivo;
       }
     }
 
@@ -189,10 +218,13 @@ class Empresas{
 
     $directorio = "../views/archivos_empresas/$id_empresa/";
 
-    $queryDelAdjuntos = "DELETE FROM archivos_usuario WHERE id = $id_archivo";
-    $delAdjuntos = $this->conexion->consultaSimple($queryDelAdjuntos);
+    $deletedOK=unlink($directorio.$nombre_adjunto);
+    if($deletedOK){
+      $queryDelAdjuntos = "DELETE FROM archivos_usuario WHERE id = $id_archivo";
+      $delAdjuntos = $this->conexion->consultaSimple($queryDelAdjuntos);
+    }
 
-    unlink($directorio.$nombre_adjunto);
+    return $deletedOK;
 
   }
 
@@ -232,10 +264,10 @@ if (isset($_POST['accion'])) {
         }else{
           $cantAdjuntos = 0;
         }
-        $empresas->subirArchivos($id_empresa,$adjuntos,$cantAdjuntos);
+        echo $empresas->subirArchivos($id_empresa,$adjuntos,$cantAdjuntos);
       break;
       case "eliminarArchivo":
-        $empresas->eliminarArchivo($id_archivo, $nombre_adjunto, $id_empresa);
+        $empresas->eliminarArchivo($id_archivo, $nombreArchivo, $id_empresa);
       break;
       case "marcarArchivoDescargado":
         $empresas->marcarArchivoDescargado($id_archivo);

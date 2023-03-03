@@ -1194,9 +1194,9 @@ if(isset($historia_clinica_anterior)){
           } else {
             $("#sobrepeso").prop('checked', false);
             if (imc <= 18) {
-              $("#descripcionIMC").val('Muy bajo');
+              $("#descripcionIMC").val('Bajo peso');
             } else {
-              $("#descripcionIMC").val('Normal');
+              $("#descripcionIMC").val('Normopeso');
             }
           }
         }

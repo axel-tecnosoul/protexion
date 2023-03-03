@@ -16,7 +16,6 @@
       <div class="auth-bg">
       <img src="assets/images/logo.png" alt="ProteXion - Centro médico laboral" class="img-responsive"><!--  style="width: 140px;" -->
         <div class="authentication-box">
-          <!--<div class="text-center"><img src="assets/images/favicon.png" alt=""></div>-->
           <div class="card mt-4">
             <div class="card-body">
               <div class="text-center">

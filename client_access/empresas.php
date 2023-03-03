@@ -18,8 +18,8 @@ if (!isset($_SESSION['rowUsers']['id_usuario'])) {
     <meta name="description" content="endless admin is super flexible, powerful, clean &amp; modern responsive bootstrap 4 admin template with unlimited possibilities.">
     <meta name="keywords" content="admin template, endless admin template, dashboard template, flat admin template, responsive admin template, web app">
     <meta name="author" content="pixelstrap">
-    <!--<link rel="icon" href="assets/images/favicon.png" type="image/x-icon">
-    <link rel="shortcut icon" href="assets/images/favicon.png" type="image/x-icon">-->
+    <link rel="icon" href="assets/images/favicon.png" type="image/x-icon">
+    <!--<link rel="shortcut icon" href="assets/images/favicon.png" type="image/x-icon">-->
     <title>Empresas</title>
     <!-- Google font-->
     <link href="https://fonts.googleapis.com/css?family=Work+Sans:100,200,300,400,500,600,700,800,900" rel="stylesheet">
@@ -156,7 +156,12 @@ if (!isset($_SESSION['rowUsers']['id_usuario'])) {
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-light" data-dismiss="modal">Cancelar</button>
-              <button type="submit" id="btnGuardar" class="btn btn-dark">Guardar</button>
+              <button type="submit" id="btnGuardar" class="btn btn-dark">
+                Guardar
+                <div id="spinner_guardar" class="spinner-border spinner-border-sm d-none" role="status">
+                  <span class="sr-only">Loading...</span>
+                </div>
+              </button>
             </div>
           </form>
         </div>
@@ -423,6 +428,7 @@ if (!isset($_SESSION['rowUsers']['id_usuario'])) {
           let arrayFiles = "";
         }
 
+        $("#spinner_guardar").toggleClass("d-none");
         $.ajax({
           data: datosEnviar,
           url: "models/administrar_empresas.php",
@@ -431,7 +437,9 @@ if (!isset($_SESSION['rowUsers']['id_usuario'])) {
           contentType: false,
           processData: false,
           success: function(data) {
-            if(data==""){
+            console.log(data);
+            $("#spinner_guardar").toggleClass("d-none");
+            if(data=="1"){
               tablaEmpresas.ajax.reload(null, false);
               $('#modalCRUD').modal('hide');
               swal({
