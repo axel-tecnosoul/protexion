@@ -52,7 +52,7 @@
                             <option value="0" disabled="true" selected="true" title="Seleccione un pais">-Seleccione un pais-</option>
                             @foreach ($paises as $pais)
                                 <option value="{{$pais->id }}"<?php
-                                if ($pais->id==$empresa->domicilio->ciudad->provincia->pais->id){
+                                if (isset($empresa->domicilio->ciudad) and $pais->id==$empresa->domicilio->ciudad->provincia->pais->id){
                                   echo "selected";
                                 }?>
                                 >{{$pais->nombre}}</option>
@@ -67,7 +67,7 @@
                             <option value="0" disabled="true" selected="true" title="Seleccione una provincia">-Seleccione una provincia-</option>
                             @foreach ($provincias as $provincia)
                                 <option value="{{$provincia->id }}"<?php
-                                if ($provincia->id==$empresa->domicilio->ciudad->provincia->id){
+                                if (isset($empresa->domicilio->ciudad) and $provincia->id==$empresa->domicilio->ciudad->provincia->id){
                                   echo "selected";
                                 }?>
                                 >{{$provincia->nombre}}</option>
@@ -82,7 +82,7 @@
                             <option value="0" disabled="true" selected="true" title="Seleccione una ciudad">-Seleccione una ciudad-</option>
                             @foreach ($ciudades as $ciudad)
                                 <option value="{{$ciudad->id }}"<?php
-                                if ($ciudad->id==$empresa->domicilio->ciudad->id){
+                                if (isset($empresa->domicilio->ciudad) and $ciudad->id==$empresa->domicilio->ciudad->id){
                                   echo "selected";
                                 }?>
                                 >{{$ciudad->nombre}}</option>
@@ -92,8 +92,13 @@
                 </div>
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                     <div class="form-group">
-                        <label>Domicilio</label>
-                        <input class="form-control" id="direccionOrigen" name="direccionOrigen" type="text" value="<?=$empresa->domicilio->direccion?>" placeholder="direccion" required>
+                        <label>Domicilio</label><?php
+                        $direccion="";
+                        if(isset($empresa->domicilio->direccion)){
+                          $direccion=$empresa->domicilio->direccion;
+                        }
+                        ?>
+                        <input class="form-control" id="direccionOrigen" name="direccionOrigen" type="text" value="<?=$direccion?>" placeholder="direccion" required>
                     </div>
                 </div>
             </div>
