@@ -556,6 +556,11 @@
                           $("#modal_fecha_nacimiento").html(data.fecha_nacimiento)
                           $("#modal_cuit").html(data.cuit)
                           $("#modal_estado_civil").html(data.estado_civil)
+                          let estado="No"
+                          if(data.estado==2){
+                            estado="Si"
+                          }
+                          $("#modal_anulado").html(estado)
                           $("#modal_button").attr("href",data.id+"/edit")
                         }else{
                           console.log("no encontró");
