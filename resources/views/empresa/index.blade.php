@@ -19,6 +19,13 @@
                         <i class="fas fa-plus"></i> Nuevo
                     </button>
                 </a>
+
+                <a href="{{ route('origen.exportar') }}">
+                    <button class="btn btn-secondary">
+                      <i class="nav-icon fas fa-file-excel"></i> Exportar Empresas
+                    </button>
+                </a>
+                
             </div>
         </div>
         <!-- / Cabecera -->

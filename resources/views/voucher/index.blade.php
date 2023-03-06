@@ -79,16 +79,11 @@
                                 </button>
                             </a>
 
-                            <!-- <a data-keyboard="false" data-target="#modal-show-{{ $voucher->id }}" data-toggle="modal">
+                            <a data-keyboard="false" data-target="#modal-delete-{{ $voucher->id }}" data-toggle="modal">
                                 <button type="submit" class="btn fondo1 btn-responsive"><i class="fa fa-fw fa-trash"></i></button>
-                            </a>-->
+                            </a>
                             @include('voucher.modaldelete')
 
-                            <form action="{{route('voucher.destroy',$voucher->id)}}" method="POST" style="display:inline;">
-                              @csrf
-                              @method('DELETE')
-                              <button type="submit" class="btn fondo1 btn-responsive"><i class="fa fa-fw fa-trash"></i></button>
-                          </form>
                         </td>
                     </tr>
                     @endforeach

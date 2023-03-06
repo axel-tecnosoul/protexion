@@ -4,7 +4,7 @@
 
     )!!}
 <div class="row">
-    <div class="col-md-3">
+    <div class="col-md-4">
         <div class="form-group">
             <label for="origen_id">Origen</label>
             <select
@@ -29,7 +29,7 @@
             </select>
         </div>
     </div>
-    <div class="col-md-3">
+    <div class="col-md-4 d-none">
         <div class="form-group">
             <label for="obra_social_id">Obra Social</label>
             <select
@@ -54,7 +54,7 @@
             </select>
         </div>
     </div>
-    <div class="col-md-3">
+    <div class="col-md-4">
         <div class="form-group">
             <label for="estado_id">Habilitado</label>
             <select
@@ -79,11 +79,7 @@
             </select>
         </div>
     </div>
-</div>
-
-
-<div class="row">
-    <div class="col-auto">
+    <div class="col-md-4">
         <label for=""></label>
         <div class="form-group">
             <span class="input-group-btn">
@@ -92,14 +88,14 @@
                     type="submit"
                     id="bt_add"
                     name="filtrar"
-                    class="btn btn-primary btn-responsive">
+                    class="btn btn-danger btn-responsive">
                         <i class="fa fa-search"></i> Buscar
                 </button>
 
                 <a
 
                 href= "{{ route('paciente.index') }}"
-                class="btn btn-default"
+                class="btn btn-secondary"
                 >
                 <i class="fas fa-eraser"></i>
                     ... Limpiar

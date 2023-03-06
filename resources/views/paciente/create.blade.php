@@ -3,6 +3,52 @@
 @section('navegacion')
     <li class="breadcrumb-item"><a href="/protexion/public/paciente">Indice de Pacientes</a></li>
     <li class="breadcrumb-item active">Crear Paciente</li>
+    <style>
+      .loader{
+        /*width: 100px;
+        height: 100px;*/
+        border-radius: 100%;
+        position: relative;
+        /*margin: 0 auto;*/
+        display: inline-block;
+        margin-left: 10px;
+      }
+
+      /* LOADER 4 */
+      #loader-4 span{
+        display: inline-block;
+        /*width: 20px;
+        height: 20px;*/
+        width: 8px;
+        height: 8px;
+        border-radius: 100%;
+        background-color: #dc3545;
+        /*margin: 35px 5px;*/
+        opacity: 0;
+      }
+
+      #loader-4 span:nth-child(1){
+        animation: opacitychange 1s ease-in-out infinite;
+      }
+
+      #loader-4 span:nth-child(2){
+        animation: opacitychange 1s ease-in-out 0.33s infinite;
+      }
+
+      #loader-4 span:nth-child(3){
+        animation: opacitychange 1s ease-in-out 0.66s infinite;
+      }
+
+      @keyframes opacitychange{
+        0%, 100%{
+          opacity: 0;
+        }
+
+        60%{
+          opacity: 1;
+        }
+      }
+    </style>
 @endsection
 @section('content')
 <div class="row">
@@ -64,7 +110,14 @@
                         
                         <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
                             <div class="form-group">
-                                <label for="documento">Documento</label>
+                                <label for="documento">
+                                  Documento
+                                  <div class="loader d-none" id="loader-4">
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                  </div>
+                                </label>
                                 <input type="number"name="documento"id="documento"value="{{old('documento')}}"class="form-control"
                                     placeholder="33.222.111"title="Introduzca el documento"onkeypress="return soloNumeros(event)">
                             </div>
@@ -322,6 +375,8 @@
     </div>
 </div>
 
+@include('paciente.modaldniencontrado')
+
 </div>
 
 {!!Form::close()!!}
@@ -352,6 +407,48 @@
 
             var select3 = $("#origen_id").select2({width:'90%'});
             select3.data('select2').$selection.css('height', '100%');
+
+            $(document).on('input','#documento',function(){
+                var dni=$(this).val();
+                $("#loader-4").removeClass("d-none")
+                console.log("buscando");
+                $.ajax({
+                    type:'get',
+                    url:'{!!URL::to('paciente/create/encontrarDni')!!}',
+                    data:{'dni':dni},
+                    success:function(data){
+                        console.log("terminó");
+                        $("#loader-4").addClass("d-none")
+                        //console.log(data);
+                        //console.log(Object.keys(data));
+                        if(Object.keys(data).length>0){
+                          console.log("encontró");
+                          $("#confirmar").addClass("disabled")
+                          $("#confirmar").attr("disabled",true)
+                          $("#modal-dni-encontrado").modal("show")
+                          $("#modal_apellido_nombre").html(data.apellidoNombre)
+                          $("#modal_documento").html(data.documento)
+                          $("#modal_sexo").html(data.sexo)
+                          $("#modal_domicilio").html(data.domicilio)
+                          $("#modal_fecha_nacimiento").html(data.fecha_nacimiento)
+                          $("#modal_cuit").html(data.cuit)
+                          $("#modal_estado_civil").html(data.estado_civil)
+                          let estado="No"
+                          if(data.estado==2){
+                            estado="Si"
+                          }
+                          $("#modal_anulado").html(estado)
+                          $("#modal_button").attr("href",data.id+"/edit")
+                        }else{
+                          console.log("no encontró");
+                          $("#confirmar").removeClass("disabled")
+                          $("#confirmar").attr("disabled",false)
+                        }
+                    },
+                    error:function(){
+                    }
+                });
+            });
 
             $(document).on('change','.pais_id',function(){
                 var pais_id=$(this).val();

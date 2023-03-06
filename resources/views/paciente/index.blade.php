@@ -33,7 +33,7 @@
           <p class="alert alert-info">{{ Session::get('message') }}</p>
         @endif
         <div class="card-body">
-            <!--div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <!-- <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                 <p>
                     <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
                         <i class="fa fa-filter" aria-hidden="true"></i> Filtrar
@@ -45,7 +45,7 @@
                         @include('paciente.search')
                     </div>
                 </div>
-            </div-->
+            </div> -->
             <table id="tablaDetalle" style="border:1px solid black; width:100%" class="table table-bordered table-condensed table-hover">
                 <thead style="background-color:#222D32">
                     <tr  class="text-uppercase">
@@ -59,7 +59,9 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($pacientes as $paciente)
+                    @foreach ($pacientes as $paciente)<?php
+                    //var_dump($paciente);
+                    ?>
                     <tr onmouseover="cambiar_color_over(this)" onmouseout="cambiar_color_out(this)">
                         <td><?php
                           if($paciente->documento == null) echo(" ");
@@ -80,25 +82,30 @@
 
                         <td style="text-align: center" colspan="3">
 
+                            <a href="{{URL::action('PacienteController@edit',$paciente->id)}}">
+                                <button title="editar" class="btn fondo2 btn-responsive">
+                                    <i class="fa fa-edit"></i>
+                                </button>
+                            </a>
+                            
                             <a data-keyboard="false" data-target="#modal-show-{{ $paciente->id }}" data-toggle="modal">
                                 <button title="editar" class="btn fondo1 btn-md">
                                     <i class="fa fa-eye"></i>
                                 </button>
                             </a>
 
-                            <a href="{{URL::action('PacienteController@edit',$paciente->id)}}">
-                                <button title="editar" class="btn fondo2 btn-responsive">
-                                    <i class="fa fa-edit"></i>
-                                </button>
-                            </a>
-
                             <a href="{{URL::action('PacienteController@voucher',$paciente->id)}}">
-                                <button title="carpeta"  class="btn fondo1 btn-responsive">
+                                <button title="carpeta"  class="btn fondo2 btn-responsive">
                                     <i style="color: rgb(255, 255, 255)" class="fas fa-folder"></i>
                                 </button>
                             </a>
                              <!-- aca colocar el modalshow-->
                              @include('paciente.modalshow')
+
+                             <a data-keyboard="false" data-target="#modal-delete-{{ $paciente->id }}" data-toggle="modal">
+                                <button type="submit" class="btn fondo1 btn-responsive"><i class="fa fa-fw fa-trash"></i></button>
+                            </a>
+                            @include('paciente.modaldelete')
                         </td>
                     </tr>
                     <!-- aca colocar el modaldelete-->

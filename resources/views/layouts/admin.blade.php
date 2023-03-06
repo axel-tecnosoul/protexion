@@ -233,12 +233,19 @@
                                 <p>Visitas por medico</p>
                             </a>
                         </li>
-                        <li class="nav-item">
+                        <!-- <li class="nav-item">
                             <a href="{{ route('origen.exportar') }}" class="nav-link">
                                 <i class="nav-icon fas fa-file-excel"></i>
                                 <p>Exportar Empresas</p>
                             </a>
-                        </li>
+                        </li> -->
+
+                        <!-- <li class="nav-item">
+                            <a href="{{ route('empresa.reporte') }}" class="nav-link">
+                                <i class="nav-icon fas fa-poll-h"></i>
+                                <p>Resumen Empresarial</p>
+                            </a>
+                        </li> -->
                         <!--
                             <li class="nav-header">GESTIÓN DE ACCESO</li>
                                 
@@ -540,7 +547,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/signature_pad/1.5.3/signature_pad.min.js"></script>
 
     <!-- mascaras -->
-    <script src="js/jquery.mask.min.js"></script>
+    <!-- <script src="js/jquery.mask.min.js"></script> -->
+    <!-- public\plugins\inputmask\jquery.inputmask.min.js -->
+    <script src="{{ asset('plugins/inputmask\jquery.inputmask.min.js')}}"></script>
+    <!-- <script src="{{ asset('plugins/js/jquery.inputmask.min.js"></script> -->
 
     @stack('scripts')
     @yield("scripts")

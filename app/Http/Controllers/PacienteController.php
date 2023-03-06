@@ -20,6 +20,7 @@ use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\PacientesImport;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
+use Carbon\Carbon;
 
 class PacienteController extends Controller
 {
@@ -35,6 +36,33 @@ class PacienteController extends Controller
          $this->middleware('permission:eliminar paciente', ['only' => ['destroy']]);
     }*/
 
+    public function encontrarDni(Request $request){
+	      //$provincias=Provincia::select('nombre','id')->where('pais_id',$request->id)->get();
+        $dniActual="";
+        if(isset($request->dniActual)) $dniActual=$request->dniActual;
+
+        $pacientes=Paciente::whereDocumento($request->dni)->get(); //que me obtenga directamente todos los grupos
+        $pacienteEncontrado=[];
+        if(isset($pacientes[0])){
+          $pacientes=$pacientes[0];
+          $dni=($pacientes->documento == null) ? " " : $pacientes->documentoIdentidad();
+          if($dni!=$dniActual){
+            $pacienteEncontrado=[
+              "id"=>$pacientes->id,
+              "apellidoNombre"=>$pacientes->nombreCompleto(),
+              //"apellidoNombre"=>$pacientes->apellidos." ".$pacientes.nombres,
+              "documento"=>$dni,
+              "sexo"=>($pacientes->sexo == null) ? " " : $pacientes->sexo->definicion,
+              "domicilio"=>($pacientes->domicilio == null) ? " " : $pacientes->direccion(),
+              "fecha_nacimiento"=>Carbon::parse($pacientes->fecha_nacimiento)->format('d/m/Y')." (".Carbon::parse($pacientes->fecha_nacimiento)->age." años)",
+              "cuit"=>$pacientes->cuil,
+              "estado_civil"=>($pacientes->estadoCivil == null) ? " " : $pacientes->estadoCivil->definicion,
+              "estado"=>$pacientes->estado_id,
+            ];
+          }
+        }
+        return response()->json($pacienteEncontrado);
+    }
 
     public function encontrarProvincia(Request $request){
 	    $provincias=Provincia::select('nombre','id')
@@ -273,6 +301,7 @@ class PacienteController extends Controller
         $paciente->obra_social_id=$request->get('obra_social_id');
         $paciente->estado_civil_id=$request->get('estado_civil_id');
         $paciente->origen_id=$request->get('origen_id');
+        $paciente->estado_id=1; //Habilitado
         
 
         if ($paciente->domicilio_id) {

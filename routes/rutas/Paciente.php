@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
     Route::post('paciente', 'PacienteController@store')->name('paciente.store');
     Route::get('paciente/{paciente}/edit', 'PacienteController@edit')->name('paciente.edit');
     Route::patch('paciente/{paciente}', 'PacienteController@update')->name('paciente.update');
+    Route::get('paciente/create/encontrarDni', 'PacienteController@encontrarDni');
     Route::get('paciente/create/encontrarProvincia', 'PacienteController@encontrarProvincia');
     Route::get('paciente/create/encontrarCiudad', 'PacienteController@encontrarCiudad');
     Route::get('paciente/{paciente}/eliminar', 'PacienteController@delete')->name('paciente.eliminar');

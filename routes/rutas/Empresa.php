@@ -12,4 +12,6 @@ Route::get('empresa/eliminado', 'EmpresaController@eliminados')->name('empresa.e
 Route::get('empresa/{empresa}', 'EmpresaController@restaurar')->name('empresa.restaurar');
 Route::get('empresa/create/encontrarEspecialidad', 'EmpresaController@encontrarEspecialidad');
 Route::delete('empresa/{id}','EmpresaController@destroy')->name('empresa.destroy');
+Route::get('empresa/{id}','EmpresaController@destroy')->name('empresa.destroy');
+Route::get('empresa/reporte/empresarial','EmpresaController@reporte')->name('empresa.reporte');
 ?>

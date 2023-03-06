@@ -14,6 +14,7 @@ use App\Ciudad;
 //use App\Estado;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Redirect;
+use App\Models\Aptitud;
 use DB;
 
 class EmpresaController extends Controller
@@ -237,6 +238,55 @@ class EmpresaController extends Controller
         return view("personal.eliminados",compact('personalEliminados'));
 
     }*/
+
+    public function reporte(Request $request){
+      //$vouchers = Voucher::all(); //obteneme todas los vouchers
+
+        //obtenemos todos los tipos de estudios
+        $empresas=Empresa::all();
+        
+        //dd($aEstudios);
+
+        $desde=date("Y-m-d");
+        if(isset($request->desde)){
+          $desde=$request->desde;
+        }
+        $hasta=date("Y-m-d");
+        if(isset($request->hasta)){
+          $hasta=$request->hasta;
+        }
+        $empresa_id=0;
+
+        $aPacientes=[];
+
+        $query = DB::table('aptituds')
+          ->join('vouchers', 'aptituds.voucher_id', '=', 'vouchers.id')
+          ->join('pacientes', 'vouchers.paciente_id', '=', 'pacientes.id');
+          //->where('carga', '=', 0);
+        //if(isset($request->desde)){
+          $query->where('turno','>=', $desde);
+        /*}
+        if(isset($request->hasta)){*/
+          $query->where('turno','<=', $hasta);
+        //}
+        if(isset($request->empresa_id)){
+          $query->where('origen.id', $request->empresa_id);
+        }
+        $datos=$query->get();
+        
+        //dd($datos);
+
+        //$vouchers = Voucher::orderBy('id', 'desc')->get();
+        return view('empresa.reporte',[
+            //"vouchers"          => $vouchers,
+            "aPacientes"        => $aPacientes,
+            "desde"             => $desde,
+            "hasta"             => $hasta,
+            "empresa_id"        => $empresa_id,
+            "empresas"          => $empresas,
+            "datos"             => $datos
+        ]);
+    }
 
 
     public function restaurar($id)
