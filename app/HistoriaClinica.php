@@ -508,7 +508,10 @@ class HistoriaClinica extends Model implements Auditable
         $mostrarNombreSeccion=0;
         foreach ($valores as $label => $valor) {
           //if(!in_array($label,$arExcluidos)){
-            if($valor==1){
+            if($valor===1){
+              /*if($seccion=="GENITALES" and $label=="Observaciones"){
+                echo "ENTRO 1";
+              }*/
               //$aux.=$label.": "" Si\n".
               $aux.=$label.": <b>Si</b><br>";
               $aux2.=$label.": Si<br>";
@@ -516,6 +519,9 @@ class HistoriaClinica extends Model implements Auditable
             }elseif ($valor == "") {
               
             }else{
+              /*if($seccion=="GENITALES" and $label=="Observaciones"){
+                echo "ENTRO 2";
+              }*/
               //echo $label."<br>";
               if($label=="Superior" or $label=="Inferior"){
                 $label="Protesis ".$label;
@@ -630,9 +636,9 @@ class HistoriaClinica extends Model implements Auditable
         $diagnostico.=$aux;
         $obs.=$aux2;
       }
-      /*var_dump($diagnostico);
+      var_dump($diagnostico);
       var_dump($obs);
-      die();*/
+      die();
       
       /*for ($i=0; $i < sizeof($matriz[1]); $i++) {
           if ($matriz[0][$i] != null) {
