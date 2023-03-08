@@ -636,9 +636,9 @@ class HistoriaClinica extends Model implements Auditable
         $diagnostico.=$aux;
         $obs.=$aux2;
       }
-      var_dump($diagnostico);
+      /*var_dump($diagnostico);
       var_dump($obs);
-      die();
+      die();*/
       
       /*for ($i=0; $i < sizeof($matriz[1]); $i++) {
           if ($matriz[0][$i] != null) {
