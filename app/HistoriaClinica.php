@@ -556,15 +556,29 @@ class HistoriaClinica extends Model implements Auditable
                 $imc=number_format($peso/($estatura*$estatura),2);
     
                 //Calculo de IMC
-                if ($imc >= "35") {
+                if ($imc < 18) {
+                  $descripcionIMC='Bajo peso';
+                } else if ($imc < 25) {
+                  $descripcionIMC='Normopeso';
+                } else if ($imc < 30) {
+                  $descripcionIMC='Sobrepeso leve';
+                } else if ($imc < 35) {
+                  $descripcionIMC='Obesidad tipo 1';
+                } else if ($imc < 40) {
+                  $descripcionIMC='Obesidad tipo 2';
+                }else{
+                  $descripcionIMC='Obesidad grave';
+                }
+                /*if ($imc >= "35") {
                   $descripcionIMC='Obesidad';
-                } elseif ($imc >= "25") {
+                } elseif ($imc >= "30") {
                   $descripcionIMC='Sobrepeso';
                 } elseif ($imc <= "18") {
                   $descripcionIMC='Bajo peso';
                 } else {
                   $descripcionIMC='Normopeso';
-                }
+                }*/
+
                 $mostrar_imc="IMC: ".$imc.=" (".$descripcionIMC.").<br>";
                 $aux.=$mostrar_imc;
                 $aux2.=$mostrar_imc;

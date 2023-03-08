@@ -1185,10 +1185,29 @@ if(isset($historia_clinica_anterior)){
           $("#imc").val(imc.toFixed(2));
 
           console.log(imc);
-          if (imc >= 35) {
+          if (imc < 18) {
+            $("#descripcionIMC").val('Bajo peso');
+            $("#sobrepeso").prop('checked', false);
+          } else if (imc < 25) {
+            $("#descripcionIMC").val('Normopeso');
+            $("#sobrepeso").prop('checked', false);
+          } else if (imc < 30) {
+            $("#descripcionIMC").val('Sobrepeso leve');
+            $("#sobrepeso").prop('checked', true);
+          } else if (imc < 35) {
+            $("#descripcionIMC").val('Obesidad tipo 1');
+            $("#sobrepeso").prop('checked', true);
+          } else if (imc < 40) {
+            $("#descripcionIMC").val('Obesidad tipo 2');
+            $("#sobrepeso").prop('checked', true);
+          }else{
+            $("#descripcionIMC").val('Obesidad grave');
+            $("#sobrepeso").prop('checked', true);
+          }
+          /*if (imc >= 35) {
             $("#sobrepeso").prop('checked', true);
             $("#descripcionIMC").val('Obesidad');
-          } else if (imc >= 25) {
+          } else if (imc >= 30) {
             $("#sobrepeso").prop('checked', true);
             $("#descripcionIMC").val('Sobrepeso');
           } else {
@@ -1198,7 +1217,7 @@ if(isset($historia_clinica_anterior)){
             } else {
               $("#descripcionIMC").val('Normopeso');
             }
-          }
+          }*/
         }
 
     </script>
