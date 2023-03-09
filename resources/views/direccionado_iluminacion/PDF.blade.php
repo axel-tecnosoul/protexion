@@ -98,6 +98,12 @@
         <table>
             <tbody>
                 <tr>
+                    <td class="datos" style="text-align: left; width: 135px"><!--  colspan="2" -->
+                        <label for="">Fecha y hora:</label>
+                        {{Carbon\Carbon::parse($iluminacion->created_at)->format('d/m/Y H:i') }}
+                    </td>
+                </tr>
+                <tr>
                     <td style="text-align: center; background-color: brown; color: #FFFFFF;text-transform: uppercase;" colspan="3">Criterio de exposición al riesgo</td>
                 </tr>
                 <tr>
@@ -430,13 +436,9 @@
         <table>
             </tbody>
                 <tr>
-                    <td class="datos" style="text-align: left; width: 135px"><!--  colspan="2" -->
-                        <label for="">Fecha y hora:</label>
-                        {{Carbon\Carbon::parse($iluminacion->created_at)->format('d/m/Y H:i') }}
-                    </td>
                 <!-- </tr>
                 <tr> -->
-                    <td class="datos" style="text-align: left; width: 375px"><!--  colspan="2" -->
+                    <td class="datos" style="text-align: left; width: 500px"><!--  colspan="2" -->
                         <label for="">Observaciones:</label>
                         {{$iluminacion->observaciones}}
                     </td>
