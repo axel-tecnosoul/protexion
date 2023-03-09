@@ -15,7 +15,7 @@
         td{ 
             border-bottom:  0.1px solid rgb(202, 202, 202);
             /* padding: 3px; */
-            padding: 4.9px;
+            padding: 4.7px;
             font-size: 12px;
         }
         #tbl_tipo_tarea td{
