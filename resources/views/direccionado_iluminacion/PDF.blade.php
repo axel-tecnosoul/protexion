@@ -15,7 +15,7 @@
         td{ 
             border-bottom:  0.1px solid rgb(202, 202, 202);
             /* padding: 3px; */
-            padding: 4.5px;
+            padding: 4.9px;
             font-size: 12px;
         }
         #tbl_tipo_tarea td{
@@ -103,14 +103,14 @@
                         {{Carbon\Carbon::parse($iluminacion->created_at)->format('d/m/Y H:i') }}
                     </td>
                 </tr>
-                <tr>
+                <!-- <tr>
                     <td style="text-align: center; background-color: brown; color: #FFFFFF;text-transform: uppercase;" colspan="3">Criterio de exposición al riesgo</td>
                 </tr>
                 <tr>
                     <td colspan="3">
                       Está orientado a trabajadores de minas o galerías subterráneas
                     </td>
-                </tr>
+                </tr> -->
                 <!-- <tr>
                     <td style="text-align: center; background-color: brown; color: #FFFFFF;text-transform: uppercase;" colspan="2">Datos del trabajador</td>
                 </tr>
