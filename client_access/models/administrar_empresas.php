@@ -166,8 +166,11 @@ class Empresas{
 
   public function subirArchivos($id_empresa,$adjuntos,$cantAdjuntos){
 
+    /*var_dump($adjuntos);
+    var_dump($cantAdjuntos);*/
     //SI VIENEN ADJUNTOS LOS GUARDO.
     if ($adjuntos > 0) {
+      $totalSubidas=0;
       for ($i=0; $i < $cantAdjuntos; $i++) { 
         $indice = "file".$i;
         $nombreADJ = $_FILES[$indice]['name'];
@@ -201,14 +204,20 @@ class Empresas{
             echo $mensajeError;
             if($mensajeError!=""){
               echo "<br><br>".$queryInsertAdjuntos;
+            }else{
+              $totalSubidas++;
             }
           }else{
             if($_FILES[$indice]['error']){
               return "Ha ocurrido un error: Cod. ".$_FILES[$indice]['error'];
             }
           }
-          return $subidaOK;
         }
+      }
+      if($totalSubidas==$cantAdjuntos){
+        return 1;
+      }else{
+        return 0;
       }
     }
 

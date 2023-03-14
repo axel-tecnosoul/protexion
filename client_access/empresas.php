@@ -233,6 +233,7 @@ if (!isset($_SESSION['rowUsers']['id_usuario'])) {
             {"defaultContent" : "<div class='text-center'><div class='btn-group'><button class='btn btn-success btnFolder'><i class='fa fa-folder'></i></button></div></div>"},
             //<button class='btn btn-warning btnVer'><i class='fa fa-eye'></i></button><button class='btn btn-danger btnBorrar'><i class='fa fa-trash-o'></i></button>
           ],
+          stateSave:true,
           "language":  idiomaEsp
         });
 
@@ -418,6 +419,8 @@ if (!isset($_SESSION['rowUsers']['id_usuario'])) {
         datosEnviar.append("accion", "subirArchivos");
 
         if(typeof arrayFiles !== 'undefined'){
+          console.log(arrayFiles);
+          console.log(arrayFiles.length);
           let cantArchivos = 0;
           for(let i = 0; i < arrayFiles.length; i++) {
             datosEnviar.append('file'+i, arrayFiles[i]);
@@ -427,6 +430,7 @@ if (!isset($_SESSION['rowUsers']['id_usuario'])) {
         }else{
           let arrayFiles = "";
         }
+        console.log(datosEnviar);
 
         $("#spinner_guardar").toggleClass("d-none");
         $.ajax({
