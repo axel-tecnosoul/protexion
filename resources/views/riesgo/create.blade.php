@@ -27,7 +27,7 @@
                         <input
                             type="string"
                             name="riesgo"
-                            maxlength="30"
+                            maxlength="99"
                             value="{{old('riesgo')}}"
                             class="form-control"
                             placeholder="Ingrese el riesgo..."
