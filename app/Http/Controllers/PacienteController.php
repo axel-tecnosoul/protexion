@@ -41,7 +41,7 @@ class PacienteController extends Controller
         $dniActual="";
         if(isset($request->dniActual)) $dniActual=$request->dniActual;
 
-        $pacientes=Paciente::whereDocumento($request->dni)->get(); //que me obtenga directamente todos los grupos
+        $pacientes=Paciente::whereDocumento($request->dni)->whereEstado_id(1)->get(); //que me obtenga directamente todos los grupos
         $pacienteEncontrado=[];
         if(isset($pacientes[0])){
           $pacientes=$pacientes[0];
