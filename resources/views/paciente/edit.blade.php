@@ -561,7 +561,7 @@
                             estado="Si"
                           }
                           $("#modal_anulado").html(estado)
-                          $("#modal_button").attr("href",data.id+"/edit")
+                          $("#modal_button").attr("href","/protexion/public/paciente/"+data.id+"/edit")
                         }else{
                           console.log("no encontró");
                           $("#confirmar").removeClass("disabled")

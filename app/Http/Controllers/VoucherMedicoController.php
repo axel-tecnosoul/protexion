@@ -71,9 +71,10 @@ class VoucherMedicoController extends Controller
         //$dniCuil=$paciente->cuil ?? number_format($paciente->documento,0,",",".");
         $dni=number_format($paciente->documento,0,",",".");
 
-        $paciente="(".$dni.") ".$paciente->nombreCompleto();
+        $pacienteNombre="(".$dni.") ".$paciente->nombreCompleto();
         $aVoucherMedico[]=[
-          "paciente" => $paciente,
+          "paciente" => $pacienteNombre,
+          "empresa" => $paciente->origen->definicion,
           "estudio" => $voucher->nombre,
         ];
         /*if($voucher->tipo_estudio_id==$tipo_estudio_id){
@@ -84,9 +85,11 @@ class VoucherMedicoController extends Controller
 
       $aPacientes=[];
       foreach ($aVoucherMedico as $k => &$paciente) {
-          $aPacientes[$paciente['paciente']][$k] = $paciente['estudio'];
+          $aPacientes[$paciente['paciente']]["estudios"][$k] = $paciente['estudio'];
+          $aPacientes[$paciente['paciente']]["empresa"] = $paciente['empresa'];
       }
-      //var_dump($aPacientes);
+      /*var_dump($aPacientes);
+      die();*/
 
       return $aPacientes;
     }

@@ -74,13 +74,19 @@
           <thead style="background-color:#222D32">
               <tr class="text-uppercase">
                   <th width="30%" style="color:#F8F9F9" >Paciente</th>
-                  <th width="70%" style="color:#F8F9F9" >Detalle</th>
+                  <th width="20%" style="color:#F8F9F9" >Empresa</th>
+                  <th width="50%" style="color:#F8F9F9" >Detalle</th>
               </tr>
           </thead>
           <tbody>
               @foreach ($aPacientes as $paciente =>$estudios)
               <tr onmouseover="cambiar_color_over(this)" onmouseout="cambiar_color_out(this)">
                   <td style="text-align:left">{{ $paciente }}</td>
+                  <td style="text-align:left"><?php
+                    if($datos["empresa"]){
+                      echo $datos["empresa"];
+                    }?>
+                  </td>
                   <td style="text-align:left"><?=implode(", ",$estudios)?></td>
               </tr>
               @endforeach

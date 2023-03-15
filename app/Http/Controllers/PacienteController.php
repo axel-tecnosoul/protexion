@@ -290,6 +290,12 @@ class PacienteController extends Controller
      */
     public function update(Request $request, $id){
 
+        /*$this->validate($request, [
+            'documento' => 'unique:pacientes,documento,except,id',
+            'nombres'   => 'required',
+            'apellidos' => 'required'
+        ]);*/
+
         $paciente=Paciente::findOrFail($id);
         $paciente->nombres=$request->get('nombres');
         $paciente->apellidos=$request->get('apellidos');
@@ -302,7 +308,6 @@ class PacienteController extends Controller
         $paciente->estado_civil_id=$request->get('estado_civil_id');
         $paciente->origen_id=$request->get('origen_id');
         $paciente->estado_id=1; //Habilitado
-        
 
         if ($paciente->domicilio_id) {
             $domicilio=Domicilio::find($paciente->domicilio_id);
