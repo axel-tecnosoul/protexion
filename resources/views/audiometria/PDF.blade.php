@@ -106,7 +106,7 @@
         <table class="datos">
             <tbody>
                 <tr>
-                    <td style="text-align: center; background-color: brown; color: #FFFFFF;text-transform: uppercase;" colspan="3">ESTUDIO FUNCIONAL DE LA AUDICIÓN</td>
+                    <td style="text-align: center; background-color: brown; color: #FFFFFF;text-transform: uppercase;font-weight: bold;" colspan="3">ESTUDIO FUNCIONAL DE LA AUDICIÓN</td>
                 </tr>
                 <!-- <tr>
                     <td colspan="2">Fecha: {{ \Carbon\Carbon::parse($voucher->turno)->format('d/m/Y') }}</td>
@@ -212,7 +212,7 @@
         <table class="datos" style="width: 643px;">
             <tbody>
                 <tr>
-                    <td style="text-align: center; background-color: brown; color: #FFFFFF;text-transform: uppercase;" colspan="8">ANTECEDENTES</td>
+                    <td style="text-align: center; background-color: brown; color: #FFFFFF;text-transform: uppercase;font-weight: bold;" colspan="8">ANTECEDENTES</td>
                 </tr>
                 <tr>
                     <!-- <td style="text-align: left; width: 100px">En su familia hay hipoacusicos:</td>
@@ -292,7 +292,7 @@
         <table style="margin-bottom: 0;">
           <tbody>
               <tr>
-                  <td style="text-align: center; background-color: brown; color: #FFFFFF;text-transform: uppercase;">AUDIOGRAMA</td>
+                  <td style="text-align: center; background-color: brown; color: #FFFFFF;text-transform: uppercase;font-weight: bold;">AUDIOGRAMA</td>
               </tr>
               <tr>
                   <td style="text-align: center;">
@@ -300,7 +300,7 @@
                   </td>
               </tr>
               <tr>
-                  <td style="text-align: center; background-color: brown; color: #FFFFFF;text-transform: uppercase;margin-bottom: 0;">CONCLUSIÓN</td>
+                  <td style="text-align: center; background-color: brown; color: #FFFFFF;text-transform: uppercase;margin-bottom: 0;font-weight: bold;">CONCLUSIÓN</td>
               </tr>
           </tbody>
         </table>

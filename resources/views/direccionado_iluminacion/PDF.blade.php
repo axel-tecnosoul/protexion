@@ -140,7 +140,7 @@
                     </td>
                 </tr> -->
                 <tr>
-                    <td style="text-align: center; background-color: brown; color: #FFFFFF;text-transform: uppercase;" colspan="3">Datos de la empresa o establecimiento en donde se desempeña el trabajador</td>
+                    <td style="text-align: center; background-color: brown; color: #FFFFFF;text-transform: uppercase;font-weight: bold;" colspan="3">Datos de la empresa o establecimiento en donde se desempeña el trabajador</td>
                 </tr>
                 <tr>
                     <td class="datos" style="text-align: left; width: 190px">
@@ -169,7 +169,7 @@
         <table>
             <tbody>
                 <tr>
-                    <td style="text-align: center; background-color: brown; color: #FFFFFF;text-transform: uppercase;" colspan="3">Datos personales del trabajador</td>
+                    <td style="text-align: center; background-color: brown; color: #FFFFFF;text-transform: uppercase;font-weight: bold;" colspan="3">Datos personales del trabajador</td>
                 </tr>
                 <!-- <tr>
                     <td class="datos" style="text-align: left; width: 250px">
@@ -242,7 +242,7 @@
         <table>
             <tbody>
                 <tr>
-                    <td style="text-align: center; background-color: brown; color: #FFFFFF;text-transform: uppercase;">Antecedentes</td>
+                    <td style="text-align: center; background-color: brown; color: #FFFFFF;text-transform: uppercase;font-weight: bold;">Antecedentes</td>
                 </tr>
                 <tr>
                     <td class="datos" style="text-align: left; width: 510px;border-bottom: solid 1px">
@@ -271,7 +271,7 @@
         <table>
             <tbody>
                 <tr>
-                    <td style="text-align: center; background-color: brown; color: #FFFFFF;text-transform: uppercase;">Exposición al riesgo</td>
+                    <td style="text-align: center; background-color: brown; color: #FFFFFF;text-transform: uppercase;font-weight: bold;">Exposición al riesgo</td>
                 </tr>
                 <tr>
                     <td class="datos" style="text-align: left; width: 510px;border-bottom: solid 1px">
@@ -298,7 +298,7 @@
         <table>
             <tbody>
                 <tr>
-                    <td style="text-align: center; background-color: brown; color: #FFFFFF;text-transform: uppercase;" colspan="2">Examen clínico</td>
+                    <td style="text-align: center; background-color: brown; color: #FFFFFF;text-transform: uppercase;font-weight: bold;" colspan="2">Examen clínico</td>
                 </tr>
                 <!-- <tr>
                     <td class="datos" style="text-align: left; width: 250px">
@@ -341,7 +341,7 @@
         <table>
             <tbody>
                 <tr>
-                    <td style="text-align: center; background-color: brown; color: #FFFFFF;text-transform: uppercase;" colspan="3">Examen ocular</td>
+                    <td style="text-align: center; background-color: brown; color: #FFFFFF;text-transform: uppercase;font-weight: bold;" colspan="3">Examen ocular</td>
                 </tr>
                 <!-- <tr>
                     <td class="datos" style="text-align: left;" colspan="3">
@@ -414,7 +414,7 @@
         <table>
             <tbody>
                 <tr>
-                    <td style="text-align: center; background-color: brown; color: #FFFFFF;text-transform: uppercase;" colspan="2">Agudeza visual</td>
+                    <td style="text-align: center; background-color: brown; color: #FFFFFF;text-transform: uppercase;font-weight: bold;" colspan="2">Agudeza visual</td>
                 </tr>
                 <!-- <tr>
                     <td class="datos" style="text-align: left; width: 250px" colspan="2">

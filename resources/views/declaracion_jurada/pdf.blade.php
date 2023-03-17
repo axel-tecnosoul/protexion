@@ -95,13 +95,11 @@
         <!-- DATOS PERSONALES -->
         <table class="table table-condensed table-hover" >
             <tr>
-                <td style="text-align: center; background-color: brown; color: #FFFFFF" colspan="12">DATOS PERSONALES</td>
+                <td style="text-align: center; background-color: brown; color: #FFFFFF;font-weight: bold;" colspan="12">DATOS PERSONALES</td>
             </tr><?php
             //dd($declaracion_jurada->voucher->paciente->sexo)
 
-use phpDocumentor\Reflection\DocBlock\Tags\Var_;
-
-?>
+            use phpDocumentor\Reflection\DocBlock\Tags\Var_;?>
             <tr style="text-align: left;">
                 <td style=" width: 150px" colspan="6"> <b> Nombre Completo:</b> {{$declaracion_jurada->voucher->paciente->nombreCompleto()}}</td>
                 <td style=" width: 150px" colspan="6"><b>Sexo:</b> {{$declaracion_jurada->voucher->paciente->sexo ? $declaracion_jurada->voucher->paciente->sexo->definicion : " " }}  </td>
@@ -143,7 +141,7 @@ use phpDocumentor\Reflection\DocBlock\Tags\Var_;
         <!-- ANTECEDENTES FAMILIARES -->
         <table class="table table-condensed table-hover" >
             <tr>
-                <td style="text-align: center; background-color: brown; color: #FFFFFF" colspan="12">ANTECEDENTES FAMILIARES</td>
+                <td style="text-align: center; background-color: brown; color: #FFFFFF;font-weight: bold;" colspan="12">ANTECEDENTES FAMILIARES</td>
             </tr>
             <tr style="text-align: left;">
                 <td style=" width: 150px" colspan="6">
@@ -216,7 +214,7 @@ use phpDocumentor\Reflection\DocBlock\Tags\Var_;
         <!-- ANTECEDENTES PERSONALES -->
         <table class="table table-condensed table-hover" >
             <tr>
-                <td style="text-align: center; background-color: brown; color: #FFFFFF;width: 510px" colspan="12">ANTECEDENTES PERSONALES</td>
+                <td style="text-align: center; background-color: brown; color: #FFFFFF;width: 510px;font-weight: bold;" colspan="12">ANTECEDENTES PERSONALES</td>
             </tr>
             <tr >
                 <td colspan="4">
@@ -274,7 +272,7 @@ use phpDocumentor\Reflection\DocBlock\Tags\Var_;
         <!-- ANTECEDENTES INFANCIA -->
         <table class="table table-condensed table-hover" >
             <tr>
-                <td style="text-align: center; background-color: brown; color: #FFFFFF;width: 510px" colspan="12">ANTECEDENTES MÉDICOS DE LA INFANCIA</td>
+                <td style="text-align: center; background-color: brown; color: #FFFFFF;width: 510px;font-weight: bold;" colspan="12">ANTECEDENTES MÉDICOS DE LA INFANCIA</td>
             </tr>
             <tr>
                 <td colspan="12">
@@ -427,7 +425,7 @@ use phpDocumentor\Reflection\DocBlock\Tags\Var_;
         <!-- ANTECEDENTES RECIENTES -->
         <table class="table table-condensed table-hover" >
             <tr>
-                <td style="text-align: center; background-color: brown; color: #FFFFFF;width: 510px" colspan="12">ANTECEDENTES RECIENTES</td>
+                <td style="text-align: center; background-color: brown; color: #FFFFFF;width: 510px;font-weight: bold;" colspan="12">ANTECEDENTES RECIENTES</td>
             </tr>
             <tr>
                 <td colspan="12">
@@ -578,7 +576,7 @@ use phpDocumentor\Reflection\DocBlock\Tags\Var_;
         <!-- ANTECEDENTES QUIRURGICOS -->
         <table class="table table-condensed table-hover" >
             <tr>
-                <td style="text-align: center; background-color: brown; color: #FFFFFF;width: 510px" colspan="12">ANTECEDENTES QUIRURGICOS</td>
+                <td style="text-align: center; background-color: brown; color: #FFFFFF;width: 510px;font-weight: bold;" colspan="12">ANTECEDENTES QUIRURGICOS</td>
             </tr>
             <tr >
                 <td colspan="12">
@@ -604,7 +602,7 @@ use phpDocumentor\Reflection\DocBlock\Tags\Var_;
         <!-- ENFERMEDADES NO ESPECIFICADAS -->
         <table class="table table-condensed table-hover" >
             <tr>
-                <td style="text-align: center; background-color: brown; color: #FFFFFF;width: 510px" colspan="12">ENFERMEDADES NO ESPECIFICADAS</td>
+                <td style="text-align: center; background-color: brown; color: #FFFFFF;width: 510px;font-weight: bold;" colspan="12">ENFERMEDADES NO ESPECIFICADAS</td>
             </tr>
             <tr >
                 <td colspan="12">

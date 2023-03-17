@@ -108,7 +108,7 @@
         <table class="datos">
             <tbody>
                 <tr>
-                    <td style="text-align: center; background-color: brown; color: #FFFFFF;text-transform: uppercase;" colspan="3">ESTUDIO FUNCIONAL ESPIROMETRIA</td>
+                    <td style="text-align: center; background-color: brown; color: #FFFFFF;text-transform: uppercase;font-weight: bold;" colspan="3">ESTUDIO FUNCIONAL ESPIROMETRIA</td>
                 </tr>
                 <!-- <tr>
                     <td colspan="2">Fecha: {{ \Carbon\Carbon::parse($voucher->turno)->format('d/m/Y') }}</td>
@@ -176,7 +176,7 @@
         <table class="datos">
             <tbody>
                 <tr>
-                    <td style="text-align: center; background-color: brown; color: #FFFFFF;text-transform: uppercase;">DECLARACION JURADA</td>
+                    <td style="text-align: center; background-color: brown; color: #FFFFFF;text-transform: uppercase;font-weight: bold;">DECLARACION JURADA</td>
                 </tr>
                 <tr>
                     <td style="text-align: center;">

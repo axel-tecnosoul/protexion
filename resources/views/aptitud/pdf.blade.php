@@ -119,7 +119,7 @@
       <!-- DATOS DE EMPRESA -->
       <table class="table table-condensed table-hover" id="tablaConFoto" >
         <tr>
-          <td style="text-align: center; background-color: brown; color: #FFFFFF; width:400px;padding:4.9px" colspan="12">DATOS DE LA EMPRESA Y DEL PACIENTE</td>
+          <td style="text-align: center; background-color: brown; color: #FFFFFF; width:400px;padding:4.9px;font-weight: bold;" colspan="12">DATOS DE LA EMPRESA Y DEL PACIENTE</td>
         </tr>
         <tr style="text-align: left">
           <td style="width: 150px;" colspan="11">
@@ -177,7 +177,7 @@
       <!-- RESULTADO -->
       <table class="table table-condensed table-hover" >
         <tr>
-          <td style="text-align: center; background-color: brown; color: #FFFFFF" colspan="12">RESULTADO</td>
+          <td style="text-align: center; background-color: brown; color: #FFFFFF;font-weight: bold;" colspan="12">RESULTADO</td>
         </tr>
         <tr style="text-align: center;font-size: 22px;font-weight: bold;">
           <td id="resultado" style="font-size: 18px;" class="text-center bold" colspan="12">
@@ -189,7 +189,7 @@
       <!-- PREEXISTENCIA Y OBSERVACIONES -->
       <table class="table table-condensed table-hover" >
         <tr>
-          <td colspan="2" style="text-align: center; background-color: brown; color: #FFFFFF;">PREEXISTENCIAS</td>
+          <td colspan="2" style="text-align: center; background-color: brown; color: #FFFFFF;font-weight: bold;">PREEXISTENCIAS</td>
         </tr>
         <tr>
           <td colspan="2" style="vertical-align: top;"><?php
@@ -200,7 +200,7 @@
           }?></td>
         </tr>
         <tr>
-          <td colspan="2" style="text-align: center; background-color: brown; color: #FFFFFF;">OBSERVACIONES</td>
+          <td colspan="2" style="text-align: center; background-color: brown; color: #FFFFFF;font-weight: bold;">OBSERVACIONES</td>
         </tr>
         <tr><?php
           $aObs=explode("\r\n",$aptitud->observaciones);
@@ -226,7 +226,7 @@
       <!-- DECLARACION DE RIESGOS -->
       <table class="table table-condensed table-hover" >
         <tr>
-          <td style="text-align: center; background-color: brown; color: #FFFFFF;width: 510px" colspan="12">DECLARACION DE RIESGOS</td>
+          <td style="text-align: center; background-color: brown; color: #FFFFFF;width: 510px;font-weight: bold;" colspan="12">DECLARACION DE RIESGOS</td>
         </tr><?php
         $cant_riesgos=count($voucher_riesgos);
         if($cant_riesgos>3){
@@ -268,7 +268,7 @@
       <!-- COMENTARIOS -->
       <table class="table table-condensed table-hover" >
         <tr>
-          <td style="text-align: center; background-color: brown; color: #FFFFFF;width: 510px" colspan="12">COMENTARIOS SOBRE PATOLOGIAS NO RELACIONADAS CON EL TRABAJO</td>
+          <td style="text-align: center; background-color: brown; color: #FFFFFF;width: 510px;font-weight: bold;" colspan="12">COMENTARIOS SOBRE PATOLOGIAS NO RELACIONADAS CON EL TRABAJO</td>
         </tr>
         <tr>
           <td colspan="12">

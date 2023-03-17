@@ -89,7 +89,7 @@
       <!-- DATOS EMPRESA -->
       <table class="table table-condensed table-hover" >
           <tr>
-              <td style="text-align: center; background-color: brown; color: #FFFFFF" colspan="12">DATOS DE LA EMPRESA</td>
+              <td style="text-align: center; background-color: brown; color: #FFFFFF;font-weight: bold;" colspan="12">DATOS DE LA EMPRESA</td>
           </tr>
           <tr style="text-align: left;">
               <td style=" width: 150px" colspan="6">
@@ -114,7 +114,7 @@
       <!-- DATOS DEL TRABAJADOR -->
       <table class="table table-condensed table-hover" >
           <tr>
-              <td style="text-align: center; background-color: brown; color: #FFFFFF" colspan="12">DATOS DEL TRABAJADOR</td>
+              <td style="text-align: center; background-color: brown; color: #FFFFFF;font-weight: bold;" colspan="12">DATOS DEL TRABAJADOR</td>
           </tr>
           <tr style="text-align: left;">
               <td style=" width: 150px" colspan="6">
@@ -136,7 +136,7 @@
       <!-- EXAMEN CLÌNICO -->
       <table class="table table-condensed table-hover" >
           <tr>
-              <td style="text-align: center; background-color: brown; color: #FFFFFF; width: 510px" colspan="12">EXAMEN CLÍNICO</td>
+              <td style="text-align: center; background-color: brown; color: #FFFFFF; width: 510px;font-weight: bold;" colspan="12">EXAMEN CLÍNICO</td>
           </tr>
           <tr style="text-align: left;">
               <td colspan="3">
@@ -190,7 +190,7 @@
       <!-- CARDIOVASCULAR -->
       <table class="table table-condensed table-hover" >
           <tr>
-              <td style="text-align: center; background-color: brown; color: #FFFFFF; width: 510px" colspan="12">CARDIOVASCULAR</td>
+              <td style="text-align: center; background-color: brown; color: #FFFFFF; width: 510px;font-weight: bold;" colspan="12">CARDIOVASCULAR</td>
           </tr>
           <tr style="text-align: left;">
               <td colspan="4">
@@ -229,7 +229,7 @@
       <!-- PIEL-->
       <table class="table table-condensed table-hover" >
           <tr>
-              <td style="text-align: center; background-color: brown; color: #FFFFFF; width: 510px" colspan="12">PIEL</td>
+              <td style="text-align: center; background-color: brown; color: #FFFFFF; width: 510px;font-weight: bold;" colspan="12">PIEL</td>
           </tr>
           <tr>
               <td colspan="6">
@@ -325,7 +325,7 @@
       <!-- OSTEOARTICULAR -->
       <table class="table table-condensed table-hover" >
           <tr>
-              <td style="text-align: center; background-color: brown; color: #FFFFFF; width: 510px" colspan="12">OSTEOARTICULAR</td>
+              <td style="text-align: center; background-color: brown; color: #FFFFFF; width: 510px;font-weight: bold;" colspan="12">OSTEOARTICULAR</td>
           </tr>
           <tr>
               <td colspan="6">
@@ -377,7 +377,7 @@
       <!-- COLUMNA VERTEBRAL -->
       <table class="table table-condensed table-hover" >
           <tr>
-              <td style="text-align: center; background-color: brown; color: #FFFFFF; width: 510px" colspan="12">COLUMNA VERTEBRAL</td>
+              <td style="text-align: center; background-color: brown; color: #FFFFFF; width: 510px;font-weight: bold;" colspan="12">COLUMNA VERTEBRAL</td>
           </tr>
           <tr>
               <td colspan="6">
@@ -429,7 +429,7 @@
       <!--CABEZA Y CUELLO-->
       <table class="table table-condensed table-hover" >
           <tr>
-              <td style="text-align: center; background-color: brown; color: #FFFFFF; width: 510px" colspan="12">CABEZA Y CUELLO</td>
+              <td style="text-align: center; background-color: brown; color: #FFFFFF; width: 510px;font-weight: bold;" colspan="12">CABEZA Y CUELLO</td>
           </tr>
           <tr>
               <td colspan="6">
@@ -490,7 +490,7 @@
       <!-- style="page-break-after:always;" -->
       <table class="table table-condensed table-hover">
           <tr>
-              <td style="text-align: center; background-color: brown; color: #FFFFFF; width: 510px" colspan="12">OFTALMOLOGICO</td>
+              <td style="text-align: center; background-color: brown; color: #FFFFFF; width: 510px;font-weight: bold;" colspan="12">OFTALMOLOGICO</td>
           </tr>
           <tr>
               <td colspan="6">
@@ -566,7 +566,7 @@
       <!-- NEUROLOGICO -->
       <table class="table table-condensed table-hover">
           <tr>
-              <td style="text-align: center; background-color: brown; color: #FFFFFF; width: 510px" colspan="12">NEUROLOGICO</td>
+              <td style="text-align: center; background-color: brown; color: #FFFFFF; width: 510px;font-weight: bold;" colspan="12">NEUROLOGICO</td>
           </tr>
           <tr>
               <td colspan="6">
@@ -644,7 +644,7 @@
       <!-- ODONTOLOGICO -->
       <table class="table table-condensed table-hover" >
           <tr>
-              <td style="text-align: center; background-color: brown; color: #FFFFFF; width: 510px" colspan="12">ODONTOLOGICO</td>
+              <td style="text-align: center; background-color: brown; color: #FFFFFF; width: 510px;font-weight: bold;" colspan="12">ODONTOLOGICO</td>
           </tr>
           <tr>
               <td colspan="6">
@@ -714,7 +714,7 @@
       <!-- TORAX Y APARATO RESPIRATORIO -->
       <table class="table table-condensed table-hover" >
           <tr>
-              <td style="text-align: center; background-color: brown; color: #FFFFFF; width: 510px" colspan="12">TORAX Y APARATO RESPIRATORIO</td>
+              <td style="text-align: center; background-color: brown; color: #FFFFFF; width: 510px;font-weight: bold;" colspan="12">TORAX Y APARATO RESPIRATORIO</td>
           </tr>
           <tr>
               <td colspan="6">
@@ -756,7 +756,7 @@
       <!-- ABDOMEN -->
       <table class="table table-condensed table-hover" >
           <tr>
-              <td style="text-align: center; background-color: brown; color: #FFFFFF; width: 510px" colspan="12">ABDOMEN</td>
+              <td style="text-align: center; background-color: brown; color: #FFFFFF; width: 510px;font-weight: bold;" colspan="12">ABDOMEN</td>
           </tr>
           <tr>
               <td colspan="6">
@@ -826,7 +826,7 @@
       <!-- REGIONES INGUINALES -->
       <table class="table table-condensed table-hover" >
           <tr>
-              <td style="text-align: center; background-color: brown; color: #FFFFFF; width: 510px" colspan="12">REGIONES INGUINALES</td>
+              <td style="text-align: center; background-color: brown; color: #FFFFFF; width: 510px;font-weight: bold;" colspan="12">REGIONES INGUINALES</td>
           </tr>
           <tr>
               <td colspan="6">
@@ -868,7 +868,7 @@
       <!-- GENITALES -->
       <table class="table table-condensed table-hover" >
           <tr>
-              <td style="text-align: center; background-color: brown; color: #FFFFFF; width: 510px" colspan="12">GENITALES</td>
+              <td style="text-align: center; background-color: brown; color: #FFFFFF; width: 510px;font-weight: bold;" colspan="12">GENITALES</td>
           </tr>
           <tr>
               <td colspan="6">
@@ -892,7 +892,7 @@
       <!-- REGION ANAL -->
       <table class="table table-condensed table-hover" >
           <tr>
-              <td style="text-align: center; background-color: brown; color: #FFFFFF; width: 510px" colspan="12">REGION ANAL</td>
+              <td style="text-align: center; background-color: brown; color: #FFFFFF; width: 510px;font-weight: bold;" colspan="12">REGION ANAL</td>
           </tr>
           <tr>
               <td colspan="6">

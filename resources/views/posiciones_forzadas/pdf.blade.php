@@ -100,7 +100,7 @@
         <table class="table table-condensed table-hover letra11">
             <tbody>
                 <tr>
-                    <td style="text-align: center; background-color: brown; color: #FFFFFF" colspan="2">DATOS DEL PACIENTE</td>
+                    <td style="text-align: center; background-color: brown; color: #FFFFFF;font-weight: bold;" colspan="2">DATOS DEL PACIENTE</td>
                 </tr>
                 <tr>
                     <td style="text-align: left; width: 255px">
@@ -177,7 +177,7 @@
                             </td>
                         </tr> -->
                         <tr>
-                            <td style="text-align: center; background-color: brown; color: #FFFFFF" colspan="4">TIPO DE TAREAS</td>
+                            <td style="text-align: center; background-color: brown; color: #FFFFFF;font-weight: bold;" colspan="4">TIPO DE TAREAS</td>
                         </tr>
                         <tr>
                             <td  style="width: 230px; text-align: left;">
@@ -277,7 +277,7 @@
                 <tbody>
                     <!-- Forma -->
                     <tr>
-                        <td style="text-align: center; background-color: brown; color: #FFFFFF" colspan="2">CARACTERISTICAS DEL DOLOR</td>
+                        <td style="text-align: center; background-color: brown; color: #FFFFFF;font-weight: bold;" colspan="2">CARACTERISTICAS DEL DOLOR</td>
                     </tr>
                     <tr>
                         <td style="text-align: left; width: 255px">
@@ -332,7 +332,7 @@
                 <table class="tabla letra11">
                     <tbody>
                         <tr>
-                            <td style="text-align: center; background-color: brown; color: #FFFFFF" colspan="3">CARACTERIZACIÓN SEMIOLÓGICA</td>
+                            <td style="text-align: center; background-color: brown; color: #FFFFFF;font-weight: bold;" colspan="3">CARACTERIZACIÓN SEMIOLÓGICA</td>
                         </tr>
                         <tr>
                             <td style="text-align: left; width: 100px">
