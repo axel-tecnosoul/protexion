@@ -677,4 +677,211 @@ class HistoriaClinica extends Model implements Auditable
       return [$diagnostico,$obs];
 
     }
+
+    public function generarDiagnosticoNew()
+    {
+      // Generación de Diagnóstico
+      /* La generación del diagnostico se realiza cargando dos arrays, uno con las etiquetas y otro con los atributos.
+      Luego se procede a cargar sólo los atributos que fueron cargados cuando se generó el formulario*/
+      $obs=$diagnostico = "";
+      //Carga variables
+      $peso=$this->examenClinico->peso;
+      $estaturaEnCm=$estaturaEnMts=$this->examenClinico->estatura;
+      if($estaturaEnMts>100){
+        $estaturaEnMts/=100;
+      }else{
+        $estaturaEnCm=$estaturaEnMts*100;
+      }
+      $imc=number_format($peso/($estaturaEnMts*$estaturaEnMts),2);
+
+      //Calculo de IMC
+      if ($imc < 18) {
+        $descripcionIMC='Bajo peso';
+      } else if ($imc < 25) {
+        $descripcionIMC='Normopeso';
+      } else if ($imc < 30) {
+        $descripcionIMC='Sobrepeso leve';
+      } else if ($imc < 35) {
+        $descripcionIMC='Obesidad tipo 1';
+      } else if ($imc < 40) {
+        $descripcionIMC='Obesidad tipo 2';
+      }else{
+        $descripcionIMC='Obesidad grave';
+      }
+      //
+      $mostrar_imc=$imc.=" (".$descripcionIMC.")";
+
+      $matriz = [
+        "EXAMEN CLINICO"=>[
+          'Peso'=>$peso,
+          'Estatura'=>$estaturaEnCm,
+          //'Sobrepeso'=>$this->examenClinico->sobrepeso,
+          'IMC'=>$mostrar_imc,
+          //'Medicación actual'=>($this->examenClinico->medicacion_actual) ? $this->examenClinico->medicacion_actual : "No posee"//$this->examenClinico->medicacion_actual,
+          'Medicación actual'=>$this->examenClinico->medicacion_actual
+        ],
+        "CARDIOVASCULAR"=>[
+          'Frecuencia cardíaca'=>$this->cardiovascular->frecuencia_cardiaca." x'",
+          'Tensión arterial'=>$this->cardiovascular->sistolica."/".$this->cardiovascular->diastolica,
+          /*'Diastólica'=>$this->cardiovascular->diastolica,
+          'Sistólica'=>$this->cardiovascular->sistolica,*/
+          'Observaciones'=>$this->cardiovascular->tension_arterial,
+          'Pulso'=>($this->cardiovascular->pulso=="A") ? "Anormal" : "Normal",//$this->cardiovascular->pulso,
+          'Várices'=>$this->cardiovascular->observacion_varices,
+        ],
+        "PIEL"=>[
+          'Cicatrices patológicas visibles'=>$this->piel->observacion1_piel,
+          'Vesícula'=>$this->piel->obs_vesicula,
+          'Ulceras'=>$this->piel->obs_ulceras,
+          'Fisuras'=>$this->piel->obs_fisuras,
+          'Prurito'=>$this->piel->obs_prurito,
+          'Eczemas'=>$this->piel->obs_eczemas,
+          'Dermatitis'=>$this->piel->obs_dertmatitis,
+          'Eritemas'=>$this->piel->obs_eritemas,
+          'Petequias'=>$this->piel->obs_petequias,
+          'Tejido celular subcutaneo'=>$this->piel->tejido,
+        ],
+        "OSTEOARTICULAR"=>[
+          'Limitaciones funcionales'=>$this->osteoarticular->observacion1_os,
+          'Amputaciones'=>$this->osteoarticular->observacion2_os,
+          'Movilidad y reflejo'=>$this->osteoarticular->observacion3_os,
+          'Tonicidad y fuerza muscular normal'=>$this->osteoarticular->observacion4_os,
+          'Observaciones'=>$this->osteoarticular->observacion_os,
+        ],
+        "COLUMNA VERTEBRAL"=>[
+          'Examen normal'=>$this->columna->observacion1_col,
+          'Contracturas'=>$this->columna->observacion2_col,
+          'Puntos dolorosos'=>$this->columna->observacion3_col,
+          'Limitaciones funcionales'=>$this->columna->observacion4_col,
+          'Observaciones'=>$this->columna->observacion_col,
+        ],
+        "CABEZA Y CUELLO"=>[
+          'Cráneo'=>$this->cabezaCuello->observacion1_cc,
+          'Cara'=>$this->cabezaCuello->observacion2_cc,
+          'Nariz'=>$this->cabezaCuello->observacion3_cc,
+          'Oídos'=>$this->cabezaCuello->observacion4_cc,
+          'Boca'=>$this->cabezaCuello->observacion5_cc,
+          'Cuello y Tiroides'=>$this->cabezaCuello->observacion6_cc,
+        ],
+        "OFTALMOLÓGICO"=>[
+          'Pupilas'=>$this->oftalmologico->observacion1_of,
+          'Corneas'=>$this->oftalmologico->observacion2_of,
+          'Conjuntivas'=>$this->oftalmologico->observacion3_of,
+          'Visión en colores'=>$this->oftalmologico->observacion4_of,
+          'Ojo derecho'=>$this->oftalmologico->observacion5_of."/10",
+          'Ojo izquierdo'=>$this->oftalmologico->observacion6_of."/10",
+          'Usa lentes'=>$this->oftalmologico->pregunta7_of,
+          'Observaciones'=>$this->oftalmologico->observacion_of,
+        ],
+        "NEUROLOGICO"=>[
+          'Motilidad activa'=>$this->neurologico->observacion1_neu,
+          'Motilidad pasiva'=>$this->neurologico->observacion2_neu,
+          'Sensibilidad'=>$this->neurologico->observacion3_neu,
+          'Marcha'=>$this->neurologico->observacion4_neu,
+          'Reflejos osteotendinosos'=>$this->neurologico->observacion5_neu, 
+          'Pares craneales'=>$this->neurologico->observacion6_neu,
+          'Taxia'=>$this->neurologico->observacion7_neu,
+          'Observaciones'=>$this->neurologico->observacion_neu,
+        ],
+        "ODONTOLOGICO"=>[
+          'Encias y mucosas'=>$this->odontologico->observacion1_od,
+          'Esmalte dental'=>$this->odontologico->observacion2_od,
+          'Protesis Superior'=>$this->odontologico->superior, 
+          'Protesis Inferior'=>$this->odontologico->inferior,
+          'Caries'=>$this->odontologico->pregunta4_od,
+          'Faltan piezas dentarias'=>$this->odontologico->pregunta5_od,
+          'Observaciones'=>$this->odontologico->observacion_od,
+        ],
+        "TORAX Y APARTO RESPIRATORIO"=>[
+          'Caja torácica'=>$this->respiratorio->observacion1_re,
+          'Pulmones'=>$this->respiratorio->observacion2_re,
+          'COVID 19'=>$this->respiratorio->covid19,
+          'Vacunas'=>$this->respiratorio->vacunado,
+        ],
+        "ABDOMEN"=>[
+          'Forma'=>$this->abdomen->observacion1_ab,
+          'Hígado'=>$this->abdomen->observacion2_ab,
+          'Bazo'=>$this->abdomen->observacion3_ab,
+          'Colon'=>$this->abdomen->observacion4_ab,
+          'Ruidos hidroaéreos'=>$this->abdomen->observacion5_ab,
+          'Puño percusión'=>$this->abdomen->observacion6_ab,
+          'Cicatrices quirúrjicas'=>$this->abdomen->observacion_ab,
+        ],
+        "REGIONES INGUINALES"=>[
+          'Tono de la pared posterior'=>$this->regionInguinal->observacion1_in,
+          'Orificios superficiales'=>$this->regionInguinal->observacion2_in,
+          'Orificios profundos'=>$this->regionInguinal->observacion3_in,
+          'Observaciones'=>$this->regionInguinal->observacion_in,
+        ],
+        "GENITALES"=>[
+          'Características'=>$this->genital->observacion1_ge,
+          'Observaciones'=>$this->genital->observacion_ge,
+        ],
+        "REGIÓN ANAL"=>[
+          'Características'=>$this->regionAnal->observacion1_an,
+          'Observaciones'=>$this->regionAnal->observacion_an,
+        ]
+      ];
+
+      $aFiltered=[];
+      foreach ($matriz as $seccion => $valores) {
+        //var_dump($seccion);
+        //var_dump($valores);
+        $aux2=$aux="";
+        $mostrarNombreSeccion=0;
+        foreach ($valores as $label => $valor) {
+          if($valor===1){
+            $aFiltered[$seccion][$label]="Si";
+
+            $aux.=$label.": <b>Si</b><br>";
+            $aux2.=$label.": Si<br>";
+            $mostrarNombreSeccion=1;
+          }elseif ($valor == "") {
+            
+          }else{
+            $mostrar=1;
+            if($seccion=="COLUMNA VERTEBRAL" and $label=='Examen normal' and in_array($valor,["SI","si","Si","sI",""," "])){
+              //var_dump("entramos");
+              $mostrar=0;
+            }
+
+            //aca es donde mostramos todo
+            if($mostrar==1){
+              $aFiltered[$seccion][$label]=$valor;
+
+              $aux.=$label.": <b>".$valor."</b>.<br>";
+              if($label=="Observaciones"){
+                $aux2.=$valor.".<br>";
+              }else{
+                $aux2.=$label.": ".$valor.".<br>";
+              }
+              $mostrarNombreSeccion=1;
+            }
+          }
+        }
+
+        if($mostrarNombreSeccion==1){
+          //CON SALTOS DE LINEA AL FINAL
+          /*$aux="<b>".$seccion."</b><br>".$aux."<br>";
+          $aux2="<b>".$seccion."</b><br>".$aux2."<br>";*/
+          //SIN SALTOS DE LINEA AL FINAL
+          $aux="<b>".$seccion."</b><br>".$aux;
+          $aux2="<b>".$seccion."</b><br>".$aux2;
+        }
+
+        //echo $aux;
+        $diagnostico.=$aux;
+        $obs.=$aux2;
+      }
+      /*var_dump($diagnostico);
+      var_dump($obs);
+      die();*/
+      
+      
+      //echo $diagnostico;
+      //die();
+      //dd($diagnostico,$obs);
+      return [$diagnostico,$obs,$aFiltered];
+
+    }
 }

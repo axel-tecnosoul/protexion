@@ -425,14 +425,15 @@ class PacienteController extends Controller
       $filas=$array[0];
       //var_dump($filas);
       $filaEmpresa=$filas[3];
-      $cuit=$filaEmpresa[2];
+      $cuit=$filaEmpresa[1];
       
       $origen = new Origen;
-      $origen->definicion = $filaEmpresa[1];
+      $origen->definicion = $filaEmpresa[0];
       $origen->cuit = $cuit;
       //$origen->domicilio_id = $request->get('domicilio_id');
 
-      $ori=DB::select('SELECT id FROM origenes WHERE cuit='.$cuit);
+      $cuit=str_replace("-","",$cuit);
+      $ori=DB::select('SELECT id FROM origenes WHERE REPLACE(cuit,"-","")='.$cuit);
       if(!$ori){
         $origen->save();
         $id_origen=$origen->id;
@@ -465,10 +466,15 @@ class PacienteController extends Controller
           $paciente->origen_id=$id_origen;
           $paciente->estado_id=1; //Habilitado
 
-          $pac=DB::select('SELECT id FROM pacientes WHERE documento='.$documento);
-          //var_dump($pac);
-          if(!$pac){
+          if($documento==""){
             $paciente->save();
+          }else{
+            $documento=str_replace(".","",$documento);
+            $pac=DB::select('SELECT id FROM pacientes WHERE REPLACE(documento,".","")="'.$documento.'"');
+            //var_dump($pac);
+            if(!$pac){
+              $paciente->save();
+            }
           }
           //
       }

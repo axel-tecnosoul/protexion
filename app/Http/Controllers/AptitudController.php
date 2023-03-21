@@ -272,7 +272,8 @@ class AptitudController extends Controller
 
         //Carga de diagnosticos
         $voucher->declaracionJurada ? ($diagnosticoD = $declaracion_jurada->generarDiagnostico()) : ($diagnosticoD = " ");
-        $voucher->historiaClinica ? ($diagnosticoH = $historia_clinica->generarDiagnostico()) : ($diagnosticoH = " ");
+        //$voucher->historiaClinica ? ($diagnosticoH = $historia_clinica->generarDiagnostico()) : ($diagnosticoH = " ");
+        $voucher->historiaClinica ? ($diagnosticoH = $historia_clinica->generarDiagnosticoNew()) : ($diagnosticoH = " ");
         $voucher->posicionesForzadas ? ($diagnosticoP = $posiciones_forzada->generarDiagnostico()) : ($diagnosticoP = " ");
         $voucher->iluminacionDireccionado ? ($diagnosticoI = $iluminacion_direccionado->generarDiagnostico()) : ($diagnosticoI = " ");
 
@@ -284,34 +285,6 @@ class AptitudController extends Controller
 
         //Carga de datos adicionales
         $datosAdicionales = "";
-        /*if ($historia_clinica->examenClinico->sobrepeso) {
-            $datosAdicionales.=" Sobrepeso. ";
-        }*/
-        /*if ($voucher->historiaClinica) {
-            $estatura=$historia_clinica->examenClinico->estatura;
-            if($estatura>100){
-              $estatura/=100;
-            }
-            $peso=$historia_clinica->examenClinico->peso;
-            $imc=number_format($peso/($estatura*$estatura),2);
-
-            $datosAdicionales = "IMC: ".$imc;
-            //Calculo de IMC
-            if ($imc >= "30") {
-              $descripcionIMC='Sobrepeso';
-            } elseif ($imc <= "18") {
-              $descripcionIMC='Muy bajo';
-            } else {
-              $descripcionIMC='Normal';
-            }
-            $datosAdicionales.=" (".$descripcionIMC.").";
-            
-            if ($historia_clinica->examenClinico->medicacion_actual) {
-                $datosAdicionales.=" Medicación actual: ".$historia_clinica->examenClinico->medicacion_actual.". ";
-            }else {
-                $datosAdicionales.=" Medicación actual: No posee. ";
-            }
-        }*/
 
         $voucher_riesgos=[];
         foreach($voucher->vouchersRiesgos as $riesgo){
