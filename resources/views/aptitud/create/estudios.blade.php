@@ -66,7 +66,7 @@
                             <hr><?php
                             $pre_historia_clinica=($historia_clinica->informe_final_preexistencias) ?: "";
                             $obs_historia_clinica=($historia_clinica->informe_final_observaciones) ?: "";
-                            //var_dump($diagnosticoH[1]);
+                            $aDiagnostico=$diagnosticoH[2];
                             //$diagnosticoH=str_replace("<br><br>","<br>",$diagnosticoH[1]);
                             $diagnosticoH=str_replace("<br>","\n",$diagnosticoH[1]);
                             //var_dump($diagnosticoH);
@@ -81,7 +81,45 @@
                                     <label for="">Observaciones</label>
                                     <textarea class="form-control textArea" data-target="observaciones" data-label="lblHistoriaClinica" name="obs_historia_clinica" id="obs_historia_clinica" cols="15" rows="5"><?=$diagnosticoH?><?php //echo $obs_historia_clinica?></textarea>
                                 </div>
+                            </div><?php
+                            //para mostrar los datos de la historia clinica cada uno en input
+                            foreach ($aDiagnostico as $seccion => $campos) {
+                              /*foreach ($campos as $clave => $valor) {?>
+                              <div class="row form-group">
+                                <div class="col-12 d-inline">
+                                    <label for="{{$name}}" class="w-100" id="{{$name}}_label">{{$nombre_estudio}}: </label>
+                                    <input class="form-control inputText d-inline w-50" name="{{$name}}" type="text" id="{{$name}}" value="<?=$valor?>">
+                                    <!--  preexistencias observaciones --><?php
+
+                                    $checkedObs="checked";
+                                    $checkedPre="";
+
+                                    if($estudio["pre_obs"]=="P"){
+                                      $checkedObs="";
+                                      $checkedPre="checked";
+                                    }
+                                    if($estudio["pre_obs"]=="O"){
+                                      $checkedObs="checked";
+                                      $checkedPre="";
+                                    }
+                                    ?>
+                                
+                                    <div class="icheck-danger d-inline w-25 ml-2">
+                                        <input class="radioObsPre" data-target="observaciones" type="radio" name="{{$name}}_radio" id="{{$name}}_check_obs" value="O" <?=$checkedObs?>>
+                                        <label for="{{$name}}_check_obs">Obs</label>
+                                    </div>
+                                    <!-- <label><input class="radioObsPre" data-target="observaciones" type="radio" name="{{$name}}_radio" id="{{$name}}_check_obs" value="O" <?=$checkedObs?>>Obs</label> -->
+                                
+                                    <div class="icheck-danger d-inline w-25 ml-2">
+                                        <input class="radioObsPre" data-target="preexistencias" type="radio" name="{{$name}}_radio" id="{{$name}}_check_pre" value="P" <?=$checkedPre?>>
+                                        <label for="{{$name}}_check_pre">Pre</label>
+                                    </div>
+                                    <!-- <label><input class="radioObsPre" data-target="preexistencias" type="radio" name="{{$name}}_radio" id="{{$name}}_check_pre" value="P" <?=$checkedPre?>>Pre</label> -->
+                                </div>
                             </div>
+                            <hr><?php
+                              }*/
+                            }?>
                         </div>
                     </div>
                 </div>

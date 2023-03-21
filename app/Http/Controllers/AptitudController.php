@@ -317,24 +317,28 @@ class AptitudController extends Controller
                     "observaciones" => $request->observaciones
         ];*/
 
-        if(isset($request->pre_historia_clinica) and isset($request->obs_historia_clinica)){
+        //dd($request->all());
+        if(isset($request->pre_historia_clinica) or isset($request->obs_historia_clinica)){
+          
           $historiaClinica=HistoriaClinica::findOrFail($voucher->historiaClinica->id);
           $historiaClinica->informe_final_observaciones=$request->obs_historia_clinica;
           $historiaClinica->informe_final_preexistencias=$request->pre_historia_clinica;
           $historiaClinica->update();
         }
-        if(isset($request->pre_posiciones_forzadas) and isset($request->obs_posiciones_forzadas)){
+        if(isset($request->pre_posiciones_forzadas) or isset($request->obs_posiciones_forzadas)){
           $posicionesForzada=PosicionesForzada::findOrFail($voucher->posicionesForzadas->id);
           $posicionesForzada->informe_final_observaciones=$request->obs_posiciones_forzadas;
           $posicionesForzada->informe_final_preexistencias=$request->pre_posiciones_forzadas;
           $posicionesForzada->update();
         }
-        if(isset($request->pre_iluminacion_insuficiente) and isset($request->obs_iluminacion_insuficiente)){
+        if(isset($request->pre_iluminacion_insuficiente) or isset($request->obs_iluminacion_insuficiente)){
           $iluminacionDireccionado=IluminacionDireccionado::findOrFail($voucher->iluminacionDireccionado->id);
           $iluminacionDireccionado->informe_final_observaciones=$request->obs_iluminacion_insuficiente;
           $iluminacionDireccionado->informe_final_preexistencias=$request->pre_iluminacion_insuficiente;
           $iluminacionDireccionado->update();
         }
+
+        //die();
 
         /*var_dump($historiaClinica->id);
         var_dump($posicionesForzada->id);

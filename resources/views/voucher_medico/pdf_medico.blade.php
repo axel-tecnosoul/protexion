@@ -83,11 +83,11 @@
               <tr onmouseover="cambiar_color_over(this)" onmouseout="cambiar_color_out(this)">
                   <td style="text-align:left">{{ $paciente }}</td>
                   <td style="text-align:left"><?php
-                    if($datos["empresa"]){
-                      echo $datos["empresa"];
+                    if($estudios["empresa"]){
+                      echo $estudios["empresa"];
                     }?>
                   </td>
-                  <td style="text-align:left"><?=implode(", ",$estudios)?></td>
+                  <td style="text-align:left"><?=implode(", ",$estudios["estudios"])?></td>
               </tr>
               @endforeach
           </tbody>
