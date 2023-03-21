@@ -27,7 +27,6 @@
                         <input
                             type="string"
                             name="definicion"
-                            maxlength="30"
                             value="{{old('definicion')}}"
                             class="form-control"
                             placeholder="Ingrese el nombre..."
