@@ -66,7 +66,8 @@
                             <hr><?php
                             $pre_historia_clinica=($historia_clinica->informe_final_preexistencias) ?: "";
                             $obs_historia_clinica=($historia_clinica->informe_final_observaciones) ?: "";
-                            $aDiagnostico=$diagnosticoH[2];
+                            //$aDiagnostico=$diagnosticoH[2];
+                            $aDiagnostico=[];
                             //$diagnosticoH=str_replace("<br><br>","<br>",$diagnosticoH[1]);
                             $diagnosticoH=str_replace("<br>","\n",$diagnosticoH[1]);
                             //var_dump($diagnosticoH);
