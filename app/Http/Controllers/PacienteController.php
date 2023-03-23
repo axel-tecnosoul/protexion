@@ -433,7 +433,7 @@ class PacienteController extends Controller
       //$origen->domicilio_id = $request->get('domicilio_id');
 
       $cuit=str_replace("-","",$cuit);
-      $ori=DB::select('SELECT id FROM origenes WHERE REPLACE(cuit,"-","")='.$cuit);
+      $ori=DB::select('SELECT id FROM origenes WHERE REPLACE(cuit,"-","")="'.$cuit.'"');
       if(!$ori){
         $origen->save();
         $id_origen=$origen->id;
