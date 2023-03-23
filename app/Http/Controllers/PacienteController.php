@@ -470,7 +470,7 @@ class PacienteController extends Controller
             $paciente->save();
           }else{
             $documento=str_replace(".","",$documento);
-            $pac=DB::select('SELECT id FROM pacientes WHERE REPLACE(documento,".","")="'.$documento.'"');
+            $pac=DB::select('SELECT id FROM pacientes WHERE estado_id=1 AND REPLACE(documento,".","")="'.$documento.'"');
             //var_dump($pac);
             if(!$pac){
               $paciente->save();
