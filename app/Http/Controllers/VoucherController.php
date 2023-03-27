@@ -233,7 +233,7 @@ class VoucherController extends Controller
                             'HISTORIA CLINICA',
                             'POSICIONES FORZADAS',
                             'AUDIOMETRIA',
-                            'ESPIRIOMETRIA',
+                            'ESPIROMETRIA',
                             'ILUMINACION'); 
 
         $forms[] = array(   'declaracion_jurada.create',

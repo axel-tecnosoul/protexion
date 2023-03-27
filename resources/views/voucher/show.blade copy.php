@@ -62,8 +62,8 @@
                   <tbody>
                     @foreach ($estudios_sistema[2] as $item)
                       <tr>
-                        @if ($estudios_sistema[0][$item]->estudio->nombre == "ESPIRIOMETRIA")
-                          <td style="width: 65%">ESPIRIOMETRIA (FORMULARIO)</td>
+                        @if ($estudios_sistema[0][$item]->estudio->nombre == "ESPIROMETRIA")
+                          <td style="width: 65%">ESPIROMETRIA (FORMULARIO)</td>
                           <td style="text-align: center">
                             <a target="_blank" href="{{ route('espiriometrias.pdf',$voucher->id) }}" class="btn fondo1 btn-responsive">
                               <i class="fas fa-file-pdf"></i>

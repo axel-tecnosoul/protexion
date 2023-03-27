@@ -289,7 +289,7 @@ class EstudioSeeder extends Seeder
         ]);
         $estudio = Estudio::create([
             'carga' => true,
-            'nombre' => 'ESPIRIOMETRIA',
+            'nombre' => 'ESPIROMETRIA',
             'tipo_estudio_id' => 3,
         ]);
         $estudio = Estudio::create([
