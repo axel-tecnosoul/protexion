@@ -254,6 +254,13 @@
                             //var_dump($estudio);
                             //$valor="";
                             $valor=($estudio["valor"]) ?: "";
+                            if (strpos($nombre_estudio, "gravindex") !== false and $valor=="") {
+                              $valor="Negativo";
+                            }
+                            if (strpos($nombre_estudio, "Toxicologico") !== false and $valor=="") {
+                              $valor="Negativo";
+                            }
+
                             $name="POinput_".$id_tipo_estudio."_".$id_estudio;?>
                             <div class="row form-group">
                                 <div class="col-12 d-inline">
