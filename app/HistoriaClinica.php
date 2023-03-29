@@ -318,7 +318,7 @@ class HistoriaClinica extends Model implements Auditable
                                 'Colon: ',
                                 'Ruidos hidroaéreos: ',
                                 'Puño percusión: ',
-                                'Cicatrices quirúrjicas: ',
+                                'Cicatrices quirúrgicas: ',
                                 
                                 '<br><b>REGIONES INGUINALES</b><br>',
                                 'Tono de la pared posterior: ',
@@ -480,7 +480,7 @@ class HistoriaClinica extends Model implements Auditable
           'Colon'=>$this->abdomen->observacion4_ab,
           'Ruidos hidroaéreos'=>$this->abdomen->observacion5_ab,
           'Puño percusión'=>$this->abdomen->observacion6_ab,
-          'Cicatrices quirúrjicas'=>$this->abdomen->observacion_ab,
+          'Cicatrices quirúrgicas'=>$this->abdomen->observacion_ab,
         ],
         "REGIONES INGUINALES"=>[
           'Tono de la pared posterior'=>$this->regionInguinal->observacion1_in,
@@ -805,7 +805,7 @@ class HistoriaClinica extends Model implements Auditable
           'Colon'=>$this->abdomen->observacion4_ab,
           'Ruidos hidroaéreos'=>$this->abdomen->observacion5_ab,
           'Puño percusión'=>$this->abdomen->observacion6_ab,
-          'Cicatrices quirúrjicas'=>$this->abdomen->observacion_ab,
+          'Cicatrices quirúrgicas'=>$this->abdomen->observacion_ab,
         ],
         "REGIONES INGUINALES"=>[
           'Tono de la pared posterior'=>$this->regionInguinal->observacion1_in,

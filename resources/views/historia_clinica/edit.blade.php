@@ -931,10 +931,10 @@ if(isset($historia_clinica)){
                                         <input class="form-control" placeholder="Describa las anormalidades..." type="text" name="observacion6_ab" value="<?=$observacion6_ab?>">
                                     </div>
                                 </div>
-                                <!-- Cicatrices quirúrjicas -->
+                                <!-- Cicatrices quirúrgicas -->
                                 <div class="form-group row">
                                     <div class="col">
-                                        <label for="" class="form-label">Cicatrices quirúrjicas</label>
+                                        <label for="" class="form-label">Cicatrices quirúrgicas</label>
                                         <input class="form-control" placeholder="Describa las anormalidades..." type="text" name="observacion_ab" value="<?=$observacion_ab?>">
                                     </div>
                                 </div>
