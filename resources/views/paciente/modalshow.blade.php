@@ -18,13 +18,13 @@
                         if($paciente->origen == null) echo(" ");
                         else echo($paciente->origen->definicion)?>
                     <hr><?php
-                    if(file_exists(asset('imagenes/paciente/'.$paciente->imagen))){
+                    //if(file_exists(asset('imagenes/paciente/'.$paciente->imagen))){
                       if($paciente->imagen == null){?>
                         <img src="{{ asset('imagenes/paciente/default.png')}}" width="50px" class="img-circle elevation-2" alt="User Image"><?php
                       }else{?>
                         <img src="{{ asset('imagenes/paciente/'.$paciente->imagen)}}" width="50px" class="img-circle elevation-2" alt="User Image"><?php
                       }
-                    }?>
+                    //}?>
                     
                 </h3>
                 <div class="modal-body">
