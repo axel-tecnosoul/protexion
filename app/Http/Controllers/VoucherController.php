@@ -88,9 +88,18 @@ class VoucherController extends Controller
 
     public function create($id)
     {
+      //dd($id);
+      $ex=explode(",",$id);
+      $cant_pacientes=count($ex);
+      if($cant_pacientes==1){
+        $paciente =         Paciente::find($id);
+      }else{
+        $paciente=$id;
+      }
+
         $tipo_estudios =    TipoEstudio::all();
         $estudios =         Estudio::all();
-        $paciente =         Paciente::find($id);
+        
         /*$aptitudes=         new Aptitud;
 
         $riesgos=$aptitudes->riesgos();*/
@@ -104,89 +113,106 @@ class VoucherController extends Controller
         }
         /*$pacientes =        Paciente::where('estado_id','=',1)
                                     ->where('documento','!=',"")->get();*/
-        return view("voucher.create", compact(/*'pacientes', */'estudios', 'tipo_estudios', 'paciente','riesgos'));
+        return view("voucher.create", compact(/*'pacientes', */'estudios', 'tipo_estudios', 'paciente','riesgos','cant_pacientes'));
     }
 
     public function store(Request $request)
     {   
-        $n=Voucher::count() + 1;
-        $voucher=new Voucher();
-        $voucher->codigo=str_pad($n, 10, '0', STR_PAD_LEFT);
-        $voucher->turno=$request->turno;
-        $voucher->user_id=auth()->user()->id;
-        $voucher->paciente_id = $request->paciente_id;
-        $voucher->save();
 
-        //dd($request->riesgos);
-        $riesgos=$request->riesgos;
+      $paciente_id=$request->paciente_id;
+      $aPacientes=explode(",",$paciente_id);
+      //$cant_pacientes=count($aPacientes);
+      //dd($request->all());
+      //$paciente=$paciente_id;
+      foreach ($aPacientes as $key => $paciente_id) {
 
-        foreach ($riesgos as $key => $value) {
-          if($value==1){
-            $voucher_riesgo = new VoucherRiesgos;
-            $voucher_riesgo->voucher_id = $voucher->id;
-            $voucher_riesgo->riesgo_id = $key;
-            $voucher_riesgo->save();
+          $n=Voucher::count() + 1;
+          $voucher=new Voucher();
+          $voucher->codigo=str_pad($n, 10, '0', STR_PAD_LEFT);
+          $voucher->turno=$request->turno;
+          $voucher->user_id=auth()->user()->id;
+          //$voucher->paciente_id = $request->paciente_id;
+          $voucher->paciente_id = $paciente_id;
+          $voucher->save();
+
+          //dd($request->riesgos);
+          $riesgos=$request->riesgos;
+
+          foreach ($riesgos as $key => $value) {
+            if($value==1){
+              $voucher_riesgo = new VoucherRiesgos;
+              $voucher_riesgo->voucher_id = $voucher->id;
+              $voucher_riesgo->riesgo_id = $key;
+              $voucher_riesgo->save();
+            }
           }
-        }
 
-        //HARDCODEADISIMO
-        //     | | | 
-        //     V V V
-        //
-            $analisisB = false;
-            $psicotecnico = false;
-            $radiologia = false;
+          //HARDCODEADISIMO
+          //     | | | 
+          //     V V V
+          //
+          $analisisB = false;
+          $psicotecnico = false;
+          $radiologia = false;
 
-            $estudios = Estudio::all();
-            foreach ($estudios as $estudio) {
-                //La variable aux toma el valor del id del Estudio
-                $aux = $estudio->id;
-                //Compara el aux con el campo de la request, que en la vista se establece que cada uno es el id de un Estudio distinto.
-                if ($request->$aux == 1) {
-                    $voucher_estudio = new VoucherEstudio;
-                    $voucher_estudio->voucher_id = $voucher->id;
-                    $voucher_estudio->estudio_id = $estudio->id;
-                    $voucher_estudio->save();
+          $estudios = Estudio::all();
+          foreach ($estudios as $estudio) {
+              //La variable aux toma el valor del id del Estudio
+              $aux = $estudio->id;
+              //Compara el aux con el campo de la request, que en la vista se establece que cada uno es el id de un Estudio distinto.
+              if ($request->$aux == 1) {
+                  $voucher_estudio = new VoucherEstudio;
+                  $voucher_estudio->voucher_id = $voucher->id;
+                  $voucher_estudio->estudio_id = $estudio->id;
+                  $voucher_estudio->save();
 
-                    //Comprobar si se cargar estudios base
-                    if ($estudio->id == $voucher_estudio->estudio_id) {
-                        if ((strtoupper($estudio->tipoEstudio->nombre) == "ANALISIS BIOQUIMICO") or
-                            (strtoupper($estudio->tipoEstudio->nombre) == "ANALISIS BIOQUIMICO ANEXO 01") ) {
-                            $analisisB = true;
-                        }
-                        if (strtoupper($estudio->tipoEstudio->nombre) == "PSICOTECNICO") {
-                            $psicotecnico = true;
-                        }
-                        if (strtoupper($estudio->tipoEstudio->nombre) == "RADIOLOGIA") {
-                            $radiologia = true;
-                        }
-                    }
-                }
-            }
-            //Cargar estudios base
-            if ($analisisB) {
-                $voucher_estudio = new VoucherEstudio;
-                $voucher_estudio->voucher_id = $voucher->id;
-                $voucher_estudio->estudio_id = 1;
-                $voucher_estudio->save();
-            }
-            if ($psicotecnico) {
-                $voucher_estudio = new VoucherEstudio;
-                $voucher_estudio->voucher_id = $voucher->id;
-                $voucher_estudio->estudio_id = 60;
-                $voucher_estudio->save();
-            }
-            if ($radiologia) {
-                $voucher_estudio = new VoucherEstudio;
-                $voucher_estudio->voucher_id = $voucher->id;
-                $voucher_estudio->estudio_id = 66;
-                $voucher_estudio->save();
-            }
+                  //Comprobar si se cargar estudios base
+                  if ($estudio->id == $voucher_estudio->estudio_id) {
+                      if ((strtoupper($estudio->tipoEstudio->nombre) == "ANALISIS BIOQUIMICO") or
+                          (strtoupper($estudio->tipoEstudio->nombre) == "ANALISIS BIOQUIMICO ANEXO 01") ) {
+                          $analisisB = true;
+                      }
+                      if (strtoupper($estudio->tipoEstudio->nombre) == "PSICOTECNICO") {
+                          $psicotecnico = true;
+                      }
+                      if (strtoupper($estudio->tipoEstudio->nombre) == "RADIOLOGIA") {
+                          $radiologia = true;
+                      }
+                  }
+              }
+          }
+          //Cargar estudios base
+          if ($analisisB) {
+              $voucher_estudio = new VoucherEstudio;
+              $voucher_estudio->voucher_id = $voucher->id;
+              $voucher_estudio->estudio_id = 1;
+              $voucher_estudio->save();
+          }
+          if ($psicotecnico) {
+              $voucher_estudio = new VoucherEstudio;
+              $voucher_estudio->voucher_id = $voucher->id;
+              $voucher_estudio->estudio_id = 60;
+              $voucher_estudio->save();
+          }
+          if ($radiologia) {
+              $voucher_estudio = new VoucherEstudio;
+              $voucher_estudio->voucher_id = $voucher->id;
+              $voucher_estudio->estudio_id = 66;
+              $voucher_estudio->save();
+          }
+      }
+      
+      
+        
         //
 
         //"riesgos" => implode($request->riesgos),
 
-        return redirect()->route('voucher.show',$voucher->id);
+        if(count($aPacientes)==1){
+          return redirect()->route('voucher.show',$voucher->id);
+        }else{
+          return redirect()->route('voucher.index');
+        }
     }
 
     public function show($id)

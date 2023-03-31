@@ -3,6 +3,7 @@ use Illuminate\Support\Facades\Route;
     Route::get('paciente', 'PacienteController@index')->name('paciente.index');
     //Route::delete('paciente/{paciente}', 'PacienteController@destroy')->name('paciente.destroy');
     Route::get('paciente/create', 'PacienteController@create')->name('paciente.create');
+    Route::post('paciente/create', 'PacienteController@create')->name('paciente.create');
     Route::post('paciente', 'PacienteController@store')->name('paciente.store');
     Route::get('paciente/{paciente}/edit', 'PacienteController@edit')->name('paciente.edit');
     Route::patch('paciente/{paciente}', 'PacienteController@update')->name('paciente.update');

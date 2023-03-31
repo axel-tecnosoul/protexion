@@ -80,7 +80,12 @@
             let hidden_label=$(this).data("label");
             let label=$("#"+hidden_label).val().trim();
             let target=$(this).data("target");
-            console.log(label);
+            // console.log("hidden_label");
+            // console.log(hidden_label);
+            // console.log("label");
+            // console.log(label);
+            // console.log("target");
+            // console.log(target);
             boldLabel="<b>"+label+"</b>"
             if(aObsPre[target]!=""){
               //boldLabel="\n"+boldLabel//SOLO PARA SEPARAR LAS LINEAS
@@ -107,12 +112,19 @@
             let inputId=this.id;
             let label=$("#"+inputId+"_label").html().trim();
             let bigLabel=$(this).closest(".card").find(".card-header").html().trim();
+            console.log("bigLabel");
             console.log(bigLabel);
+            console.log("label");
+            console.log(label);
             if(bigLabel=="ANALISIS BIOQUIMICO ANEXO 01"){
               bigLabel="ANALISIS BIOQUIMICO";
             }
             if(bigLabel=="COMPLEMENTARIO" || bigLabel=="Historia Clínica"){
               bigLabel=""
+            }
+            if(bigLabel=="PSICOTECNICO"){
+              label=bigLabel+" "+label;
+              bigLabel="";
             }
             //label=""
             //label+="\n"

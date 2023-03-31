@@ -124,6 +124,99 @@ if (!isset($_SESSION['rowUsers']['id_usuario'])) {
     <!--<script src="assets/js/theme-customizer/customizer.js"></script>-->
     <!-- Plugin used-->
     <script type="text/javascript">
+
+      idiomaEsp = {
+          "autoFill": {
+              "cancel": "Cancelar",
+              "fill": "Llenar las celdas con <i>%d<i><\/i><\/i>",
+              "fillHorizontal": "Llenar las celdas horizontalmente",
+              "fillVertical": "Llenar las celdas verticalmente"
+          },
+          "decimal": ",",
+          "emptyTable": "No hay datos disponibles en la Tabla",
+          "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+          "infoEmpty": "Mostrando 0 a 0 de 0 Entradas",
+          "infoFiltered": "Filtrado de _MAX_ entradas totales",
+          "infoThousands": ".",
+          "lengthMenu": "Mostrar _MENU_ entradas",
+          "loadingRecords": "Cargando...",
+          "paginate": {
+              "first": "Primera",
+              "last": "Ultima",
+              "next": "Siguiente",
+              "previous": "Anterior"
+          },
+          "processing": "Procesando...",
+          "search": "Busqueda:",
+          "searchBuilder": {
+              "add": "Agregar condición",
+              "button": {
+                  "0": "Constructor de búsqueda",
+                  "_": "Constructor de búsqueda (%d)"
+              },
+              "clearAll": "Quitar todo",
+              "condition": "Condición",
+              "conditions": {
+                  "date": {
+                      "after": "Luego",
+                      "before": "Luego",
+                      "between": "Entre",
+                      "empty": "Vacio",
+                      "equals": "Igual"
+                  }
+              },
+              "data": "Datos",
+              "deleteTitle": "Borrar regla de filtrado",
+              "leftTitle": "Criterio de alargado",
+              "logicAnd": "Y",
+              "logicOr": "O",
+              "rightTitle": "Criterio de endentado",
+              "title": {
+                  "0": "Constructor de búsqueda",
+                  "_": "Constructor de búsqueda (%d)"
+              },
+              "value": "Valor"
+          },
+          "searchPlaceholder": "Ingrese caracteres de busqueda",
+          "thousands": ".",
+          "zeroRecords": "No se encontraron registros que coincidan con la búsqueda",
+          "datetime": {
+              "previous": "Anterior",
+              "next": "Siguiente",
+              "hours": "Hora",
+              "minutes": "Minuto",
+              "seconds": "Segundo"
+          },
+          "editor": {
+              "close": "Cerrar",
+              "create": {
+                  "button": "Nuevo",
+                  "title": "Crear nueva entrada",
+                  "submit": "Crear"
+              },
+              "edit": {
+                  "button": "Editar",
+                  "title": "Editar entrada",
+                  "submit": "Actualizar"
+              },
+              "remove": {
+                  "button": "Borrar",
+                  "title": "Borrar",
+                  "submit": "Borrar",
+                  "confirm": {
+                      "_": "Está seguro que desea borrar %d filas?",
+                      "1": "Está seguro que desea borrar 1 fila?"
+                  }
+              },
+              "multi": {
+                  "title": "Múltiples valores",
+                  "info": "La selección contiene diferentes valores para esta entrada. Para editarla y establecer todos los items al mismo valor, clickear o tocar aquí, de otra manera conservarán sus valores individuales.",
+                  "restore": "Deshacer cambios",
+                  "noMulti": "Esta entrada se puede editar individualmente, pero no como parte de un grupo."
+              }
+          }
+      }
+
       var id_empresa=$("#id_usuario").html();
       $(document).ready(function(){
         get_archivos(id_empresa)
@@ -132,6 +225,10 @@ if (!isset($_SESSION['rowUsers']['id_usuario'])) {
       $(document).on("click", ".archivo_empresa", function(){
 
         let id_archivo = parseInt($(this).closest('tr').find('td:eq(0)').text());
+        //let id_archivo = this.getAttribute("data-id");
+
+        console.log("descargando");
+        console.log(id_archivo);
 
         accion = "marcarArchivoDescargado";
         $.ajax({

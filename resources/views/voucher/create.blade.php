@@ -19,23 +19,25 @@
                 </div>
             </div>
             <div class="card-body fondo0">
-                <!-- HIDDEN -->
-                <input type="text" name="paciente_id" value="{{$paciente->id }}" hidden>
                 <!-- Fecha -->
-                    <div class="col-12">
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="form-group">
-                                    <label> <p style="font-size:130%">Fecha: </p></label>
-                                    <input class="form-control" type="date" name="turno"  required
-                                    value="{{ Carbon\Carbon::now()->format('Y-m-d') }}">
-                                </div>
-                            </div> 
-                        </div>
+                <div class="col-12">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label> <p style="font-size:130%">Fecha: </p></label>
+                                <input class="form-control" type="date" name="turno"  required
+                                value="{{ Carbon\Carbon::now()->format('Y-m-d') }}">
+                            </div>
+                        </div> 
                     </div>
+                </div>
                 <!-- / Fecha -->
-                <!-- Paciente -->
-                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+
+                <!-- HIDDEN --><?php
+                if(isset($paciente->id)){
+                  $pacientes_id=$paciente->id;?>
+                  <!-- Paciente -->
+                  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                         <div class="card flex-fill" >
                             <div class="card-header header-bg">
                                 <h3 class="card-title">Datos del paciente</h3>
@@ -70,7 +72,12 @@
                             </div>
                         </div>
                     </div>
-                <!-- / Paciente -->
+                    <!-- / Paciente --><?php
+                }else{
+                  $pacientes_id=$paciente;
+                  echo "<h4>".$cant_pacientes." pacientes seleccionados</h4>";
+                }?>
+                <input type="text" name="paciente_id" value="{{$pacientes_id }}" hidden>
                 <!-- Estudios -->
                     @foreach ($tipo_estudios as $tipo)<?php
                         //var_dump($tipo->nombre)?>
@@ -81,8 +88,8 @@
                                         <div class="col">
                                             <h3 class="card-title">{{$tipo->nombre}}</h3> 
                                         </div>
-                                            <div style="text-align: right" class="col">
-                                                <div class="icheck-danger d-inline"><?php
+                                        <div style="text-align: right" class="col">
+                                            <div class="icheck-danger d-inline"><?php
                                                 $checked="";
                                                 if($tipo->id==2){
                                                   $checked="checked";

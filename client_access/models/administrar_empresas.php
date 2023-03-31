@@ -155,8 +155,10 @@ class Empresas{
       $arrayArchivos[] = array(
         'id_archivo_usuario'=>$row['id'],
         'archivo'=>$row['archivo'],
-        'fecha_hora_subida'=>date("d M Y H:i",strtotime($row['fecha_hora_subida'])),
-        'fecha_hora_bajada'=>($row['fecha_hora_bajada']) ? date("d M Y H:i",strtotime($row['fecha_hora_bajada'])) : "",
+        /*'fecha_hora_subida'=>date("d M Y H:i:s",strtotime($row['fecha_hora_subida'])),
+        'fecha_hora_bajada'=>($row['fecha_hora_bajada']) ? date("d M Y H:i:s",strtotime($row['fecha_hora_bajada'])) : "",*/
+        'fecha_hora_subida'=>$row['fecha_hora_subida'],
+        'fecha_hora_bajada'=>($row['fecha_hora_bajada']) ? $row['fecha_hora_bajada'] : "",
       );
     }
 
@@ -226,14 +228,19 @@ class Empresas{
   public function eliminarArchivo($id_archivo, $nombre_adjunto, $id_empresa){
 
     $directorio = "../views/archivos_empresas/$id_empresa/";
+    $archivo=$directorio.$nombre_adjunto;
 
-    $deletedOK=unlink($directorio.$nombre_adjunto);
-    if($deletedOK){
+    if(file_exists($archivo)){
+      $deletedOK=unlink($archivo);
+      if($deletedOK){
+        $queryDelAdjuntos = "DELETE FROM archivos_usuario WHERE id = $id_archivo";
+        $delAdjuntos = $this->conexion->consultaSimple($queryDelAdjuntos);
+      }
+      return $deletedOK;
+    }else{
       $queryDelAdjuntos = "DELETE FROM archivos_usuario WHERE id = $id_archivo";
       $delAdjuntos = $this->conexion->consultaSimple($queryDelAdjuntos);
     }
-
-    return $deletedOK;
 
   }
 

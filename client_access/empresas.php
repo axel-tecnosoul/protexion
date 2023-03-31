@@ -150,7 +150,7 @@ if (!isset($_SESSION['rowUsers']['id_usuario'])) {
                   <div id="dropMasArchivos"></div>
                 </div>
               </div>
-              <div class="row"><?php
+              <div class="row m-1"><?php
                 include_once("views/tabla_archivos.php")?>
               </div>
             </div>
@@ -462,9 +462,14 @@ if (!isset($_SESSION['rowUsers']['id_usuario'])) {
         //let id_item = parseInt($('#id_item').text());
 
         let id_empresa=$("#id_empresa").html();
-        //let id_archivo = this.getAttribute("data-id");
-        let id_archivo = parseInt($(this).closest('tr').find('td:eq(0)').text());
+        let id_archivo = this.getAttribute("data-id");
+        //let id_archivo = parseInt($(this).closest('tr').find('td:eq(0)').text());
         let nombreArchivo = this.getAttribute("data-name");
+        console.log($(this));
+        console.log($(this).closest('tr'));
+        console.log($(this).closest('tr').find('td:eq(0)'));
+        console.log($(this).closest('tr').find('td:eq(0)').text());
+        console.log(id_archivo);
 
         swal({
           title: "Estas seguro?",

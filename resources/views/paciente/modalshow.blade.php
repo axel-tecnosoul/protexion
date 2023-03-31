@@ -13,16 +13,20 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h3 class="modal-title"><i class="fa fa-user" aria-hidden="true"></i> Paciente <br> {{ $paciente->nombreCompleto() }}
-                <hr><i class="fa fa-industry" aria-hidden="true"></i>
-                        <?php if($paciente->origen == null)
-                            echo(" ");
+                    <hr>
+                        <i class="fa fa-industry" aria-hidden="true"></i><?php
+                        if($paciente->origen == null) echo(" ");
                         else echo($paciente->origen->definicion)?>
-                 <hr>
-                 @if($paciente->imagen == null)
-                    <img src="{{ asset('imagenes/paciente/default.png')}}" width="150px" class="img-circle elevation-2" alt="User Image">
-                @else
-                    <img src="{{ asset('imagenes/paciente/'.$paciente->imagen)}}" width="150px" class="img-circle elevation-2" alt="User Image">
-                @endif</h3>
+                    <hr><?php
+                    if(file_exists(asset('imagenes/paciente/'.$paciente->imagen))){
+                      if($paciente->imagen == null){?>
+                        <img src="{{ asset('imagenes/paciente/default.png')}}" width="50px" class="img-circle elevation-2" alt="User Image"><?php
+                      }else{?>
+                        <img src="{{ asset('imagenes/paciente/'.$paciente->imagen)}}" width="50px" class="img-circle elevation-2" alt="User Image"><?php
+                      }
+                    }?>
+                    
+                </h3>
                 <div class="modal-body">
                     <table class="table table-bordered table-condensed table-hover">
                         <thead>
