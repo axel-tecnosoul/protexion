@@ -322,6 +322,21 @@
 
                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                         <div class="form-group">
+                            <label for="oficio">
+                                    Oficio
+                            </label>
+                            <input
+                                type="string"
+                                name="oficio"
+                                maxlength="99"
+                                value="{{old('oficio')}}"
+                                class="form-control"
+                                placeholder="Ingrese el oficio..."
+                                title="Introduzca un oficio">
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <div class="form-group">
                             <label> Pais</label>
                             <select name="pais_id"id="pais_id"class="pais_id form-control"required>
                                 <option value="0"disabled="true"selected="true"title="Seleccione un pais">

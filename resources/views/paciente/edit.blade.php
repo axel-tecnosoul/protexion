@@ -348,6 +348,21 @@
                         
                     </div>
                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <div class="form-group">
+                            <label for="oficio">
+                                    Oficio
+                            </label>
+                            <input
+                                type="string"
+                                name="oficio"
+                                maxlength="99"
+                                value="{{ $paciente->oficio }}"
+                                class="form-control"
+                                placeholder="Ingrese el oficio..."
+                                title="Introduzca un oficio">
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                     <label>País</label>
                         <select
                             name="pais_id"

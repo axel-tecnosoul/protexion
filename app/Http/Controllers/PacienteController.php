@@ -160,7 +160,7 @@ class PacienteController extends Controller
     public function store(Request $request){
 
         $this->validate($request, [
-            'documento' => 'unique:pacientes,documento,except,id',
+            //'documento' => 'unique:pacientes,documento,except,id',
             'nombres'   => 'required',
             'apellidos' => 'required'
         ]);
@@ -202,6 +202,9 @@ class PacienteController extends Controller
         }
         if($request->get('origen_id')!=null){
             $paciente->origen_id=$request->get('origen_id');
+        }
+        if($request->get('oficio')!=null){
+            $paciente->oficio=$request->get('oficio');
         }
         if($request->get('estado_civil_id')!=null){
             $paciente->estado_civil_id=$request->get('estado_civil_id');
@@ -304,6 +307,7 @@ class PacienteController extends Controller
         $paciente->sexo_id=$request->get('sexo_id');
         $paciente->cuil=$request->get('cuil');
         $paciente->telefono=$request->get('telefono');
+        $paciente->oficio=$request->get('oficio');
         $paciente->obra_social_id=$request->get('obra_social_id');
         $paciente->estado_civil_id=$request->get('estado_civil_id');
         $paciente->origen_id=$request->get('origen_id');
