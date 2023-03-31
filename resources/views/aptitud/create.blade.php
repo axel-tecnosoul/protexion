@@ -131,6 +131,10 @@
             if(bigLabel=="COMPLEMENTARIO" || bigLabel=="Historia Clínica"){
               bigLabel=""
             }
+            if(bigLabel=="PSICOTECNICO"){
+              label=bigLabel+" "+label;
+              bigLabel="";
+            }
             //label=""
             //label+="\n"
             label="<b>"+label+"</b>"
