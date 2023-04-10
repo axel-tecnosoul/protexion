@@ -6,7 +6,7 @@
 <div class="col-12">
     <div class="row">
 
-      <div class="col-4">
+      <div class="col-2">
            <label for="desde">Fecha desde</label>
            <input
                type="date"
@@ -16,7 +16,7 @@
                value="{{$desde}}"
            >
        </div>
-       <div class="col-4">
+       <div class="col-2">
            <label for="hasta">Fecha Hasta</label>
            <input
                type="date"
@@ -26,7 +26,7 @@
                value="{{$hasta}}"
            >
        </div>
-       <div class="col-4">
+       <div class="col-3">
            <label for="hasta">Empresa</label>
            <select
               name="empresa_id"
@@ -34,22 +34,35 @@
               class="empresa_id custom-select">
               <option
                   value=""
-                  title="-Seleccione el tipo de estudio-">
-                  -Seleccione el tipo de estudio-
+                  title="-Seleccione una empresa-">
+                  -Seleccione una empresa-
               </option>
               @foreach ($empresas as $empresa)<?php
                   $selected="";
-                  if($empresa["id"]===$empresa_id){
+                  if($empresa["id"]==$empresa_id){
                     $selected="selected";
                   }?>
-                  <option
-                      {{$selected}}
-                      value="{{$empresa['id'] }}">{{$empresa['nombre']}}
-                  </option>
+                  <option {{$selected}} value="{{$empresa['id'] }}">{{$empresa['definicion']}}</option>
               @endforeach
             </select>
        </div>
-       <div class="col-4">
+       <div class="col-3">
+           <label for="hasta">Resultado</label>
+           <select
+              name="resultado"
+              id="resultado"
+              class="resultado custom-select">
+              <option
+                  value=""
+                  title="-Seleccione un resultado-">
+                  -Seleccione un resultado-
+              </option>
+              @foreach ($aResultados as $resultado)
+                  <option {{$resultado['selected']}} value="{{$resultado['nombre'] }}">{{$resultado['nombre']}}</option>
+              @endforeach
+            </select>
+       </div>
+       <div class="col-2">
         <label for=""></label>
         <div class="form-group">
             <span class="input-group-btn">
@@ -61,16 +74,6 @@
                     class="btn btn-danger btn-responsive">
                         <i class="fa fa-search"></i> Buscar
                 </button>
-
-                <a
-
-                href= "{{ route('voucher.index') }}"
-                class="btn btn-secondary"
-                >
-                <i class="fas fa-eraser"></i>
-                    ... Limpiar
-            </a>
-
             </span>
         </div>
     </div>

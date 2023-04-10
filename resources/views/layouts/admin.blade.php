@@ -240,12 +240,12 @@
                             </a>
                         </li> -->
 
-                        <!-- <li class="nav-item">
+                        <li class="nav-item">
                             <a href="{{ route('empresa.reporte') }}" class="nav-link">
                                 <i class="nav-icon fas fa-poll-h"></i>
                                 <p>Resumen Empresarial</p>
                             </a>
-                        </li> -->
+                        </li>
                         <!--
                             <li class="nav-header">GESTIÓN DE ACCESO</li>
                                 

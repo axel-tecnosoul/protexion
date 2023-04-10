@@ -39,6 +39,7 @@ class VoucherMedicoController extends Controller
         ->join('vouchers_estudios', 'vouchers_estudios.voucher_id', '=', 'vouchers.id')
         ->join('estudios', 'vouchers_estudios.estudio_id', '=', 'estudios.id')
         //->where('carga', '=', 0);
+        ->where('vouchers.anulado','=',0)
         ->whereNotIn('estudios.id', [1,60,66,73]);
         //->join('pacientes', 'vouchers.paciente_id', '=', 'pacientes.id');
         //->where('followers.follower_id', '=', 3)
@@ -68,15 +69,17 @@ class VoucherMedicoController extends Controller
       foreach($vouchers_medico as $voucher){
         $paciente=Paciente::find($voucher->paciente_id);
 
-        //$dniCuil=$paciente->cuil ?? number_format($paciente->documento,0,",",".");
-        $dni=number_format($paciente->documento,0,",",".");
+        if($paciente->estado_id==1){
+          //$dniCuil=$paciente->cuil ?? number_format($paciente->documento,0,",",".");
+          $dni=number_format($paciente->documento,0,",",".");
 
-        $pacienteNombre="(".$dni.") ".$paciente->nombreCompleto();
-        $aVoucherMedico[]=[
-          "paciente" => $pacienteNombre,
-          "empresa" => $paciente->origen->definicion,
-          "estudio" => $voucher->nombre,
-        ];
+          $pacienteNombre="(".$dni.") ".$paciente->nombreCompleto();
+          $aVoucherMedico[]=[
+            "paciente" => $pacienteNombre,
+            "empresa" => $paciente->origen->definicion,
+            "estudio" => $voucher->nombre,
+          ];
+        }
         /*if($voucher->tipo_estudio_id==$tipo_estudio_id){
           var_dump($voucher);
         }*/

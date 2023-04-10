@@ -47,6 +47,15 @@ if (!isset($_SESSION['rowUsers']['id_usuario'])) {
     <link id="color" rel="stylesheet" href="assets/css/light-1.css" media="screen">
     <!-- Responsive css-->
     <link rel="stylesheet" type="text/css" href="assets/css/responsive.css">
+    <style>
+      .modal-dialog{
+        overflow-y: initial !important
+      }
+      .modal-body{
+        max-height: 70vh;
+        overflow-y: auto;
+      }
+    </style>
   </head>
   <body>
     <!-- Loader starts-->
@@ -66,21 +75,6 @@ if (!isset($_SESSION['rowUsers']['id_usuario'])) {
       </div> -->
       <!-- Page Sidebar Ends-->
       <div class="page-body">
-        <!-- <div class="container-fluid">
-          <div class="page-header">
-            <div class="row">
-              <div class="col">
-                <div class="page-header-left">
-                  <h3>ABM Empresas</h3>
-                  <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="home_users.php"><i data-feather="home"></i></a></li>
-                    <li class="breadcrumb-item active">ABM Empresas</li>
-                  </ol>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div> -->
         <!-- Container-fluid starts-->
         <div class="container-fluid">
           <span class="d-none" id="tipo_usuario"><?=$_SESSION["rowUsers"]["tipo"]?></span>
@@ -145,18 +139,18 @@ if (!isset($_SESSION['rowUsers']['id_usuario'])) {
           <form id="formEmpresas">
             <div class="modal-body">
               <div class="row">
-                <div class="col-lg-4 mb-2"><button id="btnAddAdjuntos" class="btn btn-secondary"> Agregar</button></div>
+                <div class="col-lg-4 mb-2"><button id="btnAddAdjuntos" class="btn btn-secondary">Agregar</button></div>
                 <div class="col-lg-12 d-none" id="masAdjuntos">
                   <div id="dropMasArchivos"></div>
                 </div>
               </div>
-              <div class="row m-1"><?php
+              <div id="tablaArchivos" class="row m-1"><?php
                 include_once("views/tabla_archivos.php")?>
               </div>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-light" data-dismiss="modal">Cancelar</button>
-              <button type="submit" id="btnGuardar" class="btn btn-dark">
+              <button type="button" class="btn btn-light" data-dismiss="modal">Cerrar</button>
+              <button type="submit" id="btnGuardar" class="btn btn-dark d-none">
                 Guardar
                 <div id="spinner_guardar" class="spinner-border spinner-border-sm d-none" role="status">
                   <span class="sr-only">Loading...</span>
@@ -391,14 +385,30 @@ if (!isset($_SESSION['rowUsers']['id_usuario'])) {
 
         $("#modalCRUD").modal("show");
 
+        $("#btnGuardar").html("Agregar")
+        $("#masAdjuntos").addClass("d-none");
+        $("#tablaArchivos").removeClass("d-none");
+
         get_archivos(id_empresa)
       });
 
       /*BOTTON AGREGAR ADJUNTOS*/
       $(document).on('click', '#btnAddAdjuntos', function(e){
         e.preventDefault();
+        console.log(this);
+        let btn=$(this);
+        if(btn.html()=="Agregar"){
+          btn.html("Cancelar agregar")
+        }else{
+          btn.html("Agregar")
+        }
         $rowMasAdjuntos = document.getElementById("masAdjuntos");
         $rowMasAdjuntos.classList.toggle("d-none");
+        $rowTablaArchivos = document.getElementById("tablaArchivos");
+        $rowTablaArchivos.classList.toggle("d-none");
+
+        $btnGuardar = document.getElementById("btnGuardar");
+        $btnGuardar.classList.toggle("d-none");
         $.ajax({
           url: "dropMasAdjuntosEmpresas.html",
           type: "POST",
@@ -411,6 +421,7 @@ if (!isset($_SESSION['rowUsers']['id_usuario'])) {
       })
 
       $(document).on("click", "#btnGuardar", function(e){
+        $(this).addClass("disabled")
         let id_empresa=$("#id_empresa").html();
         e.preventDefault(); //evita el comportambiento normal del submit, es decir, recarga total de la página   
         
@@ -441,6 +452,7 @@ if (!isset($_SESSION['rowUsers']['id_usuario'])) {
           contentType: false,
           processData: false,
           success: function(data) {
+            $("#btnGuardar").removeClass("disabled")
             console.log(data);
             $("#spinner_guardar").toggleClass("d-none");
             if(data=="1"){

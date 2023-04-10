@@ -10,12 +10,14 @@ use App\Domicilio;
 //use App\Sexo;
 use App\Provincia;
 use App\Ciudad;
+use App\Paciente;
 //use App\Especialidad;
 //use App\Estado;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Redirect;
 use App\Models\Aptitud;
 use DB;
+use PDF;
 
 class EmpresaController extends Controller
 {
@@ -60,20 +62,14 @@ class EmpresaController extends Controller
             //$estado_id=$request->estado_id; //mantengo el id de la categoria del tiquet
         }else //si nunca filtre, (si no existió request)
         {
-            //$puesto_id=null; //en el select2 que me aparesca " -- Todas las Categorias --"
-            //$estado_id=null; //en el select2 que me aparesca " -- Todas las Categorias --"
+            
             //$personals=Empresa::whereEstado_id(1)->orderBy('created_at','desc')->get(); //que me obtenga directamente todos los grupos
             $empresas=Empresa::orderBy('created_at','desc')->get(); //que me obtenga directamente todos los grupos
         }
 
         return view('empresa.index',[
-            "empresas"         =>  $empresas,         //los grupos de trabajo
-            //"puesto_id"         =>  $puesto_id, //si los id son identicos que me mantenga el valor
-            //"puestos"           =>  $puestos,  //las categorias asociadas al grupo de trabajo
-            //"estado_id"         =>  $estado_id, //si los id son identicos que me mantenga el valor
-            //"estados"           =>  $estados, //si los id son identicos que me mantenga el valor
-
-            ]);
+          "empresas"         =>  $empresas,         //los grupos de trabajo
+        ]);
 
 
     }
@@ -243,7 +239,8 @@ class EmpresaController extends Controller
       //$vouchers = Voucher::all(); //obteneme todas los vouchers
 
         //obtenemos todos los tipos de estudios
-        $empresas=Empresa::all();
+        //$empresas=Empresa::all();
+        $empresas=Empresa::orderBy('definicion','asc')->get(); //que me obtenga directamente todos los grupos
         
         //dd($aEstudios);
 
@@ -257,35 +254,76 @@ class EmpresaController extends Controller
         }
         $empresa_id=0;
 
-        $aPacientes=[];
+        $resultados=["Apto sin preexistencias","Apto con preexistencias","Inconveniente si ingreso en el momento actual"];
+        $aResultados=[];
+        foreach ($resultados as $resultado) {
+          $aResultados[]=[
+            "nombre"=>$resultado,
+            "selected"=>"",
+          ];
+        }
 
         $query = DB::table('aptituds')
           ->join('vouchers', 'aptituds.voucher_id', '=', 'vouchers.id')
           ->join('pacientes', 'vouchers.paciente_id', '=', 'pacientes.id');
           //->where('carga', '=', 0);
-        //if(isset($request->desde)){
-          $query->where('turno','>=', $desde);
-        /*}
-        if(isset($request->hasta)){*/
-          $query->where('turno','<=', $hasta);
-        //}
+        
+        $query->where('turno','>=', $desde);
+        $query->where('turno','<=', $hasta);
+
         if(isset($request->empresa_id)){
-          $query->where('origen.id', $request->empresa_id);
+          $empresa_id=$request->empresa_id;
+          $query->where('pacientes.origen_id', $empresa_id);
+        }
+        if(isset($request->resultado)){
+          $query->where('aptitud_laboral', $request->resultado);
+
+          $indice = array_search($request->resultado, array_column($aResultados, 'nombre'));
+          $aResultados[$indice]["selected"]="selected";
+          /*$selected="";
+          if($request->resultado==$resultado){
+            $selected="selected";
+          }*/
         }
         $datos=$query->get();
-        
+
+        //dd($aResultados);
         //dd($datos);
+        //dd($aInformes);
 
         //$vouchers = Voucher::orderBy('id', 'desc')->get();
         return view('empresa.reporte',[
             //"vouchers"          => $vouchers,
-            "aPacientes"        => $aPacientes,
             "desde"             => $desde,
             "hasta"             => $hasta,
             "empresa_id"        => $empresa_id,
             "empresas"          => $empresas,
+            "aResultados"       => $aResultados,
             "datos"             => $datos
         ]);
+    }
+    
+    public function pdf_reporte($empresa_id,$visitas){
+
+        $empresa=Empresa::findOrFail($empresa_id);
+        //dd($empresa_id);
+
+        $query = DB::table('aptituds')
+          ->join('vouchers', 'aptituds.voucher_id', '=', 'vouchers.id')
+          ->join('pacientes', 'vouchers.paciente_id', '=', 'pacientes.id');
+          //->where('carga', '=', 0);
+        
+        $query->whereIn('aptituds.id', explode(",",$visitas));
+        $datos=$query->get();
+        //dd($datos);
+
+        $pdf = PDF::loadView('empresa.pdf_reporte',[
+            "empresa"          => $empresa,
+            "datos"             => $datos
+        ]);
+        //$pdf->setPaper('a4','letter');
+        $pdf->setPaper('a4','landscape');
+        return $pdf->stream('voucher_medico.pdf');
     }
 
 
