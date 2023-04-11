@@ -36,15 +36,16 @@
                           </div>
                         </th>
                         <th width="10%" style="color:#F8F9F9" >Fecha</th>
-                        <th width="10%" style="color:#F8F9F9" >Paciente</th>
+                        <th width="40%" style="color:#F8F9F9" >Paciente</th>
                         <!-- <th width="10%" style="color:#F8F9F9" >CUIL/DNI</th> -->
-                        <th width="19%" style="color:#F8F9F9" >Resultado</th>
-                        <th width="28%" style="color:#F8F9F9" >Preexistencias</th>
-                        <th width="28%" style="color:#F8F9F9" >Observaciones</th>
+                        <th width="40%" style="color:#F8F9F9" >Resultado</th>
+                        <!-- <th width="28%" style="color:#F8F9F9" >Preexistencias</th>
+                        <th width="28%" style="color:#F8F9F9" >Observaciones</th> -->
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($datos as $key =>$informe)<?php
+                    
                         $documento="";
                         if($informe->documento) $documento=number_format( (intval($informe->documento)/1000), 3, '.', '.');
                         if($informe->cuil) $documento=$informe->cuil;
@@ -62,8 +63,8 @@
                             <td style="text-align:left"><?=$informe->apellidos." ".$informe->nombres?></td>
                             <!-- <td style="text-align:left"><?=$documento?></td> -->
                             <td style="text-align:left"><?=$informe->aptitud_laboral?></td>
-                            <td style="text-align:left"><?=$informe->preexistencias?></td>
-                            <td style="text-align:left"><?=$informe->observaciones?></td>
+                            <!-- <td style="text-align:left"><?=$informe->preexistencias?></td>
+                            <td style="text-align:left"><?=$informe->observaciones?></td> -->
                         </tr>
                     @endforeach
                 </tbody>

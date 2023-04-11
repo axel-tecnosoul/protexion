@@ -263,29 +263,28 @@ class EmpresaController extends Controller
           ];
         }
 
-        $query = DB::table('aptituds')
-          ->join('vouchers', 'aptituds.voucher_id', '=', 'vouchers.id')
-          ->join('pacientes', 'vouchers.paciente_id', '=', 'pacientes.id');
-          //->where('carga', '=', 0);
-        
-        $query->where('turno','>=', $desde);
-        $query->where('turno','<=', $hasta);
-
+        $datos=[];
         if(isset($request->empresa_id)){
           $empresa_id=$request->empresa_id;
-          $query->where('pacientes.origen_id', $empresa_id);
-        }
-        if(isset($request->resultado)){
-          $query->where('aptitud_laboral', $request->resultado);
 
-          $indice = array_search($request->resultado, array_column($aResultados, 'nombre'));
-          $aResultados[$indice]["selected"]="selected";
-          /*$selected="";
-          if($request->resultado==$resultado){
-            $selected="selected";
-          }*/
+          $query = DB::table('aptituds')
+            ->join('vouchers', 'aptituds.voucher_id', '=', 'vouchers.id')
+            ->join('pacientes', 'vouchers.paciente_id', '=', 'pacientes.id');
+          
+          $query->where('turno','>=', $desde);
+          $query->where('turno','<=', $hasta);
+          $query->where('pacientes.origen_id', $empresa_id);
+
+          if(isset($request->resultado)){
+            $query->where('aptitud_laboral', $request->resultado);
+  
+            $indice = array_search($request->resultado, array_column($aResultados, 'nombre'));
+            $aResultados[$indice]["selected"]="selected";
+  
+          }
+          $query->select('aptituds.id', 'vouchers.turno', 'pacientes.apellidos', 'pacientes.nombres', 'aptituds.aptitud_laboral','pacientes.documento','pacientes.cuil', 'aptituds.preexistencias', 'aptituds.observaciones');
+          $datos=$query->get();
         }
-        $datos=$query->get();
 
         //dd($aResultados);
         //dd($datos);

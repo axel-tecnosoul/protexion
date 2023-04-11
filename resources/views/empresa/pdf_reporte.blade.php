@@ -29,7 +29,7 @@
             border-collapse: collapse;
             padding: 1%;
             width: 100%;
-            font-size: 14px;
+            font-size: 12px;
         }
         .table th, td{
           border: 1px solid black;
@@ -131,12 +131,12 @@
                     <th colspan="6" style="color:#F8F9F9" >INFORME FINAL EXAMENES PREOCUPACIONALES</th>
                 </tr>
                 <tr class="text-uppercase">
-                    <th width="10%" style="color:#F8F9F9" >Fecha</th>
-                    <th width="10%" style="color:#F8F9F9" >Paciente</th>
-                    <th width="10%" style="color:#F8F9F9" >CUIL/DNI</th>
-                    <th width="19%" style="color:#F8F9F9" >Resultado</th>
-                    <th width="28%" style="color:#F8F9F9" >Preexistencias</th>
-                    <th width="28%" style="color:#F8F9F9" >Observaciones</th>
+                    <th width="7%" style="color:#F8F9F9" >Fecha</th>
+                    <th width="8%" style="color:#F8F9F9" >Paciente</th>
+                    <th width="9%" style="color:#F8F9F9" >CUIL/DNI</th>
+                    <th width="11%" style="color:#F8F9F9" >Resultado</th>
+                    <th width="25%" style="color:#F8F9F9" >Preexistencias</th>
+                    <th width="40%" style="color:#F8F9F9" >Observaciones</th>
                 </tr>
             </thead>
             <tbody>
