@@ -3,8 +3,11 @@ session_start();
 //include_once('../conexion.php');
 date_default_timezone_set("America/Buenos_Aires");
 $hora = date('Hi');
+if ($_SESSION['rowUsers']['tipo']!=1) {
+  header("location:login.php");
+}
 if (!isset($_SESSION['rowUsers']['id_usuario'])) {
-    header("location:./models/redireccionar.php");
+  header("location:./models/redireccionar.php");
 }?>
 <!DOCTYPE html>
 <html lang="en">
@@ -15,8 +18,8 @@ if (!isset($_SESSION['rowUsers']['id_usuario'])) {
     <meta name="description" content="endless admin is super flexible, powerful, clean &amp; modern responsive bootstrap 4 admin template with unlimited possibilities.">
     <meta name="keywords" content="admin template, endless admin template, dashboard template, flat admin template, responsive admin template, web app">
     <meta name="author" content="pixelstrap">
-    <!--<link rel="icon" href="assets/images/favicon.png" type="image/x-icon">
-    <link rel="shortcut icon" href="assets/images/favicon.png" type="image/x-icon">-->
+    <link rel="icon" href="assets/images/favicon.ico" type="image/x-icon">
+    <!--<link rel="shortcut icon" href="assets/images/favicon.png" type="image/x-icon">-->
     <title>Empresas</title>
     <!-- Google font-->
     <link href="https://fonts.googleapis.com/css?family=Work+Sans:100,200,300,400,500,600,700,800,900" rel="stylesheet">
@@ -44,6 +47,21 @@ if (!isset($_SESSION['rowUsers']['id_usuario'])) {
     <link id="color" rel="stylesheet" href="assets/css/light-1.css" media="screen">
     <!-- Responsive css-->
     <link rel="stylesheet" type="text/css" href="assets/css/responsive.css">
+    <style>
+      .modal-dialog{
+        overflow-y: initial !important
+      }
+      .modal-body{
+        max-height: 70vh;
+        overflow-y: auto;
+      }
+      .dz-remove{
+        bottom: 0;
+        position: absolute;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+    </style>
   </head>
   <body>
     <!-- Loader starts-->
@@ -54,7 +72,7 @@ if (!isset($_SESSION['rowUsers']['id_usuario'])) {
     </div>
     <!-- Loader ends--><?php
     include_once('./views/main_header.php');?>
-    <!-- Page Header Ends                              -->
+    <!-- Page Header Ends-->
     <!-- Page Body Start-->
     <div class="page-body-wrapper">
       <!-- Page Sidebar Start-->
@@ -63,73 +81,56 @@ if (!isset($_SESSION['rowUsers']['id_usuario'])) {
       </div> -->
       <!-- Page Sidebar Ends-->
       <div class="page-body">
-        <!-- <div class="container-fluid">
-          <div class="page-header">
-            <div class="row">
-              <div class="col">
-                <div class="page-header-left">
-                  <h3>ABM Empresas</h3>
-                  <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="home_users.php"><i data-feather="home"></i></a></li>
-                    <li class="breadcrumb-item active">ABM Empresas</li>
-                  </ol>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div> -->
         <!-- Container-fluid starts-->
         <div class="container-fluid">
-          <div class="row">
-            <!-- Ajax Generated content for a column start-->
-            <div class="col-sm-12">
-              <div class="card">
-                <div class="card-header">
-                  <h5>
-                    Empresas
-                    <button id="btnImportarEmpresas" type="button" class="btn btn-outline-success ml-3" data-toggle="modal"><i class="fa fa-cloud-upload"></i> importar</button>
-                  </h5>
-                  <!-- <button id="btnNuevo" type="button" class="btn btn-primary mt-2" data-toggle="modalCRUD"><i class="fa fa-plus-square"></i> Importar</button>  -->
+          <span class="d-none" id="tipo_usuario"><?=$_SESSION["rowUsers"]["tipo"]?></span>
+          <span class="d-none" id="id_usuario"><?=$_SESSION["rowUsers"]["id_usuario"]?></span>
 
-                </div>
-                <div class="card-body">
-                  <div class="table-responsive">
-                    <table class="table table-hover" id="tablaEmpresas">
-                      <thead class="text-center">
-                        <tr>
-                          <th class="text-center">#ID</th>
-                          <th>Empresa</th>
-                          <th>Password</th>
-                          <!-- <th>Tipo</th> -->
-                          <!-- <th>Activo</th> -->
-                          <th>Acciones</th>
-                        </tr>
-                      </thead>
-                      <tbody></tbody>
-                    </table>
-                  </div>
-                </div>
-              </div>
+          <div class="card">
+            <div class="card-header">
+              <h5>
+                Empresas
+                <button id="btnImportarEmpresas" type="button" class="btn btn-outline-success ml-3" data-toggle="modal"><i class="fa fa-cloud-upload"></i> importar</button>
+              </h5>
+              <!-- <button id="btnNuevo" type="button" class="btn btn-primary mt-2" data-toggle="modalCRUD"><i class="fa fa-plus-square"></i> Importar</button>  -->
             </div>
-            <!-- Ajax Generated content for a column end-->
-        </div>
-          </div>
-          <!-- Container-fluid Ends-->
-        </div>
-        <!-- footer start-->
-        <footer class="footer">
-          <div class="container-fluid">
-            <div class="row">
-              <div class="col-md-6 footer-copyright">
-                <p class="mb-0"></p>
-              </div>
-              <div class="col-md-6">
-                <p class="pull-right mb-0"></p>
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table table-hover" id="tablaEmpresas">
+                  <thead class="text-center">
+                    <tr>
+                      <th class="text-center">#ID</th>
+                      <th>Empresa</th>
+                      <th>Password</th>
+                      <th>Cant. archivos</th>
+                      <!-- <th>Tipo</th> -->
+                      <!-- <th>Activo</th> -->
+                      <th>Acciones</th>
+                    </tr>
+                  </thead>
+                  <tbody></tbody>
+                </table>
               </div>
             </div>
           </div>
-        </footer>
+        </div>
+        <!-- Container-fluid Ends-->
       </div>
+      
+      <!-- footer start-->
+      <footer class="footer">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-6 footer-copyright">
+              <p class="mb-0"></p>
+            </div>
+            <div class="col-md-6">
+              <p class="pull-right mb-0"></p>
+            </div>
+          </div>
+        </div>
+      </footer>
+
     </div>
 
     <!--Modal para CRUD-->
@@ -144,26 +145,23 @@ if (!isset($_SESSION['rowUsers']['id_usuario'])) {
           <form id="formEmpresas">
             <div class="modal-body">
               <div class="row">
-                <div class="col-lg-4 mb-2"><button id="btnAddAdjuntos" class="btn btn-secondary"> Agregar</button></div>
+                <div class="col-lg-4 mb-2"><button id="btnAddAdjuntos" class="btn btn-secondary">Agregar</button></div>
                 <div class="col-lg-12 d-none" id="masAdjuntos">
                   <div id="dropMasArchivos"></div>
                 </div>
               </div>
-              <div class="row">
-                <table id="adjuntos" class="table">
-                  <thead class="text-center">
-                    <th>Archivo</th>
-                    <th>Fecha y hora carga</th>
-                    <th>Fecha y hora descarga</th>
-                    <th>Acciones</th>
-                  </thead>
-                  <tbody></tbody>
-                </table>
+              <div id="tablaArchivos" class="row m-1"><?php
+                include_once("views/tabla_archivos.php")?>
               </div>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-light" data-dismiss="modal">Cancelar</button>
-              <button type="submit" id="btnGuardar" class="btn btn-dark">Guardar</button>
+              <button type="button" class="btn btn-light" data-dismiss="modal">Cerrar</button>
+              <button type="submit" id="btnGuardar" class="btn btn-dark d-none disabled">
+                Guardar
+                <div id="spinner_guardar" class="spinner-border spinner-border-sm d-none" role="status">
+                  <span class="sr-only">Loading...</span>
+                </div>
+              </button>
             </div>
           </form>
         </div>
@@ -229,17 +227,20 @@ if (!isset($_SESSION['rowUsers']['id_usuario'])) {
             {"data": "id_usuario"},
             {"data": "usuario"},
             {"data": "clave"},
+            {"data": "cant_archivos","class":"text-center"},
             //{"data": "tipo"},
             //{"data": "activo"},
             {"defaultContent" : "<div class='text-center'><div class='btn-group'><button class='btn btn-success btnFolder'><i class='fa fa-folder'></i></button></div></div>"},
             //<button class='btn btn-warning btnVer'><i class='fa fa-eye'></i></button><button class='btn btn-danger btnBorrar'><i class='fa fa-trash-o'></i></button>
           ],
+          stateSave:true,
           "language":  idiomaEsp
         });
 
         $('#modalCRUD').on('hidden.bs.modal', function (e) {
           document.getElementById('dropMasArchivos').innerHTML="";
           document.getElementById('masAdjuntos').classList.toggle("d-none");
+          tablaEmpresas.ajax.reload(null, false);
         });
 
       });
@@ -390,50 +391,31 @@ if (!isset($_SESSION['rowUsers']['id_usuario'])) {
 
         $("#modalCRUD").modal("show");
 
+        $("#btnGuardar").html("Agregar").addClass("d-none")
+        $("#btnAddAdjuntos").html("Agregar")
+        $("#masAdjuntos").addClass("d-none");
+        $("#tablaArchivos").removeClass("d-none");
+
         get_archivos(id_empresa)
       });
-
-      function get_archivos(id_empresa){
-        let urlDirectorio = "./views/archivos_empresas/"+id_empresa+"/";
-        let accion = "trerArchivosEmpresa";
-        $.ajax({
-          url: "models/administrar_empresas.php",
-          type: "POST",
-          datatype:"json",
-          data:  {accion:accion, id_empresa:id_empresa},
-          success: function(response) {
-            let respuestaJson = JSON.parse(response);
-            console.log(respuestaJson);
-
-            let tableAdjuntos = $('#adjuntos');
-            let divAdjuntos=tableAdjuntos.find("tbody");
-
-            let divImagen="";
-            respuestaJson.forEach((archivos)=>{
-              divImagen+= `
-                <tr>
-                  <td style="width:40%;word-break: break-all;"><a download="${archivos.archivo}" href="${urlDirectorio+archivos.archivo}"><i class="fa fa-download" aria-hidden="true"></i> ${archivos.archivo}</a></td>
-                  <td style="width:25%">${archivos.fecha_hora_subida}</td>
-                  <td style="width:25%">${archivos.fecha_hora_bajada}</td>
-                  <td style="width:10%"><a class='btn btn-outline-danger btnBorrarFoto text-danger' data-id="${archivos.id_archivo_usuario}" data-name="${archivos.archivo}"><i class='fa fa-trash-o'></i></a></td>
-                </tr>`;
-            })
-            if(respuestaJson.length==0){
-              divImagen+= `
-                <tr class="text-center">
-                  <td colspan="4">No hay registros</td>
-                </tr>`;
-            }
-            divAdjuntos.html(divImagen);
-          }
-        });
-      }
 
       /*BOTTON AGREGAR ADJUNTOS*/
       $(document).on('click', '#btnAddAdjuntos', function(e){
         e.preventDefault();
+        console.log(this);
+        let btn=$(this);
+        if(btn.html()=="Agregar"){
+          btn.html("Cancelar agregar")
+        }else{
+          btn.html("Agregar")
+        }
         $rowMasAdjuntos = document.getElementById("masAdjuntos");
         $rowMasAdjuntos.classList.toggle("d-none");
+        $rowTablaArchivos = document.getElementById("tablaArchivos");
+        $rowTablaArchivos.classList.toggle("d-none");
+
+        $btnGuardar = document.getElementById("btnGuardar");
+        $btnGuardar.classList.toggle("d-none");
         $.ajax({
           url: "dropMasAdjuntosEmpresas.html",
           type: "POST",
@@ -446,44 +428,58 @@ if (!isset($_SESSION['rowUsers']['id_usuario'])) {
       })
 
       $(document).on("click", "#btnGuardar", function(e){
-        let id_empresa=$("#id_empresa").html();
-        e.preventDefault(); //evita el comportambiento normal del submit, es decir, recarga total de la página   
-        
-        let datosEnviar = new FormData();
-        datosEnviar.append("id_empresa", id_empresa);
-        datosEnviar.append("accion", "subirArchivos");
+        e.preventDefault();
+        if(!$(this).hasClass("disabled")){
 
-        if(typeof arrayFiles !== 'undefined'){
-          let cantArchivos = 0;
-          for(let i = 0; i < arrayFiles.length; i++) {
-            datosEnviar.append('file'+i, arrayFiles[i]);
-            cantArchivos++;
-          };
-          datosEnviar.append('cantAdjuntos', cantArchivos);
-        }else{
-          let arrayFiles = "";
-        }
+          $(this).addClass("disabled")
+          let id_empresa=$("#id_empresa").html();
+          e.preventDefault(); //evita el comportambiento normal del submit, es decir, recarga total de la página   
+          
+          let datosEnviar = new FormData();
+          datosEnviar.append("id_empresa", id_empresa);
+          datosEnviar.append("accion", "subirArchivos");
 
-        $.ajax({
-          data: datosEnviar,
-          url: "models/administrar_empresas.php",
-          method: "post",
-          cache: false,
-          contentType: false,
-          processData: false,
-          success: function(data) {
-            if(data==""){
-              tablaEmpresas.ajax.reload(null, false);
-              $('#modalCRUD').modal('hide');
-              swal({
-                icon: 'success',
-                title: 'Accion realizada correctamente'
-              });
-            }else{
-              swal("Ha ocurrido un error!");
-            }
+          if(typeof arrayFiles !== 'undefined'){
+            console.log(arrayFiles);
+            console.log(arrayFiles.length);
+            let cantArchivos = 0;
+            for(let i = 0; i < arrayFiles.length; i++) {
+              datosEnviar.append('file'+i, arrayFiles[i]);
+              cantArchivos++;
+            };
+            datosEnviar.append('cantAdjuntos', cantArchivos);
+          }else{
+            let arrayFiles = "";
           }
-        });
+          console.log(datosEnviar);
+
+          $("#spinner_guardar").toggleClass("d-none");
+          $.ajax({
+            data: datosEnviar,
+            url: "models/administrar_empresas.php",
+            method: "post",
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function(data) {
+              $("#btnGuardar").removeClass("disabled")
+              console.log(data);
+              $("#spinner_guardar").toggleClass("d-none");
+              if(data=="1"){
+                tablaEmpresas.ajax.reload(null, false);
+                $('#modalCRUD').modal('hide');
+                swal({
+                  icon: 'success',
+                  title: 'Accion realizada correctamente'
+                });
+              }else{
+                swal("Ha ocurrido un error!");
+              }
+            }
+          });
+        }else{
+          console.log("el boton esta deshabilitado, no hacemos nada...")
+        }
 
       })
 
@@ -492,7 +488,13 @@ if (!isset($_SESSION['rowUsers']['id_usuario'])) {
 
         let id_empresa=$("#id_empresa").html();
         let id_archivo = this.getAttribute("data-id");
+        //let id_archivo = parseInt($(this).closest('tr').find('td:eq(0)').text());
         let nombreArchivo = this.getAttribute("data-name");
+        console.log($(this));
+        console.log($(this).closest('tr'));
+        console.log($(this).closest('tr').find('td:eq(0)'));
+        console.log($(this).closest('tr').find('td:eq(0)').text());
+        console.log(id_archivo);
 
         swal({
           title: "Estas seguro?",

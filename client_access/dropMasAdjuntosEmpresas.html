@@ -18,6 +18,11 @@
     </div>
   </form>
 </div>
+<div class="card-footer">
+  <div id="progreso" class="progress">
+    <div class="progress-bar" role="progressbar"></div>
+  </div>
+</div>
   <!--<div class="pb-4 text-center">
         <button class="btn btn-secondary" id="procesarArchivo">Procesar archivo</button>
       </div>-->
@@ -29,21 +34,41 @@
   Dropzone.autoDiscover = false;
   $(".dropzone").dropzone({
     url: "./models/administrar_empresas.php",
+    //autoProcessQueue: false,
     addRemoveLinks: false,
     acceptedFiles: "image/*,application/pdf,.doc,.docx,.xls,.xlsx,.csv,.tsv,.ppt,.pptx,.pages,.odt,.rtf,.pdf,.txt",
     maxFilesize: 10,
     maxFiles: 10,
     uploadMultiple: true,
+    parallelUploads: 1,
+    paramName: "file",
     dictRemoveFile: "Eliminar",
     addRemoveLinks: true,
     init: function(){
       this.on("addedfile", function(file){
-        arrayFiles.push(file);
+        //arrayFiles.push(file);
         //console.log("arrayFiles", arrayFiles);
+        console.log("añadiendo archivos");
       });
+      this.on("uploadprogress", function(file, progreso) {
+        console.log("Progreso de carga: ", progreso);
+      });
+      //uploadprogress(file, progress, bytesSent) {
+      /*this.on("uploadprogress", function(file, progress, bytesSent) {
+        if (file.previewElement) {
+          for (let node of file.previewElement.querySelectorAll(
+            "[data-dz-uploadprogress]"
+          )) {
+            node.nodeName === "PROGRESS"
+              ? (node.value = progress)
+              : (node.style.width = `${progress}%`);
+          }
+        }
+      }),*/
       this.on("removedfile", function(file){
-        var index = arrayFiles.indexOf(file);
-        arrayFiles.splice(index, 1);
+        /*var index = arrayFiles.indexOf(file);
+        arrayFiles.splice(index, 1);*/
+        console.log("eliminando archivos");
         //console.log("arrayFiles", arrayFiles);
       });
       this.on("queuecomplete", function() {
@@ -56,6 +81,23 @@
         console.log("deshabilitamos el boton guardar");
         $("#btnGuardar").addClass("disabled")
         // Aquí puedes realizar alguna acción mientras los archivos están siendo procesados
+      });
+      this.on("success", function(file, respuesta) {
+        console.log("Subida de archivo completada: ", respuesta);
+      });
+      this.on("error", function(file, mensaje) {
+        console.log("Error en la subida del archivo: ", mensaje);
+      });
+      this.on("errormultiple", function(file, mensaje) {
+        console.log("Error en la subida multiple de archivos: ", mensaje);
+      });
+      this.on("sending", function(file, xhr, formData) {
+        console.log("Subiendo archivo: ", file);
+        //formData.append("csrf_token", getCSRFToken());
+      });
+      this.on("totaluploadprogress", function(progress) {
+        $("#progress-bar").css("width", progress + "%");
+        $("#progress-bar").text(progress + "%");
       });
     }
   });

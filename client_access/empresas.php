@@ -55,6 +55,12 @@ if (!isset($_SESSION['rowUsers']['id_usuario'])) {
         max-height: 70vh;
         overflow-y: auto;
       }
+      .dz-remove{
+        bottom: 0;
+        position: absolute;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
     </style>
   </head>
   <body>
@@ -150,7 +156,7 @@ if (!isset($_SESSION['rowUsers']['id_usuario'])) {
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-light" data-dismiss="modal">Cerrar</button>
-              <button type="submit" id="btnGuardar" class="btn btn-dark d-none">
+              <button type="submit" id="btnGuardar" class="btn btn-dark d-none disabled">
                 Guardar
                 <div id="spinner_guardar" class="spinner-border spinner-border-sm d-none" role="status">
                   <span class="sr-only">Loading...</span>
@@ -385,7 +391,8 @@ if (!isset($_SESSION['rowUsers']['id_usuario'])) {
 
         $("#modalCRUD").modal("show");
 
-        $("#btnGuardar").html("Agregar")
+        $("#btnGuardar").html("Agregar").addClass("d-none")
+        $("#btnAddAdjuntos").html("Agregar")
         $("#masAdjuntos").addClass("d-none");
         $("#tablaArchivos").removeClass("d-none");
 
@@ -421,52 +428,85 @@ if (!isset($_SESSION['rowUsers']['id_usuario'])) {
       })
 
       $(document).on("click", "#btnGuardar", function(e){
-        $(this).addClass("disabled")
-        let id_empresa=$("#id_empresa").html();
-        e.preventDefault(); //evita el comportambiento normal del submit, es decir, recarga total de la página   
-        
-        let datosEnviar = new FormData();
-        datosEnviar.append("id_empresa", id_empresa);
-        datosEnviar.append("accion", "subirArchivos");
+        e.preventDefault();
+        if(!$(this).hasClass("disabled")){
+          $(".dropzone").processQueue();
+        };
+      })
 
-        if(typeof arrayFiles !== 'undefined'){
+      $(document).on("click", "#btnGuardar2", function(e){
+        e.preventDefault();
+        if(!$(this).hasClass("disabled")){
+
+          $(this).addClass("disabled")
+          let id_empresa=$("#id_empresa").html();
+          e.preventDefault(); //evita el comportambiento normal del submit, es decir, recarga total de la página   
+
+          $("#spinner_guardar").toggleClass("d-none");
           console.log(arrayFiles);
           console.log(arrayFiles.length);
-          let cantArchivos = 0;
+          let datosEnviar
           for(let i = 0; i < arrayFiles.length; i++) {
+            datosEnviar = new FormData();
+            datosEnviar.append("id_empresa", id_empresa);
+            datosEnviar.append("accion", "subirArchivos");
+            datosEnviar.append('cantAdjuntos', 1);
             datosEnviar.append('file'+i, arrayFiles[i]);
-            cantArchivos++;
-          };
-          datosEnviar.append('cantAdjuntos', cantArchivos);
-        }else{
-          let arrayFiles = "";
-        }
-        console.log(datosEnviar);
+            $.ajax({
+              data: datosEnviar,
+              url: "models/administrar_empresas.php",
+              method: "post",
+              cache: false,
+              contentType: false,
+              processData: false,
+              /*success: function(data) {
+                $("#btnGuardar").removeClass("disabled")
+                console.log(data);
+                $("#spinner_guardar").toggleClass("d-none");
+                if(data=="1"){
+                  tablaEmpresas.ajax.reload(null, false);
+                  $('#modalCRUD').modal('hide');
+                  swal({
+                    icon: 'success',
+                    title: 'Accion realizada correctamente'
+                  });
+                }else{
+                  swal("Ha ocurrido un error!");
+                }
+              },*/
+              xhr: function () {
+                const xhr = new XMLHttpRequest();
+                xhr.upload.onprogress = function (evento) {
+                  const porcentajeCarga = (evento.loaded / evento.total) * 100;
+                  console.log("Porcentaje de carga: " + porcentajeCarga + "%");
+                };
+                return xhr;
+              },
+              success: function (data) {
+                console.log("Subida de archivo completada.");
+                console.log(data);
+              },
+              error: function (xhr, status, error) {
+                console.log("Error en la subida del archivo.");
+                console.log(error);
+              },
+              beforeSend: function () {
+                console.log("Subiendo archivo...");
+              },
+              complete: function () {
+                console.log("Subida de archivo finalizada.");
+              }
 
-        $("#spinner_guardar").toggleClass("d-none");
-        $.ajax({
-          data: datosEnviar,
-          url: "models/administrar_empresas.php",
-          method: "post",
-          cache: false,
-          contentType: false,
-          processData: false,
-          success: function(data) {
-            $("#btnGuardar").removeClass("disabled")
-            console.log(data);
-            $("#spinner_guardar").toggleClass("d-none");
-            if(data=="1"){
-              tablaEmpresas.ajax.reload(null, false);
-              $('#modalCRUD').modal('hide');
-              swal({
-                icon: 'success',
-                title: 'Accion realizada correctamente'
-              });
-            }else{
-              swal("Ha ocurrido un error!");
-            }
-          }
-        });
+            });
+
+            delete datosEnviar
+          };
+            
+          console.log(datosEnviar);
+
+        }else{
+          console.log("el boton esta deshabilitado, no hacemos nada...")
+        }
 
       })
 
