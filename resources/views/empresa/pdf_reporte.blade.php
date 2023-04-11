@@ -88,7 +88,7 @@
 
       <div class="marco2">
         <table id="tablaDetalle" style="border:1px solid black; width:100%" class="table table-bordered table-condensed table-hover">
-            <thead style="background-color:#222D32">
+            <thead style="background-color: brown; color: #FFFFFF;font-weight: bold;">
                 <tr class="text-uppercase">
                     <th colspan="5" style="color:#F8F9F9" >DATOS DE EMPRESA</th>
                 </tr>
@@ -125,8 +125,8 @@
       </div>
                         
       <div class="marco2">
-        <table id="tablaDetalle" style="border:1px solid black; width:100%" class="table table-bordered table-condensed table-hover">
-            <thead style="background-color:#222D32">
+        <table id="tablaDetalle" style="width:100%" class="table table-condensed table-hover">
+            <thead style="background-color: brown; color: #FFFFFF;font-weight: bold; border:0px solid brown;">
                 <tr class="text-uppercase">
                     <th colspan="6" style="color:#F8F9F9" >INFORME FINAL EXAMENES PREOCUPACIONALES</th>
                 </tr>
@@ -139,7 +139,7 @@
                     <th width="40%" style="color:#F8F9F9" >Observaciones</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody style="border:1px solid black;">
                 @foreach ($datos as $key =>$informe)<?php
                     $documento="";
                     if($informe->documento) $documento=number_format( (intval($informe->documento)/1000), 3, '.', '.');
@@ -149,7 +149,7 @@
                         <td style="text-align:center"><?=$informe->apellidos." ".$informe->nombres?></td>
                         <td style="text-align:center"><?=$documento?></td>
                         <td style="text-align:center"><?=$informe->aptitud_laboral?></td>
-                        <td style="text-align:left"><?=$informe->preexistencias?></td>
+                        <td style="text-align:center"><?=$informe->preexistencias?></td>
                         <td style="text-align:left"><?=$informe->observaciones?></td>
                     </tr>
                 @endforeach
