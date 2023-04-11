@@ -166,7 +166,7 @@ class Empresas{
 
   }
 
-  public function subirArchivos($id_empresa,$adjuntos,$cantAdjuntos){
+  public function subirMultiplesArchivos($id_empresa,$adjuntos,$cantAdjuntos){
 
     /*var_dump($adjuntos);
     var_dump($cantAdjuntos);*/
@@ -225,6 +225,55 @@ class Empresas{
 
   }
 
+  public function subirArchivo($id_empresa,$adjuntos,$cantAdjuntos){
+    $ok=0;
+    //SI VIENEN ADJUNTOS LOS GUARDO.
+    if ($adjuntos > 0) {
+      //$indice = "file".$i;
+      $nombreADJ = $_FILES["file"]['name'][0];
+      
+      $subidaOK=false;
+      if (is_uploaded_file($_FILES["file"]['tmp_name'][0])) {
+        //INGRESO ARCHIVOS EN EL DIRECTORIO
+        $directorio = "../views/archivos_empresas/$id_empresa/";
+        //$path = "sample/path/newfolder";
+        if (!file_exists($directorio)) {
+            mkdir($directorio, 0777, true);
+        }
+
+        $subidaOK=move_uploaded_file($_FILES["file"]['tmp_name'][0], $directorio.$nombreADJ);
+        //$ruta_completa_imagen = $directorio.$nombreFinalArchivo;
+        //var_dump($subidaOK);
+        
+        if($subidaOK){
+          //INSERTO DATOS EN LA TABLA ADJUNTOS ORDEN_COMPRA
+          $queryInsertAdjuntos = "INSERT INTO archivos_usuario (id_usuario, archivo)VALUES($id_empresa, '$nombreADJ')";
+          $insertAdjuntos = $this->conexion->consultaSimple($queryInsertAdjuntos);
+
+          $mensajeError=$this->conexion->conectar->error;
+          echo $mensajeError;
+          if($mensajeError!=""){
+            echo "<br><br>".$queryInsertAdjuntos;
+          }else{
+            //$totalSubidas++;
+            $ok=1;
+          }
+        }else{
+          if($_FILES["file"]['error'][0]){
+            return "Ha ocurrido un error: Cod. ".$_FILES["file"]['error'][0];
+          }
+        }
+      }
+
+      if($ok==1){
+        return 1;
+      }else{
+        return 0;
+      }
+    }
+
+  }
+
   public function eliminarArchivo($id_archivo, $nombre_adjunto, $id_empresa){
 
     $directorio = "../views/archivos_empresas/$id_empresa/";
@@ -252,16 +301,19 @@ class Empresas{
   }
 
 }
-
+extract($_REQUEST);
 $empresas = new Empresas();
-if (isset($_POST['accion'])) {
-		switch ($_POST['accion']) {
+if (isset($accion)) {
+		switch ($accion) {
 			/*case 'empresas':
 				$items->traerTodosClientes();
 			break;
 			case 'traerDatosIniciales':
 				$empresas->traerDatosIniciales();
 			break;*/
+      case "traerEmpresas":
+        echo json_encode($empresas->traerEmpresas());
+      break;
       case "importarEmpresas":
         $empresas->importarEmpresas($_FILES);
       break;
@@ -269,18 +321,21 @@ if (isset($_POST['accion'])) {
         $empresas->trerArchivosEmpresa($id_empresa);
       break;
       case "subirArchivos":
-        if(isset($_FILES['file0'])) {
+        //var_dump($_FILES);
+        
+        if(isset($_FILES['file'])) {
           $adjuntos = 1;
         }else{
           $adjuntos = 0;
         }
-
-        if(isset($_POST['cantAdjuntos'])){
-          $cantAdjuntos = $_POST['cantAdjuntos'];
+        var_dump($adjuntos);
+        
+        if(isset($cantAdjuntos)){
+          $cantAdjuntos = $cantAdjuntos;
         }else{
           $cantAdjuntos = 0;
         }
-        echo $empresas->subirArchivos($id_empresa,$adjuntos,$cantAdjuntos);
+        echo $empresas->subirArchivo($id_empresa,$adjuntos,$cantAdjuntos);
       break;
       case "eliminarArchivo":
         $empresas->eliminarArchivo($id_archivo, $nombreArchivo, $id_empresa);

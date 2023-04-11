@@ -102,19 +102,19 @@
             </thead>
             <tbody>
                 <tr>
-                    <td style="text-align:left">{{$empresa->definicion}}</td>
-                    <td style="text-align:left"><?=$empresa->cuit?></td>
-                    <td style="text-align:left"><?php
+                    <td style="text-align:center">{{$empresa->definicion}}</td>
+                    <td style="text-align:center"><?=$empresa->cuit?></td>
+                    <td style="text-align:center"><?php
                         if(isset($empresa->domicilio->direccion)){
                             echo $empresa->domicilio->direccion;
                         }?>
                     </td>
-                    <td style="text-align:left"><?php
+                    <td style="text-align:center"><?php
                         if(isset($empresa->domicilio->ciudad)){
                           echo $empresa->domicilio->ciudad->nombre;
                         }?>
                     </td>
-                    <td style="text-align:left"><?php
+                    <td style="text-align:center"><?php
                         if(isset($empresa->domicilio->ciudad->provincia)){
                           echo $empresa->domicilio->ciudad->provincia->nombre;
                         }

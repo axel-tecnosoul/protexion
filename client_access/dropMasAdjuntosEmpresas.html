@@ -32,8 +32,9 @@
 <script type="text/javascript">
 	var arrayFiles = [];
   Dropzone.autoDiscover = false;
+  let id_empresa=$("#id_empresa").html();
   $(".dropzone").dropzone({
-    url: "./models/administrar_empresas.php",
+    url: "./models/administrar_empresas.php?id_empresa="+id_empresa+"&accion=subirArchivos&cantAdjuntos=1",
     //autoProcessQueue: false,
     addRemoveLinks: false,
     acceptedFiles: "image/*,application/pdf,.doc,.docx,.xls,.xlsx,.csv,.tsv,.ppt,.pptx,.pages,.odt,.rtf,.pdf,.txt",
