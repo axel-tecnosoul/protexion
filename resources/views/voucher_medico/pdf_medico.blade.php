@@ -73,20 +73,23 @@
         <table class="tabla">
           <thead style="background-color:#222D32">
               <tr class="text-uppercase">
-                  <th width="30%" style="color:#F8F9F9" >Paciente</th>
+                  <!-- <th width="30%" style="color:#F8F9F9" >Paciente</th>
                   <th width="20%" style="color:#F8F9F9" >Empresa</th>
-                  <th width="50%" style="color:#F8F9F9" >Detalle</th>
+                  <th width="50%" style="color:#F8F9F9" >Detalle</th> -->
+                  <th width="20%" style="color:#F8F9F9">Paciente</th>
+                  <th width="8%" style="color:#F8F9F9">DNI</th>
+                  <th width="7%" style="color:#F8F9F9">Edad</th>
+                  <th width="20%" style="color:#F8F9F9">Empresa</th>
+                  <th width="45%" style="color:#F8F9F9">Detalle</th>
               </tr>
           </thead>
           <tbody>
               @foreach ($aPacientes as $paciente =>$estudios)
               <tr onmouseover="cambiar_color_over(this)" onmouseout="cambiar_color_out(this)">
                   <td style="text-align:left">{{ $paciente }}</td>
-                  <td style="text-align:left"><?php
-                    if($estudios["empresa"]){
-                      echo $estudios["empresa"];
-                    }?>
-                  </td>
+                  <td style="text-align:right"><?=$estudios["dni"] ?: ''?></td>
+                  <td style="text-align:center"><?=$estudios["edad"] ?: ''?></td>
+                  <td style="text-align:left"><?=$estudios["empresa"] ?: ''?>
                   <td style="text-align:left"><?=implode(", ",$estudios["estudios"])?></td>
               </tr>
               @endforeach
