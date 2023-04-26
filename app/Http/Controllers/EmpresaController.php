@@ -267,7 +267,7 @@ class EmpresaController extends Controller
         if(isset($request->empresa_id)){
           $empresa_id=$request->empresa_id;
 
-          $query = DB::table('aptituds')
+          /*$query = DB::table('aptituds')
             ->join('vouchers', 'aptituds.voucher_id', '=', 'vouchers.id')
             ->join('pacientes', 'vouchers.paciente_id', '=', 'pacientes.id');
           
@@ -282,8 +282,33 @@ class EmpresaController extends Controller
             $aResultados[$indice]["selected"]="selected";
   
           }
-          $query->select('aptituds.id', 'vouchers.turno', 'pacientes.apellidos', 'pacientes.nombres', 'aptituds.aptitud_laboral','pacientes.documento','pacientes.cuil', 'aptituds.preexistencias', 'aptituds.observaciones');
-          $datos=$query->get();
+          $query->orderBy('aptituds.updated_at','desc');
+          //$query->groupBy('vouchers.id');
+          $query->select('aptituds.id', 'vouchers.turno', 'pacientes.apellidos', 'pacientes.nombres', 'aptituds.aptitud_laboral','pacientes.documento','pacientes.cuil', 'aptituds.preexistencias', 'aptituds.observaciones', DB::raw('MAX(aptituds.updated_at) AS updated_at'));
+          $datos=$query->get();*/
+
+          // Obtener el registro más reciente de la tabla aptituds para cada voucher
+          $subquery = DB::table('aptituds')
+          ->select('voucher_id', DB::raw('MAX(updated_at) AS max_updated_at'))
+          ->groupBy('voucher_id');
+
+          // Unir la subconsulta con las tablas aptituds, vouchers y pacientes
+          $query = DB::table('aptituds')
+          ->join('vouchers', 'aptituds.voucher_id', '=', 'vouchers.id')
+          ->join('pacientes', 'vouchers.paciente_id', '=', 'pacientes.id')
+          ->joinSub($subquery, 'latest_aptituds', function ($join) {
+              $join->on('aptituds.voucher_id', '=', 'latest_aptituds.voucher_id')
+                  ->on('aptituds.updated_at', '=', 'latest_aptituds.max_updated_at');
+          })
+          ->where('vouchers.turno', '>=', $desde)
+          ->where('vouchers.turno', '<=', $hasta)
+          ->where('pacientes.origen_id', $empresa_id)
+          ->orderBy('latest_aptituds.max_updated_at', 'desc')
+          ->select('aptituds.id', 'vouchers.turno', 'pacientes.apellidos', 'pacientes.nombres', 'aptituds.aptitud_laboral', 'pacientes.documento', 'pacientes.cuil', 'aptituds.preexistencias', 'aptituds.observaciones');
+
+          $datos = $query->get();
+
+
         }
 
         //dd($aResultados);
