@@ -255,7 +255,7 @@
                   @if ($declaracion_jurada->antecedentePersonal->covid19)
                       {{$declaracion_jurada->antecedentePersonal->covid19}}
                   @else
-                      No
+                      Completo
                   @endif
               </td>
               <td colspan="6">

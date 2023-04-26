@@ -40,19 +40,21 @@
             <table id="tablaDetalle" style="border:1px solid black; width:100%" class="table table-bordered table-condensed table-hover">
                 <thead style="background-color:#222D32">
                     <tr class="text-uppercase">
-                        <th width="30%" style="color:#F8F9F9" >Paciente</th>
-                        <th width="20%" style="color:#F8F9F9" >Empresa</th>
-                        <th width="50%" style="color:#F8F9F9" >Detalle</th>
+                        <th width="20%" style="color:#F8F9F9">Paciente</th>
+                        <th width="8%" style="color:#F8F9F9">DNI</th>
+                        <th width="7%" style="color:#F8F9F9">Edad</th>
+                        <th width="20%" style="color:#F8F9F9">Empresa</th>
+                        <th width="45%" style="color:#F8F9F9">Detalle</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($aPacientes as $paciente =>$datos)
                     <tr onmouseover="cambiar_color_over(this)" onmouseout="cambiar_color_out(this)">
                         <td style="text-align:left">{{ $paciente }}</td>
-                        <td style="text-align:left"><?php
-                          if($datos["empresa"]){
-                            echo $datos["empresa"];
-                          }?>
+                        <td style="text-align:right"><?=$datos["dni"] ?: ''?></td>
+                        <td style="text-align:center"><?=$datos["edad"] ?: ''?></td>
+                        <td style="text-align:left"><?=$datos["empresa"] ?: ''?>
+                          <?php //if($datos["empresa"]) echo $datos["empresa"]?>
                         </td>
                         <td style="text-align:left"><?=implode(", ",$datos["estudios"])?></td>
                     </tr>

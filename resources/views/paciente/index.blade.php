@@ -59,13 +59,12 @@
                               <Label for="select_all"> </Label>
                           </div>
                         </th>
-                        <th width="10%" style="color:#F8F9F9">Documento</th>
-                        <th width="20%" style="color:#F8F9F9">Apellido y Nombre</th>
-                        <th width="15%" style="color:#F8F9F9">Empresa</th>
-                        <!-- <th width="15%" style="color:#F8F9F9">Obra social</th> -->
-                        <th width="15%" style="color:#F8F9F9">Foto de perfil</th>
-                        <th width="20%" style="color:#F8F9F9">Opciones</th>
-
+                        <th width="8%" style="color:#F8F9F9">DNI</th>
+                        <th width="22%" style="color:#F8F9F9">Apellido y Nombre</th>
+                        <th width="18%" style="color:#F8F9F9">Empresa</th>
+                        <th width="12%" style="color:#F8F9F9">Ult. visita</th>
+                        <th width="10%" style="color:#F8F9F9">Foto</th><!-- de perfil -->
+                        <th width="25%" style="color:#F8F9F9">Opciones</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -88,10 +87,12 @@
                           if($paciente->origen == null) echo(" ");
                           else echo($paciente->origen->definicion)?>
                         </td>
+                        <td style="text-align: left">{{ $paciente->ultima_visita }}</td>
                         <td style="text-align: center"><?php
                           //if(file_exists(asset('imagenes/paciente/'.$paciente->imagen))){
                             if($paciente->imagen == null){?>
-                              <img src="{{ asset('imagenes/paciente/default.png')}}" width="50px" class="img-circle elevation-2" alt="User Image"><?php
+                              <!-- <img src="{{ asset('imagenes/paciente/default.png')}}" width="50px" class="img-circle elevation-2" alt="User Image"> -->
+                              <?php
                             }else{?>
                               <img src="{{ asset('imagenes/paciente/'.$paciente->imagen)}}" width="50px" class="img-circle elevation-2" alt="User Image"><?php
                             }
@@ -136,7 +137,7 @@
     </div>
 </div>
 @push('scripts')
-  <script src="{{asset('js/tablaDetalle.js')}}"></script>
+  <!-- <script src="{{asset('js/tablaDetalle.js')}}"></script> -->
 
   <script type="text/javascript">
     $("#select_all").on("click",function(){
@@ -178,6 +179,43 @@
       }else{
         $("#btnVisitaMasiva").addClass("disabled")
       }
+    }
+
+    $(document).ready(function() {
+      $('#tablaDetalle').DataTable({
+          "pageLength" : 15,
+          //"lengthMenu": [[5, 10, 25, 50, 100], [5, 10, 25, 50, 100]]
+          //"lengthMenu": [5, 10, 25, 50, 100],
+          "lengthMenu": [ 10, 15, 25, 50, 75, 100 ],
+          "aaSorting":[],
+          "language":{
+              "info":"_TOTAL_ registros",
+              "search": "Buscar",
+              "paginate": {
+                  "next":"Siguiente",
+                  "previous":"Anterior"
+              },
+              /*"lengthMenu":'Mostrar <select>'+
+                  '<option value="5">5</option>'+
+                  '<option value="10">10</option>'+
+                  '<select> registros',*/
+              "loadingRecords":"Cargando...",
+              "processing":"Procesando...",
+              "emptyTable":"No hay datos",
+              "zeroRecords":"No hay coincidencias",
+              "infoEmpty":"",
+              "infoFiltered":""
+
+          }
+      });
+      cambiar_color_over(celda);
+    } );
+
+    function cambiar_color_over(celda){
+      celda.style.backgroundColor="#A7A7A7"
+    }
+    function cambiar_color_out(celda){
+      celda.style.backgroundColor="#FFFFFF"
     }
   </script>
 @endpush

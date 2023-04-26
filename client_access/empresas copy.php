@@ -444,6 +444,7 @@ if (!isset($_SESSION['rowUsers']['id_usuario'])) {
             console.log(arrayFiles.length);
             let cantArchivos = 0;
             for(let i = 0; i < arrayFiles.length; i++) {
+              console.log(arrayFiles[i]);
               datosEnviar.append('file'+i, arrayFiles[i]);
               cantArchivos++;
             };

@@ -66,6 +66,7 @@ class VoucherMedicoController extends Controller
       $vouchers_medico=$query->get(); //ejecuto la consulta
       //$vouchers_medico=$query->dd(); //ejecuto la consulta
       $aVoucherMedico=[];
+      //TRAEMOS TODOS LOS ESTUDIOS DE LOS VOUCHERS DE LOS PACIENTES
       foreach($vouchers_medico as $voucher){
         $paciente=Paciente::find($voucher->paciente_id);
 
@@ -73,9 +74,13 @@ class VoucherMedicoController extends Controller
           //$dniCuil=$paciente->cuil ?? number_format($paciente->documento,0,",",".");
           $dni=number_format($paciente->documento,0,",",".");
 
-          $pacienteNombre="(".$dni.") ".$paciente->nombreCompleto();
+          //$pacienteNombre="(".$dni.") ".$paciente->nombreCompleto();
+          $pacienteNombre=$paciente->nombreCompleto();
+          $edadPaciente=$paciente->edad();
           $aVoucherMedico[]=[
             "paciente" => $pacienteNombre,
+            "dni" => $dni,
+            "edad" => $edadPaciente,
             "empresa" => $paciente->origen->definicion,
             "estudio" => $voucher->nombre,
           ];
@@ -86,10 +91,13 @@ class VoucherMedicoController extends Controller
       }
       //var_dump($aVoucherMedico);
 
+      //AGRUPAMOS TODOS LOS ESTUDIOS CON EL PACIENTE QUE CORRESPONDE
       $aPacientes=[];
       foreach ($aVoucherMedico as $k => &$paciente) {
           $aPacientes[$paciente['paciente']]["estudios"][$k] = $paciente['estudio'];
           $aPacientes[$paciente['paciente']]["empresa"] = $paciente['empresa'];
+          $aPacientes[$paciente['paciente']]["dni"] = $paciente['dni'];
+          $aPacientes[$paciente['paciente']]["edad"] = $paciente['edad'];
       }
       /*var_dump($aPacientes);
       die();*/

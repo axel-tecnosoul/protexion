@@ -172,7 +172,9 @@ class Paciente extends Model implements Auditable
 
     public function vouchers()
     {
-        return $this->hasMany('App\Voucher');
+        //return $this->hasMany('App\Voucher');
+        return $this->hasMany(Voucher::class);
     }
+
 
 }

@@ -91,7 +91,8 @@ class PacienteController extends Controller
 
         if(count($request->all())>=1){ //si existe algun request(es decir, si uso el "Filtrar")
             //dd($request->all());
-            $sql = Paciente::select('pacientes.*'); //inicio la consulta sobre una determinada tabla
+            $sql = Paciente::select('pacientes.*') //inicio la consulta sobre una determinada tabla
+              ->leftjoin('vouchers', 'vouchers.paciente_id', '=', 'pacientes.id');
 
             if($request->origen_id){ //si el request proviene de la categoria del ticket
                 $sql = $sql->whereOrigen_id($request->origen_id); //creo la consulta y almaceno en "sql"
@@ -108,12 +109,46 @@ class PacienteController extends Controller
             $obra_social_id=$request->obra_social_id; //mantengo el id de la categoria del tiquet
             $estado_id=$request->estado_id; //mantengo el id de la categoria del tiquet
 
+
         }else{ //si nunca filtre, (si no existió request)
             $origen_id=null; //en el select2 que me aparesca " -- Todas las Categorias --"
             $obra_social_id=null; //en el select2 que me aparesca " -- Todas las Categorias --"
             $estado_id=null; //en el select2 que me aparesca " -- Todas las Categorias --"
-            $pacientes=Paciente::whereEstado_id(1)->orderBy('created_at','desc')->get(); //que me obtenga directamente todos los grupos
+            //$pacientes=Paciente::select("pacientes.*")->leftjoin('vouchers', 'vouchers.paciente_id', '=', 'pacientes.id')->whereEstado_id(1)->orderBy('created_at','desc')->get(); //que me obtenga directamente todos los grupos
+            //$pacientes=DB::table("pacientes")->leftjoin('vouchers', 'vouchers.paciente_id', '=', 'pacientes.id')->whereEstado_id(1)->orderBy('pacientes.created_at','desc')->get(); //que me obtenga directamente todos los grupos
+
+            /*$pacientes = Paciente::with(['vouchers' => function ($query) {
+              $query->latest('turno');
+            }])->get();
+          
+            $pacientes->map(function ($paciente) {
+              var_dump($paciente->vouchers);
+              
+              $paciente->ultima_visita = $paciente->vouchers->first()->turno;
+              return $paciente;
+            });*/
+
+            $pacientes = Paciente::with(['vouchers' => function ($query) {
+              $query->latest('turno');
+            }])->orderBy('pacientes.created_at','desc')->get();
+          
+            $pacientes->map(function ($paciente) {
+              $ultima_visita = $paciente->vouchers->isEmpty() ? null : $paciente->vouchers->first()->turno;
+              if($ultima_visita){
+                $ultima_visita = new Carbon($ultima_visita);
+                $ultima_visita = $ultima_visita->format('d/m/Y');
+              }
+              $paciente->ultima_visita = $ultima_visita;
+              return $paciente;
+            });
+          
+          
+
+            //var_dump($pacientes);
         }
+
+        /*var_dump($pacientes);
+        die();*/
 
         return view('paciente.index',[
             "pacientes"         =>  $pacientes,         //los grupos de trabajo

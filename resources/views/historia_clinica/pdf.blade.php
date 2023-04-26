@@ -140,21 +140,28 @@
           </tr>
           <tr style="text-align: left;">
               <td colspan="3">
-                  <label for="">Estatura (Metros):</label> {{$hc_formulario->examenClinico->estatura}}
+                  <label for="">Estatura (Metros): </label><?php
+                  //Calculo de IMC
+                  $estatura=$hc_formulario->examenClinico->estatura;
+                  if($estatura>100){
+                    $estatura/=100;
+                  }
+                  echo $estatura?>
               </td>
               <td colspan="3">
                   <label for="">Peso (Kg):</label> {{$hc_formulario->examenClinico->peso}}
               </td>
-              <td colspan="3">
+              <!-- <td colspan="3">
                   <label for="">Sobrepeso:</label>
                   @if ($hc_formulario->examenClinico->sobrepeso==true)
                       Si
                   @else
                       No
                   @endif
-              </td>
-              <td colspan="3">
+              </td> -->
+              <td colspan="6">
                   <label for="">IMC:</label><?php
+                  //Calculo de IMC
                   $estatura=$hc_formulario->examenClinico->estatura;
                   if($estatura>100){
                     $estatura/=100;
@@ -162,16 +169,20 @@
                   $peso=$hc_formulario->examenClinico->peso;
                   $imc=number_format($peso/($estatura*$estatura),2);
       
-                  $datosAdicionales = "IMC: ".$imc;
-                  //Calculo de IMC
-                  if ($imc >= "30") {
-                    $descripcionIMC='Sobrepeso';
-                  } elseif ($imc <= "18") {
-                    $descripcionIMC='Muy bajo';
-                  } else {
-                    $descripcionIMC='Normal';
+                  if ($imc < 18) {
+                    $descripcionIMC='Bajo peso';
+                  } else if ($imc < 25) {
+                    $descripcionIMC='Normopeso';
+                  } else if ($imc < 30) {
+                    $descripcionIMC='Sobrepeso leve';
+                  } else if ($imc < 35) {
+                    $descripcionIMC='Obesidad tipo 1';
+                  } else if ($imc < 40) {
+                    $descripcionIMC='Obesidad tipo 2';
+                  }else{
+                    $descripcionIMC='Obesidad grave';
                   }
-                  echo $imc?> 
+                  echo $imc." (".$descripcionIMC.")"?>
                   <!-- {{$hc_formulario->examenClinico->imc}} -->
               </td>
           </tr>
@@ -317,7 +328,7 @@
                   @if ($hc_formulario->piel->obs_petequias)
                       {{$hc_formulario->piel->obs_petequias}}
                   @else
-                      No
+                      Normal
                   @endif
               </td>
           </tr>
@@ -660,7 +671,7 @@
                   @if ($hc_formulario->odontologico->observacion2_od)
                       {{$hc_formulario->odontologico->observacion2_od}}
                   @else
-                      No
+                      Normal
                   @endif
               </td>
           </tr>

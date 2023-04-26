@@ -47,7 +47,8 @@
     addRemoveLinks: true,
     init: function(){
       this.on("addedfile", function(file){
-        //arrayFiles.push(file);
+        console.log(file);
+        arrayFiles.push(file);
         //console.log("arrayFiles", arrayFiles);
         console.log("añadiendo archivos");
       });
