@@ -92,13 +92,13 @@
                           /*var_dump($paciente->imagen);
                           var_dump(asset('imagenes/paciente/'.$paciente->imagen));
                           var_dump(file_exists(asset('imagenes/paciente/'.$paciente->imagen)));*/
-                          if(file_exists(asset('imagenes/paciente/'.$paciente->imagen))){
+                          //if(file_exists(asset('imagenes/paciente/'.$paciente->imagen))){
                             if($paciente->imagen == null){?>
                               <img src="{{ asset('imagenes/paciente/default.png')}}" width="50px" class="img-circle elevation-2" alt="User Image"><?php
                             }else{?>
                               <img src="{{ asset('imagenes/paciente/'.$paciente->imagen)}}" width="50px" class="img-circle elevation-2" alt="User Image"><?php
                             }
-                          }?>
+                          //}?>
                         </td>
 
                         <td style="text-align: center" colspan="3">
