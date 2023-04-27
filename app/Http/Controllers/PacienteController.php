@@ -133,10 +133,11 @@ class PacienteController extends Controller
             }])->orderBy('pacientes.created_at','desc')->get();
           
             $pacientes->map(function ($paciente) {
-              $ultima_visita = $paciente->vouchers->isEmpty() ? null : $paciente->vouchers->first()->turno;
+              //$ultima_visita = $paciente->vouchers->isEmpty() ? null : $paciente->vouchers->first()->turno;
+              $ultima_visita = $paciente->vouchers->isEmpty() ? '01/01/1900' : $paciente->vouchers->first()->turno;
               if($ultima_visita){
                 $ultima_visita = new Carbon($ultima_visita);
-                $ultima_visita = $ultima_visita->format('d/m/Y');
+                //$ultima_visita = $ultima_visita->format('d-m-Y');
               }
               $paciente->ultima_visita = $ultima_visita;
               return $paciente;

@@ -89,14 +89,16 @@
                           else echo($paciente->origen->definicion)?>
                         </td>
                         <td style="text-align: center"><?php
-                          //if(file_exists(asset('imagenes/paciente/'.$paciente->imagen))){
+                          /*var_dump($paciente->imagen);
+                          var_dump(asset('imagenes/paciente/'.$paciente->imagen));
+                          var_dump(file_exists(asset('imagenes/paciente/'.$paciente->imagen)));*/
+                          if(file_exists(asset('imagenes/paciente/'.$paciente->imagen))){
                             if($paciente->imagen == null){?>
-                              <!-- <img src="{{ asset('imagenes/paciente/default.png')}}" width="50px" class="img-circle elevation-2" alt="User Image"> -->
-                              <?php
+                              <img src="{{ asset('imagenes/paciente/default.png')}}" width="50px" class="img-circle elevation-2" alt="User Image"><?php
                             }else{?>
                               <img src="{{ asset('imagenes/paciente/'.$paciente->imagen)}}" width="50px" class="img-circle elevation-2" alt="User Image"><?php
                             }
-                          //}?>
+                          }?>
                         </td>
 
                         <td style="text-align: center" colspan="3">
@@ -138,6 +140,9 @@
 </div>
 @push('scripts')
   <!-- <script src="{{asset('js/tablaDetalle.js')}}"></script> -->
+  <!-- <script src="{{asset('js/datatable/datatables/jquery.dataTables.min.js')}}"></script> -->
+  <script src="{{asset('js\calendar\moment.min.js')}}"></script>
+  <script src="https://cdn.datatables.net/plug-ins/1.10.15/sorting/datetime-moment.js"></script>
 
   <script type="text/javascript">
     $("#select_all").on("click",function(){
@@ -182,32 +187,51 @@
     }
 
     $(document).ready(function() {
-      $('#tablaDetalle').DataTable({
-          "pageLength" : 15,
-          //"lengthMenu": [[5, 10, 25, 50, 100], [5, 10, 25, 50, 100]]
-          //"lengthMenu": [5, 10, 25, 50, 100],
-          "lengthMenu": [ 10, 15, 25, 50, 75, 100 ],
-          "aaSorting":[],
-          "language":{
-              "info":"_TOTAL_ registros",
-              "search": "Buscar",
-              "paginate": {
-                  "next":"Siguiente",
-                  "previous":"Anterior"
-              },
-              /*"lengthMenu":'Mostrar <select>'+
-                  '<option value="5">5</option>'+
-                  '<option value="10">10</option>'+
-                  '<select> registros',*/
-              "loadingRecords":"Cargando...",
-              "processing":"Procesando...",
-              "emptyTable":"No hay datos",
-              "zeroRecords":"No hay coincidencias",
-              "infoEmpty":"",
-              "infoFiltered":""
-
+      let table=$('#tablaDetalle').DataTable({
+        "pageLength" : 15,
+        "lengthMenu": [ 10, 15, 25, 50, 75, 100 ],
+        "aaSorting":[],
+        "language":{
+            "info":"_TOTAL_ registros",
+            "search": "Buscar",
+            "paginate": {
+                "next":"Siguiente",
+                "previous":"Anterior"
+            },
+            "loadingRecords":"Cargando...",
+            "processing":"Procesando...",
+            "emptyTable":"No hay datos",
+            "zeroRecords":"No hay coincidencias",
+            "infoEmpty":"",
+            "infoFiltered":""
+        },
+        columnDefs: [
+          //{ targets: [1], type: "date", "dateFormat": "dd/mm/yyyy"},//, "defaultContent": "01/01/1900" 
+          { "targets": 1, "type": "date", "render": function(data, type, row) {
+              // Si el tipo de datos es "sort" o "type", devolver la fecha sin formato
+              if (type === "sort" || type === "type") {
+                return data;
+              }
+              // Si el tipo de datos es "display", formatear la fecha con Moment.js
+              else {
+                if(data=="1900-01-01 00:00:00"){
+                  return "";
+                }else{
+                  return moment(data).format("DD/MM/YYYY");
+                }
+              }
+            }
           }
+        ]
       });
+      //
+      var columnType = table.column( 1 ).dataSrc();
+      console.log("columnType"); // "date"
+      console.log(columnType); // "date"
+      //console.log($.fn.dataTable.moment('DD/MM/YYYY').parse('04-25-2023'));
+      let columnData=table.column( 1 ).data()
+      console.log(columnData); // "date"
+      console.log(typeof columnData[0]);
       cambiar_color_over(celda);
     } );
 
