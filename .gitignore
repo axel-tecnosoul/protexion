@@ -1,3 +1,3 @@
 .env
-public\imagenes
-client_access\views\archivos_empresas
+public/imagenes
+client_access/views/archivos_empresas
