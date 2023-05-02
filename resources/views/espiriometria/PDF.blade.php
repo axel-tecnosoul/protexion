@@ -101,7 +101,7 @@
 
         <p class="campos" >Fecha: _________/_________/_________</p>
         <p class="subtitulo">DATOS DE LA EMPRESA</p>
-        <p class="datos"> <label class="campos" for="">Razón social:</label> {{$voucher->paciente->origen ? $voucher->paciente->origen->definicion : " "}} </p>
+        <p class="datos"> <label class="campos" for="">Razón social:</label> {{$voucher->origen ? $voucher->origen->definicion : " "}} </p>
 
         <p class="subtitulo">DATOS DEL TRABAJADOR</p> -->
 
@@ -118,7 +118,7 @@
                 </tr>
                 <tr>
                     <td colspan="2">
-                      <label class="campos" for="">Razón social:</label> {{$voucher->paciente->origen ? $voucher->paciente->origen->definicion : " "}}
+                      <label class="campos" for="">Razón social:</label> {{$voucher->origen ? $voucher->origen->definicion : " "}}
                     </td>
                 </tr> -->
                 <tr>
@@ -127,7 +127,7 @@
                       <!-- Fecha: ______/______/______ -->
                     </td>
                     <td style="text-align: right; width: 130px"><label>Razón social de la empresa: </label></td>
-                    <td style="text-align: left; width: 240px">{{$voucher->paciente->origen ? $voucher->paciente->origen->definicion : " "}}</td>
+                    <td style="text-align: left; width: 240px">{{$voucher->origen ? $voucher->origen->definicion : " "}}</td>
                 </tr>
                 <tr>
                     <td colspan="3"><label class="label-bold"><u>DATOS DEL TRABAJADOR:</u></label></td>

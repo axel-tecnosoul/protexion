@@ -52,8 +52,8 @@
               <p style="font-size:100%" class="text-left"> <strong> Edad:               </strong> {{$voucher->paciente->edad()                       }} </p>
               <p style="font-size:100%" class="text-left"> <strong> Domicilio:          </strong> {{$voucher->paciente->domicilio ? $voucher->paciente->domicilio->direccion : " "        }} </p>
               <p style="font-size:100%" class="text-left"> <strong> Sexo:               </strong> {{$voucher->paciente->sexo ? $voucher->paciente->sexo->definicion : " "                 }} </p>
-              <p style="font-size:100%" class="text-left"> <strong> Origen:             </strong> {{$voucher->paciente->origen ? $voucher->paciente->origen->definicion : " "             }} </p>
-              <p style="font-size:100%" class="text-left"> <strong> Cuit de origen:     </strong> {{$voucher->paciente->origen ? $voucher->paciente->origen->cuit : " "                   }} </p>      
+              <p style="font-size:100%" class="text-left"> <strong> Origen:             </strong> {{$voucher->origen ? $voucher->origen->definicion : " "             }} </p>
+              <p style="font-size:100%" class="text-left"> <strong> Cuit de origen:     </strong> {{$voucher->origen ? $voucher->origen->cuit : " "                   }} </p>      
               <p style="font-size:100%" class="text-left"> <strong> Turno:              </strong> {{$voucher->turno ? \Carbon\Carbon::parse($voucher->turno)->format('d/m/Y') : " "                   }} </p>       -->
             </div>
         </div>

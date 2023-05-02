@@ -93,18 +93,18 @@
           </tr>
           <tr style="text-align: left;">
               <td style=" width: 150px" colspan="6">
-                  <label>Razón Social:</label> {{$hc_formulario->voucher->paciente->origen ? $hc_formulario->voucher->paciente->origen->definicion : " "}}
+                  <label>Razón Social:</label> {{$hc_formulario->voucher->origen ? $hc_formulario->voucher->origen->definicion : " "}}
               </td>
               <td style=" width: 150px" colspan="6">
-                  <label>CUIT:</label> {{$hc_formulario->voucher->paciente->origen ? $hc_formulario->voucher->paciente->origen->cuit : " "}} 
+                  <label>CUIT:</label> {{$hc_formulario->voucher->origen ? $hc_formulario->voucher->origen->cuit : " "}} 
               </td>
           </tr>
           <!-- <tr style="text-align: left;">
               <td style=" width: 150px" colspan="6">
                   <label>Domicilio:</label> 
-                  @if ($hc_formulario->voucher->paciente->origen)
-                      @if ($hc_formulario->voucher->paciente->origen->domicilio)
-                          {{$hc_formulario->voucher->paciente->origen->domicilio->direccion}}
+                  @if ($hc_formulario->voucher->origen)
+                      @if ($hc_formulario->voucher->origen->domicilio)
+                          {{$hc_formulario->voucher->origen->domicilio->direccion}}
                       @endif
                   @endif 
               </td>

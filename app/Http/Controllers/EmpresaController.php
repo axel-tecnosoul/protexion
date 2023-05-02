@@ -267,26 +267,6 @@ class EmpresaController extends Controller
         if(isset($request->empresa_id)){
           $empresa_id=$request->empresa_id;
 
-          /*$query = DB::table('aptituds')
-            ->join('vouchers', 'aptituds.voucher_id', '=', 'vouchers.id')
-            ->join('pacientes', 'vouchers.paciente_id', '=', 'pacientes.id');
-          
-          $query->where('turno','>=', $desde);
-          $query->where('turno','<=', $hasta);
-          $query->where('pacientes.origen_id', $empresa_id);
-
-          if(isset($request->resultado)){
-            $query->where('aptitud_laboral', $request->resultado);
-  
-            $indice = array_search($request->resultado, array_column($aResultados, 'nombre'));
-            $aResultados[$indice]["selected"]="selected";
-  
-          }
-          $query->orderBy('aptituds.updated_at','desc');
-          //$query->groupBy('vouchers.id');
-          $query->select('aptituds.id', 'vouchers.turno', 'pacientes.apellidos', 'pacientes.nombres', 'aptituds.aptitud_laboral','pacientes.documento','pacientes.cuil', 'aptituds.preexistencias', 'aptituds.observaciones', DB::raw('MAX(aptituds.updated_at) AS updated_at'));
-          $datos=$query->get();*/
-
           // Obtener el registro más reciente de la tabla aptituds para cada voucher
           $subquery = DB::table('aptituds')
           ->select('voucher_id', DB::raw('MAX(updated_at) AS max_updated_at'))
@@ -302,12 +282,11 @@ class EmpresaController extends Controller
           })
           ->where('vouchers.turno', '>=', $desde)
           ->where('vouchers.turno', '<=', $hasta)
-          ->where('pacientes.origen_id', $empresa_id)
+          ->where('vouchers.origen_id', $empresa_id)
           ->orderBy('latest_aptituds.max_updated_at', 'desc')
           ->select('aptituds.id', 'vouchers.turno', 'pacientes.apellidos', 'pacientes.nombres', 'aptituds.aptitud_laboral', 'pacientes.documento', 'pacientes.cuil', 'aptituds.preexistencias', 'aptituds.observaciones');
 
           $datos = $query->get();
-
 
         }
 

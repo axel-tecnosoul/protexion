@@ -46,9 +46,12 @@
                                         -Seleccione la empresa-
                                     </option>
                                     @foreach ($origenes as $origen)
-                                        <option
-                                            value="{{$origen->id }}">{{$origen->definicion}}
-                                        </option>
+                                        @if ($origen->id==$paciente->origen_id)
+                                            <option value="{{$origen->id}}" selected>{{$origen->definicion}}</option>
+                                        @else
+                                            <option value="{{$origen->id}}">{{$origen->definicion}}</option>
+                                        @endif
+                                        <!-- <option value="{{$origen->id}}">{{$origen->definicion}}</option> -->
                                     @endforeach
                                 </select>
                                 <a data-target="#modal-agregarOrigen" data-toggle="modal" style="width:10%">

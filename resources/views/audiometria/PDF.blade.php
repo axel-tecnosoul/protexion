@@ -100,7 +100,7 @@
 
         <p class="campos" >Fecha: {{ \Carbon\Carbon::parse($voucher->turno)->format('d/m/Y') }}</p>
         <p class="subtitulo">DATOS DE LA EMPRESA</p>
-        <p class="datos"> <label class="campos" for="">Razón social:</label> {{$voucher->paciente->origen ? $voucher->paciente->origen->definicion : " "}} </p>
+        <p class="datos"> <label class="campos" for="">Razón social:</label> {{$voucher->origen ? $voucher->origen->definicion : " "}} </p>
 
         <p class="subtitulo">DATOS DEL TRABAJADOR</p> -->
         <table class="datos">
@@ -116,13 +116,13 @@
                 </tr>
                 <tr>
                     <td colspan="2">
-                      <label class="campos" for="">Razón social:</label> {{$voucher->paciente->origen ? $voucher->paciente->origen->definicion : " "}}
+                      <label class="campos" for="">Razón social:</label> {{$voucher->origen ? $voucher->origen->definicion : " "}}
                     </td>
                 </tr> -->
                 <tr>
                     <td style="text-align: left; width: 120px">Fecha: {{ \Carbon\Carbon::parse($voucher->turno)->format('d/m/Y') }}</td>
                     <td style="text-align: right; width: 140px"><label>Razón social de la empresa: </label></td>
-                    <td style="text-align: left; width: 240px">{{$voucher->paciente->origen ? $voucher->paciente->origen->definicion : " "}}</td>
+                    <td style="text-align: left; width: 240px">{{$voucher->origen ? $voucher->origen->definicion : " "}}</td>
                 </tr>
             </tbody>
         </table>

@@ -40,6 +40,7 @@ class VoucherMedicoController extends Controller
       $query = DB::table('vouchers')
         ->join('vouchers_estudios', 'vouchers_estudios.voucher_id', '=', 'vouchers.id')
         ->join('estudios', 'vouchers_estudios.estudio_id', '=', 'estudios.id')
+        ->join('origenes', 'vouchers.origen_id', '=', 'origenes.id')
         //->where('carga', '=', 0);
         ->where('vouchers.anulado','=',0)
         ->whereNotIn('estudios.id', [1,60,66,73]);
@@ -83,7 +84,7 @@ class VoucherMedicoController extends Controller
             "paciente" => $pacienteNombre,
             "dni" => $dni,
             "edad" => $edadPaciente,
-            "empresa" => $paciente->origen->definicion,
+            "empresa" => $voucher->definicion,
             "estudio" => $voucher->nombre,
           ];
         }

@@ -123,7 +123,7 @@
         </tr>
         <tr style="text-align: left">
           <td style="width: 150px;" colspan="11">
-            <label>Razón Social:</label> {{$voucher->paciente->origen ? $voucher->paciente->origen->definicion : " "}}
+            <label>Razón Social:</label> {{$voucher->origen ? $voucher->origen->definicion : " "}}
           </td>
           <td style="text-align: center; width:200px" rowspan="5"><?php
               if($voucher->paciente->imagen){
@@ -136,19 +136,19 @@
         </tr>
         <tr style="text-align: left">
           <td style=" width: 150px" colspan="11">
-            <label>CUIT:</label> {{$voucher->paciente->origen ? $voucher->paciente->origen->cuit : " "}} 
+            <label>CUIT:</label> {{$voucher->origen ? $voucher->origen->cuit : " "}} 
           </td>
         </tr>
         <tr style="text-align: left">
           <td style=" width: 300px" colspan="11">
             <label>Domicilio:</label> <?php
-            if ($voucher->paciente->origen){
-              if ($voucher->paciente->origen->domicilio){
-                echo $voucher->paciente->origen->domicilio->direccion;
-                if ($voucher->paciente->origen->domicilio->ciudad){
-                  echo ", ".$voucher->paciente->origen->domicilio->ciudad->nombre;
-                  if ($voucher->paciente->origen->domicilio->ciudad->provincia){
-                    echo ", ".$voucher->paciente->origen->domicilio->ciudad->provincia->nombre;
+            if ($voucher->origen){
+              if ($voucher->origen->domicilio){
+                echo $voucher->origen->domicilio->direccion;
+                if ($voucher->origen->domicilio->ciudad){
+                  echo ", ".$voucher->origen->domicilio->ciudad->nombre;
+                  if ($voucher->origen->domicilio->ciudad->provincia){
+                    echo ", ".$voucher->origen->domicilio->ciudad->provincia->nombre;
                   }
                 }
               }

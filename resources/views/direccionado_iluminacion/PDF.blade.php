@@ -122,19 +122,19 @@
                 <tr>
                     <td class="datos" style="text-align: left; width: 250px">
                        <label for=""> Nombre:</label>
-                           {{$iluminacion->voucher->paciente->origen ? $iluminacion->voucher->paciente->origen->definicion : " " }}
+                           {{$iluminacion->voucher->origen ? $iluminacion->voucher->origen->definicion : " " }}
                     </td>
                     <td class="datos" style="text-align: left; width: 250px">
                        <label for=""> CUIT:</label>
-                           {{$iluminacion->voucher->paciente->origen ? $iluminacion->voucher->paciente->origen->cuit : " " }}
+                           {{$iluminacion->voucher->origen ? $iluminacion->voucher->origen->cuit : " " }}
                     </td>
                 </tr>
                 <tr>
                     <td class="datos" style="text-align: left; width: 250px">
                        <label for=""> Domicilio:</label>
-                        @if ($iluminacion->voucher->paciente->origen)
-                            @if ($iluminacion->voucher->paciente->origen->domicilio)
-                                {{$iluminacion->voucher->paciente->origen->domicilio->direccion}}
+                        @if ($iluminacion->voucher->origen)
+                            @if ($iluminacion->voucher->origen->domicilio)
+                                {{$iluminacion->voucher->origen->domicilio->direccion}}
                             @endif
                         @endif 
                     </td>
@@ -145,19 +145,19 @@
                 <tr>
                     <td class="datos" style="text-align: left; width: 190px">
                        <label for=""> Nombre:</label>
-                           {{$iluminacion->voucher->paciente->origen ? $iluminacion->voucher->paciente->origen->definicion : " " }}
+                           {{$iluminacion->voucher->origen ? $iluminacion->voucher->origen->definicion : " " }}
                     </td>
                     <td class="datos" style="text-align: left; width: 90px">
                        <label for=""> CUIT:</label>
-                           {{$iluminacion->voucher->paciente->origen ? $iluminacion->voucher->paciente->origen->cuit : " " }}
+                           {{$iluminacion->voucher->origen ? $iluminacion->voucher->origen->cuit : " " }}
                     </td>
                 <!-- </tr>
                 <tr> -->
                     <td class="datos" style="text-align: left; width: 230px">
                        <label for=""> Domicilio:</label>
-                        @if ($iluminacion->voucher->paciente->origen)
-                            @if ($iluminacion->voucher->paciente->origen->domicilio)
-                                {{$iluminacion->voucher->paciente->origen->domicilio->direccion}}
+                        @if ($iluminacion->voucher->origen)
+                            @if ($iluminacion->voucher->origen->domicilio)
+                                {{$iluminacion->voucher->origen->domicilio->direccion}}
                             @endif
                         @endif 
                     </td>

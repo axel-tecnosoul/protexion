@@ -92,14 +92,6 @@ class HistoriaClinicaController extends Controller
         $historia_clinica->voucher_id=$request->voucher_id;
         $historia_clinica->user_id=auth()->user()->id;
         $historia_clinica->save();
-
-        //Actualizar datos de paciente
-        /*
-        $idPaciente = $historia_clinica->voucher->paciente->id;
-        $paciente=Paciente::findOrFail($idPaciente);
-        $paciente->obra_social_id=$request->get('obra_social_id');
-        $paciente->origen_id=$request->get('origen_id');
-        $paciente->update();*/
         
         //Carga de tablas
             //Examen Clinico
@@ -315,14 +307,6 @@ class HistoriaClinicaController extends Controller
         //$historia_clinica->voucher_id=$request->voucher_id;
         $historia_clinica->user_id=auth()->user()->id;
         $historia_clinica->save();
-
-        //Actualizar datos de paciente
-        /*
-        $idPaciente = $historia_clinica->voucher->paciente->id;
-        $paciente=Paciente::findOrFail($idPaciente);
-        $paciente->obra_social_id=$request->get('obra_social_id');
-        $paciente->origen_id=$request->get('origen_id');
-        $paciente->update();*/
         
         //Carga de tablas
             //Examen Clinico
