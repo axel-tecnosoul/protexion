@@ -21,8 +21,8 @@
                 </a>
 
                 <a href="{{ route('origen.exportar') }}">
-                    <button class="btn btn-secondary">
-                      <i class="nav-icon fas fa-file-excel"></i> Exportar Empresas
+                    <button class="btn" style="background-color: rgb(31 176 76);color: white;">
+                      <i class="nav-icon fas fa-file-excel"></i> Exportar
                     </button>
                 </a>
                 

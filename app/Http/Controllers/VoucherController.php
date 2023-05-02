@@ -17,6 +17,9 @@ use Illuminate\Http\Request;
 use App\Voucher;
 use App\User;
 use App\Paciente;
+use App\Origen;
+use App\Pais;
+use App\Provincia;
 use App\Models\VoucherEstudio;
 use App\Models\VoucherRiesgos;
 use Carbon\Carbon;
@@ -88,6 +91,7 @@ class VoucherController extends Controller
 
     public function create($id)
     {
+
       //dd($id);
       $ex=explode(",",$id);
       $cant_pacientes=count($ex);
@@ -97,30 +101,32 @@ class VoucherController extends Controller
         $paciente=$id;
       }
 
-        $tipo_estudios =    TipoEstudio::all();
-        $estudios =         Estudio::all();
-        
-        /*$aptitudes=         new Aptitud;
+      $tipo_estudios = TipoEstudio::all();
+      $estudios = Estudio::all();
+      $riesgos = Riesgos::all();
+      //$origenes = Origen::all();
+      $origenes = Origen::orderBy('definicion')->get();
 
-        $riesgos=$aptitudes->riesgos();*/
-        $riesgos =         Riesgos::all();
+      $paises = Pais::all();
 
-        //Eliminar estudios con el mismo nombre que el tipo de estudio
-        for ($i=0; $i < sizeof($estudios); $i++) { 
-            if (strtoupper($estudios[$i]->nombre)  == strtoupper($estudios[$i]->tipoEstudio->nombre))  {
-                unset($estudios[$i]);
-            }
-        }
-        /*$pacientes =        Paciente::where('estado_id','=',1)
-                                    ->where('documento','!=',"")->get();*/
-        return view("voucher.create", compact(/*'pacientes', */'estudios', 'tipo_estudios', 'paciente','riesgos','cant_pacientes'));
+      //Eliminar estudios con el mismo nombre que el tipo de estudio
+      for ($i=0; $i < sizeof($estudios); $i++) { 
+          if (strtoupper($estudios[$i]->nombre)  == strtoupper($estudios[$i]->tipoEstudio->nombre))  {
+              unset($estudios[$i]);
+          }
+      }
+      /*$pacientes =        Paciente::where('estado_id','=',1)
+                                  ->where('documento','!=',"")->get();*/
+      return view("voucher.create", compact(/*'pacientes', */'estudios', 'tipo_estudios', 'paciente','riesgos','cant_pacientes',"origenes","paises"));
     }
 
     public function store(Request $request)
-    {   
+    {
 
       $paciente_id=$request->paciente_id;
       $aPacientes=explode(",",$paciente_id);
+
+      $origen_id=$request->origen_id;
       //$cant_pacientes=count($aPacientes);
       //dd($request->all());
       //$paciente=$paciente_id;
@@ -133,7 +139,12 @@ class VoucherController extends Controller
           $voucher->user_id=auth()->user()->id;
           //$voucher->paciente_id = $request->paciente_id;
           $voucher->paciente_id = $paciente_id;
+          $voucher->origen_id = $origen_id;
           $voucher->save();
+
+          $paciente=Paciente::findOrFail($paciente_id);
+          $paciente->origen_id=$origen_id;
+          $paciente->update();
 
           //dd($request->riesgos);
           $riesgos=$request->riesgos;
@@ -202,10 +213,6 @@ class VoucherController extends Controller
           }
       }
       
-      
-        
-        //
-
         //"riesgos" => implode($request->riesgos),
 
         if(count($aPacientes)==1){
@@ -322,6 +329,8 @@ class VoucherController extends Controller
       $tipo_estudios =    TipoEstudio::all();
       $estudios =         Estudio::all();
       $paciente =         Paciente::find($voucher->paciente->id);
+      $origenes = Origen::orderBy('definicion')->get();
+      $paises = Pais::all();
 
       $voucher_estudio=[];
       //dd($voucher->vouchersEstudios);
@@ -363,7 +372,7 @@ class VoucherController extends Controller
       }*/
       //die();
 
-      return view("voucher.edit", compact(/*'pacientes', */'estudios', 'tipo_estudios', 'paciente','riesgos','voucher','voucher_estudio','voucher_riesgos'));
+      return view("voucher.edit", compact(/*'pacientes', */'estudios', 'tipo_estudios', 'paciente','riesgos','voucher','voucher_estudio','voucher_riesgos','origenes','paises'));
       //return view("ciudad.edit",["ciudad"=>$ciudad,"provincias"           =>  $provincias]);
     }
 
@@ -374,8 +383,12 @@ class VoucherController extends Controller
       $voucher=Voucher::findOrFail($id);
       $voucher->turno=$request->turno;
       $voucher->user_id=auth()->user()->id;
-      //$voucher->paciente_id = $request->paciente_id;
+      $voucher->origen_id = $request->origen_id;
       $voucher->update();
+
+      $paciente=Paciente::findOrFail($request->paciente_id);
+      $paciente->origen_id=$request->origen_id;
+      $paciente->update();
 
       //dd($request->riesgos);
       $riesgos=$request->riesgos;

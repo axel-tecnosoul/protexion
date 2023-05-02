@@ -169,7 +169,8 @@ class PacienteController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create(){
-        $origenes=Origen::all();
+        //$origenes = Origen::all();
+        $origenes = Origen::orderBy('definicion')->get();
         $estado_civiles=EstadoCivil::all();
         $sexos=Sexo::all();
         $obra_sociales=ObraSocial::all();
@@ -310,7 +311,8 @@ class PacienteController extends Controller
 
         $paciente=Paciente::findOrFail($id);
         $sexos=Sexo::all();
-        $origenes=Origen::all();
+        //$origenes=Origen::all();
+        $origenes = Origen::orderBy('definicion')->get();
         $estado_civiles=EstadoCivil::all();
         $obra_sociales=ObraSocial::all();
         $paises=Pais::all();

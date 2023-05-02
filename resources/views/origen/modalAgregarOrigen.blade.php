@@ -7,11 +7,10 @@
     tabindex="-1"
     id="modal-agregarOrigen">
 
-
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h3 class="modal-title" ><i class="fa fa-industry" aria-hidden="true"></i> Agregar Nueva Procedencia</h3>
+                    <h3 class="modal-title" ><i class="fa fa-industry" aria-hidden="true"></i> Agregar Nueva Empresa</h3>
                 </div>
                 <div class="modal-body" style="color: black">
                     <div class="form-group">

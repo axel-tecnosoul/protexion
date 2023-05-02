@@ -18,6 +18,8 @@ use App\Models\VoucherEstudio;
 use App\Models\VoucherRiesgos;
 use Carbon\Carbon;
 use PDF;
+use PHPExcel;
+use PHPExcel_IOFactory;
 
 class VoucherMedicoController extends Controller
 {
@@ -190,6 +192,91 @@ class VoucherMedicoController extends Controller
       ]);
       $pdf->setPaper('a4','letter');
       return $pdf->stream('voucher_medico.pdf');
+    }
+
+    public function excel_medico(Request $request)
+    {
+
+      $fecha=$request->fecha;
+      $tipo_estudio_id=$request->tipo_estudio_id;
+      //if(is_null($fecha)) $fecha=date("Y-m-d");
+
+      //dd($request->fecha);
+
+      $aPacientes=$this->traerDatosPaciente($fecha,$tipo_estudio_id);
+
+      $tipo_estudio_id=explode(".",$tipo_estudio_id);
+      
+      if($tipo_estudio_id[0]=="te"){
+          $tipo_estudio=TipoEstudio::find($tipo_estudio_id[1]);
+      }elseif($tipo_estudio_id[0]=="e"){
+          $tipo_estudio=Estudio::find($tipo_estudio_id[1]);
+      }
+
+      //$ori=DB::select('SELECT definicion FROM origenes');
+      //var_dump($ori);
+
+      require_once './../vendor/PHPExcel.php';
+      $objPHPExcel = new PHPExcel();
+      //$objPHPExcel = new PHPExcel();
+      //Informacion del excel
+      /*$objPHPExcel->
+      getProperties()
+        ->setCreator("ingenieroweb.com.co")
+        ->setLastModifiedBy("ingenieroweb.com.co")
+        ->setTitle("Exportar excel desde mysql")
+        ->setSubject("Ejemplo 1")
+        ->setDescription("Documento generado con PHPExcel")
+        ->setKeywords("ingenieroweb.com.co  con  phpexcel")
+        ->setCategory("ciudades"); */   
+
+      $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A1',"Fecha:");
+      $objPHPExcel->setActiveSheetIndex(0)->setCellValue('B1',date("d-m-Y",strtotime($fecha)));
+      $objPHPExcel->setActiveSheetIndex(0)->setCellValue('D1',"Tipo de estudio:");
+      $objPHPExcel->setActiveSheetIndex(0)->setCellValue('E1',$tipo_estudio->nombre);
+      
+      $objPHPExcel->setActiveSheetIndex(0)->getStyle('A1')->getFont()->setBold(true);
+      $objPHPExcel->setActiveSheetIndex(0)->getStyle('D1')->getFont()->setBold(true);
+        
+      $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A3',"Paciente");
+      $objPHPExcel->setActiveSheetIndex(0)->setCellValue('B3',"DNI");
+      $objPHPExcel->setActiveSheetIndex(0)->setCellValue('C3',"Edad");
+      $objPHPExcel->setActiveSheetIndex(0)->setCellValue('D3',"Empresa");
+      $objPHPExcel->setActiveSheetIndex(0)->setCellValue('E3',"Detalle");
+
+      $objPHPExcel->setActiveSheetIndex(0)->getStyle('A3')->getFont()->setBold(true);
+      $objPHPExcel->setActiveSheetIndex(0)->getStyle('B3')->getFont()->setBold(true);
+      $objPHPExcel->setActiveSheetIndex(0)->getStyle('C3')->getFont()->setBold(true);
+      $objPHPExcel->setActiveSheetIndex(0)->getStyle('D3')->getFont()->setBold(true);
+      $objPHPExcel->setActiveSheetIndex(0)->getStyle('E3')->getFont()->setBold(true);
+
+      $row=4;
+      foreach($aPacientes as $paciente =>$estudios){
+
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A'.$row,strval($paciente));
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('B'.$row,strval($estudios["dni"]));
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('C'.$row,strval($estudios["edad"]));
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('D'.$row,strval($estudios["empresa"]));
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('E'.$row,strval(implode(", ",$estudios["estudios"])));
+        
+        $row++;
+      }
+
+      $objPHPExcel->setActiveSheetIndex(0)->getColumnDimension('A')->setAutoSize(true);
+      $objPHPExcel->setActiveSheetIndex(0)->getColumnDimension('B')->setAutoSize(true);
+      $objPHPExcel->setActiveSheetIndex(0)->getColumnDimension('C')->setAutoSize(true);
+      $objPHPExcel->setActiveSheetIndex(0)->getColumnDimension('D')->setAutoSize(true);
+      $objPHPExcel->setActiveSheetIndex(0)->getColumnDimension('E')->setAutoSize(true);
+
+      $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007'); 
+
+      header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'); //mime type
+      header('Content-Disposition: attachment;filename="Visitas por medico.xlsx"'); //tell browser what's the file name
+      header('Cache-Control: max-age=0'); //no cache 
+      ob_end_clean();
+      $objWriter->save('php://output');
+      exit();
+
     }
 
 

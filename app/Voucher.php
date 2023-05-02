@@ -32,6 +32,11 @@ class Voucher extends Model implements Auditable
         return $this->belongsTo(Paciente::class);
     }
 
+    public function origen()
+    {
+        return $this->belongsTo('App\Origen');
+    }
+
     public function voucherPaciente()
     {
         return $this->created_at->format('d/m/Y') . " - " . $this->paciente->nombreCompleto() . " - " . $this->paciente->documento;

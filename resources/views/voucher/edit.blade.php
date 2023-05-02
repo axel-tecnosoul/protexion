@@ -32,12 +32,42 @@
       <!-- Fecha -->
       <div class="col-12">
         <div class="row">
-          <div class="col-12">
+          <div class="col-6">
             <div class="form-group">
               <label> <p style="font-size:130%">Fecha: </p></label>
               <input class="form-control" type="date" name="turno" required value="<?=$turno?>">
             </div>
           </div> 
+          <div class="col-6">
+            <label for="origen_id"> <p style="font-size:130%">Empresa</p></label>
+            <div class="form-group inline">
+                <select
+                    name="origen_id"
+                    id="origen_id"
+                    class="origen_id custom-select"
+                    style="width:90%"
+                    required>
+                    <option
+                        value="0"
+                        disabled="true"
+                        selected="true"
+                        title="-Seleccione la empresa-">
+                        -Seleccione la empresa-
+                    </option>
+                    @foreach ($origenes as $origen)
+                        <option
+                            value="{{$origen->id }}">{{$origen->definicion}}
+                        </option>
+                    @endforeach
+                </select>
+                <a data-target="#modal-agregarOrigen" data-toggle="modal" style="width:10%">
+                    <button title="agregar empresa" class="btn btn-dark btn-md">
+                        <i class="fa fa-plus"></i>
+                    </button>
+                </a>
+                @include('origen.modalAgregarOrigen')
+            </div>
+        </div>
         </div>
       </div>
       <!-- / Fecha -->

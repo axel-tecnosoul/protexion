@@ -22,10 +22,12 @@
                     var_dump(asset('imagenes/paciente/'.$paciente->imagen));
                     var_dump(file_exists(asset('imagenes/paciente/'.$paciente->imagen)));*/
                     //if(file_exists(asset('imagenes/paciente/'.$paciente->imagen))){
-                      if($paciente->imagen == null){?>
-                        <img src="{{ asset('imagenes/paciente/default.png')}}" width="50px" class="img-circle elevation-2" alt="User Image"><?php
-                      }else{?>
+                      //if($paciente->imagen == null){
+                        //var_dump($paciente->imagen);
+                      if($paciente->imagen != null and file_exists('../public/imagenes/paciente/'.$paciente->imagen)){?>
                         <img src="{{ asset('imagenes/paciente/'.$paciente->imagen)}}" width="50px" class="img-circle elevation-2" alt="User Image"><?php
+                      }else{?>
+                        <img src="{{ asset('imagenes/paciente/default.png')}}" width="50px" class="img-circle elevation-2" alt="User Image"><?php
                       }
                     //}?>
                 </h3>

@@ -16,8 +16,13 @@
             </div>
             <div class="card-tools">
                 <a target="_blank" href="{{ route('voucher_medico.pdf_medico',[$fecha,$tipo_estudio_id]) }}">
-                    <button title="exportar pdf paciente" class="btn fondo1 btn-responsive">
+                    <button title="Exportar PDF" class="btn fondo1 btn-responsive">
                         <i class="fas fa-file-pdf"></i>
+                    </button>
+                </a>
+                <a target="_blank" href="{{ route('voucher_medico.excel_medico',[$fecha,$tipo_estudio_id]) }}">
+                    <button title="Exportar Excel" class="btn btn-responsive" style="background-color: rgb(31 176 76);color: white;">
+                        <i class="fa fa-file-excel"></i>
                     </button>
                 </a>
             </div>

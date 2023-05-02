@@ -46,8 +46,8 @@
                         <td>{{ $voucher->codigo }}</td>
                         <td style="text-align: left">{{ $voucher->paciente->nombreCompleto() }}</td>
                         <td style="text-align: left"><?php
-                          if($voucher->paciente->origen){
-                            echo $voucher->paciente->origen->definicion;
+                          if($voucher->origen){
+                            echo $voucher->origen->definicion;
                           }?>
                         </td>
                         <td style="text-align: left"><?php
