@@ -76,4 +76,14 @@ class EstudioController extends Controller
         }
         return redirect()->route('estudios.index')->with('delete_user', 'Estudio eliminado correctamente');
     }
+
+    public function delete($id)
+    {
+        try { 
+          Estudio::find($id)->delete();
+        } catch(\Illuminate\Database\QueryException $ex){ 
+            return redirect()->route('estudios.index')->with('delete_user_error', 'El estudio no fue eliminado porque está siendo utilizado en otras tablas');
+        }
+        return redirect()->route('estudios.index')->with('delete_user', 'Estudio eliminado correctamente');
+    }
 }

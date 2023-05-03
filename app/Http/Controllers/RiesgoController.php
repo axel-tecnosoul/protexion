@@ -37,21 +37,11 @@ class RiesgoController extends Controller
      */
     public function index(Request $request)
     {
-        //$puestos=Puesto::all(); //obteneme todas las categorias
-        //$estados=Estado::all(); //obteneme todas las categorias
-
         $riesgos=Riesgos::all(); //que me obtenga directamente todos los grupos
 
         return view('riesgo.index',[
-            "riesgos"         =>  $riesgos,         //los grupos de trabajo
-            //"puesto_id"         =>  $puesto_id, //si los id son identicos que me mantenga el valor
-            //"puestos"           =>  $puestos,  //las categorias asociadas al grupo de trabajo
-            //"estado_id"         =>  $estado_id, //si los id son identicos que me mantenga el valor
-            //"estados"           =>  $estados, //si los id son identicos que me mantenga el valor
-
-            ]);
-
-
+          "riesgos"         =>  $riesgos,         //los grupos de trabajo
+        ]);
     }
 
 
@@ -62,14 +52,10 @@ class RiesgoController extends Controller
      */
     public function create()
     {
-
-        //$sexos=Sexo::all();
         $provincias=Provincia::all();
         return view("riesgo.create", [
-            //"sexos"             =>  $sexos,
-            "provincias"           =>  $provincias
-            ]);
-
+          "provincias"           =>  $provincias
+        ]);
     }
 
 
@@ -82,9 +68,7 @@ class RiesgoController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            //'documento'         => 'required|unique:personal_clinicas,documento,except,id',
-            'riesgo'           => 'required',
-            //'codigp_'         => 'required',
+          'riesgo'           => 'required',
         ]);
 
         //Creo los datos de la persona
@@ -93,7 +77,6 @@ class RiesgoController extends Controller
         $riesgo->save();
 
         return redirect()->route('riesgo.index');
-
     }
 
     /**
@@ -105,8 +88,6 @@ class RiesgoController extends Controller
 
     public function show($id)
     {
-
-
 
     }
 
@@ -125,7 +106,6 @@ class RiesgoController extends Controller
     }
 
 
-
     /**
      * Update the specified resource in storage.
      *
@@ -135,13 +115,11 @@ class RiesgoController extends Controller
      */
     public function update(Request $request, $id)
     {
-
         $riesgo=Riesgos::findOrFail($id);
         $riesgo->riesgo=$request->get('riesgo');
         $riesgo->update();
 
         return redirect()->route('riesgo.index');
-
     }
 
     /**
@@ -152,18 +130,12 @@ class RiesgoController extends Controller
      */
     public function delete($id)
     {
-        /*$riesgo=Riesgos::find($id);
-        $nombre=$riesgo->nombreCompleto();
-        $riesgo->update(['estado_id'=>2]);
-        return redirect()->route('riesgo.index')->withMessage("El riesgo $nombre ha sido dado de baja correctamente");*/
-
         try { 
           Riesgos::find($id)->delete();
         } catch(\Illuminate\Database\QueryException $ex){ 
             return redirect()->route('riesgo.index')->with('delete_user_error', 'El riesgo no fue eliminado porque está siendo utilizado en otras tablas');
         }
         return redirect()->route('riesgo.index')->with('delete_user', 'Riesgo eliminado correctamente');
-
     }
 
     /*public function eliminados()
@@ -173,10 +145,9 @@ class RiesgoController extends Controller
 
     }*/
 
-
     public function restaurar($id)
     {
-        $personalRestaurar = Riesgo::find($id);
+        $personalRestaurar = Riesgos::find($id);
         $personalRestaurar->update(['estado_id'=>1]);
         return redirect()->route('personal.index');
 

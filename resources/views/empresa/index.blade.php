@@ -85,11 +85,16 @@
                                     <i class="fa fa-edit"></i>
                                 </button>
                             </a>
-                            <form action="{{route('empresa.destroy',$empresa->id)}}" method="POST" style="display:inline;">
+                            <!-- <form action="{{route('empresa.destroy',$empresa->id)}}" method="POST" style="display:inline;">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-danger"><i class="fa fa-fw fa-trash"></i></button>
-                            </form>
+                            </form> -->
+                            
+                            <a data-keyboard="false" data-target="#modal-delete-{{ $empresa->id }}" data-toggle="modal">
+                                <button type="submit" class="btn fondo1 btn-responsive"><i class="fa fa-fw fa-trash"></i></button>
+                            </a>
+                            @include('empresa.modaldelete')
                         </td>
                     </tr>
                     @endforeach

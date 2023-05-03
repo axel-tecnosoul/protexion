@@ -5,7 +5,6 @@
     <li class="breadcrumb-item active">Indice de Riesgo</li>
 @endsection
 
-
 @section('content') <!-- Contenido -->
 
 <div class="card">
@@ -32,10 +31,7 @@
                     </a>
                 </p>
                 <div class="collapse" id="collapseExample">
-                    <div class="card card-body">
-
-                        
-                    </div>
+                    <div class="card card-body"></div>
                 </div>
             </div-->
             <table id="tablaDetalle" style="border:1px solid black; width:100%" class="table table-bordered table-condensed table-hover">
@@ -44,7 +40,6 @@
                         <th width="10%" style="color:#F8F9F9">NRO</th>
                         <th width="75%" style="color:#F8F9F9">RIESGO</th>
                         <th width="15%" style="color:#F8F9F9">OPCIONES</th>
-
                     </tr>
                 </thead>
                 <tbody>
@@ -67,11 +62,15 @@
                                 </button>
                             </a>
 
-                            <form action="{{route('riesgo.destroy',$riesgo->id)}}" method="POST" style="display:inline;">
+                            <!-- <form action="{{route('riesgo.destroy',$riesgo->id)}}" method="POST" style="display:inline;">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-danger"><i class="fa fa-fw fa-trash"></i></button>
-                            </form>
+                            </form> -->
+                            <a data-keyboard="false" data-target="#modal-delete-{{ $riesgo->id }}" data-toggle="modal">
+                                <button type="submit" class="btn fondo1 btn-responsive"><i class="fa fa-fw fa-trash"></i></button>
+                            </a>
+                            @include('riesgo.modaldelete')
                         </td>
                     </tr>
                     @endforeach

@@ -39,7 +39,6 @@
                         <th width="40%" style="color:#F8F9F9">NOMBRE</th>
                         <th width="35%" style="color:#F8F9F9">TIPO</th>
                         <th width="15%" style="color:#F8F9F9">OPCIONES</th>
-
                     </tr>
                 </thead>
                 <tbody>
@@ -60,11 +59,11 @@
                                     <i class="fa fa-edit"></i>
                                 </button>
                             </a>
-                            <form action="{{route('estudios.destroy',$item->id)}}" method="POST" style="display:inline;">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-danger"><i class="fa fa-fw fa-trash"></i></button>
-                            </form>
+                            
+                            <a data-keyboard="false" data-target="#modal-delete-{{ $item->id }}" data-toggle="modal">
+                                <button type="submit" class="btn fondo1 btn-responsive"><i class="fa fa-fw fa-trash"></i></button>
+                            </a>
+                            @include('estudio.modaldelete')
                         </td>
                     </tr>
                     <!-- aca colocar el modaldelete-->
