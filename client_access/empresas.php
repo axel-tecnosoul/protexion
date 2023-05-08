@@ -52,7 +52,8 @@ if (!isset($_SESSION['rowUsers']['id_usuario'])) {
         overflow-y: initial !important
       }
       .modal-body{
-        max-height: 70vh;
+        max-height: 80vh;
+        /*max-height: 80%;*/
         overflow-y: auto;
       }
       .dz-remove{
@@ -135,7 +136,7 @@ if (!isset($_SESSION['rowUsers']['id_usuario'])) {
 
     <!--Modal para CRUD-->
     <div class="modal fade" id="modalCRUD" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-dialog modal-lg" style="max-width: 75%;" role="document">
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="exampleModalLabel"></h5>
@@ -145,7 +146,7 @@ if (!isset($_SESSION['rowUsers']['id_usuario'])) {
           <form id="formEmpresas">
             <div class="modal-body">
               <div class="row">
-                <div class="col-lg-4 mb-2"><button id="btnAddAdjuntos" class="btn btn-secondary">Agregar</button></div>
+                <div class="col-lg-4 mb-2"><button id="btnAddAdjuntos" class="btn btn-secondary">Agregar archivos</button></div>
                 <div class="col-lg-12 d-none" id="masAdjuntos">
                   <div id="dropMasArchivos"></div>
                 </div>
@@ -154,7 +155,7 @@ if (!isset($_SESSION['rowUsers']['id_usuario'])) {
                 include_once("views/tabla_archivos.php")?>
               </div>
             </div>
-            <div class="modal-footer">
+            <div class="modal-footer d-none">
               <button type="button" class="btn btn-light" data-dismiss="modal">Cerrar</button>
               <button type="submit" id="btnGuardar" class="btn btn-dark d-none disabled">
                 Guardar
@@ -391,8 +392,8 @@ if (!isset($_SESSION['rowUsers']['id_usuario'])) {
 
         $("#modalCRUD").modal("show");
 
-        $("#btnGuardar").html("Agregar").addClass("d-none")
-        $("#btnAddAdjuntos").html("Agregar")
+        $("#btnGuardar").html("Agregar archivos").addClass("d-none")
+        $("#btnAddAdjuntos").html("Agregar archivos")
         $("#masAdjuntos").addClass("d-none");
         $("#tablaArchivos").removeClass("d-none");
 
@@ -404,10 +405,10 @@ if (!isset($_SESSION['rowUsers']['id_usuario'])) {
         e.preventDefault();
         console.log(this);
         let btn=$(this);
-        if(btn.html()=="Agregar"){
-          btn.html("Cancelar agregar")
+        if(btn.html()=="Agregar archivos"){
+          btn.html("Volver al listado")
         }else{
-          btn.html("Agregar")
+          btn.html("Agregar archivos")
         }
         $rowMasAdjuntos = document.getElementById("masAdjuntos");
         $rowMasAdjuntos.classList.toggle("d-none");
@@ -527,7 +528,14 @@ if (!isset($_SESSION['rowUsers']['id_usuario'])) {
           title: "Estas seguro?",
           text: "Una vez eliminado este archivo, no volveras a verlo",
           icon: "warning",
-          buttons: true,
+          //buttons: true,
+          buttons: {
+            cancel: "Cancelar",
+            danger: {
+              text: "OK",
+              closeModal: false,
+            }
+          },
           dangerMode: true,
         })
         .then((willDelete) => {
@@ -536,9 +544,13 @@ if (!isset($_SESSION['rowUsers']['id_usuario'])) {
             $.ajax({
               url: "models/administrar_empresas.php",
               type: "POST",
-              datatype:"json",    
+              datatype:"json",
               data:  {accion:accion, id_archivo:id_archivo, nombreArchivo: nombreArchivo, id_empresa: id_empresa},    
               success: function() {
+                swal({
+                  icon: 'success',
+                  title: 'Archivo eliminado correctamente'
+                });
                 get_archivos(id_empresa)
                 /*$padre = this.parentElement.parentElement
                 $padre.classList.add("d-none");*/

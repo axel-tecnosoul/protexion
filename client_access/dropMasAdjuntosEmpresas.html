@@ -19,9 +19,9 @@
   </form>
 </div>
 <div class="card-footer">
-  <div id="progreso" class="progress">
-    <div class="progress-bar" role="progressbar"></div>
-  </div>
+  <b>Archivos añadidos:</b> <span id="added_files">0</span><br>
+  <b>Archivos subidos correctamente:</b> <span id="ok_added_files">0</span>
+  <div id="files"></div>
 </div>
   <!--<div class="pb-4 text-center">
         <button class="btn btn-secondary" id="procesarArchivo">Procesar archivo</button>
@@ -30,13 +30,15 @@
 
 <script src="assets/js/dropzone/dropzone.js"></script>
 <script type="text/javascript">
-	var arrayFiles = [];
+	//var arrayFiles = [];
   Dropzone.autoDiscover = false;
-  let id_empresa=$("#id_empresa").html();
+  var id_empresa=$("#id_empresa").html();
+  /*var progreso_aux=0;
+  var ultima_actualizacion = new Date()*/
+  //var fileDropzone
   $(".dropzone").dropzone({
     url: "./models/administrar_empresas.php?id_empresa="+id_empresa+"&accion=subirArchivos&cantAdjuntos=1",
     //autoProcessQueue: false,
-    addRemoveLinks: false,
     acceptedFiles: "image/*,application/pdf,.doc,.docx,.xls,.xlsx,.csv,.tsv,.ppt,.pptx,.pages,.odt,.rtf,.pdf,.txt",
     maxFilesize: 10,
     maxFiles: 10,
@@ -45,28 +47,40 @@
     paramName: "file",
     dictRemoveFile: "Eliminar",
     addRemoveLinks: true,
+    timeout: 0,
     init: function(){
       this.on("addedfile", function(file){
         console.log(file);
-        arrayFiles.push(file);
+        //arrayFiles.push(file);
         //console.log("arrayFiles", arrayFiles);
         console.log("añadiendo archivos");
+        let added_files=$("#added_files")
+        let cant=parseInt(added_files.html())
+        added_files.html(cant+1)
+        file.id="file"+(cant+1)
+        $("#files").append(`<div>${file.name}:<span id='file${cant+1}'><div>`)
+        console.log("#file"+(cant+1));
+        console.log($("#file"+(cant+1)));
       });
       this.on("uploadprogress", function(file, progreso) {
+        /*if(progreso!=progreso_aux){
+          progreso_aux=progreso
+          ultima_actualizacion = new Date();
+          //file_name = file.name;
+        }*/
         console.log("Progreso de carga: ", progreso);
+        console.log(file.id);
+        console.log($("#"+file.id));
+        $("#"+file.id).html("<b>"+parseFloat(progreso).toFixed(2)+"%</b>")
       });
-      //uploadprogress(file, progress, bytesSent) {
-      /*this.on("uploadprogress", function(file, progress, bytesSent) {
-        if (file.previewElement) {
-          for (let node of file.previewElement.querySelectorAll(
-            "[data-dz-uploadprogress]"
-          )) {
-            node.nodeName === "PROGRESS"
-              ? (node.value = progress)
-              : (node.style.width = `${progress}%`);
-          }
-        }
-      }),*/
+      this.on("complete", function(file) {
+        console.log("Carga completa: ", file);
+        this.removeFile(file);
+        let ok_added_files=$("#ok_added_files")
+        let cant=parseInt(ok_added_files.html())
+        ok_added_files.html(cant+1)
+        get_archivos(id_empresa)
+      });;
       this.on("removedfile", function(file){
         /*var index = arrayFiles.indexOf(file);
         arrayFiles.splice(index, 1);*/
@@ -103,6 +117,19 @@
       });
     }
   });
+
+  /*var intervalo = setInterval(function() {
+    // Verificar si la variable progreso_aux ha sido actualizada recientemente
+    var tiempo_actual = new Date();
+    var tiempo_transcurrido = tiempo_actual.getTime() - ultima_actualizacion.getTime();
+    if (tiempo_transcurrido > 30000) {
+      // La variable progreso_aux no se ha actualizado en los últimos 30 segundos
+      console.log("La variable progreso_aux no se ha actualizado en los últimos 30 segundos");
+      clearInterval(intervalo); // Detener el intervalo
+      alert("Un archivo no se ha informado progreso de avance en los últimos 30 segundos, intente cancelarlo y volver a subirlo por favor");
+    }
+  }, 5000); // Verificar la variable cada 5 segundos*/
+
 </script>
 </body>
 </html>

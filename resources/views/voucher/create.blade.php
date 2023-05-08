@@ -39,20 +39,20 @@
                                     style="width:90%"
                                     required>
                                     <option
-                                        value="0"
+                                        value=""
                                         disabled="true"
                                         selected="true"
                                         title="-Seleccione la empresa-">
                                         -Seleccione la empresa-
-                                    </option>
-                                    @foreach ($origenes as $origen)
-                                        @if ($origen->id==$paciente->origen_id)
-                                            <option value="{{$origen->id}}" selected>{{$origen->definicion}}</option>
-                                        @else
-                                            <option value="{{$origen->id}}">{{$origen->definicion}}</option>
-                                        @endif
-                                        <!-- <option value="{{$origen->id}}">{{$origen->definicion}}</option> -->
-                                    @endforeach
+                                    </option><?php
+                                    foreach ($origenes as $origen){
+                                        if (isset($paciente->origen_id) and $origen->id==$paciente->origen_id){?>
+                                            <option value="{{$origen->id}}" selected>{{$origen->definicion}}</option><?php
+                                        }else{?>
+                                            <option value="{{$origen->id}}">{{$origen->definicion}}</option><?php
+                                        }
+                                        //<option value="{{$origen->id}}">{{$origen->definicion}}</option>
+                                      }?>
                                 </select>
                                 <a data-target="#modal-agregarOrigen" data-toggle="modal" style="width:10%">
                                     <button title="agregar empresa" class="btn btn-dark btn-md">
