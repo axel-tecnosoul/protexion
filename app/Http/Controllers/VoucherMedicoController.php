@@ -32,7 +32,7 @@ class VoucherMedicoController extends Controller
          $this->middleware('permission:eliminar voucher', ['only' => ['destroy']]);
     }*/
     
-    public function traerDatosPaciente($fecha,$tipo_estudio_id)
+    public function traerDatosPaciente($desde,$hasta,$tipo_estudio_id)
     {
 
       $tipo_estudio_id=explode(".",$tipo_estudio_id);
@@ -48,8 +48,11 @@ class VoucherMedicoController extends Controller
         //->where('followers.follower_id', '=', 3)
         //->get();
 
-      if($fecha){
-          $query = $query->where('turno','=',$fecha);
+      if($desde){
+          $query = $query->where('turno','>=',$desde);
+      }
+      if($hasta){
+        $query = $query->where('turno','<=',$hasta);
       }
       if($tipo_estudio_id[0]=="te"){
           if($tipo_estudio_id[1]==1){
@@ -80,7 +83,9 @@ class VoucherMedicoController extends Controller
           //$pacienteNombre="(".$dni.") ".$paciente->nombreCompleto();
           $pacienteNombre=$paciente->nombreCompleto();
           $edadPaciente=$paciente->edad();
+          $turno=new Carbon($voucher->turno);
           $aVoucherMedico[]=[
+            "turno" => $turno->format('d/m/Y'),
             "paciente" => $pacienteNombre,
             "dni" => $dni,
             "edad" => $edadPaciente,
@@ -98,6 +103,7 @@ class VoucherMedicoController extends Controller
       $aPacientes=[];
       foreach ($aVoucherMedico as $k => &$paciente) {
           $aPacientes[$paciente['paciente']]["estudios"][$k] = $paciente['estudio'];
+          $aPacientes[$paciente['paciente']]["turno"] = $paciente['turno'];
           $aPacientes[$paciente['paciente']]["empresa"] = $paciente['empresa'];
           $aPacientes[$paciente['paciente']]["dni"] = $paciente['dni'];
           $aPacientes[$paciente['paciente']]["edad"] = $paciente['edad'];
@@ -140,23 +146,28 @@ class VoucherMedicoController extends Controller
         }
         //dd($aEstudios);
 
-        $fecha=date("Y-m-d");
+        $desde=date("Y-m-d");
+        $hasta=date("Y-m-d");
         $tipo_estudio_id=0;
 
         $aPacientes=[];
-        if(isset($request->fecha)){
-          $fecha=$request->fecha;
-          $tipo_estudio_id=$request->tipo_estudio_id;
-          //if(is_null($fecha)) $fecha=date("Y-m-d");
-
-          $aPacientes=$this->traerDatosPaciente($fecha,$tipo_estudio_id);
+        if(isset($request->desde)){
+          $desde=$request->desde;
         }
+        if(isset($request->hasta)){
+          $hasta=$request->hasta;
+        }
+        $tipo_estudio_id=$request->tipo_estudio_id;
+         //if(is_null($desde)) $desde=date("Y-m-d");
+
+        $aPacientes=$this->traerDatosPaciente($desde,$hasta,$tipo_estudio_id);
 
         //$vouchers = Voucher::orderBy('id', 'desc')->get();
         return view('voucher_medico.index',[
             //"vouchers"          => $vouchers,
             "aPacientes"        => $aPacientes,
-            "fecha"             => $fecha,
+            "desde"             => $desde,
+            "hasta"             => $hasta,
             "tipo_estudio_id"   => $tipo_estudio_id,
             "aEstudios"         => $aEstudios
         ]);
@@ -165,13 +176,14 @@ class VoucherMedicoController extends Controller
     public function pdf_medico(Request $request)
     {
 
-      $fecha=$request->fecha;
+      $desde=$request->desde;
+      $hasta=$request->hasta;
       $tipo_estudio_id=$request->tipo_estudio_id;
       //if(is_null($fecha)) $fecha=date("Y-m-d");
 
       //dd($request->fecha);
 
-      $aPacientes=$this->traerDatosPaciente($fecha,$tipo_estudio_id);
+      $aPacientes=$this->traerDatosPaciente($desde,$hasta,$tipo_estudio_id);
 
       $tipo_estudio_id=explode(".",$tipo_estudio_id);
       
@@ -188,7 +200,8 @@ class VoucherMedicoController extends Controller
         "aPacientes"       => $aPacientes,
         "tipo_estudio"     => $tipo_estudio,
         //"estudios"       => $estudios,
-        "fecha"            => $fecha,
+        "desde"            => $desde,
+        "hasta"            => $hasta,
         "tipo_estudio_id"  => $tipo_estudio_id
       ]);
       $pdf->setPaper('a4','letter');
@@ -198,13 +211,14 @@ class VoucherMedicoController extends Controller
     public function excel_medico(Request $request)
     {
 
-      $fecha=$request->fecha;
+      $desde=$request->desde;
+      $hasta=$request->hasta;
       $tipo_estudio_id=$request->tipo_estudio_id;
       //if(is_null($fecha)) $fecha=date("Y-m-d");
 
       //dd($request->fecha);
 
-      $aPacientes=$this->traerDatosPaciente($fecha,$tipo_estudio_id);
+      $aPacientes=$this->traerDatosPaciente($desde,$hasta,$tipo_estudio_id);
 
       $tipo_estudio_id=explode(".",$tipo_estudio_id);
       
@@ -231,34 +245,40 @@ class VoucherMedicoController extends Controller
         ->setKeywords("ingenieroweb.com.co  con  phpexcel")
         ->setCategory("ciudades"); */   
 
-      $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A1',"Fecha:");
-      $objPHPExcel->setActiveSheetIndex(0)->setCellValue('B1',date("d-m-Y",strtotime($fecha)));
-      $objPHPExcel->setActiveSheetIndex(0)->setCellValue('D1',"Tipo de estudio:");
-      $objPHPExcel->setActiveSheetIndex(0)->setCellValue('E1',$tipo_estudio->nombre);
+      $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A1',"Desde:");
+      $objPHPExcel->setActiveSheetIndex(0)->setCellValue('B1',date("d-m-Y",strtotime($desde)));
+      $objPHPExcel->setActiveSheetIndex(0)->setCellValue('C1',"Hasta:");
+      $objPHPExcel->setActiveSheetIndex(0)->setCellValue('D1',date("d-m-Y",strtotime($hasta)));
+      $objPHPExcel->setActiveSheetIndex(0)->setCellValue('E1',"Tipo de estudio:");
+      $objPHPExcel->setActiveSheetIndex(0)->setCellValue('F1',$tipo_estudio->nombre);
       
       $objPHPExcel->setActiveSheetIndex(0)->getStyle('A1')->getFont()->setBold(true);
-      $objPHPExcel->setActiveSheetIndex(0)->getStyle('D1')->getFont()->setBold(true);
+      $objPHPExcel->setActiveSheetIndex(0)->getStyle('C1')->getFont()->setBold(true);
+      $objPHPExcel->setActiveSheetIndex(0)->getStyle('E1')->getFont()->setBold(true);
         
-      $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A3',"Paciente");
-      $objPHPExcel->setActiveSheetIndex(0)->setCellValue('B3',"DNI");
-      $objPHPExcel->setActiveSheetIndex(0)->setCellValue('C3',"Edad");
-      $objPHPExcel->setActiveSheetIndex(0)->setCellValue('D3',"Empresa");
-      $objPHPExcel->setActiveSheetIndex(0)->setCellValue('E3',"Detalle");
+      $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A3',"Turno");
+      $objPHPExcel->setActiveSheetIndex(0)->setCellValue('B3',"Paciente");
+      $objPHPExcel->setActiveSheetIndex(0)->setCellValue('C3',"DNI");
+      $objPHPExcel->setActiveSheetIndex(0)->setCellValue('D3',"Edad");
+      $objPHPExcel->setActiveSheetIndex(0)->setCellValue('E3',"Empresa");
+      $objPHPExcel->setActiveSheetIndex(0)->setCellValue('F3',"Detalle");
 
       $objPHPExcel->setActiveSheetIndex(0)->getStyle('A3')->getFont()->setBold(true);
       $objPHPExcel->setActiveSheetIndex(0)->getStyle('B3')->getFont()->setBold(true);
       $objPHPExcel->setActiveSheetIndex(0)->getStyle('C3')->getFont()->setBold(true);
       $objPHPExcel->setActiveSheetIndex(0)->getStyle('D3')->getFont()->setBold(true);
       $objPHPExcel->setActiveSheetIndex(0)->getStyle('E3')->getFont()->setBold(true);
+      $objPHPExcel->setActiveSheetIndex(0)->getStyle('F3')->getFont()->setBold(true);
 
       $row=4;
       foreach($aPacientes as $paciente =>$estudios){
 
-        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A'.$row,strval($paciente));
-        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('B'.$row,strval($estudios["dni"]));
-        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('C'.$row,strval($estudios["edad"]));
-        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('D'.$row,strval($estudios["empresa"]));
-        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('E'.$row,strval(implode(", ",$estudios["estudios"])));
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A'.$row,strval($estudios["turno"]));
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('B'.$row,strval($paciente));
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('C'.$row,strval($estudios["dni"]));
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('D'.$row,strval($estudios["edad"]));
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('E'.$row,strval($estudios["empresa"]));
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('F'.$row,strval(implode(", ",$estudios["estudios"])));
         
         $row++;
       }
@@ -268,6 +288,7 @@ class VoucherMedicoController extends Controller
       $objPHPExcel->setActiveSheetIndex(0)->getColumnDimension('C')->setAutoSize(true);
       $objPHPExcel->setActiveSheetIndex(0)->getColumnDimension('D')->setAutoSize(true);
       $objPHPExcel->setActiveSheetIndex(0)->getColumnDimension('E')->setAutoSize(true);
+      $objPHPExcel->setActiveSheetIndex(0)->getColumnDimension('F')->setAutoSize(true);
 
       $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007'); 
 

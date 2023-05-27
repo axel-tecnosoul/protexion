@@ -6,18 +6,29 @@
 <div class="col-12">
     <div class="row">
 
-        <div class="col-4">
-           <label for="fecha">Fecha</label>
+        <div class="col-3">
+           <label for="fecha">Desde</label>
            <input
                type="date"
-               name="fecha"
-               id="fecha"
+               name="desde"
+               id="desde"
                class="fecha form-control"
-               value="{{$fecha}}"
+               value="{{$desde}}"
                required
            >
        </div>
-       <div class="col-4">
+       <div class="col-3">
+           <label for="fecha">Hasta</label>
+           <input
+               type="date"
+               name="hasta"
+               id="hasta"
+               class="fecha form-control"
+               value="{{$hasta}}"
+               required
+           >
+       </div>
+       <div class="col-3">
            <label for="hasta">Tipo de estudio</label>
            <select
               name="tipo_estudio_id"
@@ -41,7 +52,7 @@
               @endforeach
             </select>
        </div>
-       <div class="col-4">
+       <div class="col-3">
         <label for=""></label>
         <div class="form-group">
             <span class="input-group-btn">
@@ -85,8 +96,7 @@ $(document).ready(function(){
         //y establesco ese valor capturado como minimo en Fecha Hasta
         $('#hasta').attr({"min" : desde});;
 
-
-        });
+    });
 
     //si existe un cambio en Fecha Hasta
     $('#hasta').change(function() {
@@ -100,29 +110,17 @@ $(document).ready(function(){
         {
             //se deshabilita el desde (para evitar que desde sea mayor que hasta)
             $("#desde").prop('disabled', true);
-
         }
 
+    });
 
-
-      });
-
-     //si se clickea en "FIltrar"
-      $('#bt_add').click(function () {
-        //se debe refrescar (si es que hubo) la prop disabled de desde
-        $("#desde").prop('disabled', false);
-
-
-      });
-
+    //si se clickea en "FIltrar"
+    $('#bt_add').click(function () {
+      //se debe refrescar (si es que hubo) la prop disabled de desde
+      $("#desde").prop('disabled', false);
+    });
 
 });
-
-
-
-
-
-
 
 </script>
 @endpush

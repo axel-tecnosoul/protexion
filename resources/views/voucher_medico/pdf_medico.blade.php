@@ -63,12 +63,15 @@
           </div>
           <div style="float:right">
               <div class="added" style="font-size: 16px;">
-                <p class="text-left"> <strong> Fecha:</strong> <?=date("d M Y",strtotime($fecha))?> </p>
+                <p class="text-left"> 
+                  <strong> Desde:</strong> <?=date("d M Y",strtotime($desde))?> 
+                  <strong> Hasta:</strong> <?=date("d M Y",strtotime($hasta))?> 
+                </p>
               </div>
           </div>
       </div>
 
-      <!-- <h3 class="titulo">{{ $fecha}}</h3> -->
+      <!-- <h3 class="titulo">{{ $desde}}</h3> -->
       <div class="marco2">
         <table class="tabla">
           <thead style="background-color:#222D32">
@@ -76,16 +79,18 @@
                   <!-- <th width="30%" style="color:#F8F9F9" >Paciente</th>
                   <th width="20%" style="color:#F8F9F9" >Empresa</th>
                   <th width="50%" style="color:#F8F9F9" >Detalle</th> -->
-                  <th width="20%" style="color:#F8F9F9">Paciente</th>
+                  <th width="10%" style="color:#F8F9F9">Turno</th>
+                  <th width="18%" style="color:#F8F9F9">Paciente</th>
                   <th width="8%" style="color:#F8F9F9">DNI</th>
                   <th width="7%" style="color:#F8F9F9">Edad</th>
-                  <th width="20%" style="color:#F8F9F9">Empresa</th>
-                  <th width="45%" style="color:#F8F9F9">Detalle</th>
+                  <th width="18%" style="color:#F8F9F9">Empresa</th>
+                  <th width="40%" style="color:#F8F9F9">Detalle</th>
               </tr>
           </thead>
           <tbody>
               @foreach ($aPacientes as $paciente =>$estudios)
               <tr onmouseover="cambiar_color_over(this)" onmouseout="cambiar_color_out(this)">
+                  <td style="text-align:right"><?=$estudios["turno"] ?: ''?></td>
                   <td style="text-align:left">{{ $paciente }}</td>
                   <td style="text-align:right"><?=$estudios["dni"] ?: ''?></td>
                   <td style="text-align:center"><?=$estudios["edad"] ?: ''?></td>

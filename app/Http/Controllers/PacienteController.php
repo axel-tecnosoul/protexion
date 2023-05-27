@@ -472,6 +472,7 @@ class PacienteController extends Controller
 
       $cant_filas=count($filas);
 
+      $aIdPacientes=[];
       for($i=8;$i<$cant_filas;$i++){
           $fila=$filas[$i];
           //var_dump($fila);
@@ -497,17 +498,24 @@ class PacienteController extends Controller
 
           if($documento==""){
             $paciente->save();
+            $aIdPacientes[]=$paciente->id;
           }else{
             $documento=str_replace(".","",$documento);
             $pac=DB::select('SELECT id FROM pacientes WHERE estado_id=1 AND REPLACE(documento,".","")="'.$documento.'"');
             //var_dump($pac);
             if(!$pac){
               $paciente->save();
+              $aIdPacientes[]=$paciente->id;
+            }else{
+              $aIdPacientes[]=$pac[0]->id;
             }
           }
           //
       }
 
+      //dd($aIdPacientes);
+      //window.location.href="voucher/create/"+encodeURIComponent(aIdPacientes.join(","))
+      return redirect()->route('voucher.create',implode(",",$aIdPacientes));
       return back()->with('message','Pacientes importados');
   }
 

@@ -137,7 +137,7 @@
                   <thead class="fondo2">
                     <tr>
                       <th style="width: 10%"> Tipo                  </th>
-                      <th style="width: 70%"> Estudio               </th>
+                      <th style="width: 70%"> Estudios              </th>
                       <th style="width: 10%"> Estado                </th>
                       <th style="width: 10%"> Acción                </th>
                     </tr>

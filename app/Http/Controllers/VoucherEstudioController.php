@@ -97,4 +97,27 @@ class VoucherEstudioController extends Controller
         flush();
         readfile($img);
     }
+
+    public function delete($id)
+    {
+
+      $archivo=ArchivoAdjunto::findOrFail($id);
+      $voucherEstudio=VoucherEstudio::findOrFail($archivo->voucher_estudio_id);
+      $voucher_id=$voucherEstudio->voucher_id;
+      $ruta=$archivo->anexo;
+
+      //dd($archivo,$voucherEstudio,$voucher_id,$ruta);
+
+      //$ruta = public_path().'/archivo/'.$request->voucher_id."/".$request->estudio."/";
+      //$item->move($ruta,$nombre);
+      unset($ruta);
+      //$ruta.=$nombre;
+
+      //dd($id);
+      //dd($request);
+      
+      $archivo->delete();
+
+      return redirect()->route('voucher.show',$voucher_id);
+    }
 }

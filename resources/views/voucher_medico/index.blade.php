@@ -15,12 +15,12 @@
                 <p style="font-size:130%"> <i class="fa fa-id-card" aria-hidden="true"></i> Indice de Visitas por medico</p>
             </div>
             <div class="card-tools">
-                <a target="_blank" href="{{ route('voucher_medico.pdf_medico',[$fecha,$tipo_estudio_id]) }}">
+                <a target="_blank" href="{{ route('voucher_medico.pdf_medico',[$desde,$hasta,$tipo_estudio_id]) }}">
                     <button title="Exportar PDF" class="btn fondo1 btn-responsive">
                         <i class="fas fa-file-pdf"></i>
                     </button>
                 </a>
-                <a target="_blank" href="{{ route('voucher_medico.excel_medico',[$fecha,$tipo_estudio_id]) }}">
+                <a target="_blank" href="{{ route('voucher_medico.excel_medico',[$desde,$hasta,$tipo_estudio_id]) }}">
                     <button title="Exportar Excel" class="btn btn-responsive" style="background-color: rgb(31 176 76);color: white;">
                         <i class="fa fa-file-excel"></i>
                     </button>
@@ -45,16 +45,18 @@
             <table id="tablaDetalle" style="border:1px solid black; width:100%" class="table table-bordered table-condensed table-hover">
                 <thead style="background-color:#222D32">
                     <tr class="text-uppercase">
-                        <th width="20%" style="color:#F8F9F9">Paciente</th>
+                        <th width="10%" style="color:#F8F9F9">Turno</th>
+                        <th width="18%" style="color:#F8F9F9">Paciente</th>
                         <th width="8%" style="color:#F8F9F9">DNI</th>
                         <th width="7%" style="color:#F8F9F9">Edad</th>
-                        <th width="20%" style="color:#F8F9F9">Empresa</th>
-                        <th width="45%" style="color:#F8F9F9">Detalle</th>
+                        <th width="17%" style="color:#F8F9F9">Empresa</th>
+                        <th width="40%" style="color:#F8F9F9">Detalle</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($aPacientes as $paciente =>$datos)
                     <tr onmouseover="cambiar_color_over(this)" onmouseout="cambiar_color_out(this)">
+                        <td style="text-align:right"><?=$datos["turno"] ?: ''?></td>
                         <td style="text-align:left">{{ $paciente }}</td>
                         <td style="text-align:right"><?=$datos["dni"] ?: ''?></td>
                         <td style="text-align:center"><?=$datos["edad"] ?: ''?></td>

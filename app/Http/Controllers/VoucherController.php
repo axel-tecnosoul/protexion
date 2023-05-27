@@ -86,7 +86,7 @@ class VoucherController extends Controller
             "vouchers"         =>  $vouchers,
             "desde"             =>  $desde,
             "hasta"             =>  $hasta
-            ]);
+        ]);
     }
 
     public function create($id)
