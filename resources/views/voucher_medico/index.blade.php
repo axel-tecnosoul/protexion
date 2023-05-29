@@ -9,7 +9,8 @@
 <div class="card">
     <div >
         @include('errors.request')
-        @include('voucher.mensaje')
+        @include('voucher.mensaje')<?php
+        //dd($desde,$hasta,$tipo_estudio_id)?>
         <div class="card-header fondo2">
             <div class="card-title">
                 <p style="font-size:130%"> <i class="fa fa-id-card" aria-hidden="true"></i> Indice de Visitas por medico</p>

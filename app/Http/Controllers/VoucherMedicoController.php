@@ -158,6 +158,7 @@ class VoucherMedicoController extends Controller
           $hasta=$request->hasta;
         }
         $tipo_estudio_id=$request->tipo_estudio_id;
+        if(is_null($tipo_estudio_id)) $tipo_estudio_id=0;
          //if(is_null($desde)) $desde=date("Y-m-d");
 
         $aPacientes=$this->traerDatosPaciente($desde,$hasta,$tipo_estudio_id);
