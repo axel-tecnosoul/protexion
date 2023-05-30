@@ -30,11 +30,11 @@
                 <thead style="background-color:#222D32">
                     <tr class="text-uppercase">
                         <th width="10%" style="color:#F8F9F9" >Código</th>
-                        <th width="24%" style="color:#F8F9F9" >Paciente</th>
-                        <th width="20%" style="color:#F8F9F9" >Empresa</th>
+                        <th width="29%" style="color:#F8F9F9" >Paciente</th>
+                        <th width="29%" style="color:#F8F9F9" >Empresa</th>
                         <th width="10%" style="color:#F8F9F9" >HHCC</th>
                         <th width="10%" style="color:#F8F9F9" >Fecha</th>
-                        <th width="26%" style="color:#F8F9F9" >Opciones</th>
+                        <th width="11%" style="color:#F8F9F9" >Opciones</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -55,7 +55,52 @@
                         }?></td>
                         <td>{{ \Carbon\Carbon::parse($voucher->turno)->format('d/m/Y') }}</td>
                         <td style="text-align: center" colspan="3">
-                            <a href="{{ route('voucher.edit',$voucher->id) }}">
+                          <div class="dropdown">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu4" data-toggle="dropdown"
+                              aria-haspopup="true" aria-expanded="false">
+                              Acciones
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenu4">
+                              <a class="dropdown-item" href="{{ route('voucher.edit',$voucher->id) }}">
+                                  <button title="Editar visita" class="btn fondo2 btn-responsive w-100 text-left">
+                                      <i class="fas fa-edit"></i> Editar visita
+                                  </button>
+                              </a>
+                              <a class="dropdown-item" target="_blank" href="{{ route('voucher.pdf_paciente',$voucher->id) }}">
+                                  <button title="exportar pdf paciente" class="btn fondo1 btn-responsive w-100 text-left">
+                                      <i class="fas fa-file-pdf"></i> Exportar PDF
+                                  </button>
+                              </a>
+                              <!-- <a class="dropdown-item" target="_blank" href="{{ route('voucher.pdf_medico',$voucher->id) }}">
+                                  <button title="exportar pdf médico" class="btn fondo2 btn-responsive w-100 text-left">
+                                      <i class="fas fa-file-pdf"></i>
+                                  </button>
+                              </a> -->
+                              <a class="dropdown-item" href="{{ route('voucher.show',$voucher->id) }}">
+                                  <button title="carpeta"  class="btn fondo3 btn-responsive w-100 text-left">
+                                      <i style="color: rgb(255, 255, 255)" class="fas fa-folder"></i> Carpeta
+                                  </button>
+                              </a>
+                              <a class="dropdown-item" data-keyboard="false" data-target="#modal-delete-{{ $voucher->id }}" data-toggle="modal">
+                                  <button type="submit" class="btn fondo1 btn-responsive w-100 text-left"><i class="fa fa-fw fa-trash"></i> Eliminar</button>
+                              </a>
+                              <a class="dropdown-item" data-keyboard="false" data-target="#modal-clonar-{{ $voucher->id }}" data-toggle="modal">
+                                  <button type="submit" class="btn fondo2 btn-responsive w-100 text-left"><i class="fa fa-fw fa-clone"></i> Clonar visita</button>
+                              </a>
+                              
+                              <!-- <a class="dropdown-item" href="#">Action</a>
+                              <a class="dropdown-item" href="#">Another action</a>
+                              <a class="dropdown-item" href="#">Something else here</a>
+                              <div class="dropdown-divider"></div>
+                              <a class="dropdown-item" href="#">Separated link</a> -->
+                            </div>
+                          </div>
+                          <!-- <a target="_blank" href="{{ route('voucher.pdf_medico',$voucher->id) }}">
+                                <button title="exportar pdf médico" class="btn fondo2 btn-responsive">
+                                    <i class="fas fa-file-pdf"></i>
+                                </button>
+                            </a> -->
+                            <!-- <a href="{{ route('voucher.edit',$voucher->id) }}">
                                 <button title="Editar visita" class="btn fondo2 btn-responsive">
                                     <i class="fas fa-edit"></i>
                                 </button>
@@ -65,11 +110,6 @@
                                     <i class="fas fa-file-pdf"></i>
                                 </button>
                             </a>
-                            <!-- <a target="_blank" href="{{ route('voucher.pdf_medico',$voucher->id) }}">
-                                <button title="exportar pdf médico" class="btn fondo2 btn-responsive">
-                                    <i class="fas fa-file-pdf"></i>
-                                </button>
-                            </a> -->
                             <a href="{{ route('voucher.show',$voucher->id) }}">
                                 <button title="carpeta"  class="btn fondo3 btn-responsive">
                                     <i style="color: rgb(255, 255, 255)" class="fas fa-folder"></i>
@@ -78,8 +118,10 @@
 
                             <a data-keyboard="false" data-target="#modal-delete-{{ $voucher->id }}" data-toggle="modal">
                                 <button type="submit" class="btn fondo1 btn-responsive"><i class="fa fa-fw fa-trash"></i></button>
-                            </a>
+                            </a> -->
                             @include('voucher.modaldelete')
+
+                            @include('voucher.modalclonar')
 
                             <!-- <form action="{{route('paciente.destroy_voucher',[$voucher->id,$voucher->paciente->id])}}" method="POST" style="display:inline;">
                                 @csrf

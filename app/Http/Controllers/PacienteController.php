@@ -427,7 +427,10 @@ class PacienteController extends Controller
     public function voucher($id){
         $paciente = Paciente::find($id);
         $vouchers = Voucher::whereAnulado(0)->wherePaciente_id($id)->orderBy('turno','desc')->get();;
-        return view("paciente.vouchers", compact('vouchers','paciente'));
+        $sql = Paciente::select('pacientes.*') //inicio la consulta sobre una determinada tabla
+          ->whereEstado_id(1); //creo la consulta y almaceno en "sql"
+        $pacientes=$sql->get();
+        return view("paciente.vouchers", compact('vouchers','paciente','pacientes'));
     }
 
     public function destroy_voucher($id,$paciente)

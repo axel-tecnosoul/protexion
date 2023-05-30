@@ -55,6 +55,9 @@ class VoucherController extends Controller
     public function index(Request $request)
     {
         $vouchers = Voucher::all(); //obteneme todas los vouchers
+        $sql = Paciente::select('pacientes.*') //inicio la consulta sobre una determinada tabla
+          ->whereEstado_id(1); //creo la consulta y almaceno en "sql"
+        $pacientes=$sql->get();
 
         $desde=$request->desde;
         $hasta=$request->hasta;
@@ -83,9 +86,10 @@ class VoucherController extends Controller
 
         //$vouchers = Voucher::orderBy('id', 'desc')->get();
         return view('voucher.index',[
-            "vouchers"         =>  $vouchers,
-            "desde"             =>  $desde,
-            "hasta"             =>  $hasta
+            "vouchers"         => $vouchers,
+            "pacientes"         => $pacientes,
+            "desde"             => $desde,
+            "hasta"             => $hasta
         ]);
     }
 
@@ -618,5 +622,99 @@ class VoucherController extends Controller
         return $pdf->stream('voucher_medico.pdf');
     }
 
+    public function clonar(Request $request, $voucher_id)
+    {
+
+      $paciente_id=$request->paciente_id;
+
+      $paciente=Paciente::find($paciente_id);
+      $voucher_clonar=Voucher::find($voucher_id);
+
+      //$origen_id=$request->origen_id;
+      $origen_id=$paciente->origen_id;
+      $estudios_voucher_clonar=$voucher_clonar->vouchersEstudios()->get();
+      $riesgos_voucher_clonar=$voucher_clonar->vouchersRiesgos()->get();
+      
+      //dd($voucher_id,$request->all(),$origen_id);
+      //dd($request->all());
+      //$paciente=$paciente_id;
+
+        $n=Voucher::count() + 1;
+        $voucher=new Voucher();
+        $voucher->codigo=str_pad($n, 10, '0', STR_PAD_LEFT);
+        $voucher->turno=$request->turno;
+        $voucher->user_id=auth()->user()->id;
+        //$voucher->paciente_id = $request->paciente_id;
+        $voucher->paciente_id = $paciente_id;
+        $voucher->origen_id = $origen_id;
+        $voucher->save();
+
+        $paciente=Paciente::findOrFail($paciente_id);
+        $paciente->origen_id=$origen_id;
+        $paciente->update();
+
+        //dd($request->riesgos);
+        //$riesgos=$request->riesgos;
+        foreach ($riesgos_voucher_clonar as $key => $riesgo) {
+          //var_dump($riesgo->riesgo_id);
+          $voucher_riesgo = new VoucherRiesgos;
+          $voucher_riesgo->voucher_id = $voucher->id;
+          $voucher_riesgo->riesgo_id = $riesgo->riesgo_id;
+          $voucher_riesgo->save();
+        }
+
+        //HARDCODEADISIMO
+        //     | | | 
+        //     V V V
+        //
+        $analisisB = false;
+        $psicotecnico = false;
+        $radiologia = false;
+
+
+        foreach ($estudios_voucher_clonar as $key => $estudio) {
+          //var_dump($estudio->estudio_id);
+          $voucher_estudio = new VoucherEstudio;
+          $voucher_estudio->voucher_id = $voucher->id;
+          $voucher_estudio->estudio_id = $estudio->estudio_id;
+          $voucher_estudio->save();
+
+          //Comprobar si se cargar estudios base
+          if ($estudio->id == $voucher_estudio->estudio_id) {
+              if ((strtoupper($estudio->tipoEstudio->nombre) == "ANALISIS BIOQUIMICO") or
+                  (strtoupper($estudio->tipoEstudio->nombre) == "ANALISIS BIOQUIMICO ANEXO 01") ) {
+                  $analisisB = true;
+              }
+              if (strtoupper($estudio->tipoEstudio->nombre) == "PSICOTECNICO") {
+                  $psicotecnico = true;
+              }
+              if (strtoupper($estudio->tipoEstudio->nombre) == "RADIOLOGIA") {
+                  $radiologia = true;
+              }
+          }
+        }
+        
+        //Cargar estudios base
+        if ($analisisB) {
+            $voucher_estudio = new VoucherEstudio;
+            $voucher_estudio->voucher_id = $voucher->id;
+            $voucher_estudio->estudio_id = 1;
+            $voucher_estudio->save();
+        }
+        if ($psicotecnico) {
+            $voucher_estudio = new VoucherEstudio;
+            $voucher_estudio->voucher_id = $voucher->id;
+            $voucher_estudio->estudio_id = 60;
+            $voucher_estudio->save();
+        }
+        if ($radiologia) {
+            $voucher_estudio = new VoucherEstudio;
+            $voucher_estudio->voucher_id = $voucher->id;
+            $voucher_estudio->estudio_id = 66;
+            $voucher_estudio->save();
+        }
+
+        return redirect()->route('voucher.show',$voucher->id);
+    }
 
 }

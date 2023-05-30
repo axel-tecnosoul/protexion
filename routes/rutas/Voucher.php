@@ -9,6 +9,10 @@ Route::patch('voucher/{voucher}',               'VoucherController@update')->   
 Route::get('voucher/{voucher}',                 'VoucherController@show')->              name('voucher.show');
 Route::get('voucher/{voucher}/forms',           'VoucherController@showforms')->         name('voucher.showforms');
 Route::get('voucher/create/traerDatosPaciente', 'VoucherController@traerDatosPaciente');
-Route::get('voucher/{voucher}/pdf_medico',      'VoucherController@pdf_medico')->        name('voucher.pdf_medico'  );
+Route::get('voucher/{voucher}/pdf_medico',      'VoucherController@pdf_medico')->        name('voucher.pdf_medico');
 Route::get('voucher/{voucher}/pdf_paciente',    'VoucherController@pdf_paciente')->      name('voucher.pdf_paciente');
+//Route::patch('voucher/{voucher}',                'VoucherController@clonar')->            name('voucher.clonar');
+//Route::get('voucher/{voucher}/clone/{param1}/{param2}', 'VoucherController@clonar')->name('voucher.clonar');
+Route::post('voucher/{voucher}/clone', 'VoucherController@clonar')->name('voucher.clonar');
+
 ?>
