@@ -5,6 +5,17 @@
     <li class="breadcrumb-item active">Indice de Visitas</li>
 @endsection
 
+<style>
+  .dropdown-item{
+    padding: .1rem .1rem !important;
+  }
+  .dropdown-menu{
+    padding: 0 !important;
+    background-color: lightgray !important;
+    min-width: 0 !important;
+    border: 1px solid black !important;
+  }
+</style>
 @section('content') <!-- Contenido -->
 <div class="card">
     <div >
