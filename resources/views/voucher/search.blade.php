@@ -63,43 +63,37 @@ $(document).ready(function(){
 
     //si existe un cambio en Fecha Desde
     $('#desde').change(function() {
+      //Se captura su valor
+      var desde = $(this).val();
+      var hasta = $('#hasta');
+      console.log(desde, 'Se cambio la fecha DESDE')
+      //y establesco ese valor capturado como minimo en Fecha Hasta
+      $('#hasta').attr({"min" : desde});
 
-        //Se captura su valor
-        var desde = $(this).val();
-        console.log(desde, 'Se cambio la fecha DESDE')
-        //y establesco ese valor capturado como minimo en Fecha Hasta
-        $('#hasta').attr({"min" : desde});;
+      if(desde>hasta.val()){
+        hasta.val(desde)
+      }
 
-
-        });
+    });
 
     //si existe un cambio en Fecha Hasta
     $('#hasta').change(function() {
+      //Se captura su valor
+      var hasta = $(this).val();
+      console.log(hasta, 'Se cambio la fecha HASTA');
+      //si ese valor es diferente a nulo (osea si hay algo dentro)
+      if (hasta != ""){
+        //se deshabilita el desde (para evitar que desde sea mayor que hasta)
+        $("#desde").prop('disabled', true);
+      }
 
-        //Se captura su valor
-        var hasta = $(this).val();
-        console.log(hasta, 'Se cambio la fecha HASTA');
+    });
 
-        //si ese valor es diferente a nulo (osea si hay algo dentro)
-        if (hasta != "")
-        {
-            //se deshabilita el desde (para evitar que desde sea mayor que hasta)
-            $("#desde").prop('disabled', true);
-
-        }
-
-
-
-      });
-
-     //si se clickea en "FIltrar"
-      $('#bt_add').click(function () {
-        //se debe refrescar (si es que hubo) la prop disabled de desde
-        $("#desde").prop('disabled', false);
-
-
-      });
-
+    //si se clickea en "FIltrar"
+    $('#bt_add').click(function () {
+      //se debe refrescar (si es que hubo) la prop disabled de desde
+      $("#desde").prop('disabled', false);
+    });
 
 });
 

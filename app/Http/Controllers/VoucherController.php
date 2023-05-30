@@ -540,16 +540,23 @@ class VoucherController extends Controller
       return redirect()->route('paciente.voucher',$request->paciente_id);
     }
 
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
-        //dd($id);
+        $volver=$request->volver;
         //dd($request);
         $voucher=Voucher::findOrFail($id);
         $voucher->anulado=1;
+        $paciente_id=$voucher->paciente_id;
+
+        //dd($id,$request->all(),$voucher->paciente_id);
         //$voucher->paciente_id = $request->paciente_id;
         $voucher->update();
 
-        return redirect()->route('voucher.index');
+        if($volver=="todas"){
+          return redirect()->route('voucher.index');
+        }else{
+          return redirect()->route('paciente.voucher', ['paciente' => $paciente_id]);
+        }
     }
 
     public function pdf_paciente($id)

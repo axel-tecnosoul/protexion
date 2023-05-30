@@ -21,6 +21,7 @@
             <form action="{{route('voucher.destroy',$voucher->id)}}" method="POST" style="display:inline;">
                 @csrf
                 @method('DELETE')
+                <input type="hidden" name="volver" value="<?=$volver?>">
                 <!-- <button type="submit" class="btn fondo1 btn-responsive"><i class="fa fa-fw fa-trash"></i></button> -->
                 <button type="submit" class="btn btn-danger"><i class="fa fa-check"></i> Confirmar</button>
             </form>

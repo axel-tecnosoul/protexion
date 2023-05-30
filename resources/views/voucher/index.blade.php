@@ -39,7 +39,8 @@
                         @include('voucher.search')
                     </div>
                 <!--/div-->
-            </div>
+            </div><?php
+            $volver="todas"?>
             <table id="tablaDetalle" style="border:1px solid black; width:100%" class="table table-bordered table-condensed table-hover">
                 <thead style="background-color:#222D32">
                     <tr class="text-uppercase">
@@ -92,7 +93,7 @@
                               </a> -->
                               <a class="dropdown-item" href="{{ route('voucher.show',$voucher->id) }}">
                                   <button title="carpeta"  class="btn fondo3 btn-responsive w-100 text-left">
-                                      <i style="color: rgb(255, 255, 255)" class="fas fa-folder"></i> Ver datos
+                                      <i style="color: rgb(255, 255, 255)" class="fas fa-folder"></i> Turno
                                   </button>
                               </a>
                               <a class="dropdown-item" data-keyboard="false" data-target="#modal-delete-{{ $voucher->id }}" data-toggle="modal">
@@ -132,15 +133,19 @@
                             <a data-keyboard="false" data-target="#modal-delete-{{ $voucher->id }}" data-toggle="modal">
                                 <button type="submit" class="btn fondo1 btn-responsive"><i class="fa fa-fw fa-trash"></i></button>
                             </a> -->
-                            @include('voucher.modaldelete')
-
-                            @include('voucher.modalclonar')
 
                         </td>
                     </tr>
                     @endforeach
                 </tbody>
             </table>
+            @foreach ($vouchers as $voucher)
+
+              @include('voucher.modaldelete')
+
+              @include('voucher.modalclonar')
+              
+            @endforeach
         </div>
     </div>
 </div>

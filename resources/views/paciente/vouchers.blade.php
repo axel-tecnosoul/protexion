@@ -35,8 +35,8 @@
                 
             </div>
         </div>
-        <div class="card-body">
-
+        <div class="card-body"><?php
+            $volver="paciente"?>
             <table id="tablaDetalle" style="border:1px solid black; width:100%" class="table table-bordered table-condensed table-hover">
                 <thead style="background-color:#222D32">
                     <tr class="text-uppercase">
@@ -89,7 +89,7 @@
                               </a> -->
                               <a class="dropdown-item" href="{{ route('voucher.show',$voucher->id) }}">
                                   <button title="carpeta"  class="btn fondo3 btn-responsive w-100 text-left">
-                                      <i style="color: rgb(255, 255, 255)" class="fas fa-folder"></i> Ver datos
+                                      <i style="color: rgb(255, 255, 255)" class="fas fa-folder"></i> Turno
                                   </button>
                               </a>
                               <a class="dropdown-item" data-keyboard="false" data-target="#modal-delete-{{ $voucher->id }}" data-toggle="modal">
@@ -149,6 +149,14 @@
 </div>
 @push('scripts')
     <script src="{{asset('js/tablaDetalle.js')}}"></script>
+    <script type="text/javascript">
+
+      $(document).ready(function(){
+        var select6 = $(".paciente_id").select2({width:'100%'});
+        select6.data('select2').$selection.css('height', '100%');
+      })
+
+    </script>
 @endpush
 @endsection
 
