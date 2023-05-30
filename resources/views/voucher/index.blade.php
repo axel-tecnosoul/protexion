@@ -82,7 +82,7 @@
                               </a>
                               <a class="dropdown-item" target="_blank" href="{{ route('voucher.pdf_paciente',$voucher->id) }}">
                                   <button title="exportar pdf paciente" class="btn fondo1 btn-responsive w-100 text-left">
-                                      <i class="fas fa-file-pdf"></i> Exportar PDF
+                                      <i class="fas fa-file-pdf"></i> Voucher Paciente
                                   </button>
                               </a>
                               <!-- <a class="dropdown-item" target="_blank" href="{{ route('voucher.pdf_medico',$voucher->id) }}">
@@ -92,7 +92,7 @@
                               </a> -->
                               <a class="dropdown-item" href="{{ route('voucher.show',$voucher->id) }}">
                                   <button title="carpeta"  class="btn fondo3 btn-responsive w-100 text-left">
-                                      <i style="color: rgb(255, 255, 255)" class="fas fa-folder"></i> Carpeta
+                                      <i style="color: rgb(255, 255, 255)" class="fas fa-folder"></i> Ver datos
                                   </button>
                               </a>
                               <a class="dropdown-item" data-keyboard="false" data-target="#modal-delete-{{ $voucher->id }}" data-toggle="modal">
