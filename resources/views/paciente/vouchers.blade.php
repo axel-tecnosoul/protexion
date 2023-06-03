@@ -15,6 +15,9 @@
     min-width: 0 !important;
     border: 1px solid black !important;
   }
+  .dropdown-menu .btn{
+    font-size: 90%;
+  }
 </style>
 @section('content') <!-- Contenido -->
 <div class="card">
