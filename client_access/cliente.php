@@ -75,15 +75,91 @@ if (!isset($_SESSION['rowUsers']['id_usuario'])) {
             <div class="card-header">
               <h5>Bienvenido <?=$_SESSION["rowUsers"]["usuario"]?></h5>
             </div>
-            <div class="card-body">
-              <div class="table-responsive"><?php
-                include_once("views/tabla_archivos.php")?>
-              </div>
+            <div class="card-body"><?php
+/*require_once('models/conexion.php');
+$conexion = new Conexion();
+$id_empresa=$_SESSION["rowUsers"]["id_usuario"];
+$query = "SELECT ue.email,u.usuario FROM usuarios_email ue INNER JOIN usuarios u ON ue.id_usuario=u.id WHERE anulado=0 AND ue.id_usuario = '$id_empresa'";
+//echo $query;
+$get = $conexion->consultaRetorno($query);
+$destinatarios=[];
+while($row = $get->fetch_array()){
+  $destinatarios[$row["email"]]=$row["usuario"];
+}
+var_dump($destinatarios);*/
+              $msjMostrar="Por favor ingrese su direccion de E-Mail para recibir un aviso cuando haya archivos nuevos:";
+              $accionBtn="Guardar";
+              $mostrarArchivos=0;
+              $mostrarBtnAdminEmail=0;
+              if($_SESSION["rowUsers"]["email"]){
+                $msjMostrar="Agregar direccion de E-Mail para notificar cuando haya archivos nuevos:";
+                $accionBtn="Agregar";
+                $mostrarArchivos=1;
+                $mostrarBtnAdminEmail=1;
+              }
+              //var_dump($_SESSION["rowUsers"]);
+              //if(!$_SESSION["rowUsers"]["email"]){?>
+                <div class="row alert alert-danger" style="background-color: #DA0037;">
+                  <div class="col-12">
+                    <form method="post" action="models/administrar_empresas.php">
+                      <label for="email" class="h5"><?=$msjMostrar?></label>
+                      <input type="email" name="email" id="email" class="form-control" placeholder="empresa@dominio.com" required>
+                      <input type="hidden" name="id_empresa" value="<?=$_SESSION["rowUsers"]["id_usuario"]?>">
+                      <input type="hidden" name="accion" value="guardar_email">
+                      <button class="btn btn-light mt-3" type="submit"><?=$accionBtn?></button><?php
+                      if($mostrarBtnAdminEmail==1){?>
+                        <button class="btn btn-light mt-3" type="button" data-toggle="modal" data-target="#direccionesEmail">Administrar E-Mails</button><?php
+                      }?>
+                    </form>
+                  </div>
+                </div><?php
+              //}
+              if($mostrarArchivos==1){?>
+                <div class="table-responsive"><?php
+                  include_once("views/tabla_archivos.php")?>
+                </div><?php
+              }?>
             </div>
           </div>
         </div>
         <!-- Container-fluid Ends-->
       </div>
+
+      <!-- MODAL DIRECCIONES DE EMAIL -->
+    <div class="modal fade mt-5" id="direccionesEmail" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <form method="post" action="models/administrar_empresas.php">
+            <div class="modal-header">
+              <h5 class="modal-title">Direcciones de E-Mail</h5>
+              <button class="close" type="button" data-dismiss="modal" aria-label="Close" data-original-title="" title=""><span aria-hidden="true">×</span></button>
+            </div>
+            <div class="modal-body p-4">
+              <div class="row">
+                <div class="col-12">
+                  <input type="hidden" name="id_empresa" id="id_empresa" value="<?=$_SESSION["rowUsers"]["id_usuario"]?>">
+                  <input type="hidden" name="accion" value="modificar_email">
+                  <table id="emailEmpresas" style="width: 100%;">
+                    <thead>
+                      <tr>
+                        <th style="text-align: center;">E-Mail</th>
+                        <th style="text-align: center;">Eliminar</th>
+                      </tr>
+                    </thead>
+                    <tbody></tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-light" data-dismiss="modal">Cancelar</button>
+              <button type="submit" id="btnContinuarImportacion" class="btn btn-dark">Modificar</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <!-- FIN MODAL DIRECCIONES DE EMAIL-->
       
       <!-- footer start-->
       <footer class="footer">
@@ -220,6 +296,7 @@ if (!isset($_SESSION['rowUsers']['id_usuario'])) {
       var id_empresa=$("#id_usuario").html();
       $(document).ready(function(){
         get_archivos(id_empresa)
+        get_email(id_empresa)
       });
 
       $(document).on("click", ".archivo_empresa", function(){
@@ -240,6 +317,94 @@ if (!isset($_SESSION['rowUsers']['id_usuario'])) {
             get_archivos(id_empresa)
           }
         }); 
+      })
+
+      function get_email(id_empresa){
+        let accion = "trerEmailEmpresa";
+        $.ajax({
+          url: "models/administrar_empresas.php",
+          type: "POST",
+          datatype:"json",
+          data:  {accion:accion, id_empresa:id_empresa},
+          success: function(response) {
+            let respuestaJson = JSON.parse(response);
+            console.log(respuestaJson);
+
+            let tableEmailEmpresas = $('#emailEmpresas');
+            let tbody=tableEmailEmpresas.find("tbody")
+            tbody.empty();
+
+            let filas="";
+            respuestaJson.forEach((data)=>{
+              filas+=`
+                <tr>
+                  <td>
+                    <input type="hidden" name="id_email_usuario[]" value="${data.id_email_usuario}">
+                    <input type="email" name="email[]" id="email" class="form-control" value="${data.email}" placeholder="empresa@dominio.com" required>
+                  </td>
+                  <td style="text-align: center;"><a class='btn btn-outline-danger text-danger btnBorrarEmail' data-id="${data.id_email_usuario}"><i class='fa fa-trash-o'></i></a></td>
+                </tr>
+              `;
+            })
+            if(filas==""){
+              window.location.href="cliente.php"
+            }
+            tbody.html(filas)
+
+          }
+        });
+      }
+
+      $(document).on("click", ".btnBorrarEmail", function(){
+        //let id_item = parseInt($('#id_item').text());
+
+        let id_empresa=$("#id_empresa").val();
+        console.log(id_empresa);
+        let id_email_usuario = this.getAttribute("data-id");
+        console.log(id_email_usuario);
+        //let id_email_usuario = parseInt($(this).closest('tr').find('td:eq(0)').text());
+        console.log($(this));
+        console.log($(this).closest('tr').find('td:eq(0)'));
+        console.log($(this).closest('tr').find('td:eq(0)').find('input'));
+        let email=$(this).closest('tr').find('td:eq(0)').find('input[name="email[]"]').val()
+        console.log(email);
+
+        swal({
+          title: "Eliminar el E-Mail "+email+"?",
+          //text: "Una vez eliminado este archivo, no volveras a verlo",
+          icon: "warning",
+          //buttons: true,
+          buttons: {
+            cancel: "Cancelar",
+            danger: {
+              text: "Eliminar",
+              closeModal: false,
+            }
+          },
+          dangerMode: true,
+        })
+        .then((willDelete) => {
+          if (willDelete) {
+            accion = "eliminarEmail";
+            $.ajax({
+              url: "models/administrar_empresas.php",
+              type: "POST",
+              datatype:"json",
+              data:  {accion:accion, id_email_usuario:id_email_usuario, id_empresa: id_empresa},    
+              success: function() {
+                swal({
+                  icon: 'success',
+                  title: 'E-Mail eliminado correctamente'
+                });
+                get_email(id_empresa)
+                /*$padre = this.parentElement.parentElement
+                $padre.classList.add("d-none");*/
+              }
+            }); 
+          } else {
+            swal("El E-Mail no se eliminó!");
+          }
+        });
       })
 
     </script>

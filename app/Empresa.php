@@ -9,7 +9,7 @@ class Empresa extends Model implements Auditable
 {
     use \OwenIt\Auditing\Auditable;
 
-    public $timestamps=false;
+    public $timestamps=true;
 
     protected $fillable = ['definicion', 'cuit'];
 

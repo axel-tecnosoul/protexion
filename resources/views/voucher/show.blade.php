@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-  <!-- Extiende de layout -->
+<!-- Extiende de layout -->
 @section('navegacion')
   <li class="breadcrumb-item"><a href="/protexion/public/voucher">Indice de Visitas</a></li>
   <li class="breadcrumb-item active">Datos de Visita</li>
@@ -13,6 +13,22 @@
         <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         {{Session::get('message')}}
       </div>
+    @endif
+    
+    @if (Session::has('upload-file-fail'))
+        <div class="alert alert-warning"data-auto-dismiss role="alert">{{ Session::get('upload-file-fail') }}
+                <button type="button" class="close" data-dismiss="alert">
+                        <span aria-hidden="true">&times;</span>
+                </button>
+        </div>
+    @endif
+
+    @if (Session::has('upload-file-success'))
+        <div class="alert alert-success"data-auto-dismiss role="alert">{{ Session::get('upload-file-success') }}
+                <button type="button" class="close" data-dismiss="alert">
+                        <span aria-hidden="true">&times;</span>
+                </button>
+        </div>
     @endif<?php
       
     //var_dump($voucher);?>
@@ -228,6 +244,10 @@
         console.log(modal.find('#voucher_estudio').val(recipient[1].id))
         console.log(recipient[1].id)
         modal.find('#voucher_id').val($("#header_voucher_id").html())
+      })
+
+      $("#cargarPdf").on("click",function(){
+        $(this).addClass("disabled");
       })
     </script>
   @endpush

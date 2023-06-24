@@ -4,34 +4,69 @@ namespace App\Http\Controllers;
 
 use App\ArchivoAdjunto;
 use App\Models\VoucherEstudio;
+use App\Voucher;
 use Illuminate\Http\Request;
+use GuzzleHttp\Client;
+use GuzzleHttp\RequestOptions;
+use GuzzleHttp\Exception\RequestException;
+use GuzzleHttp\Exception\ConnectException;
 
 class VoucherEstudioController extends Controller
 {
     public function archivo(Request $request)
     {   
-        $archivos = $request->file('anexo');
-        //Controla si hay un archivo en el request
-        if ($archivos) {
-            foreach ($archivos as $item) {
-                if ($item) {
-                        /*$nombre = $request->estudio
-                                ."_"
-                                .$request->voucher_estudio_id
-                                .$item->getClientOriginalName();*/
-                        $nombre = $item->getClientOriginalName();
-                        
-                        $ruta = public_path().'/archivo/'.$request->voucher_id."/".$request->estudio."/";
-                        $item->move($ruta,$nombre);
-                        $ruta.=$nombre;
-                        $archivo_adjunto = new ArchivoAdjunto();
-                        $archivo_adjunto->anexo = $ruta;
-                        $archivo_adjunto->voucher_estudio_id = $request->voucher_estudio_id;
-                        $archivo_adjunto->save();
-                }
-            }
+      $archivos = $request->file('anexo');
+      //Controla si hay un archivo en el request
+      $voucher_id=$request->voucher_id;
+
+      if ($archivos) {
+        $aArchivosSubir=[];
+        foreach ($archivos as $item) {
+          if ($item) {
+            /*$nombre = $request->estudio
+              ."_"
+              .$request->voucher_estudio_id
+              .$item->getClientOriginalName();*/
+            $nombre = $item->getClientOriginalName();
+            
+            $ruta = public_path().'/archivo/'.$voucher_id."/".$request->estudio."/";
+            //dd($nombre,$ruta);
+            $item->move($ruta,$nombre);
+            $ruta.=$nombre;
+            $aArchivosSubir[]=$ruta;
+            $archivo_adjunto = new ArchivoAdjunto();
+            $archivo_adjunto->anexo = $ruta;
+            $archivo_adjunto->voucher_estudio_id = $request->voucher_estudio_id;
+            $archivo_adjunto->save();
+          }
         }
-        return back();
+      }
+      $msj="El archivo se ha cargado correctamente pero no pudo ser envíado al acceso para clientes";
+      $accion="upload-file-fail";
+      if($request->estudio=="GENERAL" and count($aArchivosSubir)>=1){
+        $voucher=Voucher::findOrFail($voucher_id);
+        $empresa=$voucher->origen->definicion;
+        $paciente=$voucher->paciente->nombreCompleto();
+        $turno=$voucher->turno;
+        $datosExtra=[
+          "empresa"=>$empresa,
+          "paciente"=>$paciente,
+          "turno"=>$turno
+        ];
+
+        //dd($datosExtra);
+
+        $resultado=$this->sendFileLaravel($aArchivosSubir,json_encode($datosExtra));
+        if($resultado==1){
+          $accion="upload-file-success";
+          $msj="El archivo se ha cargado correctamente y fue envíado correctamente al servidor para clientes";
+        }else{
+          $msj.=". Error: ".$resultado;
+        }
+      }
+      //return back();
+      //return redirect()->route('voucher.show',[$voucher_id])->withMessage($msj);
+      return redirect()->route('voucher.show',[$voucher_id])->with($accion,$msj);
     }
     public function archivo2(Request $request)
     {   
@@ -55,6 +90,112 @@ class VoucherEstudioController extends Controller
             }
         }
         return back();
+    }
+
+    private function sendFileLaravel($aArchivos,$datosExtra){
+
+      // URL del sistema en el servidor web (Sistema B) que recibirá los archivos
+      $url = 'https://protexionpr.com.ar/client_access/models/administrar_empresas.php?accion=recibirArchivo';
+      //$url = 'http://localhost/protexion/client_access/models/administrar_empresas.php?accion=recibirArchivo';
+
+      // Crear una instancia del cliente GuzzleHTTP
+      //$client = new Client();
+      $archivos = [];
+      foreach ($aArchivos as $rutaArchivo) {
+        $archivos[] = [
+          'name' => 'file[]',
+          'contents' => fopen($rutaArchivo, 'r'),
+        ];
+      }
+
+      // Agregar el nombre de la empresa al arreglo de archivos
+      $archivos[] = [
+        'name' => 'datosExtra',
+        'contents' => $datosExtra,
+      ];
+
+      // Enviar la solicitud POST con los archivos y el nombre de la empresa
+      try {
+        // Crear una instancia del cliente GuzzleHTTP
+        $client = new Client();
+
+        // Realizar la solicitud a la URL
+        $response = $client->post($url, [
+          RequestOptions::MULTIPART => $archivos,
+        ]);
+
+        // Obtener la respuesta de la solicitud
+        $body = $response->getBody();
+        //var_dump($body);
+        $resultado = $body->getContents();
+        //var_dump($resultado);
+
+      }  catch (ConnectException $e) {
+        // Manejar el error de conexión
+        $resultado='No se pudo establecer conexión con el servidor web. Verifica tu conexión a internet o la URL proporcionada.';
+      } catch (RequestException $e) {
+        if ($e->hasResponse()) {
+          // Si se recibió una respuesta, obtener el código de estado HTTP
+          $statusCode = $e->getResponse()->getStatusCode();
+          
+          // Manejar el código de estado y mostrar un mensaje de error apropiado
+          if ($statusCode === 404) {
+            // Manejar el error 404
+            $resultado='Página no encontrada.';
+          } else {
+            // Manejar otros códigos de estado
+            $resultado='Ocurrió un error con el código de estado: ' . $statusCode;
+          }
+        } else {
+          // Manejar errores de conexión o resolución DNS
+          $resultado='No se pudo resolver el host. Verifica tu conexión a internet.';
+        }
+      }
+      
+      //die();
+      return $resultado;
+
+    }
+
+    private function sendFilePHP($archivo,$empresa){
+      // Ruta del archivo que deseas enviar
+      //$archivo = '/ruta/al/archivo.pdf';
+
+      // URL del sistema en el servidor web (Sistema B) que recibirá el archivo
+      $url = 'http://servidor-web.com/sistema_b.php';
+
+      // Crear un objeto de archivo
+      $archivo_enviar = new CURLFile($archivo);
+
+      // Datos adicionales que deseas enviar junto con el archivo (opcional)
+      /*$datos = array(
+          'campo1' => 'valor1',
+          'campo2' => 'valor2',
+      );*/
+
+      // Campos de la solicitud POST que incluyen el archivo y los datos adicionales
+      $campos = array(
+          'archivo' => $archivo_enviar,
+          //'datos' => $datos,
+          'empresa' => $empresa,
+      );
+
+      // Inicializar la solicitud POST
+      $ch = curl_init($url);
+      curl_setopt($ch, CURLOPT_POST, 1);
+      curl_setopt($ch, CURLOPT_POSTFIELDS, $campos);
+
+      // Ejecutar la solicitud y obtener la respuesta
+      $response = curl_exec($ch);
+
+      // Verificar si hubo errores en la solicitud
+      if ($response === false) {
+          echo 'Error en la solicitud: ' . curl_error($ch);
+      }
+
+      // Cerrar la conexión
+      curl_close($ch);
+
     }
 
     //Descarga archivos pasando el Id de voucherEstudios (Se usa para estudios de sistema)
@@ -100,7 +241,6 @@ class VoucherEstudioController extends Controller
 
     public function delete($id)
     {
-
       $archivo=ArchivoAdjunto::findOrFail($id);
       $voucherEstudio=VoucherEstudio::findOrFail($archivo->voucher_estudio_id);
       $voucher_id=$voucherEstudio->voucher_id;
@@ -108,14 +248,8 @@ class VoucherEstudioController extends Controller
 
       //dd($archivo,$voucherEstudio,$voucher_id,$ruta);
 
-      //$ruta = public_path().'/archivo/'.$request->voucher_id."/".$request->estudio."/";
-      //$item->move($ruta,$nombre);
       unset($ruta);
-      //$ruta.=$nombre;
 
-      //dd($id);
-      //dd($request);
-      
       $archivo->delete();
 
       return redirect()->route('voucher.show',$voucher_id);

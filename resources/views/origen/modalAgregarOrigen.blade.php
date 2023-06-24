@@ -198,9 +198,10 @@
                 success:function(data){
                   
                     $("#origen_id").append('<option value=' + data.id + '>' + data.definicion + '</option>');
+                    $("#origen_id").val(data.id)
                    
                     $('#modal-agregarOrigen').modal('hide') //ocultamos el modal
-                    toastr.success("Procedencia " + data.definicion + " registrada correctamente");
+                    toastr.success("Procedencia " + data.definicion + " registrada correctamente "+data.resultado_web);
 
                 },
                 error:function(){

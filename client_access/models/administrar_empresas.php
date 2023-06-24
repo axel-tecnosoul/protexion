@@ -1,4 +1,9 @@
 <?php
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+//@set_magic_quotes_runtime(false);
+ini_set('magic_quotes_runtime', 0);
 ini_set('max_execution_time', 0);
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
@@ -125,16 +130,9 @@ class Empresas{
 					$result = $this->conexion->consultaRetorno($query);
 
 					if($result->num_rows == 0){
-            $clave=$this->generarPasswordRandom();
-						$queryInsert = "INSERT INTO usuarios (usuario,clave,tipo) VALUES ('$usuario','$clave',2)";
-						$insertNewAdjunto = $this->conexion->consultaSimple($queryInsert);
-            //var_dump($insertNewAdjunto);
             
-            $mensajeError=$this->conexion->conectar->error;
-            echo $mensajeError;
-            if($mensajeError!=""){
-              echo "<br><br>".$queryInsert;
-            }
+            $insert=$this->insertarEmpresa($usuario);
+            
 					}
 
         }
@@ -142,6 +140,94 @@ class Empresas{
         $contador++;
       }
       unlink($archivo);
+    }
+  }
+
+  public function insertarEmpresa($usuario,$idEmpresa=NULL){
+    $clave=$this->generarPasswordRandom();
+    if($idEmpresa){
+      $queryInsert = "INSERT INTO usuarios (usuario,id_empresa,clave,tipo) VALUES ('$usuario',$idEmpresa,'$clave',2)";
+    }else{
+      $queryInsert = "INSERT INTO usuarios (usuario,clave,tipo) VALUES ('$usuario','$clave',2)";
+    }
+    $insertNewAdjunto = $this->conexion->consultaSimple($queryInsert);
+    //var_dump($insertNewAdjunto);
+    
+    $mensajeError=$this->conexion->conectar->error;
+    echo $mensajeError;
+    if($mensajeError!=""){
+      echo "<br><br>".$queryInsert;
+    }
+  }
+
+  public function eliminarEmpresa($idEmpresa){
+
+    //$idEmpresa=68;
+    //var_dump($idEmpresa);
+    
+    $queryTraerEmpresa = "SELECT id FROM usuarios WHERE id_empresa = $idEmpresa";
+    $getEmpresa = $this->conexion->consultaRetorno($queryTraerEmpresa);
+    $rowEmpresa = $getEmpresa->fetch_array();
+    //var_dump($rowEmpresa);
+    $mensaje="true";
+    if($rowEmpresa){
+      $idEmpresa=$rowEmpresa["id"];
+      //var_dump($idEmpresa);
+
+      $archivos=$this->trerArchivosEmpresa($idEmpresa);
+      $archivos=json_decode($archivos,true);
+
+      $email=$this->trerEmailEmpresa($idEmpresa);
+      $email=json_decode($email,true);
+
+      
+      if(count($archivos)==0 and count($email)==0){
+        $queryDelAdjuntos = "DELETE FROM usuarios WHERE id = $idEmpresa";
+        $delAdjuntos = $this->conexion->consultaSimple($queryDelAdjuntos);
+        
+        $mensajeError=$this->conexion->conectar->error;
+        //echo $mensajeError;
+        if($mensajeError!=""){
+          $mensaje=$mensajeError."<br><br>".$queryInsert;
+        }
+      }else{
+        $mensaje="La empresa no se puede eliminar porque tiene archivos o emails cargados";
+      }
+    }
+    
+    //var_dump($mensaje);
+    
+    return $mensaje;
+  }
+
+  public function updateEmpresa($idEmpresa,$nombreEmpresa){
+    
+    $queryInsert = "UPDATE usuarios SET usuario = '$nombreEmpresa' WHERE id_empresa = $idEmpresa";
+    $insertNewAdjunto = $this->conexion->consultaSimple($queryInsert);
+    //var_dump($insertNewAdjunto);
+    $mensaje="true";
+
+    $mensajeError=$this->conexion->conectar->error;
+    if($mensajeError!=""){
+      $mensaje=$mensajeError."<br><br>".$queryInsert;
+    }
+    return $mensaje;
+  }
+
+  public function sincronizarEmpresa($idEmpresa,$nombreEmpresa){
+    /*$queryTraerEmpresa = "SELECT id_empresa FROM usuarios WHERE usuario='$nombreEmpresa'";
+    $getEmpresas = $this->conexion->consultaRetorno($queryTraerEmpresa);
+    $row = $getEmpresas->fetch_array();*/
+
+    $queryInsert = "UPDATE usuarios SET id_empresa = $idEmpresa WHERE usuario='$nombreEmpresa'";
+    echo $queryInsert."<br>";
+    $insertNewAdjunto = $this->conexion->consultaSimple($queryInsert);
+    //var_dump($insertNewAdjunto);
+    
+    $mensajeError=$this->conexion->conectar->error;
+    echo $mensajeError;
+    if($mensajeError!=""){
+      echo "<br><br>".$queryInsert;
     }
   }
 
@@ -162,7 +248,7 @@ class Empresas{
       );
     }
 
-    echo json_encode($arrayArchivos);
+    return json_encode($arrayArchivos);
 
   }
 
@@ -300,6 +386,206 @@ class Empresas{
 
   }
 
+  public function recibir_archivos($datosExtra){
+    $datos=json_decode($datosExtra,true);
+    $empresa=$datos["empresa"];
+    $empresa="Particular";
+    $query = "SELECT id,usuario FROM usuarios WHERE usuario = '$empresa'";
+    $get = $this->conexion->consultaRetorno($query);
+    $row = $get->fetch_array();
+    $id_empresa=$row["id"];
+    //$email=$row["email"];
+    $usuario=$row["usuario"];
+    $cantAdjuntos=count($_FILES);
+
+    $subidaOk=$this->subirArchivo($id_empresa,$adjuntos=1,$cantAdjuntos);
+
+    if($subidaOk==1){
+      /*$destinatario=[
+        $email=> $usuario,
+      ];*/
+      $envioMail=$this->enviarMail($id_empresa,$datosExtra);
+      //echo $envioMail;
+    }
+
+    return $subidaOk;
+
+  }
+
+  public function guardar_email($id_empresa,$email){
+
+    $query = "SELECT id,anulado FROM usuarios_email WHERE email = '$email'";
+    //echo $query;
+    $get = $this->conexion->consultaRetorno($query);
+    $row = $get->fetch_array();
+    if($row){
+      if($row["anulado"]==1){
+        $queryDelAdjuntos = "UPDATE usuarios_email SET anulado = 0 WHERE id = ".$row["id"];
+        $delAdjuntos = $this->conexion->consultaSimple($queryDelAdjuntos);
+      }
+    }else{
+      $query = "INSERT INTO usuarios_email (id_usuario,email,anulado) VALUES ($id_empresa,'$email',0)";
+      $insert = $this->conexion->consultaSimple($query);
+      $mensajeError=$this->conexion->conectar->error;
+      echo $mensajeError;
+      $ok=0;
+      if($mensajeError!=""){
+        echo "<br><br>".$query;
+      }else{
+        //$totalSubidas++;
+        $ok=1;
+      }
+    }
+    $_SESSION["rowUsers"]["email"]=$email;
+    return $ok;
+
+  }
+
+  public function enviarMail($id_empresa,$datosExtra){
+    //require("../assets/PHPMailer/PHPMailerAutoload.php");
+    //require("../assets/PHPMailer/PHPMailerAutoload.php");
+    require './../assets/PHPMailer/src/Exception.php';
+    require './../assets/PHPMailer/src/PHPMailer.php';
+    require './../assets/PHPMailer/src/SMTP.php';
+    //require("../assets/PHPMailer/class.smtp.php");
+
+    $datos=json_decode($datosExtra,true);
+    $paciente=$datos["paciente"];
+    $turno=$datos["turno"];
+    
+    /*$destinatarios=[
+      'recipient1@domain.com'=> 'First Name',
+      'recipient2@domain.com'=> 'Second Name'
+    ];
+
+    $adjuntos[]=[
+        "ruta"      =>$directorio."/".$nombreArchivo,
+        "fileName"  =>$nombreArchivo,
+    ];*/
+    
+    $query = "SELECT ue.email,u.usuario FROM usuarios_email ue INNER JOIN usuarios u ON ue.id_usuario=u.id WHERE anulado=0 AND ue.id_usuario = '$id_empresa'";
+    //echo $query;
+    $get = $this->conexion->consultaRetorno($query);
+    $destinatarios=[];
+    while($row = $get->fetch_array()){
+      /*$destinatarios[]=[
+        $row["email"]=> $row["usuario"],
+      ];*/
+      $destinatarios[$row["email"]]=$row["usuario"];
+    }
+
+    $envio=false;
+    if(count($destinatarios)>0){
+      $debug=0;
+      /*require("../vendor/PHPMailer-5.2.26/PHPMailerAutoload.php");
+      require("../vendor/PHPMailer-5.2.26/class.smtp.php");*/
+
+      $smtpHost = "mail.protexionpr.com.ar";  //agregar servidor
+      $smtpUsuario = "resultados@protexionpr.com.ar";  //agregar usuario
+      $smtpClave = '-vg#+J$I9_oH';  //agregar contraseña
+      $remitente = $smtpUsuario;
+      $nombre_remitente = "ProteXion - Centro Medico Laboral";
+
+      //var_dump($smtpUsuario);
+      //var_dump($smtpClave);
+      
+      $mail = new PHPMailer(true);
+      //$mail->SMTPDebug = 3;//Habilitamos solo para debugguear
+      $mail->IsSMTP();
+      $mail->SMTPAuth = true;
+      $mail->Port = 465;
+      //$mail->Port = 587;
+      //$mail->Port = 25;
+      $mail->SMTPSecure = 'ssl';
+      $mail->IsHTML(true);
+      $mail->CharSet = "utf-8";
+      $mail->Host = $smtpHost;
+      $mail->Username = $smtpUsuario;
+      $mail->Password = $smtpClave;
+      $mail->From = $remitente;//"mailorigen@gmail.com"; //mail remitente
+      $mail->FromName = $nombre_remitente;//"de donde sale el mail"; //remitente
+      
+      foreach ($destinatarios as $key => $value) {
+          /*var_dump($key);
+          var_dump($value);*/
+          $email=$key;
+          $name=$value;
+          if(is_numeric($key)){
+            $email=$value;
+            $name="";
+          }
+          $mail->AddAddress($email, $name); //destinatario
+      }
+      $adjuntos[]=[
+        "ruta"=>"../views/docs/INSTRUCTIVO PARA BAJAR ARCHIVOS SISTEMA PROTEXION.pdf",
+        "fileName"=>"INSTRUCTIVO PARA BAJAR ARCHIVOS SISTEMA PROTEXION"
+      ];
+      foreach ($adjuntos as $key => $value) {
+          $mail->addAttachment($value["ruta"], $value["fileName"]);
+      }
+
+      //$asunto="Notificación de nuevo archivo";
+      $asunto="Resultados Exámenes Médicos del Paciente ".$paciente.", fecha ".date("d/m/Y",strtotime($turno));
+      $cuerpo='<b>*Por favor no responda este mail*</b><br><br>Hola '.$name.', desde ProteXion queremos informarte que un nuevo archivo ha sido subido a nuestro sistema online para clientes.<br><br>Para dascarglo puede hacer un click <a href="https://protexionpr.com.ar/client_access/login.php" target="_blank">Aqui</a><br><br><br>Te recodamos que TODOS los ESTUDIOS los realizamos en UNA sola mañana, RESULTADOS en 24/48 hs.<br>Para cualquier duda o consulta al mail info@protexionpr.com.ar / gerencia@protexionpr.com.ar<br>Turnos al WhatsApp 3743 483004';
+
+      $mail->Subject = $asunto; //titulo
+      $mensajeHtml = nl2br($cuerpo); //mensaje
+      $mail->Body = "{$mensajeHtml} <br /><br />";
+      $mail->AltBody = "{$cuerpo} \n\n";
+      //var_dump($mail);
+      $envio = $mail->Send();
+
+      //var_dump($envio);
+    }
+
+    return $envio;
+
+  }
+
+  public function trerEmailEmpresa($id_empresa){
+
+    $queryTraerEmpresas = "SELECT id,email FROM usuarios_email WHERE anulado = 0 AND id_usuario = $id_empresa";
+    $getEmpresas = $this->conexion->consultaRetorno($queryTraerEmpresas);
+
+    $arrayArchivos = array();
+    $_SESSION["rowUsers"]["email"]="";
+    while ($row = $getEmpresas->fetch_array()) {
+      $_SESSION["rowUsers"]["email"]=$row['email'];
+      $arrayArchivos[] = array(
+        'id_email_usuario'=>$row['id'],
+        'email'=>$row['email'],
+      );
+    }
+
+    return json_encode($arrayArchivos);
+
+  }
+
+  public function modificar_email($id_empresa,$id_email_usuario,$email){
+
+    foreach($id_email_usuario as $key => $id){
+      $query = "UPDATE usuarios_email SET email = '".$email[$key]."' WHERE id = $id";
+      $insert = $this->conexion->consultaSimple($query);
+      $mensajeError=$this->conexion->conectar->error;
+      echo $mensajeError;
+      $ok=0;
+      if($mensajeError!=""){
+        echo "<br><br>".$query;
+      }else{
+        //$totalSubidas++;
+        $ok=1;
+      }
+    }
+
+  }
+
+  public function eliminarEmail($id_email_usuario){
+
+    $queryDelAdjuntos = "UPDATE usuarios_email SET anulado = 1 WHERE id = $id_email_usuario";
+    $delAdjuntos = $this->conexion->consultaSimple($queryDelAdjuntos);
+
+  }
+
 }
 extract($_REQUEST);
 $empresas = new Empresas();
@@ -318,7 +604,7 @@ if (isset($accion)) {
         $empresas->importarEmpresas($_FILES);
       break;
       case "trerArchivosEmpresa":
-        $empresas->trerArchivosEmpresa($id_empresa);
+        echo $empresas->trerArchivosEmpresa($id_empresa);
       break;
       case "subirArchivos":
         //var_dump($_FILES);
@@ -328,7 +614,7 @@ if (isset($accion)) {
         }else{
           $adjuntos = 0;
         }
-        var_dump($adjuntos);
+        //var_dump($adjuntos);
         
         if(isset($cantAdjuntos)){
           $cantAdjuntos = $cantAdjuntos;
@@ -343,6 +629,59 @@ if (isset($accion)) {
       case "marcarArchivoDescargado":
         $empresas->marcarArchivoDescargado($id_archivo);
       break;
+      case "recibirArchivo":
+        //var_dump($_POST);
+        $datosExtra=$_POST["datosExtra"];
+        //var_dump($_FILES);
+        //$empresas->recibir_archivos($archivos,$empresa);
+        echo $empresas->recibir_archivos($datosExtra);
+      break;
+      case "guardar_email":
+        //var_dump($_POST);
+        $id_empresa=$_POST["id_empresa"];
+        $email=$_POST["email"];
+        $empresas->guardar_email($id_empresa,$email);
+        header("location: ../cliente.php");
+      break;
+      case "trerEmailEmpresa":
+        echo $empresas->trerEmailEmpresa($id_empresa);
+      break;
+      case "modificar_email":
+        $empresas->modificar_email($id_empresa,$id_email_usuario,$email);
+        header("location: ../cliente.php");
+      break;
+      case "eliminarEmail":
+        $empresas->eliminarEmail($id_email_usuario);
+      break;
+      case "subirEmpresa":
+        $idEmpresa=$_POST["idEmpresa"];
+        $nombreEmpresa=$_POST["nombreEmpresa"];
+        //echo $nombreEmpresa;
+        
+        $empresas->insertarEmpresa($nombreEmpresa,$idEmpresa);
+      break;
+      case "eliminarEmpresa":
+        $idEmpresa=$_POST["idEmpresa"];
+        //echo $nombreEmpresa;
+        
+        echo $empresas->eliminarEmpresa($idEmpresa);
+      break;
+      case "sincronizarEmpresa":
+        $idEmpresa=$_POST["idEmpresa"];
+        $nombreEmpresa=$_POST["nombreEmpresa"];
+        //echo $nombreEmpresa;
+        
+        $empresas->sincronizarEmpresa($idEmpresa,$nombreEmpresa);
+      break;
+      case "updateEmpresa":
+        $idEmpresa=$_POST["idEmpresa"];
+        $nombreEmpresa=$_POST["nombreEmpresa"];
+        //echo $nombreEmpresa;
+        
+        echo $empresas->updateEmpresa($idEmpresa,$nombreEmpresa);
+      break;
+      default:
+        echo "ruta no especificada";
 		}
 	}else{
 		if (isset($_GET['accion'])) {

@@ -18,6 +18,10 @@ use Illuminate\Support\Facades\Redirect;
 use App\Models\Aptitud;
 use DB;
 use PDF;
+use GuzzleHttp\Client;
+use GuzzleHttp\RequestOptions;
+use GuzzleHttp\Exception\RequestException;
+use GuzzleHttp\Exception\ConnectException;
 
 class EmpresaController extends Controller
 {
@@ -34,6 +38,9 @@ class EmpresaController extends Controller
         $this->middleware('permission:eliminar personal', ['only' => ['destroy']]);
     }*/
 
+    //const URL_SERVIDOR_WEB = 'https://protexionpr.com.ar/client_access/models/';
+    const URL_SERVIDOR_WEB = 'http://localhost/protexion/client_access/models/';
+    
 
     /**
      * Display a listing of the resource.
@@ -105,11 +112,11 @@ class EmpresaController extends Controller
     {
         $this->validate($request, [
             //'documento'         => 'required|unique:personal_clinicas,documento,except,id',
-            'definicion'           => 'required',
-            'cuit'         => 'required',
-            'direccionOrigen'  => 'required',
-            'ciudad_idOrigen'           => 'required',
-            //'provincias_id'         => 'required'
+            'definicion'      => 'required',
+            'cuit'            => 'required',
+            'direccionOrigen' => 'required',
+            'ciudad_idOrigen' => 'required',
+            //'provincias_id' => 'required'
         ]);
 
         $direccion = new Domicilio;
@@ -118,16 +125,166 @@ class EmpresaController extends Controller
         $direccion->save();
 
         //Creo los datos de la persona
+
+        $nombreEmpresa=$request->get('definicion');
+
         $empresa = new Empresa;
-        $empresa->definicion=$request->get('definicion');
+        $empresa->definicion=$nombreEmpresa;
         $empresa->cuit=$request->get('cuit');
         //$empresa->domicilio_id=$request->get('domicilio_id');
         $empresa->domicilio_id=$direccion->id;
 
+        //dd($empresa);
         $empresa->save();
+        $idEmpresa=$empresa->id;
+        //$idEmpresa=99;
 
-        return redirect()->route('empresa.index');
+        $resultado=$this->subirEmpresaWeb($idEmpresa,$nombreEmpresa);
 
+        $accion="";
+        $msj="";
+        if($idEmpresa>0){
+          if($resultado==""){
+            $accion="success";
+            $msj="La empresa fue creada y subida al servidor web correctamente";
+          }else{
+            $accion="warning";
+            $msj="La empresa fue creada pero no subida al servidor web por algun error inesperado. ".$resultado;
+          }
+        }
+
+        //dd($resultado);
+        //return redirect()->route('empresa.index')->with($accion,$msj);
+        return redirect()->route('empresa.index')->with('store', [
+          'alert' => $accion,
+          'message' => $msj,
+        ]);
+    }
+
+    public function subirEmpresaWeb($idEmpresa,$nombreEmpresa){
+      // URL del sistema en el servidor web (Sistema B) que recibirá los archivos
+      
+      $url = self::URL_SERVIDOR_WEB."administrar_empresas.php?accion=subirEmpresa";
+
+      // Agregar el nombre de la empresa al arreglo de archivos
+      $datos = [
+        [
+          'name' => 'idEmpresa',
+          'contents' => $idEmpresa,
+        ],[
+          'name' => 'nombreEmpresa',
+          'contents' => $nombreEmpresa,
+        ]
+      ];
+
+      //var_dump($datos);
+
+      // Enviar la solicitud POST con los archivos y el nombre de la empresa
+      try {
+        // Crear una instancia del cliente GuzzleHTTP
+        $client = new Client();
+
+        // Realizar la solicitud a la URL
+        $response = $client->post($url, [
+          RequestOptions::MULTIPART => $datos,
+        ]);
+
+        // Obtener la respuesta de la solicitud
+        $body = $response->getBody();
+        //var_dump($body);
+        $resultado = $body->getContents();
+        //var_dump($resultado);
+
+      }  catch (ConnectException $e) {
+        // Manejar el error de conexión
+        $resultado='No se pudo establecer conexión con el servidor web. Verifica tu conexión a internet o la URL proporcionada.';
+      } catch (RequestException $e) {
+        if ($e->hasResponse()) {
+          // Si se recibió una respuesta, obtener el código de estado HTTP
+          $statusCode = $e->getResponse()->getStatusCode();
+          
+          // Manejar el código de estado y mostrar un mensaje de error apropiado
+          if ($statusCode === 404) {
+            // Manejar el error 404
+            $resultado='Página no encontrada.';
+          } else {
+            // Manejar otros códigos de estado
+            $resultado='Ocurrió un error con el código de estado: ' . $statusCode;
+          }
+        } else {
+          // Manejar errores de conexión o resolución DNS
+          $resultado='No se pudo resolver el host. Verifica tu conexión a internet.';
+        }
+      }
+      //var_dump($resultado);
+      
+      //die();
+      return $resultado;
+    }
+
+    public function sincronizarEmpresas(){
+
+      $empresas = Empresa::select('origenes.*')->get(); //ejecuto la consulta
+
+      // URL del sistema en el servidor web (Sistema B) que recibirá los archivos
+      $url = self::URL_SERVIDOR_WEB."administrar_empresas.php?accion=sincronizarEmpresa";
+
+      foreach ($empresas as $key => $empresa) {
+        // Agregar el nombre de la empresa al arreglo de archivos
+        $datos = [
+          [
+            'name' => 'idEmpresa',
+            'contents' => $empresa->id,
+          ],[
+            'name' => 'nombreEmpresa',
+            'contents' => $empresa->definicion,
+          ]
+        ];
+
+        var_dump($datos);
+
+        // Enviar la solicitud POST con los archivos y el nombre de la empresa
+        try {
+          // Crear una instancia del cliente GuzzleHTTP
+          $client = new Client();
+
+          // Realizar la solicitud a la URL
+          $response = $client->post($url, [
+            RequestOptions::MULTIPART => $datos,
+          ]);
+
+          // Obtener la respuesta de la solicitud
+          $body = $response->getBody();
+          //var_dump($body);
+          $resultado = $body->getContents();
+          //var_dump($resultado);
+
+        }  catch (ConnectException $e) {
+          // Manejar el error de conexión
+          $resultado='No se pudo establecer conexión con el servidor web. Verifica tu conexión a internet o la URL proporcionada.';
+        } catch (RequestException $e) {
+          if ($e->hasResponse()) {
+            // Si se recibió una respuesta, obtener el código de estado HTTP
+            $statusCode = $e->getResponse()->getStatusCode();
+            
+            // Manejar el código de estado y mostrar un mensaje de error apropiado
+            if ($statusCode === 404) {
+              // Manejar el error 404
+              $resultado='Página no encontrada.';
+            } else {
+              // Manejar otros códigos de estado
+              $resultado='Ocurrió un error con el código de estado: ' . $statusCode;
+            }
+          } else {
+            // Manejar errores de conexión o resolución DNS
+            $resultado='No se pudo resolver el host. Verifica tu conexión a internet.';
+          }
+        }
+        var_dump($resultado);
+      }
+      
+      die();
+      return $resultado;
     }
 
     /**
@@ -137,11 +294,8 @@ class EmpresaController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function show($id)
-    {
-
+    public function show($id){
     }
-
 
     /**
      * Show the form for editing the specified resource.
@@ -150,8 +304,7 @@ class EmpresaController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function edit($id)
-    {
+    public function edit($id){
         $empresa=Empresa::findOrFail($id);
         $paises=Pais::all();
         $provincias=Provincia::all();
@@ -167,8 +320,6 @@ class EmpresaController extends Controller
         ]);
     }
 
-
-
     /**
      * Update the specified resource in storage.
      *
@@ -176,8 +327,7 @@ class EmpresaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
+    public function update(Request $request, $id){
 
         $this->validate($request, [
             //'documento'         => 'required|unique:personal_clinicas,documento,except,id',
@@ -195,15 +345,88 @@ class EmpresaController extends Controller
 
 
         $empresa=Empresa::findOrFail($id);
-        $empresa->definicion=$request->get('definicion');
+        $empresa->definicion=$nombreEmpresa=$request->get('definicion');
         $empresa->cuit=$request->get('cuit');
         $empresa->domicilio_id=$direccion->id;
         //$empresa->provincia_id=$request->get('provincias_id');
 
-        $empresa->update();
+        $resultado=$this->updateEmpresaWeb($id,$nombreEmpresa);
+        //echo $resultado;
+        $msj="La empresa no ha sido modificada porque ha ocurrido un error en el servidor web: ".$resultado;
+        $accion="warning";
+        if($resultado=="true"){
+          $empresa->update();
 
-        return redirect()->route('empresa.index');
+          $msj='Empresa modificada correctamente de ambos servidores';
+          $accion="success";
+        }
+        //die();
+        return redirect()->route('empresa.index')->with('update', [
+          'alert' => $accion,
+          'message' => $msj,
+        ]);
 
+    }
+
+    public function updateEmpresaWeb($idEmpresa,$nombreEmpresa){
+      // URL del sistema en el servidor web (Sistema B) que recibirá los archivos
+      
+      $url = self::URL_SERVIDOR_WEB."administrar_empresas.php?accion=updateEmpresa";
+
+      // Agregar el nombre de la empresa al arreglo de archivos
+      $datos = [
+        [
+          'name' => 'idEmpresa',
+          'contents' => $idEmpresa,
+        ],[
+          'name' => 'nombreEmpresa',
+          'contents' => $nombreEmpresa,
+        ]
+      ];
+
+      //var_dump($datos);
+
+      // Enviar la solicitud POST con los archivos y el nombre de la empresa
+      try {
+        // Crear una instancia del cliente GuzzleHTTP
+        $client = new Client();
+
+        // Realizar la solicitud a la URL
+        $response = $client->post($url, [
+          RequestOptions::MULTIPART => $datos,
+        ]);
+
+        // Obtener la respuesta de la solicitud
+        $body = $response->getBody();
+        //var_dump($body);
+        $resultado = $body->getContents();
+        //var_dump($resultado);
+
+      }  catch (ConnectException $e) {
+        // Manejar el error de conexión
+        $resultado='No se pudo establecer conexión con el servidor web. Verifica tu conexión a internet o la URL proporcionada.';
+      } catch (RequestException $e) {
+        if ($e->hasResponse()) {
+          // Si se recibió una respuesta, obtener el código de estado HTTP
+          $statusCode = $e->getResponse()->getStatusCode();
+          
+          // Manejar el código de estado y mostrar un mensaje de error apropiado
+          if ($statusCode === 404) {
+            // Manejar el error 404
+            $resultado='Página no encontrada.';
+          } else {
+            // Manejar otros códigos de estado
+            $resultado='Ocurrió un error con el código de estado: ' . $statusCode;
+          }
+        } else {
+          // Manejar errores de conexión o resolución DNS
+          $resultado='No se pudo resolver el host. Verifica tu conexión a internet.';
+        }
+      }
+      //var_dump($resultado);
+      
+      //die();
+      return $resultado;
     }
 
     /**
@@ -212,20 +435,87 @@ class EmpresaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function delete($id)
-    {
-        /*$personal=Empresa::find($id);
-        $nombre=$personal->nombreCompleto();
-        $personal->update(['estado_id'=>2]);
-        return redirect()->route('personal.index')->withMessage("El personal $nombre ha sido dado de baja correctamente");*/
-
+    public function delete($id){
         try { 
-            Empresa::find($id)->delete();
-        } catch(\Illuminate\Database\QueryException $ex){ 
-            return redirect()->route('empresa.index')->with('delete_user_error', 'La empresa no fue eliminado porque está siendo utilizado en otras tablas');
+            $resultado=$this->eliminarEmpresaWeb($id);
+            //echo $resultado;
+            
+            $msj="La empresa no ha sido eliminada porque ha ocurrido un error en el servidor web: ".$resultado;
+            $accion="warning";
+            if($resultado=="true"){
+              Empresa::find($id)->delete();
+              $msj='Empresa eliminada correctamente de ambos servidores';
+              $accion="success";
+            }
+            //return redirect()->route('empresa.index')->with('delete', $msj);
+        } catch(\Illuminate\Database\QueryException $ex){
+          $accion="danger";
+          $msj='La empresa no fue eliminado porque está siendo utilizado en otras tablas';
         }
-        return redirect()->route('empresa.index')->with('delete_user', 'Empresa eliminada correctamente');
 
+        //die();
+        return redirect()->route('empresa.index')->with('delete', [
+          'alert' => $accion,
+          'message' => $msj,
+        ]);
+    }
+
+    public function eliminarEmpresaWeb($idEmpresa){
+      // URL del sistema en el servidor web (Sistema B) que recibirá los archivos
+      
+      $url = self::URL_SERVIDOR_WEB."administrar_empresas.php?accion=eliminarEmpresa";
+
+      // Agregar el nombre de la empresa al arreglo de archivos
+      $datos = [
+        [
+          'name' => 'idEmpresa',
+          'contents' => $idEmpresa,
+        ]
+      ];
+
+      //var_dump($datos);
+
+      // Enviar la solicitud POST con los archivos y el nombre de la empresa
+      try {
+        // Crear una instancia del cliente GuzzleHTTP
+        $client = new Client();
+
+        // Realizar la solicitud a la URL
+        $response = $client->post($url, [
+          RequestOptions::MULTIPART => $datos,
+        ]);
+
+        // Obtener la respuesta de la solicitud
+        $body = $response->getBody();
+        //var_dump($body);
+        $resultado = $body->getContents();
+        //var_dump($resultado);
+
+      }  catch (ConnectException $e) {
+        // Manejar el error de conexión
+        $resultado='No se pudo establecer conexión con el servidor web. Verifica tu conexión a internet o la URL proporcionada.';
+      } catch (RequestException $e) {
+        if ($e->hasResponse()) {
+          // Si se recibió una respuesta, obtener el código de estado HTTP
+          $statusCode = $e->getResponse()->getStatusCode();
+          
+          // Manejar el código de estado y mostrar un mensaje de error apropiado
+          if ($statusCode === 404) {
+            // Manejar el error 404
+            $resultado='Página no encontrada.';
+          } else {
+            // Manejar otros códigos de estado
+            $resultado='Ocurrió un error con el código de estado: ' . $statusCode;
+          }
+        } else {
+          // Manejar errores de conexión o resolución DNS
+          $resultado='No se pudo resolver el host. Verifica tu conexión a internet.';
+        }
+      }
+      //var_dump($resultado);
+      
+      //die();
+      return $resultado;
     }
 
     /*public function eliminados()
@@ -336,18 +626,5 @@ class EmpresaController extends Controller
         $personalRestaurar->update(['estado_id'=>1]);
         return redirect()->route('personal.index');
 
-    }
-
-    public function destroy($id)
-    {
-        //$id=152;
-        $estudio=Estudio::find($id);
-        if(is_null($estudio)){
-            return redirect()->route('estudios.index')->with('delete_user_error', 'El estudio no fue eliminado porque está siendo utilizado en otras tablas');
-        }else{
-            $estudio = Estudio::find($id)->delete();
-
-            return redirect()->route('estudios.index')->with('delete_user', 'Estudio eliminado correctamente');
-        }
     }
 }

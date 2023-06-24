@@ -94,7 +94,7 @@
                   <p style="font-size:100%" class="text-left"> <strong> Domicilio:</strong> {{$paciente->domicilio ? $paciente->domicilio->direccion : " "}} </p>
                   <p style="font-size:100%" class="text-left"> <strong> Sexo:</strong> {{$paciente->sexo ? $paciente->sexo->definicion : " "}} </p>
                   <p style="font-size:100%" class="text-left"> <strong> Origen:</strong> {{$paciente->origen ? $paciente->origen->definicion : " "}} </p>
-                  <p style="font-size:100%" class="text-left"> <strong> Cuit de origen:</strong> {{$paciente->origen ? $paciente->origen->cuit : " "}} </p>      
+                  <p style="font-size:100%" class="text-left"> <strong> Cuit de origen:</strong> {{$paciente->origen ? $paciente->origen->cuit : " "}} </p>
                 </div>
               </div>
               <div class="col-4">
@@ -102,7 +102,8 @@
                   @if($paciente->imagen==null)
                     <img class="img-thumbnail" height="200px" width="200px" src="{{ asset('imagenes/paciente/default.png')}}">
                   @else
-                    <img class="img-thumbnail" height="200px" width="200px" src="{{$paciente->imagen}}">
+                    <!-- <img class="img-thumbnail" height="200px" width="200px" src="{{$paciente->imagen}}"> -->
+                    <img class="img-thumbnail" height="200px" width="200px" src="{{ asset('imagenes/paciente/'.$paciente->imagen)}}">
                   @endif 
                 </div>
               </div>

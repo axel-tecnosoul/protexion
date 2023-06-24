@@ -29,7 +29,7 @@
             </div>
         </div>
         <!-- / Cabecera -->
-        @include('estudio.mensaje')
+        @include('empresa.mensaje')
         <!-- Body -->
         <div class="card-body">
             <!--div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -106,8 +106,6 @@
 @push('scripts')
 
     <script src="{{asset('js/tablaDetalle.js')}}"></script>
-
-
 
 @endpush
 @endsection

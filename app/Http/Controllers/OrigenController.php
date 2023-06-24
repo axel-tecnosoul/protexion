@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use DB;
 use App\Origen;
+use App\Http\Controllers\EmpresaController;
 use App\Pais;
 use App\Provincia;
 use App\Ciudad;
@@ -38,10 +39,24 @@ class OrigenController extends Controller
         $direccion->save();
 
         $data = new Origen();
-        $data->definicion = $request->definicion;
+        $data->definicion = $nombreEmpresa = $request->definicion;
         $data->cuit = $request->cuit;
         $data->domicilio_id = $direccion->id;
         $data->save();
+
+        $idEmpresa=$data->id;
+
+        $empresa = new EmpresaController();
+
+        $resultado=$empresa->subirEmpresaWeb($idEmpresa,$nombreEmpresa);
+
+        if($resultado==""){
+          $msj="en ambos servidores";
+        }else{
+          $msj="solo en el servidor local. ".$resultado;
+        }
+
+        $data->resultado_web=$msj;
 
         return response()->json($data);
 
@@ -112,9 +127,6 @@ class OrigenController extends Controller
      */
     public function store(Request $request)
     {
-
-
-
 
         $origen=new Origen;
         $origen->razon_social=$request->get('razon_social');

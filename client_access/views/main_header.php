@@ -62,13 +62,15 @@
                 <div class="media align-items-center"><img class="align-self-center pull-right img-50 rounded-circle" src="assets/images/dashboard/user.png" alt="header-user">
                   <!--<div class="dotted-animation"><span class="animate-circle"></span><span class="main-circle"></span></div>-->
                 </div>
-                <ul class="profile-dropdown onhover-show-div p-20">
-                 <!--<li>
-                    <a href="#">
-                      <i data-feather="user"></i>                                    Editar Perfil
-                    </a>
-                  </li>
-                  <li>
+                <ul class="profile-dropdown onhover-show-div p-20"><?php
+                  /*if($_SESSION["rowUsers"]["tipo"]==2){?>
+                    <li>
+                      <a href="editar_perfil.php">
+                        <i data-feather="user"></i>                                    Editar Perfil
+                      </a>
+                    </li><?php
+                  }*/?>
+                 <!-- <li>
                     <a href="#">
                       <i data-feather="mail"></i>
                       Inbox

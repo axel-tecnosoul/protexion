@@ -80,13 +80,8 @@
                             </button>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenu4">
                               <a class="dropdown-item" href="{{ route('voucher.edit',$voucher->id) }}">
-                                  <button title="Editar visita" class="btn fondo2 btn-responsive w-100 text-left">
+                                  <button title="Editar visita" class="btn btn-warning btn-responsive w-100 text-left">
                                       <i class="fas fa-edit"></i> Editar visita
-                                  </button>
-                              </a>
-                              <a class="dropdown-item" target="_blank" href="{{ route('voucher.pdf_paciente',$voucher->id) }}">
-                                  <button title="exportar pdf paciente" class="btn fondo1 btn-responsive w-100 text-left">
-                                      <i class="fas fa-file-pdf"></i> Voucher Paciente
                                   </button>
                               </a>
                               <!-- <a class="dropdown-item" target="_blank" href="{{ route('voucher.pdf_medico',$voucher->id) }}">
@@ -95,12 +90,17 @@
                                   </button>
                               </a> -->
                               <a class="dropdown-item" href="{{ route('voucher.show',$voucher->id) }}">
-                                  <button title="carpeta"  class="btn fondo3 btn-responsive w-100 text-left">
+                                  <button title="carpeta"  class="btn btn-success btn-responsive w-100 text-left">
                                       <i style="color: rgb(255, 255, 255)" class="fas fa-folder"></i> Turno
                                   </button>
                               </a>
                               <a class="dropdown-item" data-keyboard="false" data-target="#modal-delete-{{ $voucher->id }}" data-toggle="modal">
                                   <button type="submit" class="btn fondo1 btn-responsive w-100 text-left"><i class="fa fa-fw fa-trash"></i> Eliminar</button>
+                              </a>
+                              <a class="dropdown-item" target="_blank" href="{{ route('voucher.pdf_paciente',$voucher->id) }}">
+                                  <button title="exportar pdf paciente" class="btn fondo2 btn-responsive w-100 text-left">
+                                      <i class="fas fa-file-pdf"></i> Voucher Paciente
+                                  </button>
                               </a>
                               <a class="dropdown-item" data-keyboard="false" data-target="#modal-clonar-{{ $voucher->id }}" data-toggle="modal">
                                   <button type="submit" class="btn fondo2 btn-responsive w-100 text-left"><i class="fa fa-fw fa-clone"></i> Clonar visita</button>

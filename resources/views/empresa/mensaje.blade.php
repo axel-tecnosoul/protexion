@@ -1,30 +1,21 @@
-@if (Session::has('delete_user_error'))
-        <div class="alert alert-danger"data-auto-dismiss role="alert">{{ Session::get('delete_user_error') }}
+@if (Session::has('delete'))
+        <div class="alert alert-{{ Session::get('delete')['alert'] }}" data-auto-dismiss role="alert">{{ Session::get('delete')['message'] }}
                 <button type="button" class="close" data-dismiss="alert">
                         <span aria-hidden="true">&times;</span>
                 </button>
         </div>
 @endif
 
-
-@if (Session::has('delete_user'))
-        <div class="alert alert-success"data-auto-dismiss role="alert">{{ Session::get('delete_user') }}
+@if (Session::has('store'))
+        <div class="alert alert-{{ Session::get('store')['alert'] }}" data-auto-dismiss role="alert">{{ Session::get('store')['message'] }}
                 <button type="button" class="close" data-dismiss="alert">
                         <span aria-hidden="true">&times;</span>
                 </button>
         </div>
 @endif
 
-@if (Session::has('store_user'))
-        <div class="alert alert-success"data-auto-dismiss role="alert">{{ Session::get('store_user') }}
-                <button type="button" class="close" data-dismiss="alert">
-                        <span aria-hidden="true">&times;</span>
-                </button>
-        </div>
-@endif
-
-@if (Session::has('update_user'))
-        <div class="alert alert-warning"data-auto-dismiss role="alert">{{ Session::get('update_user') }}
+@if (Session::has('update'))
+        <div class="alert alert-{{ Session::get('update')['alert'] }}" data-auto-dismiss role="alert">{{ Session::get('update')['message'] }}
                 <button type="button" class="close" data-dismiss="alert">
                         <span aria-hidden="true">&times;</span>
                 </button>

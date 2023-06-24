@@ -1,11 +1,12 @@
-# Laravel CRUD Generator
+![Laravel Crud Generator](https://banners.beyondco.de/Laravel%20CRUD.png?theme=dark&packageManager=composer+require&packageName=ibex%2Fcrud-generator&pattern=architect&style=style_1&description=Laravel+CRUD+Generator&md=1&showWatermark=0&fontSize=100px&images=gift)
 
-![Packagist](https://img.shields.io/badge/Packagist-v1.1.2-green.svg?style=flat-square)
+
+![Packagist](https://img.shields.io/badge/Packagist-v1.3.2-green.svg?style=flat-square)
 ![Licence](https://img.shields.io/badge/Licence-MIT-green.svg?style=flat-square)
 ![StyleCI](https://img.shields.io/badge/StyleCI-pass-green.svg?style=flat-square)
 
 
-This Laravel Generator package provides and generate Controller, Model (with eloquent relations) and Views in Bootstrap for your development of your applications with single command.
+This Laravel Generator package provides and generate Controller, Model (with eloquent relations) and Views in **Bootstrap** for your development of your applications with single command.
 
 - Will create **Model** with Eloquent relations
 - Will create **Controller** with all resources
