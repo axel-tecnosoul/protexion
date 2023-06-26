@@ -160,79 +160,6 @@ class Empresas{
     }
   }
 
-  public function eliminarEmpresa($idEmpresa){
-
-    //$idEmpresa=68;
-    //var_dump($idEmpresa);
-    
-    $queryTraerEmpresa = "SELECT id FROM usuarios WHERE id_empresa = $idEmpresa";
-    $getEmpresa = $this->conexion->consultaRetorno($queryTraerEmpresa);
-    $rowEmpresa = $getEmpresa->fetch_array();
-    //var_dump($rowEmpresa);
-    $mensaje="true";
-    if($rowEmpresa){
-      $idEmpresa=$rowEmpresa["id"];
-      //var_dump($idEmpresa);
-
-      $archivos=$this->trerArchivosEmpresa($idEmpresa);
-      $archivos=json_decode($archivos,true);
-
-      $email=$this->trerEmailEmpresa($idEmpresa);
-      $email=json_decode($email,true);
-
-      
-      if(count($archivos)==0 and count($email)==0){
-        $queryDelAdjuntos = "DELETE FROM usuarios WHERE id = $idEmpresa";
-        $delAdjuntos = $this->conexion->consultaSimple($queryDelAdjuntos);
-        
-        $mensajeError=$this->conexion->conectar->error;
-        //echo $mensajeError;
-        if($mensajeError!=""){
-          $mensaje=$mensajeError."<br><br>".$queryInsert;
-        }
-      }else{
-        $mensaje="La empresa no se puede eliminar porque tiene archivos o emails cargados";
-      }
-    }
-    
-    //var_dump($mensaje);
-    
-    return $mensaje;
-  }
-
-  public function updateEmpresa($idEmpresa,$nombreEmpresa){
-    
-    $queryInsert = "UPDATE usuarios SET usuario = '$nombreEmpresa' WHERE id_empresa = $idEmpresa";
-    $insertNewAdjunto = $this->conexion->consultaSimple($queryInsert);
-    //var_dump($insertNewAdjunto);
-    $mensaje="true";
-
-    $mensajeError=$this->conexion->conectar->error;
-    if($mensajeError!=""){
-      $mensaje=$mensajeError."<br><br>".$queryInsert;
-    }
-    return $mensaje;
-  }
-
-  public function sincronizarEmpresa($idEmpresa,$nombreEmpresa){
-    /*$queryTraerEmpresa = "SELECT id_empresa FROM usuarios WHERE usuario='$nombreEmpresa'";
-    $getEmpresas = $this->conexion->consultaRetorno($queryTraerEmpresa);
-    $row = $getEmpresas->fetch_array();*/
-
-    var_dump($this->conexion);
-    
-    $queryInsert = "UPDATE usuarios SET id_empresa = $idEmpresa WHERE usuario='$nombreEmpresa'";
-    echo "<hr>".$queryInsert."<br>";
-    $insertNewAdjunto = $this->conexion->consultaSimple($queryInsert);
-    //var_dump($insertNewAdjunto);
-    
-    $mensajeError=$this->conexion->conectar->error;
-    echo $mensajeError;
-    if($mensajeError!=""){
-      echo "<br><br>".$queryInsert;
-    }
-  }
-
   public function trerArchivosEmpresa($id_empresa){
 
     $queryTraerEmpresas = "SELECT id,archivo,fecha_hora_subida,fecha_hora_bajada FROM archivos_usuario WHERE id_usuario = $id_empresa";
@@ -250,7 +177,7 @@ class Empresas{
       );
     }
 
-    return json_encode($arrayArchivos);
+    echo json_encode($arrayArchivos);
 
   }
 
@@ -606,7 +533,7 @@ if (isset($accion)) {
         $empresas->importarEmpresas($_FILES);
       break;
       case "trerArchivosEmpresa":
-        echo $empresas->trerArchivosEmpresa($id_empresa);
+        $empresas->trerArchivosEmpresa($id_empresa);
       break;
       case "subirArchivos":
         //var_dump($_FILES);
@@ -662,28 +589,6 @@ if (isset($accion)) {
         
         $empresas->insertarEmpresa($nombreEmpresa,$idEmpresa);
       break;
-      case "eliminarEmpresa":
-        $idEmpresa=$_POST["idEmpresa"];
-        //echo $nombreEmpresa;
-        
-        echo $empresas->eliminarEmpresa($idEmpresa);
-      break;
-      case "sincronizarEmpresa":
-        $idEmpresa=$_POST["idEmpresa"];
-        $nombreEmpresa=$_POST["nombreEmpresa"];
-        //echo $nombreEmpresa;
-        
-        $empresas->sincronizarEmpresa($idEmpresa,$nombreEmpresa);
-      break;
-      case "updateEmpresa":
-        $idEmpresa=$_POST["idEmpresa"];
-        $nombreEmpresa=$_POST["nombreEmpresa"];
-        //echo $nombreEmpresa;
-        
-        echo $empresas->updateEmpresa($idEmpresa,$nombreEmpresa);
-      break;
-      default:
-        echo "ruta no especificada";
 		}
 	}else{
 		if (isset($_GET['accion'])) {
