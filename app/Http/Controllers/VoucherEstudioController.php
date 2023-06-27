@@ -13,6 +13,10 @@ use GuzzleHttp\Exception\ConnectException;
 
 class VoucherEstudioController extends Controller
 {
+
+    //const URL_SERVIDOR_WEB = 'https://protexionpr.com.ar/client_access/models/';
+    const URL_SERVIDOR_WEB = 'http://localhost/protexion/client_access/models/';
+
     public function archivo(Request $request)
     {   
       $archivos = $request->file('anexo');
@@ -33,11 +37,18 @@ class VoucherEstudioController extends Controller
             //dd($nombre,$ruta);
             $item->move($ruta,$nombre);
             $ruta.=$nombre;
-            $aArchivosSubir[]=$ruta;
+            
             $archivo_adjunto = new ArchivoAdjunto();
             $archivo_adjunto->anexo = $ruta;
             $archivo_adjunto->voucher_estudio_id = $request->voucher_estudio_id;
             $archivo_adjunto->save();
+            
+            $id_archivo=$archivo_adjunto->id;
+
+            $aArchivosSubir[]=[
+              "ruta"=>$ruta,
+              "id_archivo"=>$id_archivo,
+            ];
           }
         }
       }
@@ -45,11 +56,12 @@ class VoucherEstudioController extends Controller
       $accion="upload-file-fail";
       if($request->estudio=="GENERAL" and count($aArchivosSubir)>=1){
         $voucher=Voucher::findOrFail($voucher_id);
-        $empresa=$voucher->origen->definicion;
+        //$empresa=$voucher->origen->definicion;
+        $id_empresa=$voucher->origen_id;
         $paciente=$voucher->paciente->nombreCompleto();
         $turno=$voucher->turno;
         $datosExtra=[
-          "empresa"=>$empresa,
+          "id_empresa"=>$id_empresa,
           "paciente"=>$paciente,
           "turno"=>$turno
         ];
@@ -57,6 +69,9 @@ class VoucherEstudioController extends Controller
         //dd($datosExtra);
 
         $resultado=$this->sendFileLaravel($aArchivosSubir,json_encode($datosExtra));
+
+        //echo $resultado;
+        //die();
         if($resultado==1){
           $accion="upload-file-success";
           $msj="El archivo se ha cargado correctamente y fue envíado correctamente al servidor para clientes";
@@ -94,17 +109,19 @@ class VoucherEstudioController extends Controller
 
     private function sendFileLaravel($aArchivos,$datosExtra){
 
-      // URL del sistema en el servidor web (Sistema B) que recibirá los archivos
-      $url = 'https://protexionpr.com.ar/client_access/models/administrar_empresas.php?accion=recibirArchivo';
-      //$url = 'http://localhost/protexion/client_access/models/administrar_empresas.php?accion=recibirArchivo';
+      $url = self::URL_SERVIDOR_WEB."administrar_empresas.php?accion=recibirArchivo";
 
       // Crear una instancia del cliente GuzzleHTTP
       //$client = new Client();
       $archivos = [];
-      foreach ($aArchivos as $rutaArchivo) {
+      foreach ($aArchivos as $archivo) {
         $archivos[] = [
           'name' => 'file[]',
-          'contents' => fopen($rutaArchivo, 'r'),
+          'contents' => fopen($archivo["ruta"], 'r'),
+        ];
+        $archivos[] = [
+          'name' => 'id_archivo[]',
+          'contents' => $archivo["id_archivo"],
         ];
       }
 
@@ -239,19 +256,102 @@ class VoucherEstudioController extends Controller
         readfile($img);
     }
 
-    public function delete($id)
-    {
+    public function delete($id){
+
       $archivo=ArchivoAdjunto::findOrFail($id);
+      $ruta=$archivo->anexo;
       $voucherEstudio=VoucherEstudio::findOrFail($archivo->voucher_estudio_id);
       $voucher_id=$voucherEstudio->voucher_id;
-      $ruta=$archivo->anexo;
 
-      //dd($archivo,$voucherEstudio,$voucher_id,$ruta);
+      try {
 
-      unset($ruta);
+        $resultado=$this->eliminarArchivoWeb($id);
+        /*echo $resultado;
+        die();*/
+        
+        $msj="El archivo no ha sido eliminada porque ha ocurrido un error en el servidor web: ".$resultado;
+        $accion="warning";
+        if($resultado==""){
 
-      $archivo->delete();
+          //dd($archivo,$voucherEstudio,$voucher_id,$ruta);
+
+          unset($ruta);
+
+          $archivo->delete();
+
+          $msj='Archivo eliminado correctamente de ambos servidores';
+          $accion="success";
+        }
+        //return redirect()->route('empresa.index')->with('delete', $msj);
+      } catch(\Illuminate\Database\QueryException $ex){
+        $accion="danger";
+        $msj='El archivo no fue eliminado porque está siendo utilizado en otras tablas';
+      }
+
+      //die();
+      return redirect()->route('voucher.show',$voucher_id)->with('delete-archivo', [
+        'alert' => $accion,
+        'message' => $msj,
+      ]);
 
       return redirect()->route('voucher.show',$voucher_id);
+    }
+
+    public function eliminarArchivoWeb($idArchivo){
+      // URL del sistema en el servidor web (Sistema B) que recibirá los archivos
+      
+      $url = self::URL_SERVIDOR_WEB."administrar_empresas.php?accion=eliminarArchivoDesdeLocal";
+
+      // Agregar el nombre de la empresa al arreglo de archivos
+      $datos = [
+        [
+          'name' => 'idArchivo',
+          'contents' => $idArchivo,
+        ]
+      ];
+
+      //var_dump($datos);
+
+      // Enviar la solicitud POST con los archivos y el nombre de la empresa
+      try {
+        // Crear una instancia del cliente GuzzleHTTP
+        $client = new Client();
+
+        // Realizar la solicitud a la URL
+        $response = $client->post($url, [
+          RequestOptions::MULTIPART => $datos,
+        ]);
+
+        // Obtener la respuesta de la solicitud
+        $body = $response->getBody();
+        //var_dump($body);
+        $resultado = $body->getContents();
+        //var_dump($resultado);
+
+      }  catch (ConnectException $e) {
+        // Manejar el error de conexión
+        $resultado='No se pudo establecer conexión con el servidor web. Verifica tu conexión a internet o la URL proporcionada.';
+      } catch (RequestException $e) {
+        if ($e->hasResponse()) {
+          // Si se recibió una respuesta, obtener el código de estado HTTP
+          $statusCode = $e->getResponse()->getStatusCode();
+          
+          // Manejar el código de estado y mostrar un mensaje de error apropiado
+          if ($statusCode === 404) {
+            // Manejar el error 404
+            $resultado='Página no encontrada.';
+          } else {
+            // Manejar otros códigos de estado
+            $resultado='Ocurrió un error con el código de estado: ' . $statusCode;
+          }
+        } else {
+          // Manejar errores de conexión o resolución DNS
+          $resultado='No se pudo resolver el host. Verifica tu conexión a internet.';
+        }
+      }
+      //var_dump($resultado);
+      
+      //die();
+      return $resultado;
     }
 }

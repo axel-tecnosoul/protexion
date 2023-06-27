@@ -87,6 +87,39 @@
 <script type="text/javascript">
 $(document).ready(function(){
 
+  //si existe un cambio en Fecha Desde
+  $('#desde').change(function() {
+      //Se captura su valor
+      var desde = $(this).val();
+      var hasta = $('#hasta');
+      console.log(desde, 'Se cambio la fecha DESDE')
+      //y establesco ese valor capturado como minimo en Fecha Hasta
+      $('#hasta').attr({"min" : desde});
+
+      if(desde>hasta.val()){
+        hasta.val(desde)
+      }
+
+    });
+
+    //si existe un cambio en Fecha Hasta
+    $('#hasta').change(function() {
+      //Se captura su valor
+      var desde = $("#desde");
+      var hasta = $(this).val();
+      console.log(hasta, 'Se cambio la fecha HASTA');
+      //si ese valor es diferente a nulo (osea si hay algo dentro)
+      if(hasta<desde.val()){
+        desde.val(hasta)
+      }
+      /*if (hasta != ""){
+        //se deshabilita el desde (para evitar que desde sea mayor que hasta)
+        $("#desde").prop('disabled', true);
+      }*/
+
+    });
+    /*
+
     //si existe un cambio en Fecha Desde
     $('#desde').change(function() {
 
@@ -113,7 +146,7 @@ $(document).ready(function(){
         }
 
     });
-
+*/
     //si se clickea en "FIltrar"
     $('#bt_add').click(function () {
       //se debe refrescar (si es que hubo) la prop disabled de desde

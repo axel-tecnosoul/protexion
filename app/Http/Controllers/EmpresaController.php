@@ -38,8 +38,8 @@ class EmpresaController extends Controller
         $this->middleware('permission:eliminar personal', ['only' => ['destroy']]);
     }*/
 
-    const URL_SERVIDOR_WEB = 'https://protexionpr.com.ar/client_access/models/';
-    //const URL_SERVIDOR_WEB = 'http://localhost/protexion/client_access/models/';
+    //const URL_SERVIDOR_WEB = 'https://protexionpr.com.ar/client_access/models/';
+    const URL_SERVIDOR_WEB = 'http://localhost/protexion/client_access/models/';
     
 
     /**

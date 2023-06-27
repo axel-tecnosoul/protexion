@@ -314,46 +314,62 @@ class Empresas{
   }
 
   public function subirArchivo($id_empresa,$adjuntos,$cantAdjuntos){
-    $ok=0;
+    $ok=$ok2=0;
     //SI VIENEN ADJUNTOS LOS GUARDO.
     if ($adjuntos > 0) {
       //$indice = "file".$i;
-      $nombreADJ = $_FILES["file"]['name'][0];
       
-      $subidaOK=false;
-      if (is_uploaded_file($_FILES["file"]['tmp_name'][0])) {
-        //INGRESO ARCHIVOS EN EL DIRECTORIO
-        $directorio = "../views/archivos_empresas/$id_empresa/";
-        //$path = "sample/path/newfolder";
-        if (!file_exists($directorio)) {
-            mkdir($directorio, 0777, true);
-        }
-
-        $subidaOK=move_uploaded_file($_FILES["file"]['tmp_name'][0], $directorio.$nombreADJ);
-        //$ruta_completa_imagen = $directorio.$nombreFinalArchivo;
-        //var_dump($subidaOK);
+      foreach ($_FILES["file"]['name'] as $key => $value) {
+        $ok2++;
+      
+        $nombreADJ = $_FILES["file"]['name'][$key];
         
-        if($subidaOK){
-          //INSERTO DATOS EN LA TABLA ADJUNTOS ORDEN_COMPRA
-          $queryInsertAdjuntos = "INSERT INTO archivos_usuario (id_usuario, archivo)VALUES($id_empresa, '$nombreADJ')";
-          $insertAdjuntos = $this->conexion->consultaSimple($queryInsertAdjuntos);
-
-          $mensajeError=$this->conexion->conectar->error;
-          echo $mensajeError;
-          if($mensajeError!=""){
-            echo "<br><br>".$queryInsertAdjuntos;
-          }else{
-            //$totalSubidas++;
-            $ok=1;
+        $subidaOK=false;
+        if (is_uploaded_file($_FILES["file"]['tmp_name'][$key])) {
+          //INGRESO ARCHIVOS EN EL DIRECTORIO
+          $directorio = "../views/archivos_empresas/$id_empresa/";
+          //$path = "sample/path/newfolder";
+          if (!file_exists($directorio)) {
+              mkdir($directorio, 0777, true);
           }
-        }else{
-          if($_FILES["file"]['error'][0]){
-            return "Ha ocurrido un error: Cod. ".$_FILES["file"]['error'][0];
+
+          $subidaOK=move_uploaded_file($_FILES["file"]['tmp_name'][$key], $directorio.$nombreADJ);
+          //$ruta_completa_imagen = $directorio.$nombreFinalArchivo;
+          //var_dump($subidaOK);
+          
+          if($subidaOK){
+
+            $campoOpcional="";
+            $valorOpcional="";
+            if(isset($_POST["id_archivo"][$key])){
+              //var_dump($_POST["id_archivo"][$key]);
+              $campoOpcional=", id_archivo_local";
+              $valorOpcional=", ".$_POST["id_archivo"][$key];
+            }
+
+            //INSERTO DATOS EN LA TABLA ADJUNTOS ORDEN_COMPRA
+            $queryInsertAdjuntos = "INSERT INTO archivos_usuario (id_usuario, archivo $campoOpcional) VALUES ($id_empresa, '$nombreADJ' $valorOpcional)";
+            $insertAdjuntos = $this->conexion->consultaSimple($queryInsertAdjuntos);
+
+            //var_dump($queryInsertAdjuntos);
+
+            $mensajeError=$this->conexion->conectar->error;
+            echo $mensajeError;
+            if($mensajeError!=""){
+              echo "<br><br>".$queryInsertAdjuntos;
+            }else{
+              //$totalSubidas++;
+              $ok++;
+            }
+          }else{
+            if($_FILES["file"]['error'][$key]){
+              return "Ha ocurrido un error: Cod. ".$_FILES["file"]['error'][$key];
+            }
           }
         }
       }
 
-      if($ok==1){
+      if($ok==$ok2){
         return 1;
       }else{
         return 0;
@@ -381,6 +397,21 @@ class Empresas{
 
   }
 
+  public function eliminarArchivoLocal($idArchivo){
+
+    $query = "SELECT id,id_usuario,archivo FROM archivos_usuario WHERE id_archivo_local = $idArchivo";
+    $get = $this->conexion->consultaRetorno($query);
+    $row = $get->fetch_array();
+    if($row){
+      $id_archivo=$row["id"];
+      $nombre_adjunto=$row["id_usuario"];
+      $id_empresa=$row["archivo"];
+      //var_dump($row);
+      $this->eliminarArchivo($id_archivo, $nombre_adjunto, $id_empresa);
+    }
+
+  }
+
   public function marcarArchivoDescargado($id_archivo){
 
     $queryDelAdjuntos = "UPDATE archivos_usuario SET fecha_hora_bajada = NOW() WHERE id = $id_archivo";
@@ -390,9 +421,9 @@ class Empresas{
 
   public function recibir_archivos($datosExtra){
     $datos=json_decode($datosExtra,true);
-    $empresa=$datos["empresa"];
-    $empresa="Particular";
-    $query = "SELECT id,usuario FROM usuarios WHERE usuario = '$empresa'";
+    $id_empresa=$datos["id_empresa"];
+    //$empresa="Particular";
+    $query = "SELECT id,usuario FROM usuarios WHERE id_empresa = $id_empresa";
     $get = $this->conexion->consultaRetorno($query);
     $row = $get->fetch_array();
     $id_empresa=$row["id"];
@@ -421,9 +452,11 @@ class Empresas{
     $get = $this->conexion->consultaRetorno($query);
     $row = $get->fetch_array();
     if($row){
+      $ok=0;
       if($row["anulado"]==1){
         $queryDelAdjuntos = "UPDATE usuarios_email SET anulado = 0 WHERE id = ".$row["id"];
         $delAdjuntos = $this->conexion->consultaSimple($queryDelAdjuntos);
+        $ok=1;
       }
     }else{
       $query = "INSERT INTO usuarios_email (id_usuario,email,anulado) VALUES ($id_empresa,'$email',0)";
@@ -637,6 +670,11 @@ if (isset($accion)) {
         //var_dump($_FILES);
         //$empresas->recibir_archivos($archivos,$empresa);
         echo $empresas->recibir_archivos($datosExtra);
+      break;
+      case "eliminarArchivoDesdeLocal":
+        $idArchivo=$_POST["idArchivo"];
+        
+        echo $empresas->eliminarArchivoLocal($idArchivo);
       break;
       case "guardar_email":
         //var_dump($_POST);

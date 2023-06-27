@@ -7,6 +7,7 @@ use App\Paciente;
 use DB;
 use App\Estado;
 use App\Origen;
+use App\Http\Controllers\EmpresaController;
 use App\EstadoCivil;
 use App\Sexo;
 use App\ObraSocial;
@@ -469,6 +470,13 @@ class PacienteController extends Controller
       if(!$ori){
         $origen->save();
         $id_origen=$origen->id;
+
+        $empresa = new EmpresaController();
+
+        $idEmpresa=$id_origen;
+        $nombreEmpresa=$filaEmpresa[0];
+        $resultado=$empresa->subirEmpresaWeb($idEmpresa,$nombreEmpresa);
+
       }else{
         $id_origen=$ori[0]->id;
       }

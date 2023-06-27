@@ -79,13 +79,17 @@ $(document).ready(function(){
     //si existe un cambio en Fecha Hasta
     $('#hasta').change(function() {
       //Se captura su valor
+      var desde = $("#desde");
       var hasta = $(this).val();
       console.log(hasta, 'Se cambio la fecha HASTA');
       //si ese valor es diferente a nulo (osea si hay algo dentro)
-      if (hasta != ""){
+      if(hasta<desde.val()){
+        desde.val(hasta)
+      }
+      /*if (hasta != ""){
         //se deshabilita el desde (para evitar que desde sea mayor que hasta)
         $("#desde").prop('disabled', true);
-      }
+      }*/
 
     });
 
