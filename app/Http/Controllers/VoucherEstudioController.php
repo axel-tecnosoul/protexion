@@ -14,8 +14,8 @@ use GuzzleHttp\Exception\ConnectException;
 class VoucherEstudioController extends Controller
 {
 
-    //const URL_SERVIDOR_WEB = 'https://protexionpr.com.ar/client_access/models/';
-    const URL_SERVIDOR_WEB = 'http://localhost/protexion/client_access/models/';
+    const URL_SERVIDOR_WEB = 'https://protexionpr.com.ar/client_access/models/';
+    //const URL_SERVIDOR_WEB = 'http://localhost/protexion/client_access/models/';
 
     public function archivo(Request $request)
     {   
