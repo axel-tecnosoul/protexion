@@ -22,6 +22,7 @@ use App\Imports\PacientesImport;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\File;
 
 class PacienteController extends Controller
 {
@@ -253,6 +254,7 @@ class PacienteController extends Controller
           });
 
           $exif = exif_read_data($imagen->getPathname());
+
           //var_dump($exif);
           // Corregir la orientación de la imagen si es necesario
           if (!empty($exif['Orientation'])) {
@@ -269,12 +271,23 @@ class PacienteController extends Controller
             }
           }
           //dd($image_resize);
-          $imagen_temp->save(public_path('imagenes/paciente/' . $nombre_imagen));
+          $path_foto_paciente='imagenes/paciente/';
+
+          $imagen_temp->save(public_path($path_foto_paciente . $nombre_imagen));
           $paciente->imagen = $nombre_imagen;
+
+          $thumbnailPath = public_path($path_foto_paciente.'thumbnails/'); // Ruta donde guardarás los thumbnails
+          //$thumbnail = \Image::make($image)->fit(100, 100, function ($constraint) {
+          $thumbnail = Image::make($imagen_temp)->fit(50, 50, function ($constraint) {
+              $constraint->aspectRatio();
+              $constraint->upsize();
+          });
+          $thumbnail->save($thumbnailPath . $imagen_temp->getClientOriginalName());
 
         }
         $paciente->save();
-        return redirect()->route('paciente.index');
+        return redirect()->route('paciente.voucher', ['paciente' => $paciente->id]);
+        //return redirect()->route('paciente.index');
     }
 
     /**
@@ -386,14 +399,26 @@ class PacienteController extends Controller
             }
           }
           //dd($image_resize);
-          $imagen_temp->save(public_path('imagenes/paciente/' . $nombre_imagen));
+
+          $path_foto_paciente='imagenes/paciente/';
+
+          $imagen_temp->save(public_path($path_foto_paciente . $nombre_imagen));
           $paciente->imagen = $nombre_imagen;
+
+          $thumbnailPath = public_path($path_foto_paciente.'thumbnails/'); // Ruta donde guardarás los thumbnails
+          //$thumbnail = \Image::make($image)->fit(100, 100, function ($constraint) {
+          $thumbnail = Image::make($imagen_temp)->fit(50, 50, function ($constraint) {
+              $constraint->aspectRatio();
+              $constraint->upsize();
+          });
+          $thumbnail->save($thumbnailPath . $imagen->getClientOriginalName());
 
         }
         
         $paciente->update();
 
-        return redirect()->route('paciente.index')->withMessage("El paciente " .  $paciente->nombreCompleto() .  " ha sido actualizado con éxito");
+        return redirect()->route('paciente.voucher', ['paciente' => $paciente->id]);
+        //return redirect()->route('paciente.index')->withMessage("El paciente " .  $paciente->nombreCompleto() .  " ha sido actualizado con éxito");
     }
 
     /**
@@ -528,6 +553,40 @@ class PacienteController extends Controller
       //window.location.href="voucher/create/"+encodeURIComponent(aIdPacientes.join(","))
       return redirect()->route('voucher.create',implode(",",$aIdPacientes));
       return back()->with('message','Pacientes importados');
-  }
+    }
+
+    public function generarThumbnail(){
+
+      $path_foto_paciente='imagenes/paciente/';
+
+      $rutaImagenes = public_path($path_foto_paciente); // Ruta de la carpeta que contiene las imágenes originales
+      $rutaThumbnails = public_path($path_foto_paciente.'thumbnails/'); // Ruta donde guardarás los thumbnails
+      
+      $imagenes = File::allFiles($rutaImagenes); // Obtiene todas las imágenes de la carpeta
+      
+      foreach ($imagenes as $imagen) {
+          $nombreImagen = $imagen->getFilename();
+          $rutaImagen = $rutaImagenes . $nombreImagen;
+          
+          $thumbnail = Image::make($rutaImagen)->fit(50, 50, function ($constraint) {
+              $constraint->aspectRatio();
+              $constraint->upsize();
+          });
+          
+          $thumbnail->save($rutaThumbnails . $nombreImagen);
+      }
+
+      //$imagen_temp->save(public_path($path_foto_paciente . $nombre_imagen));
+      //$paciente->imagen = $nombre_imagen;
+
+      //$thumbnailPath = public_path($path_foto_paciente.'thumbnails/'); // Ruta donde guardarás los thumbnails
+      //$thumbnail = \Image::make($image)->fit(100, 100, function ($constraint) {
+      /*$thumbnail = Image::make($imagen_temp)->fit(50, 50, function ($constraint) {
+          $constraint->aspectRatio();
+          $constraint->upsize();
+      });
+      $thumbnail->save($thumbnailPath . $imagen->getClientOriginalName());*/
+
+    }
 
 }

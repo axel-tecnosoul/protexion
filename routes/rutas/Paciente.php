@@ -17,4 +17,5 @@ use Illuminate\Support\Facades\Route;
     Route::get('paciente/{paciente}/vouchers', 'PacienteController@voucher')->name('paciente.voucher');
     Route::post('paciente-import-list-excel', 'PacienteController@importExcel')->name('pacientes.import.excel');
     Route::delete('paciente/{voucher},{paciente}', 'PacienteController@destroy_voucher')-> name('paciente.destroy_voucher');
+    Route::get('paciente/generar_thumbnail/all', 'PacienteController@generarThumbnail')
 ?>

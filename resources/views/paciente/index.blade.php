@@ -94,12 +94,33 @@
                           var_dump(file_exists('../public/imagenes/paciente/'.$paciente->imagen));*/
                           //if($paciente->imagen != null){
                             //var_dump($paciente->imagen);
-                            if($paciente->imagen != null and file_exists('../public/imagenes/paciente/'.$paciente->imagen)){?>
-                              <img src="{{ asset('imagenes/paciente/'.$paciente->imagen)}}" width="50px" class="img-circle elevation-2" alt="User Image"><?php
-                            }else{?>
-                              <img src="{{ asset('imagenes/paciente/default.png')}}" width="50px" class="img-circle elevation-2" alt="User Image"><?php
+                            $mostrar_imagen_default=1;
+                            $foto_mostrar="imagenes/paciente/thumbnails/default.png";
+                            if($paciente->imagen != null){
+                              $path_foto_paciente="imagenes/paciente/";
+                              
+                              $path_thumbnail=$path_foto_paciente.'thumbnails/'.$paciente->imagen;
+                              //$path_thumbnail=$path_foto_paciente.$paciente->imagen;
+                              $path_foto_original=$path_foto_paciente.$paciente->imagen;
+
+                              if(file_exists("../public/".$path_thumbnail)){
+                                $mostrar_imagen_default=0;
+                                $foto_mostrar=$path_thumbnail;
+                                /*?>
+                                <img src="{{ asset('$path_thumbnail)}}" width="50px" class="img-circle elevation-2" alt="User Image"><?php
+                                */
+                              }elseif(file_exists('../public/'.$path_foto_original)){
+                                $mostrar_imagen_default=0;
+                                $foto_mostrar=$path_foto_original;
+                                /*?>
+                                <img src="{{ asset('$path_foto_original)}}" width="50px" class="img-circle elevation-2" alt="User Image"><?php*/
+                              }
                             }
+                            /*if($mostrar_imagen_default==0){?>
+                              <img src="{{ asset('imagenes/paciente/default.png')}}" width="50px" class="img-circle elevation-2" alt="User Image"><?php
+                            }*/
                           //}?>
+                          <img src="{{ asset($foto_mostrar)}}" width="50px" class="img-circle elevation-2" alt="User Image">
                         </td>
 
                         <td style="text-align: center" colspan="3">

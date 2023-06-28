@@ -24,12 +24,13 @@
                     //if(file_exists(asset('imagenes/paciente/'.$paciente->imagen))){
                       //if($paciente->imagen == null){
                         //var_dump($paciente->imagen);
-                      if($paciente->imagen != null and file_exists('../public/imagenes/paciente/'.$paciente->imagen)){?>
+                      /*if($paciente->imagen != null and file_exists('../public/imagenes/paciente/'.$paciente->imagen)){?>
                         <img src="{{ asset('imagenes/paciente/'.$paciente->imagen)}}" width="50px" class="img-circle elevation-2" alt="User Image"><?php
                       }else{?>
                         <img src="{{ asset('imagenes/paciente/default.png')}}" width="50px" class="img-circle elevation-2" alt="User Image"><?php
-                      }
+                      }*/
                     //}?>
+                  <img src="{{ asset($foto_mostrar)}}" width="50px" class="img-circle elevation-2" alt="User Image">
                 </h3>
                 <div class="modal-body">
                     <table class="table table-bordered table-condensed table-hover">
