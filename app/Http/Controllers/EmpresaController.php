@@ -38,7 +38,7 @@ class EmpresaController extends Controller
         $this->middleware('permission:eliminar personal', ['only' => ['destroy']]);
     }*/
 
-    const URL_SERVIDOR_WEB = 'https://protexionpr.com.ar/client_access/models/';
+    //const URL_SERVIDOR_WEB = 'https://protexionpr.com.ar/client_access/models/';
     //const URL_SERVIDOR_WEB = 'http://localhost/protexion/client_access/models/';
     
 
@@ -164,7 +164,7 @@ class EmpresaController extends Controller
     public function subirEmpresaWeb($idEmpresa,$nombreEmpresa){
       // URL del sistema en el servidor web (Sistema B) que recibirá los archivos
       
-      $url = self::URL_SERVIDOR_WEB."administrar_empresas.php?accion=subirEmpresa";
+      $url = env('URL_SERVIDOR_WEB')."administrar_empresas.php?accion=subirEmpresa";
 
       // Agregar el nombre de la empresa al arreglo de archivos
       $datos = [
@@ -227,7 +227,7 @@ class EmpresaController extends Controller
       $empresas = Empresa::select('origenes.*')->get(); //ejecuto la consulta
 
       // URL del sistema en el servidor web (Sistema B) que recibirá los archivos
-      $url = self::URL_SERVIDOR_WEB."administrar_empresas.php?accion=sincronizarEmpresa";
+      $url = env('URL_SERVIDOR_WEB')."administrar_empresas.php?accion=sincronizarEmpresa";
 
       foreach ($empresas as $key => $empresa) {
         // Agregar el nombre de la empresa al arreglo de archivos
@@ -371,7 +371,7 @@ class EmpresaController extends Controller
     public function updateEmpresaWeb($idEmpresa,$nombreEmpresa){
       // URL del sistema en el servidor web (Sistema B) que recibirá los archivos
       
-      $url = self::URL_SERVIDOR_WEB."administrar_empresas.php?accion=updateEmpresa";
+      $url = env('URL_SERVIDOR_WEB')."administrar_empresas.php?accion=updateEmpresa";
 
       // Agregar el nombre de la empresa al arreglo de archivos
       $datos = [
@@ -463,7 +463,7 @@ class EmpresaController extends Controller
     public function eliminarEmpresaWeb($idEmpresa){
       // URL del sistema en el servidor web (Sistema B) que recibirá los archivos
       
-      $url = self::URL_SERVIDOR_WEB."administrar_empresas.php?accion=eliminarEmpresa";
+      $url = env('URL_SERVIDOR_WEB')."administrar_empresas.php?accion=eliminarEmpresa";
 
       // Agregar el nombre de la empresa al arreglo de archivos
       $datos = [

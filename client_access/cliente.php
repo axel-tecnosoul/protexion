@@ -76,17 +76,7 @@ if (!isset($_SESSION['rowUsers']['id_usuario'])) {
               <h5>Bienvenido <?=$_SESSION["rowUsers"]["usuario"]?></h5>
             </div>
             <div class="card-body"><?php
-/*require_once('models/conexion.php');
-$conexion = new Conexion();
-$id_empresa=$_SESSION["rowUsers"]["id_usuario"];
-$query = "SELECT ue.email,u.usuario FROM usuarios_email ue INNER JOIN usuarios u ON ue.id_usuario=u.id WHERE anulado=0 AND ue.id_usuario = '$id_empresa'";
-//echo $query;
-$get = $conexion->consultaRetorno($query);
-$destinatarios=[];
-while($row = $get->fetch_array()){
-  $destinatarios[$row["email"]]=$row["usuario"];
-}
-var_dump($destinatarios);*/
+
               $msjMostrar="Por favor ingrese su direccion de E-Mail para recibir un aviso cuando haya archivos nuevos:";
               $accionBtn="Guardar";
               $mostrarArchivos=0;
@@ -96,24 +86,23 @@ var_dump($destinatarios);*/
                 $accionBtn="Agregar";
                 $mostrarArchivos=1;
                 $mostrarBtnAdminEmail=1;
-              }
-              //var_dump($_SESSION["rowUsers"]);
-              //if(!$_SESSION["rowUsers"]["email"]){?>
-                <div class="row alert alert-danger" style="background-color: #DA0037;">
-                  <div class="col-12">
-                    <form method="post" action="models/administrar_empresas.php">
-                      <label for="email" class="h5"><?=$msjMostrar?></label>
-                      <input type="email" name="email" id="email" class="form-control" placeholder="empresa@dominio.com" required>
-                      <input type="hidden" name="id_empresa" value="<?=$_SESSION["rowUsers"]["id_usuario"]?>">
-                      <input type="hidden" name="accion" value="guardar_email">
-                      <button class="btn btn-light mt-3" type="submit"><?=$accionBtn?></button><?php
-                      if($mostrarBtnAdminEmail==1){?>
-                        <button class="btn btn-light mt-3" type="button" data-toggle="modal" data-target="#direccionesEmail">Administrar E-Mails</button><?php
-                      }?>
-                    </form>
-                  </div>
-                </div><?php
-              //}
+              }?>
+
+              <div class="row alert alert-danger" style="background-color: #DA0037;">
+                <div class="col-12">
+                  <form method="post" id="add_mail" action="models/administrar_empresas.php">
+                    <label for="email" class="h5"><?=$msjMostrar?></label>
+                    <input type="email" name="email" id="email" class="form-control" placeholder="empresa@dominio.com" required>
+                    <input type="hidden" name="id_empresa" value="<?=$_SESSION["rowUsers"]["id_usuario"]?>">
+                    <input type="hidden" name="accion" value="guardar_email">
+                    <button class="btn btn-light mt-3" type="submit"><?=$accionBtn?></button><?php
+                    if($mostrarBtnAdminEmail==1){?>
+                      <button class="btn btn-light mt-3" type="button" data-toggle="modal" data-target="#direccionesEmail">Administrar E-Mails</button><?php
+                    }?>
+                  </form>
+                </div>
+              </div><?php
+              
               if($mostrarArchivos==1){?>
                 <div class="table-responsive"><?php
                   include_once("views/tabla_archivos.php")?>
@@ -126,40 +115,40 @@ var_dump($destinatarios);*/
       </div>
 
       <!-- MODAL DIRECCIONES DE EMAIL -->
-    <div class="modal fade mt-5" id="direccionesEmail" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <form method="post" action="models/administrar_empresas.php">
-            <div class="modal-header">
-              <h5 class="modal-title">Direcciones de E-Mail</h5>
-              <button class="close" type="button" data-dismiss="modal" aria-label="Close" data-original-title="" title=""><span aria-hidden="true">×</span></button>
-            </div>
-            <div class="modal-body p-4">
-              <div class="row">
-                <div class="col-12">
-                  <input type="hidden" name="id_empresa" id="id_empresa" value="<?=$_SESSION["rowUsers"]["id_usuario"]?>">
-                  <input type="hidden" name="accion" value="modificar_email">
-                  <table id="emailEmpresas" style="width: 100%;">
-                    <thead>
-                      <tr>
-                        <th style="text-align: center;">E-Mail</th>
-                        <th style="text-align: center;">Eliminar</th>
-                      </tr>
-                    </thead>
-                    <tbody></tbody>
-                  </table>
+      <div class="modal fade mt-5" id="direccionesEmail" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <form method="post" action="models/administrar_empresas.php">
+              <div class="modal-header">
+                <h5 class="modal-title">Direcciones de E-Mail</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close" data-original-title="" title=""><span aria-hidden="true">×</span></button>
+              </div>
+              <div class="modal-body p-4">
+                <div class="row">
+                  <div class="col-12">
+                    <input type="hidden" name="id_empresa" id="id_empresa" value="<?=$_SESSION["rowUsers"]["id_usuario"]?>">
+                    <input type="hidden" name="accion" value="modificar_email">
+                    <table id="emailEmpresas" style="width: 100%;">
+                      <thead>
+                        <tr>
+                          <th style="text-align: center;">E-Mail</th>
+                          <th style="text-align: center;">Eliminar</th>
+                        </tr>
+                      </thead>
+                      <tbody></tbody>
+                    </table>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-light" data-dismiss="modal">Cancelar</button>
-              <button type="submit" id="btnContinuarImportacion" class="btn btn-dark">Modificar</button>
-            </div>
-          </form>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-light" data-dismiss="modal">Cancelar</button>
+                <button type="submit" id="btnContinuarImportacion" class="btn btn-dark">Modificar</button>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
-    </div>
-    <!-- FIN MODAL DIRECCIONES DE EMAIL-->
+      <!-- FIN MODAL DIRECCIONES DE EMAIL-->
       
       <!-- footer start-->
       <footer class="footer">
@@ -298,6 +287,30 @@ var_dump($destinatarios);*/
         get_archivos(id_empresa)
         get_email(id_empresa)
       });
+
+      $("#add_mail").on("submit",function(e){
+        e.preventDefault();
+        console.log(this);
+        let email = $("#email").val();
+        //let id_archivo = this.getAttribute("data-id");
+
+        accion = "guardar_email";
+        $.ajax({
+          url: "models/administrar_empresas.php",
+          type: "POST",
+          datatype:"json",
+          data:  {accion:accion, email:email, id_empresa:id_empresa},
+          success: function(response) {
+            console.log(response);
+            if(response==1){
+              console.log("mail enviado");
+            }else{
+              console.log("mostrar error");
+            }
+            //get_archivos(id_empresa)
+          }
+        }); 
+      })
 
       $(document).on("click", ".archivo_empresa", function(){
 

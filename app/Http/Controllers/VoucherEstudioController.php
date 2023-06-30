@@ -14,7 +14,7 @@ use GuzzleHttp\Exception\ConnectException;
 class VoucherEstudioController extends Controller
 {
 
-    const URL_SERVIDOR_WEB = 'https://protexionpr.com.ar/client_access/models/';
+    //const URL_SERVIDOR_WEB = 'https://protexionpr.com.ar/client_access/models/';
     //const URL_SERVIDOR_WEB = 'http://localhost/protexion/client_access/models/';
 
     public function archivo(Request $request)
@@ -70,8 +70,8 @@ class VoucherEstudioController extends Controller
 
         $resultado=$this->sendFileLaravel($aArchivosSubir,json_encode($datosExtra));
 
-        //echo $resultado;
-        //die();
+        /*echo $resultado;
+        die();*/
         if($resultado==1){
           $accion="upload-file-success";
           $msj="El archivo se ha cargado correctamente y fue envíado correctamente al servidor para clientes";
@@ -109,7 +109,8 @@ class VoucherEstudioController extends Controller
 
     private function sendFileLaravel($aArchivos,$datosExtra){
 
-      $url = self::URL_SERVIDOR_WEB."administrar_empresas.php?accion=recibirArchivo";
+      //$url = self::URL_SERVIDOR_WEB."administrar_empresas.php?accion=recibirArchivo";
+      $url = env('URL_SERVIDOR_WEB')."administrar_empresas.php?accion=recibirArchivo";
 
       // Crear una instancia del cliente GuzzleHTTP
       //$client = new Client();
@@ -300,7 +301,8 @@ class VoucherEstudioController extends Controller
     public function eliminarArchivoWeb($idArchivo){
       // URL del sistema en el servidor web (Sistema B) que recibirá los archivos
       
-      $url = self::URL_SERVIDOR_WEB."administrar_empresas.php?accion=eliminarArchivoDesdeLocal";
+      //$url = self::URL_SERVIDOR_WEB."administrar_empresas.php?accion=eliminarArchivoDesdeLocal";
+      $url = env('URL_SERVIDOR_WEB')."administrar_empresas.php?accion=eliminarArchivoDesdeLocal";
 
       // Agregar el nombre de la empresa al arreglo de archivos
       $datos = [

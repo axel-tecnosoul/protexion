@@ -230,8 +230,19 @@ if (!isset($_SESSION['rowUsers']['id_usuario'])) {
             },
           "columns":[
             {"data": "id_usuario"},
-            {"data": "usuario","class":"a_copiar"},
-            {"data": "clave","class":"a_copiar"},
+            //{"data": "usuario","class":"a_copiar"},
+            {
+              "data": "usuario",
+              "createdCell": function(td, cellData, rowData, row, col) {
+                $(td).addClass('a_copiar');
+              }
+            },
+            {
+              "data": "clave",
+              "createdCell": function(td, cellData, rowData, row, col) {
+                $(td).addClass('a_copiar');
+              }
+            },
             {"data": "cant_archivos","class":"text-center"},
             //{"data": "tipo"},
             //{"data": "activo"},

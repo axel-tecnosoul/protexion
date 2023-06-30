@@ -438,7 +438,7 @@ class Empresas{
         $email=> $usuario,
       ];*/
       $envioMail=$this->enviarMail($id_empresa,$datosExtra);
-      //echo $envioMail;
+      $subidaOk=$envioMail;
     }
 
     return $subidaOk;
@@ -525,7 +525,7 @@ class Empresas{
       //var_dump($smtpClave);
       
       $mail = new PHPMailer(true);
-      //$mail->SMTPDebug = 3;//Habilitamos solo para debugguear
+      $mail->SMTPDebug = 3;//Habilitamos solo para debugguear
       $mail->IsSMTP();
       $mail->SMTPAuth = true;
       $mail->Port = 465;
@@ -568,7 +568,13 @@ class Empresas{
       $mail->Body = "{$mensajeHtml} <br /><br />";
       $mail->AltBody = "{$cuerpo} \n\n";
       //var_dump($mail);
-      $envio = $mail->Send();
+      try {
+        $envio = $mail->Send();
+      } catch (\Throwable $th) {
+        //throw $th;
+        //var_dump($th);
+        $envio="El archivo se ha subido correctamente pero ocurrió un error con el envío del mail: ".$th->getMessage();
+      }
 
       //var_dump($envio);
     }
@@ -680,8 +686,8 @@ if (isset($accion)) {
         //var_dump($_POST);
         $id_empresa=$_POST["id_empresa"];
         $email=$_POST["email"];
-        $empresas->guardar_email($id_empresa,$email);
-        header("location: ../cliente.php");
+        echo $empresas->guardar_email($id_empresa,$email);
+        //header("location: ../cliente.php");
       break;
       case "trerEmailEmpresa":
         echo $empresas->trerEmailEmpresa($id_empresa);

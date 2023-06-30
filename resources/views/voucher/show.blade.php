@@ -8,6 +8,14 @@
 @section('content')
   <div class="container col-12"><?php
     //var_dump($voucher->aptitud);?>
+    @if (Session::has('delete-archivo'))
+        <div class="alert alert-{{ Session::get('delete-archivo')['alert'] }}" data-auto-dismiss role="alert">{{ Session::get('delete-archivo')['message'] }}
+            <button type="button" class="close" data-dismiss="alert">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    @endif
+
     @if(Session::has('message'))
       <div class="alert alert-danger alert-dismissible" role="alert">
         <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>

@@ -14,22 +14,10 @@
             <div class="modal-header">
                 <h3 class="modal-title"><i class="fa fa-user" aria-hidden="true"></i> Paciente <br> {{ $paciente->nombreCompleto() }}
                     <hr>
-                        <i class="fa fa-industry" aria-hidden="true"></i><?php
-                        if($paciente->origen == null) echo(" ");
-                        else echo($paciente->origen->definicion)?>
-                    <hr><?php
-                    /*var_dump($paciente->imagen);
-                    var_dump(asset('imagenes/paciente/'.$paciente->imagen));
-                    var_dump(file_exists(asset('imagenes/paciente/'.$paciente->imagen)));*/
-                    //if(file_exists(asset('imagenes/paciente/'.$paciente->imagen))){
-                      //if($paciente->imagen == null){
-                        //var_dump($paciente->imagen);
-                      /*if($paciente->imagen != null and file_exists('../public/imagenes/paciente/'.$paciente->imagen)){?>
-                        <img src="{{ asset('imagenes/paciente/'.$paciente->imagen)}}" width="50px" class="img-circle elevation-2" alt="User Image"><?php
-                      }else{?>
-                        <img src="{{ asset('imagenes/paciente/default.png')}}" width="50px" class="img-circle elevation-2" alt="User Image"><?php
-                      }*/
-                    //}?>
+                    <i class="fa fa-industry" aria-hidden="true"></i><?php
+                    if($paciente->origen == null) echo(" ");
+                    else echo($paciente->origen->definicion)?>
+                    <hr>
                   <img src="{{ asset($foto_mostrar)}}" width="50px" class="img-circle elevation-2" alt="User Image">
                 </h3>
                 <div class="modal-body">
