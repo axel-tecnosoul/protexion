@@ -69,80 +69,101 @@
                 </thead>
                 <tbody>
                     @foreach ($pacientes as $paciente)<?php
-                    //var_dump($paciente);
-                    ?>
-                    <tr onmouseover="cambiar_color_over(this)" onmouseout="cambiar_color_out(this)">
-                        <td style="text-align: center;vertical-align: middle;">
-                            <div class="icheck-danger d-inline">
-                                <input type="checkbox" name="paciente[]" value="{{$paciente->id}}" class="paciente" id="{{$paciente->id}}">
-                                <label for="{{$paciente->id}}"> </label>
-                            </div>
-                        </td>
-                        <td style="text-align: left">{{ $paciente->ultima_visita }}</td>
-                        <td style="text-align: left">{{ $paciente->nombreCompleto() }}</td>
-                        <td><?php
-                          if($paciente->documento == null) echo(" ");
-                          else echo(number_format( (intval($paciente->documento)/1000), 3, '.', '.'))?>
-                        </td>
-                        <td style="text-align: left"><?php
-                          if($paciente->origen == null) echo(" ");
-                          else echo($paciente->origen->definicion)?>
-                        </td>
-                        <td style="text-align: center"><?php
-                          $mostrar_imagen_default=1;
-                          $foto_mostrar="imagenes/paciente/thumbnails/default.png";
-                          if($paciente->imagen != null){
-                            $path_foto_paciente="imagenes/paciente/";
-                            
-                            $path_thumbnail=$path_foto_paciente.'thumbnails/'.$paciente->imagen;
-                            //$path_thumbnail=$path_foto_paciente.$paciente->imagen;
-                            $path_foto_original=$path_foto_paciente.$paciente->imagen;
+                        //var_dump($paciente);
+                        ?>
+                        <tr onmouseover="cambiar_color_over(this)" onmouseout="cambiar_color_out(this)">
+                            <td style="text-align: center;vertical-align: middle;">
+                                <div class="icheck-danger d-inline">
+                                    <input type="checkbox" name="paciente[]" value="{{$paciente->id}}" class="paciente" id="{{$paciente->id}}">
+                                    <label for="{{$paciente->id}}"> </label>
+                                </div>
+                            </td>
+                            <td style="text-align: left">{{ $paciente->ultima_visita }}</td>
+                            <td style="text-align: left" class="nombre_paciente"
+                              data-referencia="{{$paciente->existeReferencia()}}"
+                              data-paciente-id="{{$paciente->id}}"
+                              data-nombre="{{$paciente->nombreCompleto()}}"
+                              data-empresa="<?php
+                                if($paciente->origen == null) echo(" ");
+                                else echo($paciente->origen->definicion)?>"
+                              data-documento="<?php
+                                if($paciente->documento == null) echo(" ");
+                                else echo($paciente->documentoIdentidad())?>"
+                              data-sexo="<?php
+                                if($paciente->sexo == null) echo(" ");
+                                else echo($paciente->sexo->definicion)?>"
+                              data-domicilio="<?php
+                                if($paciente->domicilio == null) echo(" ");
+                                else echo($paciente->direccion())?>"
+                              data-fecha-nacimiento="{{Carbon\Carbon::parse($paciente->fecha_nacimiento)->format('d/m/Y') }} ({{Carbon\Carbon::parse($paciente->fecha_nacimiento)->age }} años)"
+                              data-cuil="{{ $paciente->cuil }}"
+                              data-peso="{{ $paciente->peso }}"
+                              data-estatura="{{ $paciente->estatura }}"
+                              data-estado-civil="<?php
+                                if($paciente->estadoCivil == null) echo(" ");
+                                else echo($paciente->estadoCivil->definicion)?>"
+                            >{{ $paciente->nombreCompleto() }}</td>
+                            <td><?php
+                              if($paciente->documento == null) echo(" ");
+                              else echo(number_format( (intval($paciente->documento)/1000), 3, '.', '.'))?>
+                            </td>
+                            <td style="text-align: left"><?php
+                              if($paciente->origen == null) echo(" ");
+                              else echo($paciente->origen->definicion)?>
+                            </td>
+                            <td style="text-align: center" class="foto_paciente"><?php
+                              $mostrar_imagen_default=1;
+                              $foto_mostrar="imagenes/paciente/thumbnails/default.png";
+                              if($paciente->imagen != null){
+                                $path_foto_paciente="imagenes/paciente/";
+                                
+                                $path_thumbnail=$path_foto_paciente.'thumbnails/'.$paciente->imagen;
+                                //$path_thumbnail=$path_foto_paciente.$paciente->imagen;
+                                $path_foto_original=$path_foto_paciente.$paciente->imagen;
 
-                            if(file_exists("../public/".$path_thumbnail)){
-                              $mostrar_imagen_default=0;
-                              $foto_mostrar=$path_thumbnail;
-                            }elseif(file_exists('../public/'.$path_foto_original)){
-                              $mostrar_imagen_default=0;
-                              $foto_mostrar=$path_foto_original;
-                            }
-                          }?>
-                          <img src="{{ asset($foto_mostrar)}}" width="50px" class="img-circle elevation-2" alt="User Image">
-                        </td>
+                                if(file_exists("../public/".$path_thumbnail)){
+                                  $mostrar_imagen_default=0;
+                                  $foto_mostrar=$path_thumbnail;
+                                }elseif(file_exists('../public/'.$path_foto_original)){
+                                  $mostrar_imagen_default=0;
+                                  $foto_mostrar=$path_foto_original;
+                                }
+                              }?>
+                              <img src="{{ asset($foto_mostrar)}}" width="50px" class="img-circle elevation-2" alt="User Image">
+                            </td>
 
-                        <td style="text-align: center" colspan="3">
-
-                            <a href="{{URL::action('PacienteController@edit',$paciente->id)}}">
-                                <button title="editar" class="btn fondo2 btn-responsive">
-                                    <i class="fa fa-edit"></i>
-                                </button>
-                            </a>
-                            
-                            <a data-keyboard="false" data-target="#modal-show-{{ $paciente->id }}" data-toggle="modal">
-                                <button title="editar" class="btn fondo1 btn-md">
-                                    <i class="fa fa-eye"></i>
-                                </button>
-                            </a>
-
-                            <a href="{{URL::action('PacienteController@voucher',$paciente->id)}}">
-                                <button title="carpeta"  class="btn fondo2 btn-responsive">
-                                    <i style="color: rgb(255, 255, 255)" class="fas fa-folder"></i>
-                                </button>
-                            </a>
-                            <!-- aca colocar el modalshow-->
-                            @include('paciente.modalshow')
-
-                            <a data-keyboard="false" data-target="#modal-delete-{{ $paciente->id }}" data-toggle="modal">
-                                <button type="submit" class="btn fondo1 btn-responsive"><i class="fa fa-fw fa-trash"></i></button>
-                            </a>
-                            @include('paciente.modaldelete')
-                        </td>
-                    </tr>
-                    <!-- aca colocar el modaldelete-->
-                    @include('paciente.modaldelete')
-                    @include('paciente.modalhabilitar')
+                            <td style="text-align: center" colspan="3">
+                                <a href="{{URL::action('PacienteController@edit',$paciente->id)}}">
+                                    <button title="editar" class="btn fondo2 btn-responsive">
+                                        <i class="fa fa-edit"></i>
+                                    </button>
+                                </a>
+                                <a class="btnShow" data-keyboard="false" data-id="{{ $paciente->id }}">
+                                    <button title="editar" class="btn fondo1 btn-md">
+                                        <i class="fa fa-eye"></i>
+                                    </button>
+                                </a>
+                                <a href="{{URL::action('PacienteController@voucher',$paciente->id)}}">
+                                    <button title="carpeta"  class="btn fondo2 btn-responsive">
+                                        <i style="color: rgb(255, 255, 255)" class="fas fa-folder"></i>
+                                    </button>
+                                </a>
+                                <a class="btnDelete" data-keyboard="false" data-id="{{ $paciente->id }}">
+                                    <button type="submit" class="btn fondo1 btn-responsive"><i class="fa fa-fw fa-trash"></i></button>
+                                </a>
+                            </td>
+                        </tr>
                     @endforeach
                 </tbody>
             </table>
+
+            <!-- aca colocar el modaldelete-->
+            @include('paciente.modaldelete')
+            <!-- aca colocar el modalhabilitar SIN USAR-->
+            @include('paciente.modalhabilitar')
+            <!-- aca colocar el modalshow-->
+            @include('paciente.modalshow')
+
         </div>
     </div>
 </div>
@@ -153,6 +174,65 @@
   <script src="https://cdn.datatables.net/plug-ins/1.10.15/sorting/datetime-moment.js"></script>
 
   <script type="text/javascript">
+
+    $(document).on("click",".btnDelete",function(){
+      console.log(this);
+      let fila=$(this).parents("tr");
+      let celda_paciente=fila.find(".nombre_paciente");
+      console.log(celda_paciente);
+      console.log(celda_paciente.data());
+      let nombre_paciente=celda_paciente.html();
+      let referencia=celda_paciente.data("referencia");
+      console.log(referencia);
+      let paciente_id=$(this).data("id");
+
+      let modal=$("#modal-delete")
+      modal.modal("show");
+      modal.find("#lblPaciente").html(nombre_paciente)
+      modal.find("#lblReferencia").html(referencia)
+      console.log(paciente_id);
+      modal.find("form").attr("action","/protexion/public/paciente/"+paciente_id)
+    })
+
+    $(document).on("click",".btnShow",function(){
+      console.log(this);
+      let fila=$(this).parents("tr");
+      let celda_paciente=fila.find(".nombre_paciente");
+      let foto_paciente=fila.find(".foto_paciente").find("img");
+      foto_paciente=foto_paciente[0]
+      let nombre_paciente=celda_paciente.html();
+
+      let paciente_id=celda_paciente.data("pacienteId");
+      let empresa=celda_paciente.data("empresa");
+      let documento=celda_paciente.data("documento");
+      let sexo=celda_paciente.data("sexo");
+      let domicilio=celda_paciente.data("domicilio");
+      let fechaNacimiento=celda_paciente.data("fechaNacimiento");
+      let cuil=celda_paciente.data("cuil");
+      let peso=celda_paciente.data("peso");
+      let estatura=celda_paciente.data("estatura");
+      let estadoCivil=celda_paciente.data("estadoCivil");
+
+      $("#lblEmpresa").html(empresa);
+      console.log(foto_paciente);
+      console.log(foto_paciente.src);
+      var foto = foto_paciente.src.replace("/thumbnails", "");
+      $("#foto_paciente").attr("src",foto);
+      $(".lblPaciente").html(nombre_paciente);
+      $("#lblDocumento").html(documento);
+      $("#lblSexo").html(sexo);
+      $("#lblDomicilio").html(domicilio);
+      $("#lblFechaNacimiento").html(fechaNacimiento);
+      $("#lblCuil").html(cuil);
+      $("#lblPeso").html(peso);
+      $("#lblEstatura").html(estatura);
+      $("#lblEstadoCivil").html(estadoCivil);
+
+      let modal=$("#modal-show")
+      modal.modal("show");
+
+    })
+
     $("#select_all").on("click",function(){
       if(this.checked){
         $(".paciente").prop("checked",true)
@@ -176,9 +256,6 @@
             //console.log(this.value);
             aIdPacientes.push(this.value)
           })
-          console.log(aIdPacientes);
-          console.log("public/voucher/create/"+aIdPacientes.join(","));
-
           //enviar(aIdPacientes.join(","))
           //$("#formVisitaMasiva").submit();
           window.location.href="voucher/create/"+encodeURIComponent(aIdPacientes.join(","))
@@ -234,12 +311,9 @@
       });
       //
       var columnType = table.column( 1 ).dataSrc();
-      console.log("columnType"); // "date"
-      console.log(columnType); // "date"
       //console.log($.fn.dataTable.moment('DD/MM/YYYY').parse('04-25-2023'));
       let columnData=table.column( 1 ).data()
-      console.log(columnData); // "date"
-      console.log(typeof columnData[0]);
+      
       cambiar_color_over(celda);
     } );
 

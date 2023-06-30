@@ -1,79 +1,55 @@
 {{--ventanita modal cuando se haga clic en eliminar--}}
 
-
-<div class="modal fade modal-slide-in-right"
-    aria-hidden="true"
-    role="dialog"
-    tabindex="-1"
-    id="modal-show-{{$paciente->id}}">
-
-
+<div class="modal fade modal-slide-in-right" aria-hidden="true" role="dialog" tabindex="-1" id="modal-show">
 
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="modal-title"><i class="fa fa-user" aria-hidden="true"></i> Paciente <br> {{ $paciente->nombreCompleto() }}
+                <h3 class="modal-title"><i class="fa fa-user" aria-hidden="true"></i> Paciente <br> <span class="lblPaciente"></span>
                     <hr>
-                    <i class="fa fa-industry" aria-hidden="true"></i><?php
-                    if($paciente->origen == null) echo(" ");
-                    else echo($paciente->origen->definicion)?>
+                    <i class="fa fa-industry" aria-hidden="true"></i>
+                    <span id="lblEmpresa"></span>
                     <hr>
-                  <img src="{{ asset($foto_mostrar)}}" width="50px" class="img-circle elevation-2" alt="User Image">
+                  <img id="foto_paciente" src="" width="150px" class="img-circle elevation-2" alt="User Image">
                 </h3>
                 <div class="modal-body">
                     <table class="table table-bordered table-condensed table-hover">
                         <thead>
                             <tr>
                                 <th>Apellido y Nombre</th>
-                                <td>{{ $paciente->nombreCompleto() }}</td>
+                                <td><span class="lblPaciente"></span></td>
                             </tr>
                             <tr>
                                 <th>Documento</th>
-                                <td><?php if($paciente->documento == null)
-                                        echo(" ");
-                                    else echo($paciente->documentoIdentidad())?></td>
+                                <td><span id="lblDocumento"></span></td>
                             </tr>
                             <tr>
                                 <th>Sexo</th>
-                                <td><?php if($paciente->sexo == null)
-                                        echo(" ");
-                                    else echo($paciente->sexo->definicion)?></td>
+                                <td><span id="lblSexo"></span></td>
                             </tr>
                             <tr>
                                 <th>Domicilio</th>
-                                <td><?php if($paciente->domicilio == null)
-                                        echo(" ");
-                                    else echo($paciente->direccion())?></td>
-
+                                <td><span id="lblDomicilio"></span></td>
                             </tr>
                             <tr>
                                 <th>Fecha de nacimiento</th>
-                                <td>{{Carbon\Carbon::parse($paciente->fecha_nacimiento)->format('d/m/Y') }} ({{Carbon\Carbon::parse($paciente->fecha_nacimiento)->age }} años)</td>
-
+                                <td><span id="lblFechaNacimiento"></span></td>
                             </tr>
                             <tr>
                                 <th>Cuit</th>
-                                <td>{{ $paciente->cuil }}</td>
+                                <td><span id="lblCuil"></span></td>
                             </tr>
-                            <!-- <tr>
-                                <th>Obra Social</th>
-                                <td><?php if($paciente->obraSocial == null)
-                                        echo(" ");
-                                    else echo($paciente->obraSocial->obraSocialCompleta())?></td>
-                            </tr> -->
                             <tr>
                                 <th>Peso</th>
-                                <td>{{ $paciente->peso }} Kgrs</td>
+                                <td><span id="lblPeso"></span> Kgrs</td>
                             </tr>
                             <tr>
                                 <th>Estatura</th>
-                                <td>{{ $paciente->estatura }} Mts</td>
+                                <td><span id="lblEstatura"></span> Mts</td>
                             </tr>
                             <tr>
                                 <th>Estado civil</th>
-                                <td><?php if($paciente->estadoCivil == null)
-                                            echo(" ");
-                                        else echo($paciente->estadoCivil->definicion)?></td>
+                                <td><span id="lblEstadoCivil"></span></td>
                             </tr>
                         </thead>
 
