@@ -62,7 +62,7 @@
           @if ($tipo->id != 2)
               @foreach ($voucher->vouchersEstudios as $item)
                   @if (($tipo->id == 3) || ($tipo->id == 4) )
-                      @if ($item->estudio->tipo_estudio_id == $tipo->id)
+                      @if ($item->estudio->tipo_estudio_id == $tipo->id and $item->estudio->id!=73)
                           <li>{{strtoupper($item->estudio->nombre)}}.</li>
                       @endif
                   @else
@@ -71,6 +71,8 @@
                       @endif  
                   @endif
               @endforeach
+          @else
+              <li>ANALISIS BIOQUIMICO</li>
           @endif
       @endforeach
     </ul>
