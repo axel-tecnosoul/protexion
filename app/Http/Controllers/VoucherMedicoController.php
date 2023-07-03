@@ -78,7 +78,12 @@ class VoucherMedicoController extends Controller
 
         if($paciente->estado_id==1){
           //$dniCuil=$paciente->cuil ?? number_format($paciente->documento,0,",",".");
-          $dni=number_format($paciente->documento,0,",",".");
+          $dni="";
+          if($paciente->documento){
+            $dni=$paciente->documento;
+            $dni=str_replace(".","",$dni);
+            $dni=number_format($dni,0,",",".");
+          }
 
           //$pacienteNombre="(".$dni.") ".$paciente->nombreCompleto();
           $pacienteNombre=$paciente->nombreCompleto();
