@@ -28,5 +28,10 @@
 			$datos = $this->conectar->query($sql);
 			return $datos;
 		}
+
+    public function url_servidor_web(){
+			//return "https://protexionpr.com.ar/client_access/models/";
+      return "http://localhost/protexion/client_access/models/";
+		}
 	}
 ?>

@@ -807,11 +807,11 @@
           </tr>
           <tr>
               <td colspan="6">
-                  <label for="">Ruidos Hidroaéreos:</label> <!--{{$hc_formulario->abdomen->observacion5_ab}}-->
+                  <label for="">Hernia humbilical:</label> <!--{{$hc_formulario->abdomen->observacion5_ab}}-->
                   @if ($hc_formulario->abdomen->observacion5_ab)
                       {{$hc_formulario->abdomen->observacion5_ab}}
                   @else
-                      Normal
+                      No
                   @endif
               </td>
               <td colspan="6">

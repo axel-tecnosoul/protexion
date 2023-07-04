@@ -47,6 +47,57 @@ if (!isset($_SESSION['rowUsers']['id_usuario'])) {
     <link id="color" rel="stylesheet" href="assets/css/light-1.css" media="screen">
     <!-- Responsive css-->
     <link rel="stylesheet" type="text/css" href="assets/css/responsive.css">
+    <style>
+      .loader{
+        /*width: 100px;
+        height: 100px;*/
+        border-radius: 100%;
+        position: relative;
+        /*margin: 0 auto;*/
+        display: inline-block;
+        margin-left: 10px;
+      }
+
+      /* LOADER 4 */
+      .loader-container span{
+        display: inline-block;
+        /*width: 20px;
+        height: 20px;*/
+        width: 8px;
+        height: 8px;
+        border-radius: 100%;
+        background-color: #dc3545;
+        /*margin: 35px 5px;*/
+        opacity: 0;
+      }
+
+      .loader-container span:nth-child(1){
+        animation: opacitychange 1s ease-in-out infinite;
+      }
+
+      .loader-container span:nth-child(2){
+        animation: opacitychange 1s ease-in-out 0.33s infinite;
+      }
+
+      .loader-container span:nth-child(3){
+        animation: opacitychange 1s ease-in-out 0.66s infinite;
+      }
+      @keyframes opacitychange{
+        0%, 100%{
+          opacity: 0;
+        }
+
+        60%{
+          opacity: 1;
+        }
+      }
+
+      .swal-respuesta-reenvio-email{
+        width: 500px; /* Ajusta el valor del ancho según tus necesidades */
+        width: auto; /* Ajusta el valor del ancho según tus necesidades */
+        max-width: 80%;
+      }
+    </style>
   </head>
   <body>
     <!-- Loader starts-->
@@ -81,13 +132,12 @@ if (!isset($_SESSION['rowUsers']['id_usuario'])) {
               $accionBtn="Guardar";
               $mostrarArchivos=0;
               $mostrarBtnAdminEmail=0;
-              if($_SESSION["rowUsers"]["email"]){
+              if($_SESSION["rowUsers"]["cant_validados"]>0){
                 $msjMostrar="Agregar direccion de E-Mail para notificar cuando haya archivos nuevos:";
                 $accionBtn="Agregar";
                 $mostrarArchivos=1;
                 $mostrarBtnAdminEmail=1;
               }?>
-
               <div class="row alert alert-danger" style="background-color: #DA0037;">
                 <div class="col-12">
                   <form method="post" id="add_mail" action="models/administrar_empresas.php">
@@ -95,9 +145,27 @@ if (!isset($_SESSION['rowUsers']['id_usuario'])) {
                     <input type="email" name="email" id="email" class="form-control" placeholder="empresa@dominio.com" required>
                     <input type="hidden" name="id_empresa" value="<?=$_SESSION["rowUsers"]["id_usuario"]?>">
                     <input type="hidden" name="accion" value="guardar_email">
-                    <button class="btn btn-light mt-3" type="submit"><?=$accionBtn?></button><?php
+                    <button class="btn btn-light mt-3" type="submit">
+                      <?=$accionBtn?>
+                      <div class="loader loader-container d-none" id="loader-4">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                      </div>
+                    </button><?php
                     if($mostrarBtnAdminEmail==1){?>
                       <button class="btn btn-light mt-3" type="button" data-toggle="modal" data-target="#direccionesEmail">Administrar E-Mails</button><?php
+                    }
+                    if($_SESSION["rowUsers"]["cant_validados"]==0 and $_SESSION["rowUsers"]["cant_direcciones"]>0){?>
+                      <a href="cliente.php" id="btnRefresh" class="btn btn-light mt-3" type="button">Controlar validación</a>
+                      <a href="#" id="btnSendEmail" class="btn btn-light mt-3" type="button">
+                        Volver a enviar Email de validacion
+                        <div class="loader loader-container d-none" id="loader-3">
+                          <span></span>
+                          <span></span>
+                          <span></span>
+                        </div>
+                      </a><?php
                     }?>
                   </form>
                 </div>
@@ -189,6 +257,11 @@ if (!isset($_SESSION['rowUsers']['id_usuario'])) {
     <!--<script src="assets/js/theme-customizer/customizer.js"></script>-->
     <!-- Plugin used-->
     <script type="text/javascript">
+
+      function validarEmail(email) {
+        var regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return regex.test(email);
+      }
 
       idiomaEsp = {
           "autoFill": {
@@ -288,28 +361,124 @@ if (!isset($_SESSION['rowUsers']['id_usuario'])) {
         get_email(id_empresa)
       });
 
+      $("#btnSendEmail").on("click",function(){
+        $("#loader-3").removeClass("d-none")
+        let accion="enviar_mail_verificacion_todos"
+        $.ajax({
+          url: "models/administrar_empresas.php",
+          type: "POST",
+          datatype:"json",
+          data:  {accion:accion, id_empresa: id_empresa},    
+          success: function(response) {
+            console.log(response);
+            response=JSON.parse(response);
+            console.log(response);
+
+            // Crear la tabla
+            var tabla = document.createElement("table");
+            tabla.className = "table table-bordered";
+            var cuerpoTabla = document.createElement("tbody");
+
+            Object.keys(response).forEach(key => {
+              console.log(key);
+              console.log(response[key]);
+              /*tabla+=`
+                <tr>
+                  <td>${key}</td>
+                  <td style="text-align: center;">${response[key]}</td>
+                </tr>
+              `;*/
+
+              var fila = document.createElement("tr");
+
+              var celda1 = document.createElement("td");
+              celda1.textContent = key;
+              celda1.style = "text-align:left";
+              fila.appendChild(celda1);
+
+              var celda2 = document.createElement("td");
+              resp=response[key];
+              clase="text-danger"
+              if(resp==true){
+                clase="text-success"
+                resp="Enviado correctamente";
+              }
+              celda2.textContent = resp;
+              celda2.style = "text-align:left";
+              celda2.className = clase;
+              fila.appendChild(celda2);
+
+              cuerpoTabla.appendChild(fila);
+            });
+            tabla.appendChild(cuerpoTabla);
+
+            swal({
+              icon: 'success',
+              title: 'E-Mail enviados correctamente',
+              content: tabla,
+              /*customClass: {
+                container: 'swal-respuesta-reenvio-email'
+              }*/
+              className: 'swal-respuesta-reenvio-email',
+            }).then((willDelete) => {
+              window.location.href="cliente.php"
+            });
+            $("#loader-3").addClass("d-none")
+          }
+        }); 
+      })
+
       $("#add_mail").on("submit",function(e){
+        $("#loader-4").removeClass("d-none")
         e.preventDefault();
         console.log(this);
         let email = $("#email").val();
         //let id_archivo = this.getAttribute("data-id");
 
-        accion = "guardar_email";
-        $.ajax({
-          url: "models/administrar_empresas.php",
-          type: "POST",
-          datatype:"json",
-          data:  {accion:accion, email:email, id_empresa:id_empresa},
-          success: function(response) {
-            console.log(response);
-            if(response==1){
-              console.log("mail enviado");
-            }else{
-              console.log("mostrar error");
+        if (validarEmail(email)) {
+          console.log('La dirección de correo electrónico es válida.');
+          accion = "guardar_email";
+          $.ajax({
+            url: "models/administrar_empresas.php",
+            type: "POST",
+            datatype:"json",
+            data:  {accion:accion, email:email, id_empresa:id_empresa},
+            success: function(response) {
+              console.log(response);
+              $("#loader-4").addClass("d-none")
+              if(response==1){
+                console.log("mail enviado");
+                //swal("Good job!", "You clicked the button!", "success");
+                swal({
+                  icon: 'success',
+                  title: 'Se ha enviado un E-Mail a '+email,
+                  text: 'Por favor ingrese al mismo y presione el botón "Verificar"',
+                }).then((willDelete) => {
+                  window.location.href="cliente.php"
+                });
+              }else{
+                console.log("mostrar error");
+                swal({
+                  title: "Ha ocurrido un error",
+                  text: response,
+                  icon: "warning",
+                  buttons: true,
+                  dangerMode: true,
+                })
+              }
+              //get_archivos(id_empresa)
             }
-            //get_archivos(id_empresa)
-          }
-        }); 
+          });
+        } else {
+          swal({
+            title: "La direccion de Email brindada no es una direccion de Email valida",
+            //text: ,
+            icon: "warning",
+            //buttons: true,
+            //dangerMode: true,
+          })
+          $("#loader-4").addClass("d-none")
+        }
       })
 
       $(document).on("click", ".archivo_empresa", function(){
@@ -376,8 +545,6 @@ if (!isset($_SESSION['rowUsers']['id_usuario'])) {
         let id_email_usuario = this.getAttribute("data-id");
         console.log(id_email_usuario);
         //let id_email_usuario = parseInt($(this).closest('tr').find('td:eq(0)').text());
-        console.log($(this));
-        console.log($(this).closest('tr').find('td:eq(0)'));
         console.log($(this).closest('tr').find('td:eq(0)').find('input'));
         let email=$(this).closest('tr').find('td:eq(0)').find('input[name="email[]"]').val()
         console.log(email);
