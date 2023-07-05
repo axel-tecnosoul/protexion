@@ -567,11 +567,14 @@ class VoucherController extends Controller
         $tipos = [];
         $i = -1;
         $cont = 0;
+
+        $aVoucherPaciente=[];
         foreach ($tipo_estudios as $tipo) {
-            $aux = 0;
+            /*$aux = 0;
             foreach ($voucher->vouchersEstudios as $item) {
                 if  ($item->estudio->tipo_estudio_id == $tipo->id){
-                    $estudios[] = $item->esudio;
+                  //dd($item->estudio);
+                    $estudios[] = $item->estudio;
                     if ($aux == 0) {
                         $aux = 1;
                     }
@@ -579,16 +582,46 @@ class VoucherController extends Controller
             }
             if ($aux == 1) {
                 $tipos[] = $tipo;
+            }*/
+
+            if ($tipo->id != 2){
+              foreach ($voucher->vouchersEstudios as $item) {
+                //if (($tipo->id == 3) || ($tipo->id == 4) ){
+                if(in_array($tipo->id,[3,4,6])){//3->COMPLEMENTARIO, 4->EXAMEN CLINICO, 6->RADIOLOGIA
+                  if ($item->estudio->tipo_estudio_id == $tipo->id and !in_array($item->estudio->id,[73,66])){//73->GENERAL, 66->RADIOLOGIA
+                    //echo $tipo->id."<br>";
+                    //echo "1 - ".$item->estudio->id." - ".strtoupper($item->estudio->nombre)."<br>";
+                    if(in_array($item->estudio->id,[56,57])){//56->DECLARACION JURADA, 57->HISTORIA CLINICA
+                      $aVoucherPaciente[]=$tipo->nombre;
+                    }else{
+                      $aVoucherPaciente[]=strtoupper($item->estudio->nombre);
+                    }
+                  }
+                }else{
+                  if ($tipo->nombre == strtoupper($item->estudio->nombre)){
+                    //echo "2 - ".$tipo->nombre."<br>";
+                    $aVoucherPaciente[]=$tipo->nombre;
+                  }
+                }
+              }
+            }else{
+              //echo "ANALISIS BIOQUIMICO"."<br>";
+              $aVoucherPaciente[]="ANALISIS BIOQUIMICO";
             }
         }
+        $aVoucherPaciente=array_unique($aVoucherPaciente);
+        //var_dump($aVoucherPaciente);
         
+
+        //dd($tipos,$tipo_estudios,$estudios,$voucher);
         $pdf = PDF::loadView('voucher.pdf_paciente',[
             "voucher"           =>  $voucher,
             "tipo_estudios"     =>  $tipos,
             "estudios"          =>  $estudios,
+            "aVoucherPaciente"  =>  $aVoucherPaciente,
             "i"                 =>  $i,
             "cont"              =>  $cont
-            ]);
+        ]);
         $pdf->setPaper('a4','letter');
         return $pdf->stream('voucher_paciente.pdf');
         //return view('voucher.pdf_paciente', compact('voucher', 'tipo_estudios', 'estudios','i','cont'));

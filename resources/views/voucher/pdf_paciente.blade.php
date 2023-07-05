@@ -58,7 +58,7 @@
            
     
     <ul style="font-size: 12px;">
-      @foreach ($tipo_estudios as $tipo)
+      <!-- @foreach ($tipo_estudios as $tipo)
           @if ($tipo->id != 2)
               @foreach ($voucher->vouchersEstudios as $item)
                   @if (($tipo->id == 3) || ($tipo->id == 4) )
@@ -74,6 +74,9 @@
           @else
               <li>ANALISIS BIOQUIMICO</li>
           @endif
+      @endforeach -->
+      @foreach ($aVoucherPaciente as $estudio)
+          <li>{{strtoupper($estudio)}}.</li>
       @endforeach
     </ul>
     <!-- @foreach ($tipo_estudios as $tipo)
