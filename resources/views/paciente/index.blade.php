@@ -37,6 +37,7 @@
           <p class="alert alert-info">{{ Session::get('message') }}</p>
         @endif
         <div class="card-body">
+          hola
             <!-- <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                 <p>
                     <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
