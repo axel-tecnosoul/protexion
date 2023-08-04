@@ -159,7 +159,6 @@ class VoucherEstudioController extends Controller
         // Crear una instancia del cliente GuzzleHTTP
         $client = new Client();
 
-        var_dump($url);
         // Realizar la solicitud a la URL
         $response = $client->post($url, [
           RequestOptions::MULTIPART => $archivos,
@@ -167,15 +166,15 @@ class VoucherEstudioController extends Controller
 
         // Obtener la respuesta de la solicitud
         $body = $response->getBody();
-        var_dump($body);
+
         $resultado = $body->getContents();
-        var_dump($resultado);
+        dd($url,$body,$resultado);
 
       }  catch (ConnectException $e) {
         // Manejar el error de conexión
         $resultado='No se pudo establecer conexión con el servidor web. Verifica tu conexión a internet o la URL proporcionada.';
       } catch (RequestException $e) {
-        var_dump($e);
+        dd($e);
         if ($e->hasResponse()) {
           // Si se recibió una respuesta, obtener el código de estado HTTP
           $statusCode = $e->getResponse()->getStatusCode();
