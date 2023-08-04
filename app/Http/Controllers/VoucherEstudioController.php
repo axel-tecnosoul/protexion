@@ -157,7 +157,7 @@ class VoucherEstudioController extends Controller
       // Enviar la solicitud POST con los archivos y el nombre de la empresa
       try {
         // Crear una instancia del cliente GuzzleHTTP
-        $client = new Client();
+        $client = new Client([ 'verify' => false ]);
 
         // Realizar la solicitud a la URL
         $response = $client->post($url, [
