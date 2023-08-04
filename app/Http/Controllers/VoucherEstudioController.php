@@ -88,8 +88,8 @@ class VoucherEstudioController extends Controller
 
       $resultado=$this->sendFileLaravel($aArchivosSubir,json_encode($datosExtra));
 
-      echo $resultado;
-      die();
+      //echo $resultado;
+      //die();
       if($resultado==1){
         $accion="upload-file-success";
         $msj="El archivo se ha cargado correctamente y fue envíado correctamente al servidor para clientes";
@@ -130,8 +130,6 @@ class VoucherEstudioController extends Controller
       //$url = self::URL_SERVIDOR_WEB."administrar_empresas.php?accion=recibirArchivo";
       $url = env('URL_SERVIDOR_WEB')."administrar_empresas.php?accion=recibirArchivo";
 
-      // Crear una instancia del cliente GuzzleHTTP
-      //$client = new Client();
       $archivos = [];
       foreach ($aArchivos as $archivo) {
         $archivos[] = [
@@ -168,13 +166,13 @@ class VoucherEstudioController extends Controller
         $body = $response->getBody();
 
         $resultado = $body->getContents();
-        dd($url,$body,$resultado);
+        //dd($url,$body,$resultado);
 
       }  catch (ConnectException $e) {
         // Manejar el error de conexión
         $resultado='No se pudo establecer conexión con el servidor web. Verifica tu conexión a internet o la URL proporcionada.';
       } catch (RequestException $e) {
-        dd($e);
+        //dd($e);
         if ($e->hasResponse()) {
           // Si se recibió una respuesta, obtener el código de estado HTTP
           $statusCode = $e->getResponse()->getStatusCode();
@@ -340,7 +338,7 @@ class VoucherEstudioController extends Controller
       // Enviar la solicitud POST con los archivos y el nombre de la empresa
       try {
         // Crear una instancia del cliente GuzzleHTTP
-        $client = new Client();
+        $client = new Client([ 'verify' => false ]);
 
         // Realizar la solicitud a la URL
         $response = $client->post($url, [
