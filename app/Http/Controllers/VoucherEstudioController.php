@@ -23,6 +23,12 @@ class VoucherEstudioController extends Controller
       //Controla si hay un archivo en el request
       $voucher_id=$request->voucher_id;
 
+      $voucher=Voucher::findOrFail($voucher_id);
+      //$empresa=$voucher->origen->definicion;
+      $id_empresa=$voucher->origen_id;
+      $paciente=$voucher->paciente->nombreCompleto();
+      $turno=$voucher->turno;
+
       if ($archivos) {
         $aArchivosSubir=[];
         foreach ($archivos as $item) {
@@ -31,7 +37,9 @@ class VoucherEstudioController extends Controller
               ."_"
               .$request->voucher_estudio_id
               .$item->getClientOriginalName();*/
+              //dd($item);
             $nombre = $item->getClientOriginalName();
+            $extension = $item->getClientOriginalExtension();
             
             $ruta = public_path().'/archivo/'.$voucher_id."/".$request->estudio."/";
             //dd($nombre,$ruta);
@@ -45,8 +53,21 @@ class VoucherEstudioController extends Controller
             
             $id_archivo=$archivo_adjunto->id;
 
+            "Juan Recalde 2023-07-22 RX.jpg";
+            "Juan Recalde 2023-07-22 General.pdf";
+
+            $nombre="RX";
+            //if($request->estudio=="GENERAL" and count($aArchivosSubir)>=1){
+            if($request->estudio=="GENERAL"){
+              $nombre="RESULTADOS";
+            }
+
+            $nuevo_nombre=$paciente." ".$turno." ".$nombre.".".$extension;
+            //var_dump($nuevo_nombre);
+
             $aArchivosSubir[]=[
               "ruta"=>$ruta,
+              "nuevo_nombre"=>$nuevo_nombre,
               "id_archivo"=>$id_archivo,
             ];
           }
@@ -54,31 +75,28 @@ class VoucherEstudioController extends Controller
       }
       $msj="El archivo se ha cargado correctamente pero no pudo ser envíado al acceso para clientes";
       $accion="upload-file-fail";
-      if($request->estudio=="GENERAL" and count($aArchivosSubir)>=1){
-        $voucher=Voucher::findOrFail($voucher_id);
-        //$empresa=$voucher->origen->definicion;
-        $id_empresa=$voucher->origen_id;
-        $paciente=$voucher->paciente->nombreCompleto();
-        $turno=$voucher->turno;
-        $datosExtra=[
-          "id_empresa"=>$id_empresa,
-          "paciente"=>$paciente,
-          "turno"=>$turno
-        ];
 
-        //dd($datosExtra);
+      //die();
 
-        $resultado=$this->sendFileLaravel($aArchivosSubir,json_encode($datosExtra));
+      $datosExtra=[
+        "id_empresa"=>$id_empresa,
+        "paciente"=>$paciente,
+        "turno"=>$turno
+      ];
 
-        /*echo $resultado;
-        die();*/
-        if($resultado==1){
-          $accion="upload-file-success";
-          $msj="El archivo se ha cargado correctamente y fue envíado correctamente al servidor para clientes";
-        }else{
-          $msj.=". Error: ".$resultado;
-        }
+      //dd($datosExtra);
+
+      $resultado=$this->sendFileLaravel($aArchivosSubir,json_encode($datosExtra));
+
+      echo $resultado;
+      die();
+      if($resultado==1){
+        $accion="upload-file-success";
+        $msj="El archivo se ha cargado correctamente y fue envíado correctamente al servidor para clientes";
+      }else{
+        $msj.=". Error: ".$resultado;
       }
+
       //return back();
       //return redirect()->route('voucher.show',[$voucher_id])->withMessage($msj);
       return redirect()->route('voucher.show',[$voucher_id])->with($accion,$msj);
@@ -123,6 +141,10 @@ class VoucherEstudioController extends Controller
         $archivos[] = [
           'name' => 'id_archivo[]',
           'contents' => $archivo["id_archivo"],
+        ];
+        $archivos[] = [
+          'name' => 'nuevo_nombre[]',
+          'contents' => $archivo["nuevo_nombre"],
         ];
       }
 
