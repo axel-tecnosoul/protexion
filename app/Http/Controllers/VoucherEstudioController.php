@@ -61,8 +61,9 @@ class VoucherEstudioController extends Controller
             if($request->estudio=="GENERAL"){
               $nombre="RESULTADOS";
             }
+            $marca_de_tiempo=str_replace(".","",microtime(true));
 
-            $nuevo_nombre=$paciente." ".$turno." ".$nombre.".".$extension;
+            $nuevo_nombre=$paciente." ".$turno." ".$nombre." ".$marca_de_tiempo.".".$extension;
             //var_dump($nuevo_nombre);
 
             $aArchivosSubir[]=[
