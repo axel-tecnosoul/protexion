@@ -294,7 +294,7 @@ class EmpresaController extends Controller
       //die();
       //return $resultado;
       $accion="success";
-      $msj="Las empresas ha sido sincronizadas con la web correctamente";
+      $msj="Las empresas han sido sincronizadas con la web correctamente";
       if(count($aErrores)>0){
         $accion="warning";
         $msj="La sincronizacion con el servidor web ha devuelto los siguientes errores: ".implode("/n",$aErrores);
