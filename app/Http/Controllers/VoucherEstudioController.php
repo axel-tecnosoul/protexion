@@ -53,8 +53,8 @@ class VoucherEstudioController extends Controller
             
             $id_archivo=$archivo_adjunto->id;
 
-            "Juan Recalde 2023-07-22 RX.jpg";
-            "Juan Recalde 2023-07-22 General.pdf";
+            //"Juan Recalde 2023-07-22 RX.jpg";
+            //"Juan Recalde 2023-07-22 General.pdf";
 
             $nombre="RX";
             //if($request->estudio=="GENERAL" and count($aArchivosSubir)>=1){

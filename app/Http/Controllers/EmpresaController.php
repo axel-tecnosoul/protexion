@@ -229,7 +229,10 @@ class EmpresaController extends Controller
       // URL del sistema en el servidor web (Sistema B) que recibirá los archivos
       $url = env('URL_SERVIDOR_WEB')."administrar_empresas.php?accion=sincronizarEmpresa";
 
+      $ok=$ok2=0;
+      $aErrores=[];
       foreach ($empresas as $key => $empresa) {
+        $ok++;
         // Agregar el nombre de la empresa al arreglo de archivos
         $datos = [
           [
@@ -241,7 +244,7 @@ class EmpresaController extends Controller
           ]
         ];
 
-        var_dump($datos);
+        //var_dump($datos);
 
         // Enviar la solicitud POST con los archivos y el nombre de la empresa
         try {
@@ -280,11 +283,29 @@ class EmpresaController extends Controller
             $resultado='No se pudo resolver el host. Verifica tu conexión a internet.';
           }
         }
-        var_dump($resultado);
+        //var_dump($resultado);
+        if($resultado==""){
+          $ok2++;
+        }else{
+          $aErrores[]=$resultado;
+        }
       }
       
-      die();
-      return $resultado;
+      //die();
+      //return $resultado;
+      $accion="success";
+      $msj="Las empresas ha sido sincronizadas con la web correctamente";
+      if(count($aErrores)>0){
+        $accion="warning";
+        $msj="La sincronizacion con el servidor web ha devuelto los siguientes errores: ".implode("/n",$aErrores);
+      }
+
+      //dd($resultado);
+      //return redirect()->route('empresa.index')->with($accion,$msj);
+      return redirect()->route('empresa.index')->with('store', [
+        'alert' => $accion,
+        'message' => $msj,
+      ]);
     }
 
     /**

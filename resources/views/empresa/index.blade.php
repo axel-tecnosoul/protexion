@@ -5,6 +5,19 @@
     <li class="breadcrumb-item active">Indice de Empresa</li>
 @endsection
 
+<style>
+    /* Agrega un estilo de rotación al icono */
+    .fa-rotate {
+        animation: spin 2s infinite linear;
+    }
+
+    /* Define la animación de rotación */
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+</style>
+
 @section('content') <!-- Contenido -->
 <div class="card">
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -23,6 +36,12 @@
                 <a href="{{ route('origen.exportar') }}">
                     <button class="btn" style="background-color: rgb(31 176 76);color: white;">
                       <i class="nav-icon fas fa-file-excel"></i> Exportar
+                    </button>
+                </a>
+
+                <a href="{{ route('empresa.sincronizar') }}">
+                    <button class="btn btn-primary" id="btnSincronizar">
+                      <i class="nav-icon fa fa-sync"></i> <span>Sincronizar</span>
                     </button>
                 </a>
                 
@@ -106,6 +125,24 @@
 @push('scripts')
 
     <script src="{{asset('js/tablaDetalle.js')}}"></script>
+
+    <script>
+        // Agrega un event listener al botón
+        document.getElementById("btnSincronizar").addEventListener("click", function() {
+            var btn = this;
+            var icono = btn.querySelector("i");
+            var label = btn.querySelector("span");
+
+            // Agrega la clase de rotación al icono
+            icono.classList.add("fa-rotate");
+            label.textContent="Sincronizando..."
+
+            // Cambia solo el texto del botón
+            //btn.insertAdjacentHTML('beforeend', ' Sincronizando...');
+            //btn.textContent.replace('Sincronizar', 'Sincronizando...');
+
+        });
+    </script>
 
 @endpush
 @endsection
