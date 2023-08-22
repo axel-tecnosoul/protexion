@@ -126,17 +126,26 @@ if (!isset($_SESSION['rowUsers']['id_usuario'])) {
             <div class="card-header">
               <h5>Bienvenido <?=$_SESSION["rowUsers"]["usuario"]?></h5>
             </div>
+            
             <div class="card-body"><?php
-
+              //var_dump($_SESSION["rowUsers"]);
               $msjMostrar="Por favor ingrese su direccion de E-Mail para recibir un aviso cuando haya archivos nuevos:";
               $accionBtn="Guardar";
               $mostrarArchivos=0;
               $mostrarBtnAdminEmail=0;
+              if($_SESSION["rowUsers"]["cant_direcciones"]>0){
+                $mostrarBtnAdminEmail=1;
+              }
+              // and $_SESSION["rowUsers"]["cant_direcciones"]>0
               if($_SESSION["rowUsers"]["cant_validados"]>0){
                 $msjMostrar="Agregar direccion de E-Mail para notificar cuando haya archivos nuevos:";
                 $accionBtn="Agregar";
                 $mostrarArchivos=1;
-                $mostrarBtnAdminEmail=1;
+                //$mostrarBtnAdminEmail=1;
+              }
+              $tiene_direcciones_sin_validar=0;
+              if($_SESSION["rowUsers"]["cant_validados"]==0 and $_SESSION["rowUsers"]["cant_direcciones"]>0){
+                $tiene_direcciones_sin_validar=1;
               }?>
               <div class="row alert alert-danger" style="background-color: #DA0037;">
                 <div class="col-12">
@@ -153,19 +162,12 @@ if (!isset($_SESSION['rowUsers']['id_usuario'])) {
                         <span></span>
                       </div>
                     </button><?php
+                    //$mostrarBtnAdminEmail=1;
                     if($mostrarBtnAdminEmail==1){?>
                       <button class="btn btn-light mt-3" type="button" data-toggle="modal" data-target="#direccionesEmail">Administrar E-Mails</button><?php
                     }
                     if($_SESSION["rowUsers"]["cant_validados"]==0 and $_SESSION["rowUsers"]["cant_direcciones"]>0){?>
-                      <a href="cliente.php" id="btnRefresh" class="btn btn-light mt-3" type="button">Controlar validación</a>
-                      <a href="#" id="btnSendEmail" class="btn btn-light mt-3" type="button">
-                        Volver a enviar Email de validacion
-                        <div class="loader loader-container d-none" id="loader-3">
-                          <span></span>
-                          <span></span>
-                          <span></span>
-                        </div>
-                      </a><?php
+                      <a href="cliente.php" id="btnRefresh" class="btn btn-light mt-3" type="button">Controlar verificacion</a><?php
                     }?>
                   </form>
                 </div>
@@ -184,7 +186,7 @@ if (!isset($_SESSION['rowUsers']['id_usuario'])) {
 
       <!-- MODAL DIRECCIONES DE EMAIL -->
       <div class="modal fade mt-5" id="direccionesEmail" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-lg">
           <div class="modal-content">
             <form method="post" action="models/administrar_empresas.php">
               <div class="modal-header">
@@ -199,8 +201,9 @@ if (!isset($_SESSION['rowUsers']['id_usuario'])) {
                     <table id="emailEmpresas" style="width: 100%;">
                       <thead>
                         <tr>
-                          <th style="text-align: center;">E-Mail</th>
-                          <th style="text-align: center;">Eliminar</th>
+                          <th class="col-2" style="text-align: center;">Validado</th>
+                          <th class="col-7" style="text-align: center;">E-Mail</th>
+                          <th class="col-3" style="text-align: center;">Acciones</th>
                         </tr>
                       </thead>
                       <tbody></tbody>
@@ -208,9 +211,19 @@ if (!isset($_SESSION['rowUsers']['id_usuario'])) {
                   </div>
                 </div>
               </div>
-              <div class="modal-footer">
+              <div class="modal-footer"><?php
+                if($tiene_direcciones_sin_validar==1){?>
+                  <button type="button" id="btnSendEmail" class="btn btn-info">
+                    Volver a enviar Email de validacion
+                    <div class="loader loader-container d-none" id="loader-3">
+                      <span></span>
+                      <span></span>
+                      <span></span>
+                    </div>
+                  </button><?php
+                }?>
                 <button type="button" class="btn btn-light" data-dismiss="modal">Cancelar</button>
-                <button type="submit" id="btnContinuarImportacion" class="btn btn-dark">Modificar</button>
+                <button type="submit" class="btn btn-dark">Modificar</button>
               </div>
             </form>
           </div>
@@ -257,12 +270,6 @@ if (!isset($_SESSION['rowUsers']['id_usuario'])) {
     <!--<script src="assets/js/theme-customizer/customizer.js"></script>-->
     <!-- Plugin used-->
     <script type="text/javascript">
-
-      function validarEmail(email) {
-        var regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return regex.test(email);
-      }
-
       idiomaEsp = {
           "autoFill": {
               "cancel": "Cancelar",
@@ -355,151 +362,216 @@ if (!isset($_SESSION['rowUsers']['id_usuario'])) {
           }
       }
 
-      var id_empresa=$("#id_usuario").html();
-      $(document).ready(function(){
-        get_archivos(id_empresa)
-        get_email(id_empresa)
-      });
+      $(document).ready(function () {
 
-      $("#btnSendEmail").on("click",function(){
-        $("#loader-3").removeClass("d-none")
-        let accion="enviar_mail_verificacion_todos"
-        $.ajax({
-          url: "models/administrar_empresas.php",
-          type: "POST",
-          datatype:"json",
-          data:  {accion:accion, id_empresa: id_empresa},    
-          success: function(response) {
-            console.log(response);
-            response=JSON.parse(response);
-            console.log(response);
-
-            // Crear la tabla
-            var tabla = document.createElement("table");
-            tabla.className = "table table-bordered";
-            var cuerpoTabla = document.createElement("tbody");
-
-            Object.keys(response).forEach(key => {
-              console.log(key);
-              console.log(response[key]);
-              /*tabla+=`
-                <tr>
-                  <td>${key}</td>
-                  <td style="text-align: center;">${response[key]}</td>
-                </tr>
-              `;*/
-
-              var fila = document.createElement("tr");
-
-              var celda1 = document.createElement("td");
-              celda1.textContent = key;
-              celda1.style = "text-align:left";
-              fila.appendChild(celda1);
-
-              var celda2 = document.createElement("td");
-              resp=response[key];
-              clase="text-danger"
-              if(resp==true){
-                clase="text-success"
-                resp="Enviado correctamente";
-              }
-              celda2.textContent = resp;
-              celda2.style = "text-align:left";
-              celda2.className = clase;
-              fila.appendChild(celda2);
-
-              cuerpoTabla.appendChild(fila);
-            });
-            tabla.appendChild(cuerpoTabla);
-
-            swal({
-              icon: 'success',
-              title: 'E-Mail enviados correctamente',
-              content: tabla,
-              /*customClass: {
-                container: 'swal-respuesta-reenvio-email'
-              }*/
-              className: 'swal-respuesta-reenvio-email',
-            }).then((willDelete) => {
-              window.location.href="cliente.php"
-            });
-            $("#loader-3").addClass("d-none")
+        var id_empresa=$("#id_usuario").html();
+        $(document).ready(function(){
+          let cant_direcciones="<?php echo $_SESSION["rowUsers"]["cant_direcciones"]?>";
+          console.log(cant_direcciones);
+          if(cant_direcciones!=0){
+            get_email(id_empresa)
           }
-        }); 
-      })
+          if($("#adjuntos").length>0){
+            get_archivos(id_empresa)
+          }
+        });
 
-      $("#add_mail").on("submit",function(e){
-        $("#loader-4").removeClass("d-none")
-        e.preventDefault();
-        console.log(this);
-        let email = $("#email").val();
-        //let id_archivo = this.getAttribute("data-id");
-
-        if (validarEmail(email)) {
-          console.log('La dirección de correo electrónico es válida.');
-          accion = "guardar_email";
+        $("#btnSendEmail").on("click",function(){
+          $("#loader-3").removeClass("d-none")
+          let accion="enviar_mail_verificacion_todos"
           $.ajax({
             url: "models/administrar_empresas.php",
             type: "POST",
             datatype:"json",
-            data:  {accion:accion, email:email, id_empresa:id_empresa},
+            data:  {accion:accion, id_empresa: id_empresa},    
             success: function(response) {
               console.log(response);
-              $("#loader-4").addClass("d-none")
-              if(response==1){
-                console.log("mail enviado");
-                //swal("Good job!", "You clicked the button!", "success");
-                swal({
-                  icon: 'success',
-                  title: 'Se ha enviado un E-Mail a '+email,
-                  text: 'Por favor ingrese al mismo y presione el botón "Verificar"',
-                }).then((willDelete) => {
-                  window.location.href="cliente.php"
-                });
-              }else{
-                console.log("mostrar error");
-                swal({
-                  title: "Ha ocurrido un error",
-                  text: response,
-                  icon: "warning",
-                  buttons: true,
-                  dangerMode: true,
-                })
-              }
-              //get_archivos(id_empresa)
+              response=JSON.parse(response);
+              console.log(response);
+
+              // Crear la tabla
+              var tabla = document.createElement("table");
+              tabla.className = "table table-bordered";
+              var cuerpoTabla = document.createElement("tbody");
+
+              Object.keys(response).forEach(key => {
+                console.log(key);
+                console.log(response[key]);
+                /*tabla+=`
+                  <tr>
+                    <td>${key}</td>
+                    <td style="text-align: center;">${response[key]}</td>
+                  </tr>
+                `;*/
+
+                var fila = document.createElement("tr");
+
+                var celda1 = document.createElement("td");
+                celda1.textContent = key;
+                celda1.style = "text-align:left";
+                fila.appendChild(celda1);
+
+                var celda2 = document.createElement("td");
+                resp=response[key];
+                clase="text-danger"
+                if(resp==true){
+                  clase="text-success"
+                  resp="Enviado correctamente";
+                }
+                celda2.textContent = resp;
+                celda2.style = "text-align:left";
+                celda2.className = clase;
+                fila.appendChild(celda2);
+
+                cuerpoTabla.appendChild(fila);
+              });
+              tabla.appendChild(cuerpoTabla);
+
+              swal({
+                icon: 'warning',
+                title: 'Resultado del envío de E-Mail de validacion',
+                content: tabla,
+                /*customClass: {
+                  container: 'swal-respuesta-reenvio-email'
+                }*/
+                className: 'swal-respuesta-reenvio-email',
+              }).then((willDelete) => {
+                window.location.href="cliente.php"
+              });
+              $("#loader-3").addClass("d-none")
             }
-          });
-        } else {
+          }); 
+        })
+
+        $("#add_mail").on("submit",function(e){
+          $("#loader-4").removeClass("d-none")
+          e.preventDefault();
+          console.log(this);
+          let email = $("#email").val();
+          //let id_archivo = this.getAttribute("data-id");
+
+          if (validarEmail(email)) {
+            console.log('La dirección de correo electrónico es válida.');
+            accion = "guardar_email";
+            $.ajax({
+              url: "models/administrar_empresas.php",
+              type: "POST",
+              datatype:"json",
+              data:  {accion:accion, email:email, id_empresa:id_empresa},
+              success: function(response) {
+                console.log(response);
+                $("#loader-4").addClass("d-none")
+                if(response==1){
+                  console.log("mail enviado");
+                  //swal("Good job!", "You clicked the button!", "success");
+                  swal({
+                    icon: 'success',
+                    title: 'Se ha enviado un E-Mail a '+email,
+                    text: 'Por favor ingrese al mismo y presione el botón "Verificar"',
+                  }).then((willDelete) => {
+                    window.location.href="cliente.php"
+                  });
+                }else{
+                  console.log("mostrar error");
+                  swal({
+                    title: "Ha ocurrido un error",
+                    text: response,
+                    icon: "warning",
+                    //buttons: true,
+                    //dangerMode: true,
+                  })
+                }
+                //get_archivos(id_empresa)
+              }
+            });
+          } else {
+            swal({
+              title: "La direccion de Email brindada no es una direccion de Email valida",
+              //text: ,
+              icon: "warning",
+              //buttons: true,
+              //dangerMode: true,
+            })
+            $("#loader-4").addClass("d-none")
+          }
+        })
+
+        $(document).on("click", ".archivo_empresa", function(){
+
+          let id_archivo = parseInt($(this).closest('tr').find('td:eq(0)').text());
+          //let id_archivo = this.getAttribute("data-id");
+
+          console.log("descargando");
+          console.log(id_archivo);
+
+          accion = "marcarArchivoDescargado";
+          $.ajax({
+            url: "models/administrar_empresas.php",
+            type: "POST",
+            datatype:"json",
+            data:  {accion:accion, id_archivo:id_archivo},
+            success: function() {
+              get_archivos(id_empresa)
+            }
+          }); 
+        })
+
+        $(document).on("click", ".btnBorrarEmail", function(){
+          //let id_item = parseInt($('#id_item').text());
+
+          let id_empresa=$("#id_empresa").val();
+          console.log(id_empresa);
+          let id_email_usuario = this.getAttribute("data-id");
+          console.log(id_email_usuario);
+          //let id_email_usuario = parseInt($(this).closest('tr').find('td:eq(0)').text());
+          console.log($(this).closest('tr').find('input'));
+          let email=$(this).closest('tr').find('input[name="email[]"]').val()
+          console.log(email);
+
           swal({
-            title: "La direccion de Email brindada no es una direccion de Email valida",
-            //text: ,
+            title: "Eliminar el E-Mail "+email+"?",
+            //text: "Una vez eliminado este archivo, no volveras a verlo",
             icon: "warning",
             //buttons: true,
-            //dangerMode: true,
+            buttons: {
+              cancel: "Cancelar",
+              danger: {
+                text: "Eliminar",
+                closeModal: false,
+              }
+            },
+            dangerMode: true,
           })
-          $("#loader-4").addClass("d-none")
-        }
-      })
+          .then((willDelete) => {
+            if (willDelete) {
+              accion = "eliminarEmail";
+              $.ajax({
+                url: "models/administrar_empresas.php",
+                type: "POST",
+                datatype:"json",
+                data:  {accion:accion, id_email_usuario:id_email_usuario, id_empresa: id_empresa},    
+                success: function() {
+                  swal({
+                    icon: 'success',
+                    title: 'E-Mail eliminado correctamente'
+                  });
+                  get_email(id_empresa)
+                  /*$padre = this.parentElement.parentElement
+                  $padre.classList.add("d-none");*/
+                }
+              }); 
+            } else {
+              swal("El E-Mail no se eliminó!");
+            }
+          });
+        })
 
-      $(document).on("click", ".archivo_empresa", function(){
+      });
 
-        let id_archivo = parseInt($(this).closest('tr').find('td:eq(0)').text());
-        //let id_archivo = this.getAttribute("data-id");
-
-        console.log("descargando");
-        console.log(id_archivo);
-
-        accion = "marcarArchivoDescargado";
-        $.ajax({
-          url: "models/administrar_empresas.php",
-          type: "POST",
-          datatype:"json",
-          data:  {accion:accion, id_archivo:id_archivo},
-          success: function() {
-            get_archivos(id_empresa)
-          }
-        }); 
-      })
+      function validarEmail(email) {
+        var regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return regex.test(email);
+      }
 
       function get_email(id_empresa){
         let accion = "trerEmailEmpresa";
@@ -518,15 +590,33 @@ if (!isset($_SESSION['rowUsers']['id_usuario'])) {
 
             let filas="";
             respuestaJson.forEach((data)=>{
+              let validado='<i class="fa fa-lg fa-check-circle text-success" aria-hidden="true"></i>'
+              if(data.validado==0){
+                validado='<i class="fa fa-lg fa-times-circle text-danger" aria-hidden="true"></i>'
+              }
               filas+=`
                 <tr>
+                  <td style="text-align: center;">${validado}</td>
                   <td>
                     <input type="hidden" name="id_email_usuario[]" value="${data.id_email_usuario}">
-                    <input type="email" name="email[]" id="email" class="form-control" value="${data.email}" placeholder="empresa@dominio.com" required>
+                    <input type="email" name="email[]" class="form-control" value="${data.email}" placeholder="empresa@dominio.com" required>
                   </td>
-                  <td style="text-align: center;"><a class='btn btn-outline-danger text-danger btnBorrarEmail' data-id="${data.id_email_usuario}"><i class='fa fa-trash-o'></i></a></td>
+                  <td style="text-align: center;">
+                    <a class='btn btn-outline-danger btn-sm text-danger btnBorrarEmail' data-id="${data.id_email_usuario}">
+                      <span class="fa-stack">
+                        <i class='fa fa-trash-o fa-lg'></i>
+                      </span>
+                    </a>
+                  </td>
                 </tr>
               `;
+              /*
+              <a class='btn btn-outline-primary btn-sm btnRefreshVerify' data-id="${data.id_email_usuario}">
+                      <span class="fa-stack">
+                        <i class="fa fa-refresh fa-stack-1x text-primary" aria-hidden="true"></i>
+                        <i class="fa fa-envelope-o fa-stack-2x" aria-hidden="true"></i>
+                      </span>
+                    </a>*/
             })
             if(filas==""){
               window.location.href="cliente.php"
@@ -536,56 +626,6 @@ if (!isset($_SESSION['rowUsers']['id_usuario'])) {
           }
         });
       }
-
-      $(document).on("click", ".btnBorrarEmail", function(){
-        //let id_item = parseInt($('#id_item').text());
-
-        let id_empresa=$("#id_empresa").val();
-        console.log(id_empresa);
-        let id_email_usuario = this.getAttribute("data-id");
-        console.log(id_email_usuario);
-        //let id_email_usuario = parseInt($(this).closest('tr').find('td:eq(0)').text());
-        console.log($(this).closest('tr').find('td:eq(0)').find('input'));
-        let email=$(this).closest('tr').find('td:eq(0)').find('input[name="email[]"]').val()
-        console.log(email);
-
-        swal({
-          title: "Eliminar el E-Mail "+email+"?",
-          //text: "Una vez eliminado este archivo, no volveras a verlo",
-          icon: "warning",
-          //buttons: true,
-          buttons: {
-            cancel: "Cancelar",
-            danger: {
-              text: "Eliminar",
-              closeModal: false,
-            }
-          },
-          dangerMode: true,
-        })
-        .then((willDelete) => {
-          if (willDelete) {
-            accion = "eliminarEmail";
-            $.ajax({
-              url: "models/administrar_empresas.php",
-              type: "POST",
-              datatype:"json",
-              data:  {accion:accion, id_email_usuario:id_email_usuario, id_empresa: id_empresa},    
-              success: function() {
-                swal({
-                  icon: 'success',
-                  title: 'E-Mail eliminado correctamente'
-                });
-                get_email(id_empresa)
-                /*$padre = this.parentElement.parentElement
-                $padre.classList.add("d-none");*/
-              }
-            }); 
-          } else {
-            swal("El E-Mail no se eliminó!");
-          }
-        });
-      })
 
     </script>
   </body>

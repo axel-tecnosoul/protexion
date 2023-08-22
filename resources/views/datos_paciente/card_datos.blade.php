@@ -29,7 +29,7 @@
                     @else
                         <!-- <img class="img-thumbnail" height="200px" width="200px" src="{{$voucher->paciente->imagen}}"> -->
                         <img class="img-thumbnail" height="200px" width="200px" src="{{ asset('imagenes/paciente/'.$voucher->paciente->imagen)}}">
-                    @endif 
+                    @endif
                 </div>
             </div>
         </div>

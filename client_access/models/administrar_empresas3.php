@@ -430,8 +430,7 @@ class Empresas{
 
   public function marcarArchivoDescargado($id_archivo){
 
-    //$queryDelAdjuntos = "UPDATE archivos_usuario SET fecha_hora_bajada = NOW() WHERE id = $id_archivo";
-    $queryDelAdjuntos = "UPDATE archivos_usuario SET fecha_hora_bajada = NOW() WHERE id IN ($id_archivo)";
+    $queryDelAdjuntos = "UPDATE archivos_usuario SET fecha_hora_bajada = NOW() WHERE id = $id_archivo";
     $this->conexion->consultaSimple($queryDelAdjuntos);
 
   }
@@ -439,9 +438,6 @@ class Empresas{
   public function recibir_archivos($datosExtra){
     $datos=json_decode($datosExtra,true);
     $id_empresa=$datos["id_empresa"];
-    $paciente=$datos["paciente"];
-    $turno=$datos["turno"];
-
     //$empresa="Particular";
     $query = "SELECT id,usuario FROM usuarios WHERE id_empresa = $id_empresa";
     $get = $this->conexion->consultaRetorno($query);
@@ -459,36 +455,8 @@ class Empresas{
         /*$destinatario=[
           $email=> $usuario,
         ];*/
-
-        $query = "SELECT ue.email,u.usuario FROM usuarios_email ue INNER JOIN usuarios u ON ue.id_usuario=u.id WHERE anulado=0 AND ue.validado=1 AND ue.id_usuario = '$id_empresa'";
-        //echo $query;
-        $get = $this->conexion->consultaRetorno($query);
-        $destinatarios=[];
-        while($row = $get->fetch_array()){
-          /*$destinatarios[]=[
-            $row["email"]=> $row["usuario"],
-          ];*/
-          $destinatarios[$row["email"]]=$row["usuario"];
-        }
-        if(count($destinatarios)>0){
-
-          //$asunto="Notificación de nuevo archivo";
-          $asunto="Resultados Exámenes Médicos del Paciente ".$paciente.", fecha ".date("d/m/Y",strtotime($turno));
-          $cuerpo='<b>*Por favor no responda este mail*</b><br><br>Hola '.$usuario.', desde ProteXion queremos informarte que un nuevo archivo ha sido subido a nuestro sistema online para clientes.<br><br>Para dascarglo puede hacer un click <a href="https://protexionpr.com.ar/client_access/login.php" target="_blank">Aqui</a><br><br><br>Te recodamos que TODOS los ESTUDIOS los realizamos en UNA sola mañana, RESULTADOS en 24/48 hs.<br>Para cualquier duda o consulta al mail info@protexionpr.com.ar / gerencia@protexionpr.com.ar<br>Turnos al WhatsApp 3743 483004';
-
-          $archivosAdjuntos[]=[
-            "ruta"=>"../views/docs/INSTRUCTIVO PARA BAJAR ARCHIVOS SISTEMA PROTEXION.pdf",
-            "fileName"=>"INSTRUCTIVO PARA BAJAR ARCHIVOS SISTEMA PROTEXION"
-          ];
-
-          $envioMail=$this->enviarMail($destinatarios,$asunto,$cuerpo,$archivosAdjuntos);
-          if($envioMail!=true){
-            $envioMail="El archivo se ha subido correctamente pero ocurrió un error con el envío del mail: ".$envioMail;
-          }
-          $subidaOk=$envioMail;
-        }else{
-          $subidaOk="El archivo se ha subido correctamente pero no se han encontrado destinatarios validados para el envío del mail";
-        }
+        $envioMail=$this->enviarMail($id_empresa,$datosExtra);
+        //echo $envioMail;
       }
     }else{
       $subidaOk="Empresa no encontrada";
@@ -500,17 +468,14 @@ class Empresas{
 
   public function guardar_email($id_empresa,$email){
 
-    $query = "SELECT id,anulado,validado FROM usuarios_email WHERE email = '$email'";
+    $query = "SELECT id,anulado FROM usuarios_email WHERE email = '$email'";
     //echo $query;
     $get = $this->conexion->consultaRetorno($query);
     $row = $get->fetch_array();
     if($row){
-      //echo " - ".$row["anulado"]." - ";
-      
-      $id_email=$row["id"];
       $ok=0;
-      if($row["anulado"]==1 or $row["validado"]==0){
-        $queryDelAdjuntos = "UPDATE usuarios_email SET anulado = 0, validado = 0, fecha_hora_alta = NOW() WHERE id = ".$id_email;
+      if($row["anulado"]==1){
+        $queryDelAdjuntos = "UPDATE usuarios_email SET anulado = 0 WHERE id = ".$row["id"];
         $delAdjuntos = $this->conexion->consultaSimple($queryDelAdjuntos);
         $ok=1;
       }
@@ -518,7 +483,6 @@ class Empresas{
       $query = "INSERT INTO usuarios_email (id_usuario,email,anulado) VALUES ($id_empresa,'$email',0)";
       $insert = $this->conexion->consultaSimple($query);
       $mensajeError=$this->conexion->conectar->error;
-      $id_email=$this->conexion->conectar->insert_id;
       echo $mensajeError;
       $ok=0;
       if($mensajeError!=""){
@@ -528,86 +492,22 @@ class Empresas{
         $ok=1;
       }
     }
-    //var_dump($ok);
-    //$_SESSION["rowUsers"]["email"]=$email;
-    if($ok==1){
-      //$_SESSION['rowUsers']["cant_direcciones"]++;
-      $ok=$this->enviar_mail_verificacion($id_email);
-      $this->updateUsrMails();
-    }
+    $_SESSION["rowUsers"]["email"]=$email;
     return $ok;
 
   }
 
-  public function enviar_mail_verificacion($id_email){
-    $query = "SELECT u.usuario,ue.email FROM usuarios u INNER JOIN usuarios_email ue ON ue.id_usuario=u.id WHERE ue.id = $id_email";
-    //echo $query;
-    $get = $this->conexion->consultaRetorno($query);
-    $row = $get->fetch_array();
+  public function enviarMail($id_empresa,$datosExtra){
+    //require("../assets/PHPMailer/PHPMailerAutoload.php");
+    //require("../assets/PHPMailer/PHPMailerAutoload.php");
+    require './../assets/PHPMailer/src/Exception.php';
+    require './../assets/PHPMailer/src/PHPMailer.php';
+    require './../assets/PHPMailer/src/SMTP.php';
+    //require("../assets/PHPMailer/class.smtp.php");
 
-    $url = $this->conexion->url_servidor_web();
-
-    $destinatarios[$row["email"]]=$row["usuario"];
-    $asunto="Verificacion de Email";
-    $cuerpo='<b>*Por favor no responda este mail*</b><br><br>Hola '.$row["usuario"].'<br><br>Para verificar tu correo hacé click en el siguiente boton: <br><a href="'.$url.'administrar_empresas.php?accion=verificar_email&id='.$id_email.'" style="display:inline-block;text-decoration:none;background:#DA0037;border-radius:3px;color:white;font-family:Helvetica,sans-serif;font-size:16px;line-height:24px;font-weight:400;padding:12px 20px 11px;margin:0px;margin-top:25px" target="_blank" ><span class="il">Verificar</span> mi correo electrónico</a><br><br><br>Te recodamos que TODOS los ESTUDIOS los realizamos en UNA sola mañana, RESULTADOS en 24/48 hs.<br>Para cualquier duda o consulta al mail info@protexionpr.com.ar / gerencia@protexionpr.com.ar<br>Turnos al WhatsApp 3743 483004';
-
-    $adjuntos[]=[
-      "ruta"=>"../views/docs/INSTRUCTIVO PARA BAJAR ARCHIVOS SISTEMA PROTEXION.pdf",
-      "fileName"=>"INSTRUCTIVO PARA BAJAR ARCHIVOS SISTEMA PROTEXION"
-    ];
-
-    $envioMail=$this->enviarMail($destinatarios,$asunto,$cuerpo,$adjuntos);
-    if($envioMail!=true){
-      $envioMail="Ocurrió un error con el envío del mail: ".$envioMail;
-    }
-    return $envioMail;
-  }
-
-  public function enviar_mail_verificacion_todos($id_empresa){
-    $aEmail=$this->trerEmailEmpresa($id_empresa);
-    $aEmail=json_decode($aEmail,true);
-    $aRespuesta=[];
-    foreach ($aEmail as $key => $email) {
-      $envio_ok=$this->enviar_mail_verificacion($email["id_email_usuario"]);
-      $aRespuesta[$email["email"]]=$envio_ok;
-    }
-    return json_encode($aRespuesta);
-  }
-
-  public function verificar_email($id_email){
-
-    $query = "SELECT IF(DATEDIFF(NOW(), fecha_hora_alta) >= 7,1,0) AS expirado FROM usuarios_email WHERE anulado = 0 AND id = $id_email";
-    $get = $this->conexion->consultaRetorno($query);
-    $row = $get->fetch_array();
-    /*echo $query;
-    var_dump($row);
-    if($row and $row["expirado"]==0){
-      echo "expirado";
-    }
-    die();*/
-    $ok=2;
-    if($row and $row["expirado"]==0){
-      $query = "UPDATE usuarios_email SET validado = 1 WHERE id = $id_email";
-      $insert = $this->conexion->consultaSimple($query);
-      $mensajeError=$this->conexion->conectar->error;
-      echo $mensajeError;
-      $ok=0;
-      if($mensajeError!=""){
-        echo "<br><br>".$query;
-      }else{
-        //$totalSubidas++;
-        $ok=1;
-        //$_SESSION['rowUsers']["cant_validados"]++;
-        $this->updateUsrMails();
-      }
-    }
-    return $ok;
-  }
-
-  public function enviarMail($destinatarios,$asunto,$cuerpo,$adjuntos=[]){
-    require_once './../assets/PHPMailer/src/Exception.php';
-    require_once './../assets/PHPMailer/src/PHPMailer.php';
-    require_once './../assets/PHPMailer/src/SMTP.php';
+    $datos=json_decode($datosExtra,true);
+    $paciente=$datos["paciente"];
+    $turno=$datos["turno"];
     
     /*$destinatarios=[
       'recipient1@domain.com'=> 'First Name',
@@ -618,73 +518,80 @@ class Empresas{
         "ruta"      =>$directorio."/".$nombreArchivo,
         "fileName"  =>$nombreArchivo,
     ];*/
-
-    $smtpHost = "mail.protexionpr.com.ar";  //agregar servidor
-    $smtpUsuario = "resultados@protexionpr.com.ar";  //agregar usuario
-    $smtpClave = '-vg#+J$I9_oH';  //agregar contraseña
-    $remitente = $smtpUsuario;
-    $nombre_remitente = "ProteXion - Centro Medico Laboral";
-
-    //var_dump($smtpUsuario);
-    //var_dump($smtpClave);
     
-    $mail = new PHPMailer(true);
-    //$mail->SMTPDebug = 3;//Habilitamos solo para debugguear
-    $mail->IsSMTP();
-    $mail->SMTPAuth = true;
-    $mail->Port = 465;
-    //$mail->Port = 587;
-    //$mail->Port = 25;
-    $mail->SMTPSecure = 'ssl';
-    $mail->IsHTML(true);
-    $mail->CharSet = "utf-8";
-    $mail->Host = $smtpHost;
-    $mail->Username = $smtpUsuario;
-    $mail->Password = $smtpClave;
-    $mail->From = $remitente;//"mailorigen@gmail.com"; //mail remitente
-    $mail->FromName = $nombre_remitente;//"de donde sale el mail"; //remitente
-    
-    foreach ($destinatarios as $key => $value) {
-        /*var_dump($key);
-        var_dump($value);*/
-        $email=$key;
-        $name=$value;
-        if(is_numeric($key)){
-          $email=$value;
-          $name="";
-        }
-        if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            // La dirección de correo electrónico es válida
-            $mail->AddAddress($email, $name); //destinatario
-        } else {
-            // La dirección de correo electrónico no es válida
-            //echo "La dirección de correo electrónico no es válida.";
-        }
+    $query = "SELECT ue.email,u.usuario FROM usuarios_email ue INNER JOIN usuarios u ON ue.id_usuario=u.id WHERE anulado=0 AND ue.id_usuario = '$id_empresa'";
+    //echo $query;
+    $get = $this->conexion->consultaRetorno($query);
+    $destinatarios=[];
+    while($row = $get->fetch_array()){
+      /*$destinatarios[]=[
+        $row["email"]=> $row["usuario"],
+      ];*/
+      $destinatarios[$row["email"]]=$row["usuario"];
     }
 
-    $numDestinatarios = count($mail->getToAddresses());
-    if($numDestinatarios>0){
-    
+    $envio=false;
+    if(count($destinatarios)>0){
+      $debug=0;
+      /*require("../vendor/PHPMailer-5.2.26/PHPMailerAutoload.php");
+      require("../vendor/PHPMailer-5.2.26/class.smtp.php");*/
+
+      $smtpHost = "mail.protexionpr.com.ar";  //agregar servidor
+      $smtpUsuario = "resultados@protexionpr.com.ar";  //agregar usuario
+      $smtpClave = '-vg#+J$I9_oH';  //agregar contraseña
+      $remitente = $smtpUsuario;
+      $nombre_remitente = "ProteXion - Centro Medico Laboral";
+
+      //var_dump($smtpUsuario);
+      //var_dump($smtpClave);
+      
+      $mail = new PHPMailer(true);
+      //$mail->SMTPDebug = 3;//Habilitamos solo para debugguear
+      $mail->IsSMTP();
+      $mail->SMTPAuth = true;
+      $mail->Port = 465;
+      //$mail->Port = 587;
+      //$mail->Port = 25;
+      $mail->SMTPSecure = 'ssl';
+      $mail->IsHTML(true);
+      $mail->CharSet = "utf-8";
+      $mail->Host = $smtpHost;
+      $mail->Username = $smtpUsuario;
+      $mail->Password = $smtpClave;
+      $mail->From = $remitente;//"mailorigen@gmail.com"; //mail remitente
+      $mail->FromName = $nombre_remitente;//"de donde sale el mail"; //remitente
+      
+      foreach ($destinatarios as $key => $value) {
+          /*var_dump($key);
+          var_dump($value);*/
+          $email=$key;
+          $name=$value;
+          if(is_numeric($key)){
+            $email=$value;
+            $name="";
+          }
+          $mail->AddAddress($email, $name); //destinatario
+      }
+      $adjuntos[]=[
+        "ruta"=>"../views/docs/INSTRUCTIVO PARA BAJAR ARCHIVOS SISTEMA PROTEXION.pdf",
+        "fileName"=>"INSTRUCTIVO PARA BAJAR ARCHIVOS SISTEMA PROTEXION"
+      ];
       foreach ($adjuntos as $key => $value) {
           $mail->addAttachment($value["ruta"], $value["fileName"]);
       }
+
+      //$asunto="Notificación de nuevo archivo";
+      $asunto="Resultados Exámenes Médicos del Paciente ".$paciente.", fecha ".date("d/m/Y",strtotime($turno));
+      $cuerpo='<b>*Por favor no responda este mail*</b><br><br>Hola '.$name.', desde ProteXion queremos informarte que un nuevo archivo ha sido subido a nuestro sistema online para clientes.<br><br>Para dascarglo puede hacer un click <a href="https://protexionpr.com.ar/client_access/login.php" target="_blank">Aqui</a><br><br><br>Te recodamos que TODOS los ESTUDIOS los realizamos en UNA sola mañana, RESULTADOS en 24/48 hs.<br>Para cualquier duda o consulta al mail info@protexionpr.com.ar / gerencia@protexionpr.com.ar<br>Turnos al WhatsApp 3743 483004';
 
       $mail->Subject = $asunto; //titulo
       $mensajeHtml = nl2br($cuerpo); //mensaje
       $mail->Body = "{$mensajeHtml} <br /><br />";
       $mail->AltBody = "{$cuerpo} \n\n";
       //var_dump($mail);
-      try {
-        $envio = $mail->Send();
-      } catch (\Throwable $th) {
-        //throw $th;
-        //var_dump($th);
-        //$envio="El archivo se ha subido correctamente pero ocurrió un error con el envío del mail: ".$th->getMessage();
-        $envio=$th->getMessage();
-      }
+      $envio = $mail->Send();
+
       //var_dump($envio);
-    }else{
-      $envio="No se han encontrado destinatarios validos";
     }
 
     return $envio;
@@ -693,17 +600,16 @@ class Empresas{
 
   public function trerEmailEmpresa($id_empresa){
 
-    $queryTraerEmpresas = "SELECT id,email,validado FROM usuarios_email WHERE anulado = 0 AND id_usuario = $id_empresa";
+    $queryTraerEmpresas = "SELECT id,email FROM usuarios_email WHERE anulado = 0 AND id_usuario = $id_empresa";
     $getEmpresas = $this->conexion->consultaRetorno($queryTraerEmpresas);
 
     $arrayArchivos = array();
-    //$_SESSION["rowUsers"]["email"]="";
+    $_SESSION["rowUsers"]["email"]="";
     while ($row = $getEmpresas->fetch_array()) {
-      //$_SESSION["rowUsers"]["email"]=$row['email'];
+      $_SESSION["rowUsers"]["email"]=$row['email'];
       $arrayArchivos[] = array(
         'id_email_usuario'=>$row['id'],
         'email'=>$row['email'],
-        'validado'=>$row['validado'],
       );
     }
 
@@ -714,54 +620,25 @@ class Empresas{
   public function modificar_email($id_empresa,$id_email_usuario,$email){
 
     foreach($id_email_usuario as $key => $id){
-      $queryTraerEmpresas = "SELECT id,validado FROM usuarios_email WHERE validado = 1 AND email = '".$email[$key]."' AND id_usuario = $id_empresa";
-      $getEmpresas = $this->conexion->consultaRetorno($queryTraerEmpresas);
-      $row = $getEmpresas->fetch_array();
-      /*$validado=0;
-      if($row and $row["validado"]==1){
-        $validado=1;
-      }*/
-
-      if(is_null($row["id"])){
-        $query = "UPDATE usuarios_email SET email = '".$email[$key]."', validado = 0 WHERE id = $id";
-        $insert = $this->conexion->consultaSimple($query);
-        $mensajeError=$this->conexion->conectar->error;
-        echo $mensajeError;
-        $ok=0;
-        if($mensajeError!=""){
-          echo "<br><br>".$query;
-        }else{
-          //if($validado==0){
-            $this->updateUsrMails();
-            $envio_ok=$this->enviar_mail_verificacion($id);
-          //}
-          //$totalSubidas++;
-          $ok=1;
-        }
+      $query = "UPDATE usuarios_email SET email = '".$email[$key]."' WHERE id = $id";
+      $insert = $this->conexion->consultaSimple($query);
+      $mensajeError=$this->conexion->conectar->error;
+      echo $mensajeError;
+      $ok=0;
+      if($mensajeError!=""){
+        echo "<br><br>".$query;
+      }else{
+        //$totalSubidas++;
+        $ok=1;
       }
     }
 
   }
 
-  public function updateUsrMails(){
-
-    $queryGetUser = "SELECT SUM(if(ue.anulado=0,1,0)) AS cant_direcciones, SUM(ue.validado) as cant_validados FROM usuarios u LEFT JOIN usuarios_email ue ON ue.id_usuario=u.id WHERE u.id = ".$_SESSION['rowUsers']["id_usuario"];
-    $getUser = $this->conexion->consultaRetorno($queryGetUser);
-
-    if($getUser->num_rows == 0){
-      echo "El usuario no existe";
-    }else{
-      $userRows = $getUser->fetch_assoc();
-      $_SESSION['rowUsers']["cant_direcciones"] = $userRows["cant_direcciones"];
-      $_SESSION['rowUsers']["cant_validados"] = $userRows["cant_validados"];
-    }
-  }
-
   public function eliminarEmail($id_email_usuario){
 
-    $queryDelAdjuntos = "UPDATE usuarios_email SET anulado = 1, validado = 0 WHERE id = $id_email_usuario";
+    $queryDelAdjuntos = "UPDATE usuarios_email SET anulado = 1 WHERE id = $id_email_usuario";
     $delAdjuntos = $this->conexion->consultaSimple($queryDelAdjuntos);
-    $this->updateUsrMails();
 
   }
 
@@ -824,24 +701,8 @@ if (isset($accion)) {
         //var_dump($_POST);
         $id_empresa=$_POST["id_empresa"];
         $email=$_POST["email"];
-        echo $empresas->guardar_email($id_empresa,$email);
-        //header("location: ../cliente.php");
-      break;
-      case "enviar_mail_verificacion_todos":
-        $id_empresa=$_POST["id_empresa"];
-        echo $empresas->enviar_mail_verificacion_todos($id_empresa);
-      break;
-      case "verificar_email":
-        //var_dump($_POST);
-        $id_email=$_GET["id"];
-        $ok=$empresas->verificar_email($id_email);
-        if($ok==1){
-          header("location: ../email_verified.php");
-        }elseif($ok==2){
-          header("location: ../link_expired.php");
-        }else{
-          header("location: ../email_error.php");
-        }
+        $empresas->guardar_email($id_empresa,$email);
+        header("location: ../cliente.php");
       break;
       case "trerEmailEmpresa":
         echo $empresas->trerEmailEmpresa($id_empresa);
