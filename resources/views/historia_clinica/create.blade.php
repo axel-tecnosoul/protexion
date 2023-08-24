@@ -933,10 +933,10 @@ if(isset($historia_clinica_anterior)){
                                         <input class="form-control" placeholder="Describa las anormalidades..." type="text" name="observacion4_ab" value="<?=$observacion4_ab?>">
                                     </div>
                                 </div>
-                                <!-- Hernia humbilical -->
+                                <!-- Hernia umbilical -->
                                 <div class="form-group row">
                                     <div class="col">
-                                        <label for="" class="form-label">Hernia humbilical</label>
+                                        <label for="" class="form-label">Hernia umbilical</label>
                                         <input class="form-control" placeholder="Describa las anormalidades..." type="text" name="observacion5_ab" value="<?=$observacion5_ab?>">
                                     </div>
                                 </div>

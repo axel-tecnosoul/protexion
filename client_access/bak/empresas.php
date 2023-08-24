@@ -62,6 +62,10 @@ if (!isset($_SESSION['rowUsers']['id_usuario'])) {
         left: 50%;
         transform: translate(-50%, -50%);
       }
+      .a_copiar:hover{
+        cursor: pointer;
+        text-decoration: underline;
+      }
     </style>
   </head>
   <body>
@@ -226,8 +230,8 @@ if (!isset($_SESSION['rowUsers']['id_usuario'])) {
             },
           "columns":[
             {"data": "id_usuario"},
-            {"data": "usuario"},
-            {"data": "clave"},
+            {"data": "usuario","class":"a_copiar"},
+            {"data": "clave","class":"a_copiar"},
             {"data": "cant_archivos","class":"text-center"},
             //{"data": "tipo"},
             //{"data": "activo"},
@@ -235,7 +239,11 @@ if (!isset($_SESSION['rowUsers']['id_usuario'])) {
             //<button class='btn btn-warning btnVer'><i class='fa fa-eye'></i></button><button class='btn btn-danger btnBorrar'><i class='fa fa-trash-o'></i></button>
           ],
           stateSave:true,
-          "language":  idiomaEsp
+          "language": idiomaEsp,
+          initComplete:function(){
+            console.log($('.a_copiar'));
+            $('.a_copiar').attr("title","Click para copiar");
+          }
         });
 
         $('#modalCRUD').on('hidden.bs.modal', function (e) {
@@ -245,6 +253,26 @@ if (!isset($_SESSION['rowUsers']['id_usuario'])) {
         });
 
       });
+
+      $(document).on("click",'.a_copiar',function(){
+        //var contenido = document.getElementById('contenido-a-copiar');
+        console.log(this);
+        //var contenido = this.innerText;
+        var contenido = this;
+        console.log(contenido);
+        var seleccion = window.getSelection();
+        var rango = document.createRange();
+        rango.selectNodeContents(contenido);
+        seleccion.removeAllRanges();
+        seleccion.addRange(rango);
+        document.execCommand('copy');
+        seleccion.removeAllRanges();
+
+        swal("Texto copiado!", {
+          buttons: false,
+          timer: 700,
+        });
+      })
       
       idiomaEsp = {
           "autoFill": {

@@ -16,7 +16,7 @@
 			$this->clave = $clave;
 
 			/*Buscar usuario*/
-			$queryGetUser = "SELECT u.id as id_usuario, u.usuario, u.email, u.clave, u.tipo, u.activo, SUM(if(ue.anulado = 0, 1, 0)) AS cant_direcciones, SUM(ue.validado) as cant_validados FROM usuarios u LEFT JOIN usuarios_email ue ON ue.id_usuario=u.id WHERE u.usuario = '$this->usuario'";// AND (ue.validado=1 OR ue.validado IS NULL)
+			$queryGetUser = "SELECT u.id as id_usuario, u.usuario, u.email, u.clave, u.tipo, u.activo, SUM(if(ue.anulado = 0, 1, 0)) AS cant_direcciones, SUM(ue.validado) as cant_validados FROM usuarios u LEFT JOIN usuarios_email ue ON ue.id_usuario=u.id WHERE u.usuario = '$this->usuario' GROUP BY u.id";// AND (ue.validado=1 OR ue.validado IS NULL)
 			$getUser = $this->conexion->consultaRetorno($queryGetUser);
 
 			if($getUser->num_rows == 0){

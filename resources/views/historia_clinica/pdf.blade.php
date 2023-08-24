@@ -807,7 +807,7 @@
           </tr>
           <tr>
               <td colspan="6">
-                  <label for="">Hernia humbilical:</label> <!--{{$hc_formulario->abdomen->observacion5_ab}}-->
+                  <label for="">Hernia umbilical:</label> <!--{{$hc_formulario->abdomen->observacion5_ab}}-->
                   @if ($hc_formulario->abdomen->observacion5_ab)
                       {{$hc_formulario->abdomen->observacion5_ab}}
                   @else

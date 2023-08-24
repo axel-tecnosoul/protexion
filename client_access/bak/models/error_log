@@ -1,0 +1,330 @@
+[19-Nov-2022 12:08:39 UTC] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'root'@'localhost' (using password: NO) in /home/protex/public_html/client_access/models/conexion.php on line 10
+[19-Nov-2022 09:08:39 America/Buenos_Aires] PHP Warning:  mysqli::set_charset(): Couldn't fetch mysqli in /home/protex/public_html/client_access/models/conexion.php on line 18
+[19-Nov-2022 09:08:39 America/Buenos_Aires] PHP Warning:  mysqli::query(): Couldn't fetch mysqli in /home/protex/public_html/client_access/models/conexion.php on line 19
+[01-Dec-2022 16:40:15 UTC] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'root'@'localhost' (using password: NO) in /home/protex/public_html/client_access/models/conexion.php on line 10
+[01-Dec-2022 13:40:15 America/Buenos_Aires] PHP Warning:  mysqli::set_charset(): Couldn't fetch mysqli in /home/protex/public_html/client_access/models/conexion.php on line 18
+[01-Dec-2022 13:40:15 America/Buenos_Aires] PHP Warning:  mysqli::query(): Couldn't fetch mysqli in /home/protex/public_html/client_access/models/conexion.php on line 19
+[01-Dec-2022 16:41:46 UTC] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'root'@'localhost' (using password: NO) in /home/protex/public_html/client_access/models/conexion.php on line 11
+[01-Dec-2022 13:41:46 America/Buenos_Aires] PHP Warning:  mysqli::set_charset(): Couldn't fetch mysqli in /home/protex/public_html/client_access/models/conexion.php on line 19
+[01-Dec-2022 13:41:46 America/Buenos_Aires] PHP Warning:  mysqli::query(): Couldn't fetch mysqli in /home/protex/public_html/client_access/models/conexion.php on line 20
+[01-Dec-2022 16:42:58 UTC] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'protex_protex'@'localhost' (using password: NO) in /home/protex/public_html/client_access/models/conexion.php on line 13
+[01-Dec-2022 13:42:58 America/Buenos_Aires] PHP Warning:  mysqli::set_charset(): Couldn't fetch mysqli in /home/protex/public_html/client_access/models/conexion.php on line 21
+[01-Dec-2022 13:42:58 America/Buenos_Aires] PHP Warning:  mysqli::query(): Couldn't fetch mysqli in /home/protex/public_html/client_access/models/conexion.php on line 22
+[01-Dec-2022 16:42:59 UTC] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'protex_protex'@'localhost' (using password: NO) in /home/protex/public_html/client_access/models/conexion.php on line 13
+[01-Dec-2022 13:42:59 America/Buenos_Aires] PHP Warning:  mysqli::set_charset(): Couldn't fetch mysqli in /home/protex/public_html/client_access/models/conexion.php on line 21
+[01-Dec-2022 13:42:59 America/Buenos_Aires] PHP Warning:  mysqli::query(): Couldn't fetch mysqli in /home/protex/public_html/client_access/models/conexion.php on line 22
+[01-Dec-2022 16:44:25 UTC] PHP Warning:  mysqli::__construct(): (HY000/1044): Access denied for user 'protex_protex'@'localhost' to database 'protex_client_access' in /home/protex/public_html/client_access/models/conexion.php on line 14
+[01-Dec-2022 13:44:25 America/Buenos_Aires] PHP Warning:  mysqli::set_charset(): Couldn't fetch mysqli in /home/protex/public_html/client_access/models/conexion.php on line 22
+[01-Dec-2022 13:44:25 America/Buenos_Aires] PHP Warning:  mysqli::query(): Couldn't fetch mysqli in /home/protex/public_html/client_access/models/conexion.php on line 23
+[01-Dec-2022 16:44:26 UTC] PHP Warning:  mysqli::__construct(): (HY000/1044): Access denied for user 'protex_protex'@'localhost' to database 'protex_client_access' in /home/protex/public_html/client_access/models/conexion.php on line 14
+[01-Dec-2022 13:44:26 America/Buenos_Aires] PHP Warning:  mysqli::set_charset(): Couldn't fetch mysqli in /home/protex/public_html/client_access/models/conexion.php on line 22
+[01-Dec-2022 13:44:26 America/Buenos_Aires] PHP Warning:  mysqli::query(): Couldn't fetch mysqli in /home/protex/public_html/client_access/models/conexion.php on line 23
+[01-Dec-2022 15:26:44 America/Buenos_Aires] PHP Warning:  include_once(../../vendor/PHPExcel/IOFactory.php): failed to open stream: No such file or directory in /home/protex/public_html/client_access/models/administrar_empresas.php on line 78
+[01-Dec-2022 15:26:44 America/Buenos_Aires] PHP Warning:  include_once(): Failed opening '../../vendor/PHPExcel/IOFactory.php' for inclusion (include_path='.:/opt/cpanel/ea-php73/root/usr/share/pear') in /home/protex/public_html/client_access/models/administrar_empresas.php on line 78
+[01-Dec-2022 15:26:44 America/Buenos_Aires] PHP Fatal error:  Uncaught Error: Class 'PHPExcel_IOFactory' not found in /home/protex/public_html/client_access/models/administrar_empresas.php:79
+Stack trace:
+#0 /home/protex/public_html/client_access/models/administrar_empresas.php(215): Empresas->importarEmpresas(Array)
+#1 {main}
+  thrown in /home/protex/public_html/client_access/models/administrar_empresas.php on line 79
+[01-Dec-2022 15:27:19 America/Buenos_Aires] PHP Warning:  include_once(../../vendor/PHPExcel/IOFactory.php): failed to open stream: No such file or directory in /home/protex/public_html/client_access/models/administrar_empresas.php on line 78
+[01-Dec-2022 15:27:19 America/Buenos_Aires] PHP Warning:  include_once(): Failed opening '../../vendor/PHPExcel/IOFactory.php' for inclusion (include_path='.:/opt/cpanel/ea-php73/root/usr/share/pear') in /home/protex/public_html/client_access/models/administrar_empresas.php on line 78
+[01-Dec-2022 15:27:19 America/Buenos_Aires] PHP Fatal error:  Uncaught Error: Class 'PHPExcel_IOFactory' not found in /home/protex/public_html/client_access/models/administrar_empresas.php:79
+Stack trace:
+#0 /home/protex/public_html/client_access/models/administrar_empresas.php(215): Empresas->importarEmpresas(Array)
+#1 {main}
+  thrown in /home/protex/public_html/client_access/models/administrar_empresas.php on line 79
+[01-Dec-2022 15:28:29 America/Buenos_Aires] PHP Warning:  include_once(../../vendor/PHPExcel/IOFactory.php): failed to open stream: No such file or directory in /home/protex/public_html/client_access/models/administrar_empresas.php on line 78
+[01-Dec-2022 15:28:29 America/Buenos_Aires] PHP Warning:  include_once(): Failed opening '../../vendor/PHPExcel/IOFactory.php' for inclusion (include_path='.:/opt/cpanel/ea-php73/root/usr/share/pear') in /home/protex/public_html/client_access/models/administrar_empresas.php on line 78
+[01-Dec-2022 15:28:29 America/Buenos_Aires] PHP Fatal error:  Uncaught Error: Class 'PHPExcel_IOFactory' not found in /home/protex/public_html/client_access/models/administrar_empresas.php:79
+Stack trace:
+#0 /home/protex/public_html/client_access/models/administrar_empresas.php(215): Empresas->importarEmpresas(Array)
+#1 {main}
+  thrown in /home/protex/public_html/client_access/models/administrar_empresas.php on line 79
+[01-Dec-2022 15:32:47 America/Buenos_Aires] PHP Warning:  include_once(../../vendor/PHPExcel/IOFactory.php): failed to open stream: No such file or directory in /home/protex/public_html/client_access/models/administrar_empresas.php on line 78
+[01-Dec-2022 15:32:47 America/Buenos_Aires] PHP Warning:  include_once(): Failed opening '../../vendor/PHPExcel/IOFactory.php' for inclusion (include_path='.:/opt/cpanel/ea-php74/root/usr/share/pear') in /home/protex/public_html/client_access/models/administrar_empresas.php on line 78
+[01-Dec-2022 15:32:47 America/Buenos_Aires] PHP Fatal error:  Uncaught Error: Class 'PHPExcel_IOFactory' not found in /home/protex/public_html/client_access/models/administrar_empresas.php:79
+Stack trace:
+#0 /home/protex/public_html/client_access/models/administrar_empresas.php(215): Empresas->importarEmpresas(Array)
+#1 {main}
+  thrown in /home/protex/public_html/client_access/models/administrar_empresas.php on line 79
+[01-Dec-2022 15:34:26 America/Buenos_Aires] PHP Warning:  include_once(../../vendor/PHPExcel/IOFactory.php): failed to open stream: No such file or directory in /home/protex/public_html/client_access/models/administrar_empresas.php on line 78
+[01-Dec-2022 15:34:26 America/Buenos_Aires] PHP Warning:  include_once(): Failed opening '../../vendor/PHPExcel/IOFactory.php' for inclusion (include_path='.:/opt/cpanel/ea-php74/root/usr/share/pear') in /home/protex/public_html/client_access/models/administrar_empresas.php on line 78
+[01-Dec-2022 15:34:26 America/Buenos_Aires] PHP Fatal error:  Uncaught Error: Class 'PHPExcel_IOFactory' not found in /home/protex/public_html/client_access/models/administrar_empresas.php:79
+Stack trace:
+#0 /home/protex/public_html/client_access/models/administrar_empresas.php(215): Empresas->importarEmpresas(Array)
+#1 {main}
+  thrown in /home/protex/public_html/client_access/models/administrar_empresas.php on line 79
+[01-Dec-2022 15:53:32 America/Buenos_Aires] PHP Warning:  include_once(../../vendor/PHPExcel/IOFactory.php): failed to open stream: No such file or directory in /home/protex/public_html/client_access/models/administrar_empresas.php on line 78
+[01-Dec-2022 15:53:32 America/Buenos_Aires] PHP Warning:  include_once(): Failed opening '../../vendor/PHPExcel/IOFactory.php' for inclusion (include_path='.:/opt/cpanel/ea-php74/root/usr/share/pear') in /home/protex/public_html/client_access/models/administrar_empresas.php on line 78
+[01-Dec-2022 15:53:32 America/Buenos_Aires] PHP Fatal error:  Uncaught Error: Class 'PHPExcel_IOFactory' not found in /home/protex/public_html/client_access/models/administrar_empresas.php:79
+Stack trace:
+#0 /home/protex/public_html/client_access/models/administrar_empresas.php(215): Empresas->importarEmpresas(Array)
+#1 {main}
+  thrown in /home/protex/public_html/client_access/models/administrar_empresas.php on line 79
+[01-Dec-2022 15:53:51 America/Buenos_Aires] PHP Fatal error:  Uncaught Error: Class 'PHPExcel' not found in /home/protex/public_html/client_access/assets/PHPExcel/Reader/Excel2007.php:362
+Stack trace:
+#0 /home/protex/public_html/client_access/assets/PHPExcel/IOFactory.php(193): PHPExcel_Reader_Excel2007->load('empresas (1).xl...')
+#1 /home/protex/public_html/client_access/models/administrar_empresas.php(79): PHPExcel_IOFactory::load('empresas (1).xl...')
+#2 /home/protex/public_html/client_access/models/administrar_empresas.php(215): Empresas->importarEmpresas(Array)
+#3 {main}
+  thrown in /home/protex/public_html/client_access/assets/PHPExcel/Reader/Excel2007.php on line 362
+[01-Dec-2022 15:58:23 America/Buenos_Aires] PHP Warning:  require_once(../../vendor/PHPExcel.php): failed to open stream: No such file or directory in /home/protex/public_html/client_access/models/administrar_empresas.php on line 90
+[01-Dec-2022 15:58:23 America/Buenos_Aires] PHP Fatal error:  require_once(): Failed opening required '../../vendor/PHPExcel.php' (include_path='.:/opt/cpanel/ea-php74/root/usr/share/pear') in /home/protex/public_html/client_access/models/administrar_empresas.php on line 90
+[01-Dec-2022 17:04:07 America/Buenos_Aires] PHP Warning:  unlink(../views/archivos_empresas/2/): Is a directory in /home/protex/public_html/client_access/models/administrar_empresas.php on line 195
+[01-Dec-2022 17:04:25 America/Buenos_Aires] PHP Warning:  unlink(../views/archivos_empresas/2/): Is a directory in /home/protex/public_html/client_access/models/administrar_empresas.php on line 195
+[01-Dec-2022 17:04:27 America/Buenos_Aires] PHP Warning:  unlink(../views/archivos_empresas/2/): Is a directory in /home/protex/public_html/client_access/models/administrar_empresas.php on line 195
+[01-Dec-2022 17:04:39 America/Buenos_Aires] PHP Warning:  unlink(../views/archivos_empresas/2/): Is a directory in /home/protex/public_html/client_access/models/administrar_empresas.php on line 195
+[17-Feb-2023 12:09:36 America/Buenos_Aires] PHP Warning:  unlink(../views/archivos_empresas/13/): Is a directory in /home/protex/public_html/client_access/models/administrar_empresas.php on line 195
+[17-Feb-2023 12:09:38 America/Buenos_Aires] PHP Warning:  unlink(../views/archivos_empresas/13/): Is a directory in /home/protex/public_html/client_access/models/administrar_empresas.php on line 195
+[17-Feb-2023 12:09:41 America/Buenos_Aires] PHP Warning:  unlink(../views/archivos_empresas/13/): Is a directory in /home/protex/public_html/client_access/models/administrar_empresas.php on line 195
+[17-Feb-2023 12:09:46 America/Buenos_Aires] PHP Warning:  unlink(../views/archivos_empresas/13/): Is a directory in /home/protex/public_html/client_access/models/administrar_empresas.php on line 195
+[28-Feb-2023 15:14:52 America/Buenos_Aires] PHP Warning:  unlink(../views/archivos_empresas/23/): Is a directory in /home/protex/public_html/client_access/models/administrar_empresas.php on line 195
+[02-Mar-2023 15:48:49 America/Buenos_Aires] PHP Warning:  unlink(../views/archivos_empresas/13/): Is a directory in /home/protex/public_html/client_access/models/administrar_empresas.php on line 195
+[02-Mar-2023 15:48:51 America/Buenos_Aires] PHP Warning:  unlink(../views/archivos_empresas/13/): Is a directory in /home/protex/public_html/client_access/models/administrar_empresas.php on line 195
+[02-Mar-2023 15:48:53 America/Buenos_Aires] PHP Warning:  unlink(../views/archivos_empresas/13/): Is a directory in /home/protex/public_html/client_access/models/administrar_empresas.php on line 195
+[02-Mar-2023 15:48:55 America/Buenos_Aires] PHP Warning:  unlink(../views/archivos_empresas/13/): Is a directory in /home/protex/public_html/client_access/models/administrar_empresas.php on line 195
+[02-Mar-2023 16:25:37 America/Buenos_Aires] PHP Warning:  unlink(../views/archivos_empresas/23/): Is a directory in /home/protex/public_html/client_access/models/administrar_empresas.php on line 195
+[02-Mar-2023 16:25:44 America/Buenos_Aires] PHP Warning:  unlink(../views/archivos_empresas/23/): Is a directory in /home/protex/public_html/client_access/models/administrar_empresas.php on line 195
+[03-Mar-2023 11:41:45 America/Buenos_Aires] PHP Warning:  unlink(../views/archivos_empresas/23/): Is a directory in /home/protex/public_html/client_access/models/administrar_empresas.php on line 197
+[03-Mar-2023 16:26:38 UTC] PHP Warning:  session_start(): Cannot start session when headers already sent in /home/protex/public_html/client_access/models/administrar_empresas.php on line 7
+[03-Mar-2023 16:33:52 UTC] PHP Notice:  Undefined variable: hola in /home/protex/public_html/client_access/models/administrar_empresas.php on line 9
+[03-Mar-2023 16:35:35 UTC] PHP Notice:  Undefined variable: hola in /home/protex/public_html/client_access/models/administrar_empresas.php on line 9
+[03-Mar-2023 13:47:02 America/Buenos_Aires] PHP Notice:  Undefined variable: nombre_adjunto in /home/protex/public_html/client_access/models/administrar_empresas.php on line 257
+[03-Mar-2023 13:47:02 America/Buenos_Aires] PHP Warning:  unlink(../views/archivos_empresas/23/): Is a directory in /home/protex/public_html/client_access/models/administrar_empresas.php on line 214
+[03-Mar-2023 13:52:43 America/Buenos_Aires] PHP Notice:  Undefined variable: nombre_adjunto in /home/protex/public_html/client_access/models/administrar_empresas.php on line 257
+[03-Mar-2023 13:52:43 America/Buenos_Aires] PHP Warning:  unlink(../views/archivos_empresas/23/): Is a directory in /home/protex/public_html/client_access/models/administrar_empresas.php on line 214
+[03-Mar-2023 14:13:41 America/Buenos_Aires] PHP Notice:  Undefined variable: nombre_adjunto in /home/protex/public_html/client_access/models/administrar_empresas.php on line 267
+[03-Mar-2023 14:13:41 America/Buenos_Aires] PHP Warning:  unlink(../views/archivos_empresas/23/): Is a directory in /home/protex/public_html/client_access/models/administrar_empresas.php on line 224
+[03-Mar-2023 14:34:02 America/Buenos_Aires] PHP Notice:  Undefined variable: nombre_adjunto in /home/protex/public_html/client_access/models/administrar_empresas.php on line 270
+[03-Mar-2023 14:34:02 America/Buenos_Aires] PHP Warning:  unlink(../views/archivos_empresas/23/): Is a directory in /home/protex/public_html/client_access/models/administrar_empresas.php on line 221
+[03-Mar-2023 14:35:18 America/Buenos_Aires] PHP Warning:  unlink(../views/archivos_empresas/23/RODRIGUEZ ARNALDO.pdf): No such file or directory in /home/protex/public_html/client_access/models/administrar_empresas.php on line 221
+[09-Mar-2023 11:37:29 America/Buenos_Aires] PHP Deprecated:  Array and string offset access syntax with curly braces is deprecated in /home/protex/public_html/client_access/assets/PHPExcel/Reader/Excel5.php on line 1616
+[09-Mar-2023 11:37:29 America/Buenos_Aires] PHP Deprecated:  Array and string offset access syntax with curly braces is deprecated in /home/protex/public_html/client_access/assets/PHPExcel/Reader/Excel5.php on line 1674
+[09-Mar-2023 11:37:29 America/Buenos_Aires] PHP Deprecated:  Array and string offset access syntax with curly braces is deprecated in /home/protex/public_html/client_access/assets/PHPExcel/Reader/Excel5.php on line 1811
+[09-Mar-2023 11:37:29 America/Buenos_Aires] PHP Deprecated:  Array and string offset access syntax with curly braces is deprecated in /home/protex/public_html/client_access/assets/PHPExcel/Reader/Excel5.php on line 1833
+[09-Mar-2023 11:37:29 America/Buenos_Aires] PHP Deprecated:  Array and string offset access syntax with curly braces is deprecated in /home/protex/public_html/client_access/assets/PHPExcel/Reader/Excel5.php on line 1843
+[09-Mar-2023 11:37:29 America/Buenos_Aires] PHP Deprecated:  Array and string offset access syntax with curly braces is deprecated in /home/protex/public_html/client_access/assets/PHPExcel/Reader/Excel5.php on line 1861
+[09-Mar-2023 11:37:29 America/Buenos_Aires] PHP Deprecated:  Array and string offset access syntax with curly braces is deprecated in /home/protex/public_html/client_access/assets/PHPExcel/Reader/Excel5.php on line 1874
+[09-Mar-2023 11:37:29 America/Buenos_Aires] PHP Deprecated:  Array and string offset access syntax with curly braces is deprecated in /home/protex/public_html/client_access/assets/PHPExcel/Reader/Excel5.php on line 1878
+[09-Mar-2023 11:37:29 America/Buenos_Aires] PHP Deprecated:  Array and string offset access syntax with curly braces is deprecated in /home/protex/public_html/client_access/assets/PHPExcel/Reader/Excel5.php on line 1960
+[09-Mar-2023 11:37:29 America/Buenos_Aires] PHP Deprecated:  Array and string offset access syntax with curly braces is deprecated in /home/protex/public_html/client_access/assets/PHPExcel/Reader/Excel5.php on line 2083
+[09-Mar-2023 11:37:29 America/Buenos_Aires] PHP Deprecated:  Array and string offset access syntax with curly braces is deprecated in /home/protex/public_html/client_access/assets/PHPExcel/Reader/Excel5.php on line 2083
+[09-Mar-2023 11:37:29 America/Buenos_Aires] PHP Deprecated:  Array and string offset access syntax with curly braces is deprecated in /home/protex/public_html/client_access/assets/PHPExcel/Reader/Excel5.php on line 2083
+[09-Mar-2023 11:37:29 America/Buenos_Aires] PHP Deprecated:  Array and string offset access syntax with curly braces is deprecated in /home/protex/public_html/client_access/assets/PHPExcel/Reader/Excel5.php on line 2099
+[09-Mar-2023 11:37:29 America/Buenos_Aires] PHP Deprecated:  Array and string offset access syntax with curly braces is deprecated in /home/protex/public_html/client_access/assets/PHPExcel/Reader/Excel5.php on line 2099
+[09-Mar-2023 11:37:29 America/Buenos_Aires] PHP Deprecated:  Array and string offset access syntax with curly braces is deprecated in /home/protex/public_html/client_access/assets/PHPExcel/Reader/Excel5.php on line 2099
+[09-Mar-2023 11:37:29 America/Buenos_Aires] PHP Deprecated:  Array and string offset access syntax with curly braces is deprecated in /home/protex/public_html/client_access/assets/PHPExcel/Reader/Excel5.php on line 2115
+[09-Mar-2023 11:37:29 America/Buenos_Aires] PHP Deprecated:  Array and string offset access syntax with curly braces is deprecated in /home/protex/public_html/client_access/assets/PHPExcel/Reader/Excel5.php on line 2115
+[09-Mar-2023 11:37:29 America/Buenos_Aires] PHP Deprecated:  Array and string offset access syntax with curly braces is deprecated in /home/protex/public_html/client_access/assets/PHPExcel/Reader/Excel5.php on line 2115
+[09-Mar-2023 11:37:29 America/Buenos_Aires] PHP Deprecated:  Array and string offset access syntax with curly braces is deprecated in /home/protex/public_html/client_access/assets/PHPExcel/Reader/Excel5.php on line 2131
+[09-Mar-2023 11:37:29 America/Buenos_Aires] PHP Deprecated:  Array and string offset access syntax with curly braces is deprecated in /home/protex/public_html/client_access/assets/PHPExcel/Reader/Excel5.php on line 2131
+[09-Mar-2023 11:37:29 America/Buenos_Aires] PHP Deprecated:  Array and string offset access syntax with curly braces is deprecated in /home/protex/public_html/client_access/assets/PHPExcel/Reader/Excel5.php on line 2131
+[09-Mar-2023 11:37:29 America/Buenos_Aires] PHP Deprecated:  Array and string offset access syntax with curly braces is deprecated in /home/protex/public_html/client_access/assets/PHPExcel/Reader/Excel5.php on line 2147
+[09-Mar-2023 11:37:29 America/Buenos_Aires] PHP Deprecated:  Array and string offset access syntax with curly braces is deprecated in /home/protex/public_html/client_access/assets/PHPExcel/Reader/Excel5.php on line 2147
+[09-Mar-2023 11:37:29 America/Buenos_Aires] PHP Deprecated:  Array and string offset access syntax with curly braces is deprecated in /home/protex/public_html/client_access/assets/PHPExcel/Reader/Excel5.php on line 2147
+[09-Mar-2023 11:37:29 America/Buenos_Aires] PHP Deprecated:  Array and string offset access syntax with curly braces is deprecated in /home/protex/public_html/client_access/assets/PHPExcel/Reader/Excel5.php on line 2163
+[09-Mar-2023 11:37:29 America/Buenos_Aires] PHP Deprecated:  Array and string offset access syntax with curly braces is deprecated in /home/protex/public_html/client_access/assets/PHPExcel/Reader/Excel5.php on line 2163
+[09-Mar-2023 11:37:29 America/Buenos_Aires] PHP Deprecated:  Array and string offset access syntax with curly braces is deprecated in /home/protex/public_html/client_access/assets/PHPExcel/Reader/Excel5.php on line 2163
+[09-Mar-2023 11:37:29 America/Buenos_Aires] PHP Deprecated:  Array and string offset access syntax with curly braces is deprecated in /home/protex/public_html/client_access/assets/PHPExcel/Reader/Excel5.php on line 2179
+[09-Mar-2023 11:37:29 America/Buenos_Aires] PHP Deprecated:  Array and string offset access syntax with curly braces is deprecated in /home/protex/public_html/client_access/assets/PHPExcel/Reader/Excel5.php on line 2179
+[09-Mar-2023 11:37:29 America/Buenos_Aires] PHP Deprecated:  Array and string offset access syntax with curly braces is deprecated in /home/protex/public_html/client_access/assets/PHPExcel/Reader/Excel5.php on line 2179
+[09-Mar-2023 11:37:29 America/Buenos_Aires] PHP Deprecated:  Array and string offset access syntax with curly braces is deprecated in /home/protex/public_html/client_access/assets/PHPExcel/Reader/Excel5.php on line 2195
+[09-Mar-2023 11:37:29 America/Buenos_Aires] PHP Deprecated:  Array and string offset access syntax with curly braces is deprecated in /home/protex/public_html/client_access/assets/PHPExcel/Reader/Excel5.php on line 2195
+[09-Mar-2023 11:37:29 America/Buenos_Aires] PHP Deprecated:  Array and string offset access syntax with curly braces is deprecated in /home/protex/public_html/client_access/assets/PHPExcel/Reader/Excel5.php on line 2195
+[09-Mar-2023 11:37:29 America/Buenos_Aires] PHP Deprecated:  Array and string offset access syntax with curly braces is deprecated in /home/protex/public_html/client_access/assets/PHPExcel/Reader/Excel5.php on line 2236
+[09-Mar-2023 11:37:29 America/Buenos_Aires] PHP Deprecated:  Array and string offset access syntax with curly braces is deprecated in /home/protex/public_html/client_access/assets/PHPExcel/Reader/Excel5.php on line 2300
+[09-Mar-2023 11:37:29 America/Buenos_Aires] PHP Deprecated:  Array and string offset access syntax with curly braces is deprecated in /home/protex/public_html/client_access/assets/PHPExcel/Reader/Excel5.php on line 2308
+[09-Mar-2023 11:37:29 America/Buenos_Aires] PHP Deprecated:  Array and string offset access syntax with curly braces is deprecated in /home/protex/public_html/client_access/assets/PHPExcel/Reader/Excel5.php on line 2483
+[09-Mar-2023 11:37:29 America/Buenos_Aires] PHP Deprecated:  Array and string offset access syntax with curly braces is deprecated in /home/protex/public_html/client_access/assets/PHPExcel/Reader/Excel5.php on line 2565
+[09-Mar-2023 11:37:29 America/Buenos_Aires] PHP Deprecated:  Array and string offset access syntax with curly braces is deprecated in /home/protex/public_html/client_access/assets/PHPExcel/Reader/Excel5.php on line 2634
+[09-Mar-2023 11:37:29 America/Buenos_Aires] PHP Deprecated:  Array and string offset access syntax with curly braces is deprecated in /home/protex/public_html/client_access/assets/PHPExcel/Reader/Excel5.php on line 2658
+[09-Mar-2023 11:37:29 America/Buenos_Aires] PHP Deprecated:  Array and string offset access syntax with curly braces is deprecated in /home/protex/public_html/client_access/assets/PHPExcel/Reader/Excel5.php on line 3531
+[09-Mar-2023 11:37:29 America/Buenos_Aires] PHP Deprecated:  Array and string offset access syntax with curly braces is deprecated in /home/protex/public_html/client_access/assets/PHPExcel/Reader/Excel5.php on line 3555
+[09-Mar-2023 11:37:29 America/Buenos_Aires] PHP Deprecated:  Array and string offset access syntax with curly braces is deprecated in /home/protex/public_html/client_access/assets/PHPExcel/Reader/Excel5.php on line 3556
+[09-Mar-2023 11:37:29 America/Buenos_Aires] PHP Deprecated:  Array and string offset access syntax with curly braces is deprecated in /home/protex/public_html/client_access/assets/PHPExcel/Reader/Excel5.php on line 3557
+[09-Mar-2023 11:37:29 America/Buenos_Aires] PHP Deprecated:  Array and string offset access syntax with curly braces is deprecated in /home/protex/public_html/client_access/assets/PHPExcel/Reader/Excel5.php on line 3571
+[09-Mar-2023 11:37:29 America/Buenos_Aires] PHP Deprecated:  Array and string offset access syntax with curly braces is deprecated in /home/protex/public_html/client_access/assets/PHPExcel/Reader/Excel5.php on line 3572
+[09-Mar-2023 11:37:29 America/Buenos_Aires] PHP Deprecated:  Array and string offset access syntax with curly braces is deprecated in /home/protex/public_html/client_access/assets/PHPExcel/Reader/Excel5.php on line 3573
+[09-Mar-2023 11:37:29 America/Buenos_Aires] PHP Deprecated:  Array and string offset access syntax with curly braces is deprecated in /home/protex/public_html/client_access/assets/PHPExcel/Reader/Excel5.php on line 3577
+[09-Mar-2023 11:37:29 America/Buenos_Aires] PHP Deprecated:  Array and string offset access syntax with curly braces is deprecated in /home/protex/public_html/client_access/assets/PHPExcel/Reader/Excel5.php on line 3579
+[09-Mar-2023 11:37:29 America/Buenos_Aires] PHP Deprecated:  Array and string offset access syntax with curly braces is deprecated in /home/protex/public_html/client_access/assets/PHPExcel/Reader/Excel5.php on line 3580
+[09-Mar-2023 11:37:29 America/Buenos_Aires] PHP Deprecated:  Array and string offset access syntax with curly braces is deprecated in /home/protex/public_html/client_access/assets/PHPExcel/Reader/Excel5.php on line 3581
+[09-Mar-2023 11:37:29 America/Buenos_Aires] PHP Deprecated:  Array and string offset access syntax with curly braces is deprecated in /home/protex/public_html/client_access/assets/PHPExcel/Reader/Excel5.php on line 3585
+[09-Mar-2023 11:37:29 America/Buenos_Aires] PHP Deprecated:  Array and string offset access syntax with curly braces is deprecated in /home/protex/public_html/client_access/assets/PHPExcel/Reader/Excel5.php on line 3587
+[09-Mar-2023 11:37:29 America/Buenos_Aires] PHP Deprecated:  Array and string offset access syntax with curly braces is deprecated in /home/protex/public_html/client_access/assets/PHPExcel/Reader/Excel5.php on line 3588
+[09-Mar-2023 11:37:29 America/Buenos_Aires] PHP Deprecated:  Array and string offset access syntax with curly braces is deprecated in /home/protex/public_html/client_access/assets/PHPExcel/Reader/Excel5.php on line 3589
+[09-Mar-2023 11:37:29 America/Buenos_Aires] PHP Deprecated:  Array and string offset access syntax with curly braces is deprecated in /home/protex/public_html/client_access/assets/PHPExcel/Reader/Excel5.php on line 3656
+[09-Mar-2023 11:37:29 America/Buenos_Aires] PHP Deprecated:  Array and string offset access syntax with curly braces is deprecated in /home/protex/public_html/client_access/assets/PHPExcel/Reader/Excel5.php on line 3721
+[09-Mar-2023 11:37:29 America/Buenos_Aires] PHP Deprecated:  Array and string offset access syntax with curly braces is deprecated in /home/protex/public_html/client_access/assets/PHPExcel/Reader/Excel5.php on line 3724
+[09-Mar-2023 11:37:29 America/Buenos_Aires] PHP Deprecated:  Array and string offset access syntax with curly braces is deprecated in /home/protex/public_html/client_access/assets/PHPExcel/Reader/Excel5.php on line 4023
+[09-Mar-2023 11:37:29 America/Buenos_Aires] PHP Deprecated:  Array and string offset access syntax with curly braces is deprecated in /home/protex/public_html/client_access/assets/PHPExcel/Reader/Excel5.php on line 4171
+[09-Mar-2023 11:37:29 America/Buenos_Aires] PHP Deprecated:  Array and string offset access syntax with curly braces is deprecated in /home/protex/public_html/client_access/assets/PHPExcel/Reader/Excel5.php on line 4173
+[09-Mar-2023 11:37:29 America/Buenos_Aires] PHP Deprecated:  Array and string offset access syntax with curly braces is deprecated in /home/protex/public_html/client_access/assets/PHPExcel/Reader/Excel5.php on line 5704
+[09-Mar-2023 11:37:29 America/Buenos_Aires] PHP Deprecated:  Array and string offset access syntax with curly braces is deprecated in /home/protex/public_html/client_access/assets/PHPExcel/Reader/Excel5.php on line 5707
+[09-Mar-2023 11:37:29 America/Buenos_Aires] PHP Deprecated:  Array and string offset access syntax with curly braces is deprecated in /home/protex/public_html/client_access/assets/PHPExcel/Reader/Excel5.php on line 6105
+[09-Mar-2023 11:37:29 America/Buenos_Aires] PHP Deprecated:  Array and string offset access syntax with curly braces is deprecated in /home/protex/public_html/client_access/assets/PHPExcel/Reader/Excel5.php on line 6108
+[09-Mar-2023 11:37:29 America/Buenos_Aires] PHP Deprecated:  Array and string offset access syntax with curly braces is deprecated in /home/protex/public_html/client_access/assets/PHPExcel/Reader/Excel5.php on line 6111
+[09-Mar-2023 11:37:29 America/Buenos_Aires] PHP Warning:  "continue" targeting switch is equivalent to "break". Did you mean to use "continue 2"? in /home/protex/public_html/client_access/assets/PHPExcel/Shared/OLE.php on line 290
+[09-Mar-2023 11:37:29 America/Buenos_Aires] PHP Deprecated:  Array and string offset access syntax with curly braces is deprecated in /home/protex/public_html/client_access/assets/PHPExcel/Shared/OLE.php on line 450
+[09-Mar-2023 11:37:29 America/Buenos_Aires] PHP Deprecated:  Array and string offset access syntax with curly braces is deprecated in /home/protex/public_html/client_access/assets/PHPExcel/Reader/Excel5/Escher.php on line 253
+[09-Mar-2023 11:37:29 America/Buenos_Aires] PHP Deprecated:  Array and string offset access syntax with curly braces is deprecated in /home/protex/public_html/client_access/assets/PHPExcel/Reader/Excel5/Escher.php on line 256
+[09-Mar-2023 11:37:29 America/Buenos_Aires] PHP Deprecated:  Array and string offset access syntax with curly braces is deprecated in /home/protex/public_html/client_access/assets/PHPExcel/Reader/Excel5/Escher.php on line 259
+[09-Mar-2023 11:37:29 America/Buenos_Aires] PHP Deprecated:  Array and string offset access syntax with curly braces is deprecated in /home/protex/public_html/client_access/assets/PHPExcel/Reader/Excel5/Escher.php on line 262
+[09-Mar-2023 11:37:29 America/Buenos_Aires] PHP Deprecated:  Array and string offset access syntax with curly braces is deprecated in /home/protex/public_html/client_access/assets/PHPExcel/Reader/Excel5/Escher.php on line 304
+[09-Mar-2023 11:37:29 America/Buenos_Aires] PHP Deprecated:  Array and string offset access syntax with curly braces is deprecated in /home/protex/public_html/client_access/assets/PHPExcel/Reader/Excel5/Escher.php on line 345
+[14-Mar-2023 14:14:54 America/Buenos_Aires] PHP Warning:  unlink(../views/archivos_empresas/23/PIÃ‘ERO ULISES.pdf): No such file or directory in /home/protex/public_html/client_access/models/administrar_empresas.php on line 230
+[14-Mar-2023 14:15:04 America/Buenos_Aires] PHP Warning:  unlink(../views/archivos_empresas/23/PIÃ‘ERO ULISES.pdf): No such file or directory in /home/protex/public_html/client_access/models/administrar_empresas.php on line 230
+[14-Mar-2023 17:29:30 UTC] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'root'@'localhost' (using password: NO) in /home/protex/public_html/client_access/models/conexion.php on line 10
+[14-Mar-2023 14:29:30 America/Buenos_Aires] PHP Warning:  unlink(../views/archivos_empresas/4/PIÃ‘ERO ULISES RX 2 001.jpg): No such file or directory in /home/protex/public_html/client_access/models/administrar_empresas.php on line 230
+[14-Mar-2023 17:29:30 UTC] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'root'@'localhost' (using password: NO) in /home/protex/public_html/client_access/models/conexion.php on line 10
+[14-Mar-2023 14:29:30 America/Buenos_Aires] PHP Warning:  mysqli::set_charset(): Couldn't fetch mysqli in /home/protex/public_html/client_access/models/conexion.php on line 19
+[14-Mar-2023 14:29:30 America/Buenos_Aires] PHP Warning:  mysqli::query(): Couldn't fetch mysqli in /home/protex/public_html/client_access/models/conexion.php on line 20
+[14-Mar-2023 14:29:30 America/Buenos_Aires] PHP Fatal error:  Uncaught Error: Call to a member function fetch_array() on bool in /home/protex/public_html/client_access/models/administrar_empresas.php:154
+Stack trace:
+#0 /home/protex/public_html/client_access/models/administrar_empresas.php(262): Empresas->trerArchivosEmpresa('4')
+#1 {main}
+  thrown in /home/protex/public_html/client_access/models/administrar_empresas.php on line 154
+[14-Mar-2023 17:30:27 UTC] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'root'@'localhost' (using password: NO) in /home/protex/public_html/client_access/models/conexion.php on line 10
+[14-Mar-2023 14:30:27 America/Buenos_Aires] PHP Warning:  mysqli::set_charset(): Couldn't fetch mysqli in /home/protex/public_html/client_access/models/conexion.php on line 19
+[14-Mar-2023 14:30:27 America/Buenos_Aires] PHP Warning:  mysqli::query(): Couldn't fetch mysqli in /home/protex/public_html/client_access/models/conexion.php on line 20
+[14-Mar-2023 14:30:27 America/Buenos_Aires] PHP Fatal error:  Uncaught Error: Call to a member function fetch_array() on bool in /home/protex/public_html/client_access/models/administrar_empresas.php:48
+Stack trace:
+#0 /home/protex/public_html/client_access/models/administrar_empresas.php(287): Empresas->traerEmpresas()
+#1 {main}
+  thrown in /home/protex/public_html/client_access/models/administrar_empresas.php on line 48
+[14-Mar-2023 17:31:01 UTC] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'root'@'localhost' (using password: NO) in /home/protex/public_html/client_access/models/conexion.php on line 10
+[14-Mar-2023 14:31:01 America/Buenos_Aires] PHP Warning:  mysqli::set_charset(): Couldn't fetch mysqli in /home/protex/public_html/client_access/models/conexion.php on line 19
+[14-Mar-2023 14:31:01 America/Buenos_Aires] PHP Warning:  mysqli::query(): Couldn't fetch mysqli in /home/protex/public_html/client_access/models/conexion.php on line 20
+[14-Mar-2023 14:31:01 America/Buenos_Aires] PHP Fatal error:  Uncaught Error: Call to a member function fetch_array() on bool in /home/protex/public_html/client_access/models/administrar_empresas.php:48
+Stack trace:
+#0 /home/protex/public_html/client_access/models/administrar_empresas.php(287): Empresas->traerEmpresas()
+#1 {main}
+  thrown in /home/protex/public_html/client_access/models/administrar_empresas.php on line 48
+[14-Mar-2023 17:31:34 UTC] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'root'@'localhost' (using password: NO) in /home/protex/public_html/client_access/models/conexion.php on line 10
+[14-Mar-2023 14:31:34 America/Buenos_Aires] PHP Warning:  mysqli::set_charset(): Couldn't fetch mysqli in /home/protex/public_html/client_access/models/conexion.php on line 18
+[14-Mar-2023 14:31:34 America/Buenos_Aires] PHP Warning:  mysqli::query(): Couldn't fetch mysqli in /home/protex/public_html/client_access/models/conexion.php on line 19
+[14-Mar-2023 14:31:34 America/Buenos_Aires] PHP Fatal error:  Uncaught Error: Call to a member function fetch_array() on bool in /home/protex/public_html/client_access/models/administrar_empresas.php:48
+Stack trace:
+#0 /home/protex/public_html/client_access/models/administrar_empresas.php(287): Empresas->traerEmpresas()
+#1 {main}
+  thrown in /home/protex/public_html/client_access/models/administrar_empresas.php on line 48
+[14-Mar-2023 17:42:31 UTC] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'protex_protex'@'localhost' (using password: YES) in /home/protex/public_html/client_access/models/conexion.php on line 17
+[14-Mar-2023 14:42:31 America/Buenos_Aires] PHP Warning:  mysqli::set_charset(): Couldn't fetch mysqli in /home/protex/public_html/client_access/models/conexion.php on line 25
+[14-Mar-2023 14:42:31 America/Buenos_Aires] PHP Warning:  mysqli::query(): Couldn't fetch mysqli in /home/protex/public_html/client_access/models/conexion.php on line 26
+[14-Mar-2023 14:42:31 America/Buenos_Aires] PHP Fatal error:  Uncaught Error: Call to a member function fetch_array() on bool in /home/protex/public_html/client_access/models/administrar_empresas.php:48
+Stack trace:
+#0 /home/protex/public_html/client_access/models/administrar_empresas.php(287): Empresas->traerEmpresas()
+#1 {main}
+  thrown in /home/protex/public_html/client_access/models/administrar_empresas.php on line 48
+[16-Mar-2023 11:11:58 America/Buenos_Aires] PHP Warning:  unlink(../views/archivos_empresas/16/BAZAN GUSTAVO RX1 001.jpg): No such file or directory in /home/protex/public_html/client_access/models/administrar_empresas.php on line 230
+[16-Mar-2023 11:12:02 America/Buenos_Aires] PHP Warning:  unlink(../views/archivos_empresas/16/BAZAN GUSTAVO RX1 001.jpg): No such file or directory in /home/protex/public_html/client_access/models/administrar_empresas.php on line 230
+[16-Mar-2023 11:12:10 America/Buenos_Aires] PHP Warning:  unlink(../views/archivos_empresas/16/BAZAN GUSTAVO RX1 001.jpg): No such file or directory in /home/protex/public_html/client_access/models/administrar_empresas.php on line 230
+[06-Jun-2023 14:51:15 America/Buenos_Aires] PHP Notice:  Undefined index: empresa in /home/protex/public_html/client_access/models/administrar_empresas.php on line 361
+[06-Jun-2023 17:52:21 UTC] PHP Warning:  require(../assets/PHPMailer/src/Exception.php): failed to open stream: No such file or directory in /home/protex/public_html/client_access/models/administrar_empresas.php on line 16
+[06-Jun-2023 17:52:21 UTC] PHP Fatal error:  require(): Failed opening required '../assets/PHPMailer/src/Exception.php' (include_path='.:/opt/cpanel/ea-php74/root/usr/share/pear') in /home/protex/public_html/client_access/models/administrar_empresas.php on line 16
+[06-Jun-2023 14:56:42 America/Buenos_Aires] PHP Fatal error:  Uncaught Error: Call to a member function fetch_array() on bool in /home/protex/public_html/client_access/models/administrar_empresas.php:389
+Stack trace:
+#0 /home/protex/public_html/client_access/models/administrar_empresas.php(332): Empresas->enviarMail('4', '{"empresa":"DEM...')
+#1 /home/protex/public_html/client_access/models/administrar_empresas.php(556): Empresas->recibir_archivos('{"empresa":"DEM...')
+#2 {main}
+  thrown in /home/protex/public_html/client_access/models/administrar_empresas.php on line 389
+[06-Jun-2023 16:10:50 America/Buenos_Aires] PHP Warning:  include_once(./test_envio_mail.php): failed to open stream: No such file or directory in /home/protex/public_html/client_access/models/eliminar_archivos_viejos.php on line 15
+[06-Jun-2023 16:10:50 America/Buenos_Aires] PHP Warning:  include_once(): Failed opening './test_envio_mail.php' for inclusion (include_path='.:/opt/cpanel/ea-php74/root/usr/share/pear') in /home/protex/public_html/client_access/models/eliminar_archivos_viejos.php on line 15
+[06-Jun-2023 16:11:07 America/Buenos_Aires] PHP Fatal error:  Uncaught ArgumentCountError: Too few arguments to function Empresas::enviarMail(), 1 passed in /home/protex/public_html/client_access/models/test_envio_mail.php on line 7 and exactly 2 expected in /home/protex/public_html/client_access/models/administrar_empresas.php:369
+Stack trace:
+#0 /home/protex/public_html/client_access/models/test_envio_mail.php(7): Empresas->enviarMail(Array)
+#1 /home/protex/public_html/client_access/models/eliminar_archivos_viejos.php(15): include_once('/home/protex/pu...')
+#2 {main}
+  thrown in /home/protex/public_html/client_access/models/administrar_empresas.php on line 369
+[06-Jun-2023 16:12:42 America/Buenos_Aires] PHP Warning:  json_decode() expects parameter 1 to be string, array given in /home/protex/public_html/client_access/models/administrar_empresas.php on line 371
+[06-Jun-2023 16:12:42 America/Buenos_Aires] PHP Notice:  Trying to access array offset on value of type null in /home/protex/public_html/client_access/models/administrar_empresas.php on line 372
+[06-Jun-2023 16:12:42 America/Buenos_Aires] PHP Notice:  Trying to access array offset on value of type null in /home/protex/public_html/client_access/models/administrar_empresas.php on line 373
+[06-Jun-2023 16:12:42 America/Buenos_Aires] PHP Fatal error:  Uncaught PHPMailer\PHPMailer\Exception: Could not access file: ../views/docs/INSTRUCTIVO PARA BAJAR ARCHIVOS SISTEMA PROTEXION.pdf in /home/protex/public_html/client_access/assets/PHPMailer/src/PHPMailer.php:3217
+Stack trace:
+#0 /home/protex/public_html/client_access/models/administrar_empresas.php(443): PHPMailer\PHPMailer\PHPMailer->addAttachment('../views/docs/I...', 'INSTRUCTIVO PAR...')
+#1 /home/protex/public_html/client_access/models/test_envio_mail.php(9): Empresas->enviarMail(4, Array)
+#2 /home/protex/public_html/client_access/models/eliminar_archivos_viejos.php(15): include_once('/home/protex/pu...')
+#3 {main}
+  thrown in /home/protex/public_html/client_access/assets/PHPMailer/src/PHPMailer.php on line 3217
+[06-Jun-2023 16:13:05 America/Buenos_Aires] PHP Fatal error:  Uncaught PHPMailer\PHPMailer\Exception: Could not access file: ../views/docs/INSTRUCTIVO PARA BAJAR ARCHIVOS SISTEMA PROTEXION.pdf in /home/protex/public_html/client_access/assets/PHPMailer/src/PHPMailer.php:3217
+Stack trace:
+#0 /home/protex/public_html/client_access/models/administrar_empresas.php(443): PHPMailer\PHPMailer\PHPMailer->addAttachment('../views/docs/I...', 'INSTRUCTIVO PAR...')
+#1 /home/protex/public_html/client_access/models/test_envio_mail.php(9): Empresas->enviarMail(4, '{"paciente":"Ax...')
+#2 /home/protex/public_html/client_access/models/eliminar_archivos_viejos.php(15): include_once('/home/protex/pu...')
+#3 {main}
+  thrown in /home/protex/public_html/client_access/assets/PHPMailer/src/PHPMailer.php on line 3217
+[26-Jun-2023 19:14:44 America/Buenos_Aires] PHP Notice:  Undefined variable: ok in /home/protex/public_html/client_access/models/administrar_empresas.php on line 442
+[26-Jun-2023 19:14:44 America/Buenos_Aires] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home/protex/public_html/client_access/models/administrar_empresas.php:442) in /home/protex/public_html/client_access/models/administrar_empresas.php on line 646
+[26-Jun-2023 19:16:23 America/Buenos_Aires] PHP Notice:  Undefined variable: ok in /home/protex/public_html/client_access/models/administrar_empresas.php on line 443
+[26-Jun-2023 19:16:23 America/Buenos_Aires] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home/protex/public_html/client_access/models/administrar_empresas.php:443) in /home/protex/public_html/client_access/models/administrar_empresas.php on line 647
+[27-Jun-2023 16:36:46 America/Buenos_Aires] PHP Notice:  Undefined index: datosExtra in /home/protex/public_html/client_access/models/administrar_empresas.php on line 669
+[27-Jun-2023 16:36:46 America/Buenos_Aires] PHP Notice:  Trying to access array offset on value of type null in /home/protex/public_html/client_access/models/administrar_empresas.php on line 424
+[27-Jun-2023 16:36:46 America/Buenos_Aires] PHP Fatal error:  Uncaught Error: Call to a member function fetch_array() on bool in /home/protex/public_html/client_access/models/administrar_empresas.php:428
+Stack trace:
+#0 /home/protex/public_html/client_access/models/administrar_empresas.php(672): Empresas->recibir_archivos(NULL)
+#1 {main}
+  thrown in /home/protex/public_html/client_access/models/administrar_empresas.php on line 428
+[28-Jun-2023 10:52:38 America/Buenos_Aires] PHP Notice:  Trying to access array offset on value of type null in /home/protex/public_html/client_access/models/administrar_empresas.php on line 429
+[28-Jun-2023 10:52:38 America/Buenos_Aires] PHP Notice:  Trying to access array offset on value of type null in /home/protex/public_html/client_access/models/administrar_empresas.php on line 431
+[28-Jun-2023 16:39:54 America/Buenos_Aires] PHP Fatal error:  Uncaught PHPMailer\PHPMailer\Exception: SMTP Error: The following recipients failed: we@seviciosolavarria.com: The mail server could not deliver mail to we@seviciosolavarria.com.  The
+account or domain may not exist, they may be blacklisted, or missing the
+proper dns entries.
+ in /home/protex/public_html/client_access/assets/PHPMailer/src/PHPMailer.php:2082
+Stack trace:
+#0 /home/protex/public_html/client_access/assets/PHPMailer/src/PHPMailer.php(1678): PHPMailer\PHPMailer\PHPMailer->smtpSend('Date: Wed, 28 J...', '--b1=_HsJRRDTEp...')
+#1 /home/protex/public_html/client_access/assets/PHPMailer/src/PHPMailer.php(1516): PHPMailer\PHPMailer\PHPMailer->postSend()
+#2 /home/protex/public_html/client_access/models/administrar_empresas.php(571): PHPMailer\PHPMailer\PHPMailer->send()
+#3 /home/protex/public_html/client_access/models/administrar_empresas.php(440): Empresas->enviarMail('23', '{"id_empresa":2...')
+#4 /home/protex/public_html/client_access/models/administrar_empresas.php(672): Empresas->recibir_archivos( in /home/protex/public_html/client_access/assets/PHPMailer/src/PHPMailer.php on line 2082
+[28-Jun-2023 16:42:24 America/Buenos_Aires] PHP Fatal error:  Uncaught PHPMailer\PHPMailer\Exception: SMTP Error: The following recipients failed: we@seviciosolavarria.com: The mail server could not deliver mail to we@seviciosolavarria.com.  The
+account or domain may not exist, they may be blacklisted, or missing the
+proper dns entries.
+ in /home/protex/public_html/client_access/assets/PHPMailer/src/PHPMailer.php:2082
+Stack trace:
+#0 /home/protex/public_html/client_access/assets/PHPMailer/src/PHPMailer.php(1678): PHPMailer\PHPMailer\PHPMailer->smtpSend('Date: Wed, 28 J...', '--b1=_qjhIQ96cB...')
+#1 /home/protex/public_html/client_access/assets/PHPMailer/src/PHPMailer.php(1516): PHPMailer\PHPMailer\PHPMailer->postSend()
+#2 /home/protex/public_html/client_access/models/administrar_empresas.php(571): PHPMailer\PHPMailer\PHPMailer->send()
+#3 /home/protex/public_html/client_access/models/administrar_empresas.php(440): Empresas->enviarMail('23', '{"id_empresa":2...')
+#4 /home/protex/public_html/client_access/models/administrar_empresas.php(672): Empresas->recibir_archivos( in /home/protex/public_html/client_access/assets/PHPMailer/src/PHPMailer.php on line 2082
+[28-Jun-2023 16:47:46 America/Buenos_Aires] PHP Fatal error:  Uncaught PHPMailer\PHPMailer\Exception: SMTP Error: The following recipients failed: we@seviciosolavarria.com: The mail server could not deliver mail to we@seviciosolavarria.com.  The
+account or domain may not exist, they may be blacklisted, or missing the
+proper dns entries.
+ in /home/protex/public_html/client_access/assets/PHPMailer/src/PHPMailer.php:2082
+Stack trace:
+#0 /home/protex/public_html/client_access/assets/PHPMailer/src/PHPMailer.php(1678): PHPMailer\PHPMailer\PHPMailer->smtpSend('Date: Wed, 28 J...', '--b1=_O1hX3HSda...')
+#1 /home/protex/public_html/client_access/assets/PHPMailer/src/PHPMailer.php(1516): PHPMailer\PHPMailer\PHPMailer->postSend()
+#2 /home/protex/public_html/client_access/models/administrar_empresas.php(571): PHPMailer\PHPMailer\PHPMailer->send()
+#3 /home/protex/public_html/client_access/models/administrar_empresas.php(440): Empresas->enviarMail('23', '{"id_empresa":2...')
+#4 /home/protex/public_html/client_access/models/administrar_empresas.php(672): Empresas->recibir_archivos( in /home/protex/public_html/client_access/assets/PHPMailer/src/PHPMailer.php on line 2082
+[28-Jun-2023 16:49:07 America/Buenos_Aires] PHP Fatal error:  Uncaught PHPMailer\PHPMailer\Exception: SMTP Error: The following recipients failed: we@seviciosolavarria.com: The mail server could not deliver mail to we@seviciosolavarria.com.  The
+account or domain may not exist, they may be blacklisted, or missing the
+proper dns entries.
+ in /home/protex/public_html/client_access/assets/PHPMailer/src/PHPMailer.php:2082
+Stack trace:
+#0 /home/protex/public_html/client_access/assets/PHPMailer/src/PHPMailer.php(1678): PHPMailer\PHPMailer\PHPMailer->smtpSend('Date: Wed, 28 J...', '--b1=_jhusks8p1...')
+#1 /home/protex/public_html/client_access/assets/PHPMailer/src/PHPMailer.php(1516): PHPMailer\PHPMailer\PHPMailer->postSend()
+#2 /home/protex/public_html/client_access/models/administrar_empresas.php(571): PHPMailer\PHPMailer\PHPMailer->send()
+#3 /home/protex/public_html/client_access/models/administrar_empresas.php(440): Empresas->enviarMail('23', '{"id_empresa":2...')
+#4 /home/protex/public_html/client_access/models/administrar_empresas.php(672): Empresas->recibir_archivos( in /home/protex/public_html/client_access/assets/PHPMailer/src/PHPMailer.php on line 2082
+[04-Jul-2023 07:20:14 America/Buenos_Aires] PHP Notice:  Undefined index: datosExtra in /home/protex/public_html/client_access/models/administrar_empresas.php on line 669
+[12-Jul-2023 11:29:47 America/Buenos_Aires] PHP Notice:  Undefined index: datosExtra in /home/protex/public_html/client_access/models/administrar_empresas.php on line 669
+[04-Aug-2023 10:13:57 America/Buenos_Aires] PHP Notice:  Undefined index: datosExtra in /home/protex/public_html/client_access/models/administrar_empresas.php on line 672
+[04-Aug-2023 10:15:47 America/Buenos_Aires] PHP Notice:  Undefined index: datosExtra in /home/protex/public_html/client_access/models/administrar_empresas.php on line 672
+[14-Aug-2023 10:17:22 America/Buenos_Aires] PHP Notice:  Trying to access array offset on value of type null in /home/protex/public_html/client_access/models/administrar_empresas.php on line 432
+[14-Aug-2023 10:17:22 America/Buenos_Aires] PHP Notice:  Trying to access array offset on value of type null in /home/protex/public_html/client_access/models/administrar_empresas.php on line 434
+[14-Aug-2023 10:45:32 America/Buenos_Aires] PHP Notice:  Trying to access array offset on value of type null in /home/protex/public_html/client_access/models/administrar_empresas.php on line 432
+[14-Aug-2023 10:45:32 America/Buenos_Aires] PHP Notice:  Trying to access array offset on value of type null in /home/protex/public_html/client_access/models/administrar_empresas.php on line 434
+[14-Aug-2023 11:08:21 America/Buenos_Aires] PHP Notice:  Trying to access array offset on value of type null in /home/protex/public_html/client_access/models/administrar_empresas.php on line 432
+[14-Aug-2023 11:08:21 America/Buenos_Aires] PHP Notice:  Trying to access array offset on value of type null in /home/protex/public_html/client_access/models/administrar_empresas.php on line 434
+[14-Aug-2023 11:11:29 America/Buenos_Aires] PHP Notice:  Trying to access array offset on value of type null in /home/protex/public_html/client_access/models/administrar_empresas.php on line 432
+[14-Aug-2023 11:11:29 America/Buenos_Aires] PHP Notice:  Trying to access array offset on value of type null in /home/protex/public_html/client_access/models/administrar_empresas.php on line 434
+[18-Aug-2023 17:36:10 America/Buenos_Aires] PHP Fatal error:  Uncaught PHPMailer\PHPMailer\Exception: SMTP Error: The following recipients failed: almada_neri@hotmail.com: Temporary local problem - please try later
+ in /home/protex/public_html/client_access/assets/PHPMailer/src/PHPMailer.php:2082
+Stack trace:
+#0 /home/protex/public_html/client_access/assets/PHPMailer/src/PHPMailer.php(1678): PHPMailer\PHPMailer\PHPMailer->smtpSend('Date: Fri, 18 A...', '--b1=_kgfHMIcHH...')
+#1 /home/protex/public_html/client_access/assets/PHPMailer/src/PHPMailer.php(1516): PHPMailer\PHPMailer\PHPMailer->postSend()
+#2 /home/protex/public_html/client_access/models/administrar_empresas.php(574): PHPMailer\PHPMailer\PHPMailer->send()
+#3 /home/protex/public_html/client_access/models/administrar_empresas.php(443): Empresas->enviarMail('83', '{"id_empresa":8...')
+#4 /home/protex/public_html/client_access/models/administrar_empresas.php(675): Empresas->recibir_archivos('{"id_empresa":8...')
+#5 {main}
+  thrown in /home/protex/public_html/client_access/assets/PHPMailer/src/PHPMailer.php on line 2082
