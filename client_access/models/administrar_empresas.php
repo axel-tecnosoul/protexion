@@ -413,6 +413,21 @@ class Empresas{
 
   }
 
+  public function eliminarArchivosSeleccionados($archivos){
+
+    $queryTraerEmpresas = "SELECT id,archivo,id_usuario FROM archivos_usuario WHERE id IN ($archivos)";
+    $getEmpresas = $this->conexion->consultaRetorno($queryTraerEmpresas);
+
+    while ($row = $getEmpresas->fetch_array()) {
+      //var_dump($row);
+      $id_archivo=$row["id"];
+      $nombre_adjunto=$row["archivo"];
+      $id_empresa=$row["id_usuario"];
+      $delAdjuntos = $this->eliminarArchivo($id_archivo, $nombre_adjunto, $id_empresa);
+    }
+
+  }
+
   public function eliminarArchivoLocal($idArchivo){
 
     $query = "SELECT id,id_usuario,archivo FROM archivos_usuario WHERE id_archivo_local = $idArchivo";
@@ -804,6 +819,9 @@ if (isset($accion)) {
       break;
       case "eliminarArchivo":
         $empresas->eliminarArchivo($id_archivo, $nombreArchivo, $id_empresa);
+      break;
+      case "eliminarArchivosSeleccionados":
+        $empresas->eliminarArchivosSeleccionados($archivos);
       break;
       case "marcarArchivoDescargado":
         $empresas->marcarArchivoDescargado($id_archivo);

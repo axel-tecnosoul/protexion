@@ -282,7 +282,7 @@ class PacienteController extends Controller
               $constraint->aspectRatio();
               $constraint->upsize();
           });
-          $thumbnail->save($thumbnailPath . $imagen_temp->getClientOriginalName());
+          $thumbnail->save($thumbnailPath . $imagen->getClientOriginalName());
 
         }
         $paciente->save();

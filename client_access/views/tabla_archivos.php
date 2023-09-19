@@ -196,6 +196,7 @@
         a.click();
         window.URL.revokeObjectURL(zipURL);
       });
+
     });
 
     /*$('#adjuntos').on('page.dt', function() {
@@ -286,7 +287,7 @@
             if($_SESSION["rowUsers"]["tipo"]==1){?>
               {render: function(data, type, full, meta) {
                 return `
-                <a class='btn btn-outline-danger btnBorrarFoto text-danger' data-id="${full.id_archivo_usuario}" data-name="${full.archivo}"><i class='fa fa-trash-o'></i></a>`;
+                <a class='btn btn-outline-danger btnBorrarFoto text-danger' title="Eliminar este archivo" data-id="${full.id_archivo_usuario}" data-name="${full.archivo}"><i class='fa fa-trash-o'></i></a>`;
               }},<?php
             }?>
           ],
@@ -305,7 +306,14 @@
             $('#selectAll').prop("checked",false)
             //$("#idProductosFiltrados").val(json.idProductosFiltered)
             //$('.top').append($("#download_selected"));
-            $('.top').append('<button id="download_selected" type="button" class="btn btn-primary">Descargar seleccionados</button>');
+            if(tipo_usuario==1){
+              $('.top').append(`Acciones para los archivos seleccionados:
+              <button id="delete_selected" type="button" class="btn btn-danger" title="Eliminar seleccionados"><i class='fa fa-trash-o'></i></button>
+              <button id="download_selected" type="button" class="btn btn-primary" title="Descargar seleccionados"><i class='fa fa-download'></i></button>`);
+            }else{
+              $('.top').append('<button id="download_selected" type="button" class="btn btn-primary">Descargar seleccionados</button>');
+            }
+            $('[title]').tooltip();
           }
         });
       }

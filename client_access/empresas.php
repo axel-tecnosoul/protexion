@@ -143,14 +143,18 @@ if (!isset($_SESSION['rowUsers']['id_usuario'])) {
       <div class="modal-dialog modal-lg" style="max-width: 75%;" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel"></h5>
+            <h5 class="modal-title">
+              <span id="exampleModalLabel"></span>
+              <!-- <div class="col-lg-4 mb-2"><button id="btnAddAdjuntos" class="btn btn-secondary">Agregar archivos</button></div> -->
+              <button id="btnAddAdjuntos" class="btn btn-light ml-2">Agregar archivos</button>
+            </h5>
             <span id="id_empresa" class="d-none"></span>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
           </div>
           <form id="formEmpresas">
             <div class="modal-body">
               <div class="row">
-                <div class="col-lg-4 mb-2"><button id="btnAddAdjuntos" class="btn btn-secondary">Agregar archivos</button></div>
+                
                 <div class="col-lg-12 d-none" id="masAdjuntos">
                   <div id="dropMasArchivos"></div>
                 </div>
@@ -427,7 +431,7 @@ if (!isset($_SESSION['rowUsers']['id_usuario'])) {
 
         $(".modal-header").css( "background-color", "#22af47");
         $(".modal-header").css( "color", "white" );
-        $(".modal-title").text("Archivos de "+nombre_empresa);
+        $(".modal-title").find("span").text("Archivos de "+nombre_empresa);
 
         $("#modalCRUD").modal("show");
 
@@ -584,7 +588,7 @@ if (!isset($_SESSION['rowUsers']['id_usuario'])) {
               url: "models/administrar_empresas.php",
               type: "POST",
               datatype:"json",
-              data:  {accion:accion, id_archivo:id_archivo, nombreArchivo: nombreArchivo, id_empresa: id_empresa},    
+              data:  {accion:accion, id_archivo:id_archivo, nombreArchivo: nombreArchivo, id_empresa: id_empresa},
               success: function() {
                 swal({
                   icon: 'success',
@@ -600,6 +604,68 @@ if (!isset($_SESSION['rowUsers']['id_usuario'])) {
           }
         });
       })
+
+      $(document).on("click","#delete_selected", function () {
+        let id_empresa=$("#id_empresa").html();
+        let selectedCheckboxes = $('#adjuntos').DataTable().column(1).nodes().to$().find(':checkbox:checked');
+        let selectedFiles = [];
+
+        // Verificar si se han seleccionado archivos
+        if (selectedCheckboxes.length === 0) {
+          alert("No se han seleccionado archivos para eliminar.");
+          return;
+        }
+
+        // Obtener los nombres de archivo de los checkbox seleccionados
+        let aIdArchivos = []
+        selectedCheckboxes.each(function () {
+
+          let id_archivo = parseInt($(this).closest('tr').find('td:eq(0)').text());
+          aIdArchivos.push(id_archivo)
+        });
+
+        let archivos=aIdArchivos.join(',')
+        console.log(aIdArchivos);
+        console.log(archivos);
+
+        swal({
+            title: "Estas seguro?",
+            text: "Una vez eliminados estos archivos, no volveras a verlos",
+            icon: "warning",
+            //buttons: true,
+            buttons: {
+              cancel: "Cancelar",
+              danger: {
+                text: "OK",
+                closeModal: false,
+              }
+            },
+            dangerMode: true,
+          })
+          .then((willDelete) => {
+            if (willDelete) {
+              accion = "eliminarArchivosSeleccionados";
+              $.ajax({
+                url: "models/administrar_empresas.php",
+                type: "POST",
+                datatype:"json",
+                data:  {accion:accion, archivos: archivos},
+                success: function() {
+                  swal({
+                    icon: 'success',
+                    title: 'Archivo eliminado correctamente'
+                  });
+                  get_archivos(id_empresa)
+                  /*$padre = this.parentElement.parentElement
+                  $padre.classList.add("d-none");*/
+                }
+              }); 
+            } else {
+              swal("Los archivos no se eliminaron!");
+            }
+          });
+
+      });
 
     </script>
   </body>

@@ -569,7 +569,7 @@ class VoucherController extends Controller
         $cont = 0;
 
         $aVoucherPaciente=[];
-        foreach ($tipo_estudios as $tipo) {
+        //foreach ($tipo_estudios as $tipo_estudio) {
             /*$aux = 0;
             foreach ($voucher->vouchersEstudios as $item) {
                 if  ($item->estudio->tipo_estudio_id == $tipo->id){
@@ -581,34 +581,53 @@ class VoucherController extends Controller
                 }
             }
             if ($aux == 1) {
-                $tipos[] = $tipo;
+                $tipos[] = $tipo_estudio;
             }*/
 
-            if ($tipo->id != 2){
-              foreach ($voucher->vouchersEstudios as $item) {
-                //if (($tipo->id == 3) || ($tipo->id == 4) ){
-                if(in_array($tipo->id,[3,4,6])){//3->COMPLEMENTARIO, 4->EXAMEN CLINICO, 6->RADIOLOGIA
-                  if ($item->estudio->tipo_estudio_id == $tipo->id and !in_array($item->estudio->id,[73,66])){//73->GENERAL, 66->RADIOLOGIA
-                    //echo $tipo->id."<br>";
-                    //echo "1 - ".$item->estudio->id." - ".strtoupper($item->estudio->nombre)."<br>";
-                    if(in_array($item->estudio->id,[56,57])){//56->DECLARACION JURADA, 57->HISTORIA CLINICA
-                      $aVoucherPaciente[]=$tipo->nombre;
+            //entramos solamente si NO es ANALISIS BIOQUIMICO ANEXO 01
+            foreach ($voucher->vouchersEstudios as $item) {
+              $itemVoucher=$item->estudio;
+              $tipo_estudio=$itemVoucher->tipoEstudio;
+              if ($tipo_estudio->id != 2){
+                //if (($tipo_estudio->id == 3) || ($tipo_estudio->id == 4) ){
+                if(in_array($tipo_estudio->id,[3,4,6])){//3->COMPLEMENTARIO, 4->EXAMEN CLINICO, 6->RADIOLOGIA
+                  //si es uno de estos tipos de estudio debemos realizar otras acciones
+                  /*echo "itemVoucher->tipo_estudio_id: ";
+                  echo $itemVoucher->tipo_estudio_id;
+                  echo "<br>tipo_estudio->id: ";
+                  echo $tipo_estudio->id;
+                  echo "<br>itemVoucher->id: ";
+                  echo $itemVoucher->id;*/
+
+                  //if ($itemVoucher->tipo_estudio_id == $tipo_estudio->id and !in_array($itemVoucher->id,[73,66])){//73->GENERAL, 66->RADIOLOGIA
+                  if (!in_array($itemVoucher->id,[73,66])){//73->GENERAL, 66->RADIOLOGIA
+                    //echo "ENTRAMOS";
+                    /*if($tipo_estudio->id==3){
+                      dd($item,$itemVoucher->tipoEstudio,$tipo_estudio,$item,$itemVoucher);
+                    }*/
+                    if(in_array($itemVoucher->id,[56,57])){//56->DECLARACION JURADA, 57->HISTORIA CLINICA
+                      //para estos estudios deben aparecen el nombre del tipo de estudio (EXAMEN CLINICO)
+                      $aVoucherPaciente[]=$tipo_estudio->nombre;
                     }else{
-                      $aVoucherPaciente[]=strtoupper($item->estudio->nombre);
+                      //para los demas casos, va el nombre del estudio propiamente dicho
+                      $aVoucherPaciente[]=strtoupper($itemVoucher->nombre);
                     }
                   }
                 }else{
-                  if ($tipo->nombre == strtoupper($item->estudio->nombre)){
-                    //echo "2 - ".$tipo->nombre."<br>";
-                    $aVoucherPaciente[]=$tipo->nombre;
+                  //si es ANALISIS BIOQUIMICO o PSICOTECNICO va el nombre del tipo de estudio directamente
+                  if ($tipo_estudio->nombre == strtoupper($itemVoucher->nombre)){
+                    //echo "2 - ".$tipo_estudio->nombre."<br>";
+                    $aVoucherPaciente[]=$tipo_estudio->nombre;
                   }
                 }
+                //echo "<hr>";
+              }else{
+                //echo "ANALISIS BIOQUIMICO"."<br>";
+                $aVoucherPaciente[]="ANALISIS BIOQUIMICO";
               }
-            }else{
-              //echo "ANALISIS BIOQUIMICO"."<br>";
-              $aVoucherPaciente[]="ANALISIS BIOQUIMICO";
             }
-        }
+        //}
+        //die();
         $aVoucherPaciente=array_unique($aVoucherPaciente);
         //var_dump($aVoucherPaciente);
         
