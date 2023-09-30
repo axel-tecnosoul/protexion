@@ -515,7 +515,7 @@ class Empresas{
 
   public function guardar_email($id_empresa,$email){
 
-    $query = "SELECT id,anulado,validado FROM usuarios_email WHERE email = '$email'";
+    $query = "SELECT id,anulado,validado FROM usuarios_email WHERE email = '$email' AND id_usuario = $id_empresa";
     //echo $query;
     $get = $this->conexion->consultaRetorno($query);
     $row = $get->fetch_array();
@@ -760,15 +760,19 @@ class Empresas{
 
   public function updateUsrMails(){
 
-    $queryGetUser = "SELECT SUM(if(ue.anulado=0,1,0)) AS cant_direcciones, SUM(ue.validado) as cant_validados FROM usuarios u LEFT JOIN usuarios_email ue ON ue.id_usuario=u.id WHERE u.id = ".$_SESSION['rowUsers']["id_usuario"];
-    $getUser = $this->conexion->consultaRetorno($queryGetUser);
+    if(isset($_SESSION['rowUsers'])){
+      $queryGetUser = "SELECT SUM(if(ue.anulado=0,1,0)) AS cant_direcciones, SUM(ue.validado) as cant_validados FROM usuarios u LEFT JOIN usuarios_email ue ON ue.id_usuario=u.id WHERE u.id = ".$_SESSION['rowUsers']["id_usuario"];
+      $getUser = $this->conexion->consultaRetorno($queryGetUser);
 
-    if($getUser->num_rows == 0){
-      echo "El usuario no existe";
+      if($getUser->num_rows == 0){
+        echo "El usuario no existe";
+      }else{
+        $userRows = $getUser->fetch_assoc();
+        $_SESSION['rowUsers']["cant_direcciones"] = $userRows["cant_direcciones"];
+        $_SESSION['rowUsers']["cant_validados"] = $userRows["cant_validados"];
+      }
     }else{
-      $userRows = $getUser->fetch_assoc();
-      $_SESSION['rowUsers']["cant_direcciones"] = $userRows["cant_direcciones"];
-      $_SESSION['rowUsers']["cant_validados"] = $userRows["cant_validados"];
+
     }
   }
 
@@ -898,6 +902,8 @@ if (isset($accion)) {
         
         echo $empresas->updateEmpresa($idEmpresa,$nombreEmpresa);
       break;
+      case "verificarEmail":
+        $empresas->updateUsrMails();
       default:
         echo "ruta no especificada";
 		}

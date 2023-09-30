@@ -364,17 +364,17 @@ if (!isset($_SESSION['rowUsers']['id_usuario'])) {
 
       $(document).ready(function () {
 
+        verificar_email();
+
         var id_empresa=$("#id_usuario").html();
-        $(document).ready(function(){
-          let cant_direcciones="<?php echo $_SESSION["rowUsers"]["cant_direcciones"]?>";
-          console.log(cant_direcciones);
-          if(cant_direcciones!=0){
-            get_email(id_empresa)
-          }
-          if($("#adjuntos").length>0){
-            get_archivos(id_empresa)
-          }
-        });
+        let cant_direcciones="<?php echo $_SESSION["rowUsers"]["cant_direcciones"]?>";
+        console.log(cant_direcciones);
+        if(cant_direcciones!=0){
+          get_email(id_empresa)
+        }
+        if($("#adjuntos").length>0){
+          get_archivos(id_empresa)
+        }
 
         $("#btnSendEmail").on("click",function(){
           $("#loader-3").removeClass("d-none")
@@ -567,6 +567,41 @@ if (!isset($_SESSION['rowUsers']['id_usuario'])) {
         })
 
       });
+
+      function verificar_email(){
+        let accion="verificarEmail";
+        $.ajax({
+          url: "models/administrar_empresas.php",
+          type: "POST",
+          datatype:"json",
+          data: {accion:accion},
+          success: function(response) {
+            console.log(response);
+            /*$("#loader-4").addClass("d-none")
+            if(response==1){
+              console.log("mail enviado");
+              //swal("Good job!", "You clicked the button!", "success");
+              swal({
+                icon: 'success',
+                title: 'Se ha enviado un E-Mail a '+email,
+                text: 'Por favor ingrese al mismo y presione el botón "Verificar"',
+              }).then((willDelete) => {
+                window.location.href="cliente.php"
+              });
+            }else{
+              console.log("mostrar error");
+              swal({
+                title: "Ha ocurrido un error",
+                text: response,
+                icon: "warning",
+                //buttons: true,
+                //dangerMode: true,
+              })
+            }
+            //get_archivos(id_empresa)*/
+          }
+        });
+      }
 
       function validarEmail(email) {
         var regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;

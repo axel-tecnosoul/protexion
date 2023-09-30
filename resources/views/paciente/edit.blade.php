@@ -441,7 +441,7 @@
 
                             >
                             <option
-                                value="0"
+                                value=""
                                 disabled="true"
                                 selected="true"
                                 title="Seleccione una ciudad"
@@ -480,6 +480,7 @@
                                         <input
                                             type="string"
                                             name="direccion"
+                                            id="direccion"
                                             @if ($paciente->domicilio)
                                                 value="{{ $paciente->domicilio->direccion }}"
                                             @endif
@@ -519,131 +520,149 @@
 
 {!!Form::close()!!}
 
-    @push('scripts')
-    <script type="text/javascript">
+  @push('scripts')
+  <script type="text/javascript">
 
-        $(document).ready(function(){
+    $(document).ready(function(){
 
-            var select1 = $("#sexo_id").select2({width:'100%'});
-            select1.data('select2').$selection.css('height', '100%');
+      var select1 = $("#sexo_id").select2({width:'100%'});
+      select1.data('select2').$selection.css('height', '100%');
 
-            /*var select2 = $("#obra_social_id").select2({width:'90%'});
-            select2.data('select2').$selection.css('height', '100%');*/
+      /*var select2 = $("#obra_social_id").select2({width:'90%'});
+      select2.data('select2').$selection.css('height', '100%');*/
 
-            var select3 = $("#origen_id").select2({width:'90%'});
-            select3.data('select2').$selection.css('height', '100%');
+      var select3 = $("#origen_id").select2({width:'90%'});
+      select3.data('select2').$selection.css('height', '100%');
 
-            var select5 = $("#estado_civil_id").select2({width:'100%'});
-            select5.data('select2').$selection.css('height', '100%');
+      var select5 = $("#estado_civil_id").select2({width:'100%'});
+      select5.data('select2').$selection.css('height', '100%');
 
-            var select7 = $("#pais_id").select2({width:'100%'});
-            select7.data('select2').$selection.css('height', '100%');
+      var select7 = $("#pais_id").select2({width:'100%'});
+      select7.data('select2').$selection.css('height', '100%');
 
-            var select8 = $("#provincia_id").select2({width:'100%'});
-            select8.data('select2').$selection.css('height', '100%');
+      var select8 = $("#provincia_id").select2({width:'100%'});
+      select8.data('select2').$selection.css('height', '100%');
 
-            var select9 = $("#ciudad_id").select2({width:'100%'});
-            select9.data('select2').$selection.css('height', '100%');
+      var select9 = $("#ciudad_id").select2({width:'100%'});
+      select9.data('select2').$selection.css('height', '100%');
 
-            $(document).on('input','#documento',function(){
-                var dni=$(this).val();
-                $("#loader-4").removeClass("d-none")
-                console.log("buscando");
-                var dniActual="{{ $paciente->documento }}"
-                $.ajax({
-                    type:'get',
-                    url:'{!!URL::to('paciente/create/encontrarDni')!!}',
-                    data:{'dni':dni,'dniActual':dniActual},
-                    success:function(data){
-                        console.log("terminó");
-                        $("#loader-4").addClass("d-none")
-                        //console.log(data);
-                        //console.log(Object.keys(data));
-                        if(Object.keys(data).length>0){
-                          console.log("encontró");
-                          $("#confirmar").addClass("disabled")
-                          $("#confirmar").attr("disabled",true)
-                          $("#modal-dni-encontrado").modal("show")
-                          $("#modal_apellido_nombre").html(data.apellidoNombre)
-                          $("#modal_documento").html(data.documento)
-                          $("#modal_sexo").html(data.sexo)
-                          $("#modal_domicilio").html(data.domicilio)
-                          $("#modal_fecha_nacimiento").html(data.fecha_nacimiento)
-                          $("#modal_cuit").html(data.cuit)
-                          $("#modal_estado_civil").html(data.estado_civil)
-                          let estado="No"
-                          if(data.estado==2){
-                            estado="Si"
-                          }
-                          $("#modal_anulado").html(estado)
-                          $("#modal_button").attr("href","/protexion/public/paciente/"+data.id+"/edit")
-                        }else{
-                          console.log("no encontró");
-                          $("#confirmar").removeClass("disabled")
-                          $("#confirmar").attr("disabled",false)
-                        }
-                    },
-                    error:function(){
+      // Detectar cambios en el campo de dirección
+      $('#direccion').on('input', function() {
+        // Verificar si el campo de dirección no está vacío
+        if ($(this).val() !== '') {
+          // Hacer que el campo de ciudad_id sea requerido
+          $('#ciudad_id').prop('required', true);
+          $('#ciudad_id').attr('min', 1);
+        } else {
+          // Si el campo de dirección está vacío, quitar la propiedad "required" del campo de ciudad_id
+          $('#ciudad_id').prop('required', false);
+          $('#ciudad_id').attr('min', 0);
+        }
+      });
+
+      /*$('#direccion').on('input', function() {
+        // Verificar si el campo de dirección no está vacío
+        if ($(this).val() !== '') {
+          // Hacer que el campo de ciudad_id sea requerido
+          $('#ciudad_id').attr('required', true);
+        } else {
+          // Si el campo de dirección está vacío, quitar la propiedad "required" del campo de ciudad_id
+          $('#ciudad_id').attr('required', false);
+        }
+        $('#ciudad_id').trigger('change.select2');
+      });*/
+
+      $(document).on('input','#documento',function(){
+          var dni=$(this).val();
+          $("#loader-4").removeClass("d-none")
+          console.log("buscando");
+          var dniActual="{{ $paciente->documento }}"
+          $.ajax({
+              type:'get',
+              url:'{!!URL::to('paciente/create/encontrarDni')!!}',
+              data:{'dni':dni,'dniActual':dniActual},
+              success:function(data){
+                  console.log("terminó");
+                  $("#loader-4").addClass("d-none")
+                  //console.log(data);
+                  //console.log(Object.keys(data));
+                  if(Object.keys(data).length>0){
+                    console.log("encontró");
+                    $("#confirmar").addClass("disabled")
+                    $("#confirmar").attr("disabled",true)
+                    $("#modal-dni-encontrado").modal("show")
+                    $("#modal_apellido_nombre").html(data.apellidoNombre)
+                    $("#modal_documento").html(data.documento)
+                    $("#modal_sexo").html(data.sexo)
+                    $("#modal_domicilio").html(data.domicilio)
+                    $("#modal_fecha_nacimiento").html(data.fecha_nacimiento)
+                    $("#modal_cuit").html(data.cuit)
+                    $("#modal_estado_civil").html(data.estado_civil)
+                    let estado="No"
+                    if(data.estado==2){
+                      estado="Si"
                     }
-                });
-            });
+                    $("#modal_anulado").html(estado)
+                    $("#modal_button").attr("href","/protexion/public/paciente/"+data.id+"/edit")
+                  }else{
+                    console.log("no encontró");
+                    $("#confirmar").removeClass("disabled")
+                    $("#confirmar").attr("disabled",false)
+                  }
+              },
+              error:function(){
+              }
+          });
+      });
 
-            $(document).on('change','.pais_id',function(){
-                var pais_id=$(this).val();
-                var div=$(this).parent();
-                var op=" ";
+      $(document).on('change','.pais_id',function(){
+          var pais_id=$(this).val();
+          var div=$(this).parent();
+          var op=" ";
 
-                $.ajax({
-                    type:'get',
-                    url:'{!!URL::to('paciente/create/encontrarProvincia')!!}',
-                    data:{'id':pais_id},
-                    success:function(data){
-                        op+='<option value="0" selected disabled>-Seleccione una provincia-</option>';
-                        for(var i=0;i<data.length;i++){
-                            op+='<option value="'+data[i].id+'">'+data[i].nombre+'</option>';
-                        }
-                        div.find('.provincia_id').html(" ");
-                        div.find('.provincia_id').append(op);
-                    },
-                    error:function(){
-                    }
-                });
-            });
+          $.ajax({
+              type:'get',
+              url:'{!!URL::to('paciente/create/encontrarProvincia')!!}',
+              data:{'id':pais_id},
+              success:function(data){
+                  op+='<option value="0" selected disabled>-Seleccione una provincia-</option>';
+                  for(var i=0;i<data.length;i++){
+                      op+='<option value="'+data[i].id+'">'+data[i].nombre+'</option>';
+                  }
+                  div.find('.provincia_id').html(" ");
+                  div.find('.provincia_id').append(op);
+              },
+              error:function(){
+              }
+          });
+      });
 
+      $(document).on('change','.provincia_id',function(){
+          var provincia_id=$(this).val();
+          var div=$(this).parent();
+          var op=" ";
 
-            $(document).on('change','.provincia_id',function(){
-                var provincia_id=$(this).val();
-                var div=$(this).parent();
-                var op=" ";
+          $.ajax({
+              type:'get',
+              url:'{!!URL::to('paciente/create/encontrarCiudad')!!}',
+              data:{'id':provincia_id},
+              success:function(data){
+                  op+='<option value="0" selected disabled>-Seleccione una ciudad-</option>';
+                  for(var i=0;i<data.length;i++){
+                      op+='<option value="'+data[i].id+'">'+data[i].nombre+'</option>';
+                  }
+                  div.find('.ciudad_id').html(" ");
+                  div.find('.ciudad_id').append(op);
+              },
+              error:function(){
+              }
+          });
+      });
 
-                $.ajax({
-                    type:'get',
-                    url:'{!!URL::to('paciente/create/encontrarCiudad')!!}',
-                    data:{'id':provincia_id},
-                    success:function(data){
-                        op+='<option value="0" selected disabled>-Seleccione una ciudad-</option>';
-                        for(var i=0;i<data.length;i++){
-                            op+='<option value="'+data[i].id+'">'+data[i].nombre+'</option>';
-                        }
-                        div.find('.ciudad_id').html(" ");
-                        div.find('.ciudad_id').append(op);
-                    },
-                    error:function(){
-                    }
-                });
-            });
+      $('#documento').mask('00.000.000');
 
-            
+    });
 
-            $('#documento').mask('00.000.000');
-
-        });
-
-
-
-</script>
-
-<script>
     function soloLetras(e) {
         key = e.keyCode || e.which;
         tecla = String.fromCharCode(key).toLowerCase();
@@ -661,9 +680,7 @@
         if(letras.indexOf(tecla) == -1 && !tecla_especial)
             return false;
     }
-</script>
 
-<script>
     function soloNumeros(e) {
         key = e.keyCode || e.which;
         tecla = String.fromCharCode(key);
@@ -681,7 +698,8 @@
         if(letras.indexOf(tecla) == -1 && !tecla_especial)
             return false;
     }
-</script>
+
+  </script>
 
 @endpush
 
