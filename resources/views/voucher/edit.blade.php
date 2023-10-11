@@ -139,7 +139,9 @@
                 @foreach ($estudios as $item)
                   @if ($item->tipo_estudio_id == $tipo->id)<?php
                     //var_dump($item->id);
-                    if($item->id==73 or strtoupper($item->nombre)==strtoupper($item->tipoEstudio->nombre)){?>
+                    
+                    if($item->id==73 or strtoupper($item->nombre)==strtoupper($item->tipoEstudio->nombre)){
+                      //echo $item->id." - ".strtoupper($item->nombre)."<br>";?>
                       <input class="{{$tipo->id}}" type="hidden" name="{{$item->id}}" value=1 id="{{$item->id}}"><?php
                     }else{?>
                       <div class="col-6">

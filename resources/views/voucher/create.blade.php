@@ -135,8 +135,8 @@
                                     </div>
                                 </div>
                                 <div class="card-body" > <!--style="display: none;" -->
-                                    <div class="row">
-                                        <?php $idChecked = ["45","46","47","48","49","50","56","57"]; 
+                                    <div class="row"><?php
+                                        $idChecked = ["45","46","47","48","49","50","56","57"]; 
                                         //dd($estudios)?>
                                         @foreach ($estudios as $item)
                                             @if ($item->tipo_estudio_id == $tipo->id)

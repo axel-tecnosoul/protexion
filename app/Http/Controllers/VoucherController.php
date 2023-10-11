@@ -423,19 +423,28 @@ class VoucherController extends Controller
           $radiologia = false;
 
           $estudios = Estudio::all();
+
+          //dd($request->all());
           foreach ($estudios as $estudio) {
               //La variable aux toma el valor del id del Estudio
               $aux = $estudio->id;
-              //var_dump($aux);
-              //Compara el aux con el campo de la request, que en la vista se establece que cada uno es el id de un Estudio distinto.
-              //var_dump($request->$aux);
+
+              if($aux==60 or $aux==66){
+                //var_dump($aux);
+                //var_dump($request->$aux);
+              }
               
+              //Compara el aux con el campo de la request, que en la vista se establece que cada uno es el id de un Estudio distinto.
               if ($request->$aux == 1) {
                   /* VINO EN EL REQUEST */
-                  $voucher_estudio=VoucherEstudio::whereVoucher_id($id)->whereEstudio_id($aux)->get();
+                  $get_voucher_estudio=VoucherEstudio::whereVoucher_id($id)->whereEstudio_id($aux)->get();
                   //echo "encontrado: ".count($voucher_estudio)."<br><br>";
-                  //var_dump($voucher_estudio);
-                  if(count($voucher_estudio)==0){
+                  if($aux==60){
+                    //echo "count: ".count($get_voucher_estudio);
+                    //dd($get_voucher_estudio);
+                  }
+                  //die();
+                  if(count($get_voucher_estudio)==0){
                       /* ES NUEVO Y LO INSERTAMOS */
                       $voucher_estudio = new VoucherEstudio;
                       $voucher_estudio->voucher_id = $id;
@@ -446,6 +455,7 @@ class VoucherController extends Controller
                       //var_dump($voucher_estudio->estudio_id);
                       //var_dump($estudio->id);
                       if ($estudio->id == $voucher_estudio->estudio_id) {
+                          //var_dump($estudio->tipoEstudio->nombre);
                           if ((strtoupper($estudio->tipoEstudio->nombre) == "ANALISIS BIOQUIMICO") or
                               (strtoupper($estudio->tipoEstudio->nombre) == "ANALISIS BIOQUIMICO ANEXO 01") ) {
                               $analisisB = true;
@@ -453,7 +463,6 @@ class VoucherController extends Controller
                           if (strtoupper($estudio->tipoEstudio->nombre) == "PSICOTECNICO") {
                               $psicotecnico = true;
                           }
-                          //var_dump($estudio->tipoEstudio->nombre);
                           if (strtoupper($estudio->tipoEstudio->nombre) == "RADIOLOGIA") {
                               $radiologia = true;
                           }
@@ -468,11 +477,13 @@ class VoucherController extends Controller
                   $voucher_estudio=VoucherEstudio::whereVoucher_id($id)->whereEstudio_id($aux)->delete();
               }
           }
+          //var_dump($psicotecnico);
+          //var_dump($radiologia);
           //Cargar estudios base
           if ($analisisB) {
-              $voucher_estudio = new VoucherEstudio;
+              /*$voucher_estudio = new VoucherEstudio;
               $voucher_estudio->voucher_id = $id;
-              $voucher_estudio->estudio_id = 1;
+              $voucher_estudio->estudio_id = 1;*/
               //$voucher_estudio->save();
           }else{
               //echo "VER CUANTOS HAY DE analisisB Y ELIMINAR el 1 SI NO SE ENCUENTRA<br><br>";
@@ -489,10 +500,11 @@ class VoucherController extends Controller
                 $voucher_estudio=VoucherEstudio::whereId($voucher_estudio[0]->vouchers_estudio_id)->delete();
               }
           }
+
           if ($psicotecnico) {
-              $voucher_estudio = new VoucherEstudio;
+              /*$voucher_estudio = new VoucherEstudio;
               $voucher_estudio->voucher_id = $id;
-              $voucher_estudio->estudio_id = 60;
+              $voucher_estudio->estudio_id = 60;*/
               //$voucher_estudio->save();
           }else{
               //echo "VER CUANTOS HAY DE psicotecnico Y ELIMINAR el 60 SI NO SE ENCUENTRA<br><br>";
@@ -504,17 +516,19 @@ class VoucherController extends Controller
                 ->where('tipo_estudio_id', '=', 5);
               $voucher_estudio=$query->get(); //ejecuto la consulta
               //var_dump($voucher_estudio);
+              //echo "Cant psicotencios: ".count($voucher_estudio)."<br>";
 
               if(count($voucher_estudio)==1 and $voucher_estudio[0]->estudio_id==60){
-                //echo "ELIMINAMOS";
-                $voucher_estudio=VoucherEstudio::whereId($voucher_estudio[0]->vouchers_estudio_id)->delete();
+                //echo "ELIMINAMOS psicotecnico";
+                //$voucher_estudio=VoucherEstudio::whereId($voucher_estudio[0]->vouchers_estudio_id)->delete();
+                //var_dump($voucher_estudio);
               }
           }
           //var_dump($radiologia);
           if ($radiologia) {
-              $voucher_estudio = new VoucherEstudio;
+              /*$voucher_estudio = new VoucherEstudio;
               $voucher_estudio->voucher_id = $id;
-              $voucher_estudio->estudio_id = 66;
+              $voucher_estudio->estudio_id = 66;*/
               //$voucher_estudio->save();
           }else{
               //echo "VER CUANTOS HAY DE radiología Y ELIMINAR el 66 SI NO SE ENCUENTRA<br><br>";
@@ -527,10 +541,12 @@ class VoucherController extends Controller
                 ->where('tipo_estudio_id', '=', 6);
               $voucher_estudio=$query->get(); //ejecuto la consulta
               //var_dump($voucher_estudio);
+              //echo "Cant radiologia: ".count($voucher_estudio)."<br>";
 
               if(count($voucher_estudio)==1 and $voucher_estudio[0]->estudio_id==66 and $voucher_estudio[0]->anexo=="ruta"){
-                //echo "ELIMINAMOS";
+                //echo "ELIMINAMOS radiologia";
                 $voucher_estudio=VoucherEstudio::whereId($voucher_estudio[0]->vouchers_estudio_id)->delete();
+                //var_dump($voucher_estudio);
               }
           }
           //die();
@@ -614,10 +630,18 @@ class VoucherController extends Controller
                     }
                   }
                 }else{
-                  //si es ANALISIS BIOQUIMICO o PSICOTECNICO va el nombre del tipo de estudio directamente
-                  if ($tipo_estudio->nombre == strtoupper($itemVoucher->nombre)){
-                    //echo "2 - ".$tipo_estudio->nombre."<br>";
-                    $aVoucherPaciente[]=$tipo_estudio->nombre;
+                  //si el estudio es PSICOTECNICO no lo mostramos
+                  //var_dump($itemVoucher->id);
+                  
+                  if($itemVoucher->id!=60){
+                    //var_dump($tipo_estudio->nombre);
+                    //var_dump(strtoupper($itemVoucher->nombre));
+                    //si es ANALISIS BIOQUIMICO o PSICOTECNICO va el nombre del tipo de estudio directamente
+                    if ($tipo_estudio->nombre == strtoupper($itemVoucher->nombre) or $tipo_estudio->id == 5){
+                      //var_dump($tipo_estudio->nombre);
+                      //echo "2 - ".$tipo_estudio->nombre."<br>";
+                      $aVoucherPaciente[]=$tipo_estudio->nombre;
+                    }
                   }
                 }
                 //echo "<hr>";
@@ -627,10 +651,9 @@ class VoucherController extends Controller
               }
             }
         //}
-        //die();
         $aVoucherPaciente=array_unique($aVoucherPaciente);
         //var_dump($aVoucherPaciente);
-        
+        //die();
 
         //dd($tipos,$tipo_estudios,$estudios,$voucher);
         $pdf = PDF::loadView('voucher.pdf_paciente',[
