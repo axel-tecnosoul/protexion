@@ -169,38 +169,39 @@
                   <tbody>
                     <?php
                     //dd($estudios_cargar)?>
-                    @foreach ($estudios_cargar as $item)
-                      <tr>
-                        <td style="text-align: left">{{($item->estudio->nombre) }}</td> 
-                        <td style="text-align: left"><?php
-                        //var_dump($item->estudio);
-                          if($item->estudio->nombre=="RADIOLOGIA"){
-                            if(isset($estudios_voucher["RADIOLOGIA"])){
-                              echo implode(", ",$estudios_voucher["RADIOLOGIA"]);
-                              echo "<br>";
-                            }
-                          }else{
-                            //var_dump($estudios_voucher);
-                            
-                            foreach ($estudios_voucher as $tipo_estudio => $estudios) {
-                              //var_dump($tipo_estudio);
-                              if($tipo_estudio!="RADIOLOGIA"){
+                    @foreach ($estudios_cargar as $item)<?php
+                      $mostrar="";
+                      //var_dump($item->estudio);
+                      if($item->estudio->nombre=="RADIOLOGIA"){
+                        if(isset($estudios_voucher["RADIOLOGIA"])){
+                          $mostrar.=implode(", ",$estudios_voucher["RADIOLOGIA"]);
+                          $mostrar.="<br>";
+                        }
+                      }else{
+                        //var_dump($estudios_voucher);
+                        
+                        foreach ($estudios_voucher as $tipo_estudio => $estudios) {
+                          //var_dump($tipo_estudio);
+                          if($tipo_estudio!="RADIOLOGIA"){
 
-                                if($tipo_estudio=="COMPLEMENTARIO"){
-                                  if(count($estudios)){
-                                    //unset($estudios);
-                                    //continue;
-                                  }
-                                  //var_dump($estudios);
-                                  unset($estudios[73]);
-                                }
-                                echo "<b>".$tipo_estudio.":</b> ";
-                                echo implode(", ",$estudios);
-                                echo "<br>";
+                            if($tipo_estudio=="COMPLEMENTARIO"){
+                              if(count($estudios)){
+                                //unset($estudios);
+                                //continue;
                               }
+                              //var_dump($estudios);
+                              unset($estudios[73]);
                             }
+                            $mostrar.="<b>".$tipo_estudio.":</b> ";
+                            $mostrar.=implode(", ",$estudios);
+                            $mostrar.="<br>";
                           }
-                          ?></td>
+                        }
+                      }
+                      if($mostrar!=""){?>
+                        <tr>
+                          <td style="text-align: left">{{($item->estudio->nombre) }}</td> 
+                          <td style="text-align: left"><?=$mostrar?></td>
                           @if ($item->archivo_adjunto != "[]")
                             <td><label class="badge badge-success" style="font-size:90%">Cargado</label></td>
                             <td style="text-align: center">
@@ -223,6 +224,7 @@
                             </td>
                           @endif
                         </tr><?php
+                      }
                       //var_dump($estudios_voucher);?>
                     @endforeach
                   </tbody>
