@@ -168,7 +168,7 @@
           </td>
         </tr>
         <tr style="text-align: left;">
-          <td style="width: 75px; vertical-align: top;" colspan="3">
+          <td style="width: 75px;" colspan="3">
             <label>CUIL:</label> {{$voucher->paciente->cuil ?? number_format($voucher->paciente->documento,0,",",".")}}
           </td>
           <td style="width: 75px" colspan="8">
