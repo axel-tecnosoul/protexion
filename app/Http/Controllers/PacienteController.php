@@ -513,7 +513,7 @@ class PacienteController extends Controller
           $fila=$filas[$i];
           //var_dump($fila);
 
-          $domicilio_actual=$fila[9];
+          /*$domicilio_actual=$fila[9];
           $localidad=$fila[10];
           $ciudad_id=NULL;
 
@@ -553,7 +553,7 @@ class PacienteController extends Controller
 
               $domicilio_id=$domicilio->id;
             }
-          }
+          }*/
 
           //dd($domicilio_actual,$localidad,$ciudad_id,$domicilio);
 
@@ -563,9 +563,9 @@ class PacienteController extends Controller
           $paciente->nombres=$fila[1];
           $documento=$fila[7];
 
-          if($domicilio_id){
+          /*if($domicilio_id){
             $paciente->domicilio_id=$domicilio_id;
-          }
+          }*/
 
           if(!is_null($documento)){
             $paciente->documento=$documento;

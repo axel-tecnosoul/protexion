@@ -168,8 +168,23 @@
           </td>
         </tr>
         <tr style="text-align: left;">
-          <td style="width: 75px" colspan="11">
+          <td style="width: 75px; vertical-align: top;" colspan="3">
             <label>CUIL:</label> {{$voucher->paciente->cuil ?? number_format($voucher->paciente->documento,0,",",".")}}
+          </td>
+          <td style="width: 75px" colspan="8">
+            <label>Domicilio: </label><?php
+            if ($voucher->paciente){
+              if ($voucher->paciente->domicilio){
+                echo $voucher->paciente->domicilio->direccion;
+                if ($voucher->paciente->domicilio->ciudad){
+                  echo ", ".$voucher->paciente->domicilio->ciudad->nombre;
+                  if ($voucher->paciente->domicilio->ciudad->provincia){
+                    echo ", ".$voucher->paciente->domicilio->ciudad->provincia->nombre;
+                  }
+                }
+              }
+            }
+            //echo "text-align: center; background-color: brown; color: #FFFFFF;font-weight: bold; text-align: center; background-color: brown; color: #FFFFFF;font-weight: bold; text-align: center; background-color: brown; color: #FFFFFF;font-weight: bold; "?>
           </td>
         </tr>
       </table>
