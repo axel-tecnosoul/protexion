@@ -513,18 +513,45 @@ class PacienteController extends Controller
           $fila=$filas[$i];
           //var_dump($fila);
 
-          /*if($request->get('direccion')!=null) {
+          $domicilio_actual=$fila[9];
+          $localidad=$fila[10];
+          $ciudad_id=NULL;
+          if($localidad){
+            //$resultados = Ciudad::where('nombre', 'like', '%' . $localidad . '%')->get();
+            $resultados = Ciudad::where('nombre', 'like', '%' . $localidad . '%')->first();
+            if($resultados and $resultados->id){
+              $ciudad_id=$resultados->id;
+            }
+          }
+
+          $domicilio_id=NULL;
+          if($domicilio_actual) {
+            $resultados = Domicilio::where('ciudad_id', $ciudad_id)
+                                    ->where('direccion', 'like', '%' . $domicilio_actual . '%')
+                                    ->first();
+            if($resultados and $resultados->id){
+              $domicilio_id=$resultados->id;
+            }else{
               $domicilio = new Domicilio;
-              $domicilio->direccion = $request->get('direccion');
-              $domicilio->ciudad_id = $request->get('ciudad_id');
+              $domicilio->direccion = $domicilio_actual;
+              $domicilio->ciudad_id = $ciudad_id;
               $domicilio->save();
-          }*/
+
+              $domicilio_id=$domicilio->id;
+            }
+          }
+
+          //dd($domicilio_actual,$localidad,$ciudad_id,$domicilio);
 
           //Creo los datos del personal de la clinica
           $paciente = new Paciente;
           $paciente->apellidos=$fila[0];
           $paciente->nombres=$fila[1];
           $documento=$fila[7];
+
+          if($domicilio_id){
+            $paciente->domicilio_id=$domicilio_id;
+          }
 
           if(!is_null($documento)){
             $paciente->documento=$documento;
@@ -546,13 +573,14 @@ class PacienteController extends Controller
               $aIdPacientes[]=$pac[0]->id;
             }
           }
+          //dd($paciente);
           //
       }
 
       //dd($aIdPacientes);
       //window.location.href="voucher/create/"+encodeURIComponent(aIdPacientes.join(","))
       return redirect()->route('voucher.create',implode(",",$aIdPacientes));
-      return back()->with('message','Pacientes importados');
+      //return back()->with('message','Pacientes importados');//opcion vieja
     }
 
     public function generarThumbnail(){
