@@ -516,22 +516,36 @@ class PacienteController extends Controller
           $domicilio_actual=$fila[9];
           $localidad=$fila[10];
           $ciudad_id=NULL;
+
           if($localidad){
+            //si viene una localidad la buscamos
             //$resultados = Ciudad::where('nombre', 'like', '%' . $localidad . '%')->get();
             $resultados = Ciudad::where('nombre', 'like', '%' . $localidad . '%')->first();
             if($resultados and $resultados->id){
+              //si existe tomamos su id
               $ciudad_id=$resultados->id;
+            }else{
+              //si no existe la creamos
+              $ciudad = new Ciudad;
+              $ciudad->nombre = $localidad;
+              $ciudad->save();
+
+              $ciudad_id=$ciudad->id;
             }
           }
 
           $domicilio_id=NULL;
           if($domicilio_actual) {
+            //si viene un domicilio lo buscamos relacionado a la ciudad
             $resultados = Domicilio::where('ciudad_id', $ciudad_id)
                                     ->where('direccion', 'like', '%' . $domicilio_actual . '%')
                                     ->first();
+
             if($resultados and $resultados->id){
+              //si existe tomamos su id
               $domicilio_id=$resultados->id;
             }else{
+              //si no existe la creamos
               $domicilio = new Domicilio;
               $domicilio->direccion = $domicilio_actual;
               $domicilio->ciudad_id = $ciudad_id;

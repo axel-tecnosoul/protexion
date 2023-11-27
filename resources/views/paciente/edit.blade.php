@@ -379,20 +379,18 @@
                                 -Seleccione un pais-
                             </option>
                             @foreach($paises as $pais)
-                                @if ($paciente->domicilio != null)
-                                        @if (old('paises', $paciente->domicilio->ciudad->provincia->pais_id)== $pais->id)
-                                            <option value="{{$pais->id}}" selected>
-                                                {{$pais->nombre}}
-                                            </option>
-                                        @else
-                                            <option value="{{$pais->id}}">
-                                                {{$pais->nombre}}
-                                            </option>
-                                        @endif
-                                    @elseif ($paciente->domicilio == null)
-                                        <option value="{{$pais->id}}">
-                                            {{$pais->nombre}}
-                                        </option>
+                                @if ($paciente->domicilio && 
+                                    $paciente->domicilio->ciudad && 
+                                    $paciente->domicilio->ciudad->provincia && 
+                                    $paciente->domicilio->ciudad->provincia->pais_id == $pais->id
+                                )
+                                    <option value="{{$pais->id}}" selected>
+                                        {{$pais->nombre}}
+                                    </option>
+                                @else
+                                    <option value="{{$pais->id}}">
+                                        {{$pais->nombre}}
+                                    </option>
                                 @endif
                             @endforeach
                         </select>
@@ -403,7 +401,6 @@
                             id="provincia_id"
                             class="provincia_id custom-select"
                             style="width:50%"
-
                             >
                             <option
                                 value="0"
@@ -414,17 +411,14 @@
                                 -Seleccione una provincia-
                             </option>
                             @foreach($provincias as $provincia) 
-                                @if ($paciente->domicilio != null)
-                                    @if (old('provincias', $paciente->domicilio->ciudad->provincia_id)== $provincia->id)
-                                        <option value="{{$provincia->id}}" selected>
-                                            {{$provincia->nombre}}
-                                        </option>
-                                    @else
-                                        <option value="{{$provincia->id}}">
-                                            {{$provincia->nombre}}
-                                        </option>
-                                    @endif
-                                @elseif ($paciente->domicilio == null)
+                                @if ($paciente->domicilio &&
+                                    $paciente->domicilio->ciudad &&
+                                    $paciente->domicilio->ciudad->provincia_id == $provincia->id
+                                )
+                                    <option value="{{$provincia->id}}" selected>
+                                        {{$provincia->nombre}}
+                                    </option>
+                                @else
                                     <option value="{{$provincia->id}}">
                                         {{$provincia->nombre}}
                                     </option>
