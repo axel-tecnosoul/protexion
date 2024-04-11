@@ -9,7 +9,7 @@
     //WEB
     /*private $host = "localhost";
 		private $user = "protex";
-		private $pass = "<SoloLaSaVePr2022>";
+		private $pass = "@iugo2024@";//<SoloLaSaVePr2022>
 		private $db = "protex_client_access";*/
     
 		public $conectar;
@@ -30,8 +30,11 @@
 		}
 
     public function url_servidor_web(){
-			//return "https://protexionpr.com.ar/client_access/models/";
-      return "http://localhost/protexion/client_access/models/";
+      if($this->user=="root"){
+			  return "https://protexionpr.com.ar/client_access/models/";
+      }else{
+        return "http://localhost/protexion/client_access/models/";
+      }
 		}
 	}
 ?>

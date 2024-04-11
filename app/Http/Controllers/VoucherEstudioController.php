@@ -192,6 +192,7 @@ class VoucherEstudioController extends Controller
         }
       }
       
+      //dd($resultado);
       //die();
       return $resultado;
 

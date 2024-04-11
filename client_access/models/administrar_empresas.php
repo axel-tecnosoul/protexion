@@ -832,10 +832,14 @@ if (isset($accion)) {
       break;
       case "recibirArchivo":
         //var_dump($_POST);
-        $datosExtra=$_POST["datosExtra"];
-        //var_dump($_FILES);
-        //$empresas->recibir_archivos($archivos,$empresa);
-        echo $empresas->recibir_archivos($datosExtra);
+        if(isset($_POST["datosExtra"])){
+          $datosExtra=$_POST["datosExtra"];
+          //var_dump($_FILES);
+          //$empresas->recibir_archivos($archivos,$empresa);
+          echo $empresas->recibir_archivos($datosExtra);
+        }else{
+          echo "Faltan datos para subir el archivo".json_encode($_POST);
+        }
       break;
       case "eliminarArchivoDesdeLocal":
         $idArchivo=$_POST["idArchivo"];
