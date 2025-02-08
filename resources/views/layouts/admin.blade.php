@@ -373,6 +373,13 @@
                                 <p>Riesgos</p>
                             </a>
                         </li>
+
+                        <li class="nav-item">
+                            <a href="{{ route('configuracion.index') }}" class="nav-link">
+                                <i class="nav-icon fas fa-file-export"></i>
+                                <p>Exportar BBDD</p>
+                            </a>
+                        </li>
                         <!--
                         <li class="nav-item">
                             <a href="{{ route('tipo_estudios.index') }}" class="nav-link">

@@ -19,6 +19,16 @@ class ConfiguracionController extends Controller
     }
 
     /**
+     * Export the databe.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function export()
+    {
+        return view('configuracion.generar_archivo_sql');
+    }
+
+    /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response

@@ -14,13 +14,24 @@
             <div class="card">
                 <div class="card-header">
                     <h4 class="card-title" >
-                        <i class="fas fa-file-export" aria-hidden="true"></i> Exportacion de la Base de Datos
+                        <i class="fa fa-cogs" aria-hidden="true"></i> Indice de Configuraciones
                     </h4>
                 </div>
                 <div class="card-body">
                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                        <a href="{{ route('configuracion.export') }}" target="_blank">Click aqui para exportar y descargar</a>
-                        <!-- generar_archivo_sql.php -->
+                        <div class="col-lg-3 col-6">
+                            <!-- small box -->
+                            <div class="small-box bg-danger">
+                                <div class="inner">
+                                <h3>3</h3>
+                                <p>Tipo de Sangre</p>
+                            </div>
+                            <div class="icon">
+                                <i class="fas fa-tint"></i>
+                            </div>
+                                <a href="{{ route('user.index') }}" class="small-box-footer">Ir a gestion de tipo de sangre <i class="fas fa-arrow-circle-right"></i></a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

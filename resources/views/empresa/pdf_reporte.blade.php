@@ -74,7 +74,7 @@
             <!-- <span class="page-number">Page <script type="text/php">echo $PAGE_NUM;</script></span> -->
           <!-- <span>
             PROTEXIÓN "CENTRO MÉDICO LABORAL"<br>
-            Av. San Martín 1400- Puerto Rico,  Misiones - CP 3334
+            Av. Juan Manuel Estrada y Presidente Raúl Alfonsín esquina- Puerto Rico,  Misiones - CP 3334
             Tel. (03743) 476272 - Whatsapp: (03743) 483004<br>
             E-mail: info@protexionpr.com.ar; gerencia@protexionpr.com.ar<br>
           </span> -->
