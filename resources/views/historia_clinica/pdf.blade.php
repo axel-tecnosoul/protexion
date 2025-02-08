@@ -71,7 +71,7 @@
       <!-- <div class="page-number"></div> -->
       <span>
         PROTEXIÓN "CENTRO MÉDICO LABORAL"<br>
-        Av. Juan Manuel Estrada y Presidente Raúl Alfonsín esquina- Puerto Rico,  Misiones - CP 3334
+        Av. José M. de Estrada 1400 esquina Av. Pres. Raúl Alfonsín- Puerto Rico,  Misiones - CP 3334
         <!-- <br> --><br>
         Tel. (03743) 476272 - Whatsapp: (03743) 483004.
         E-mail: info@protexionpr.com.ar; gerencia@protexionpr.com.ar<br>
