@@ -34,7 +34,10 @@ class EspiriometriaController extends Controller
     public function crearPDF($id)
     {
         $voucher= Voucher::find($id);
-        $declaracionJurada=DeclaracionJurada::find($voucher->declaracionJurada->id);
+        $declaracionJurada=null;
+        if($voucher->declaracionJurada){
+          $declaracionJurada=DeclaracionJurada::find($voucher->declaracionJurada->id);
+        }
         $pdf = PDF::loadView('espiriometria.PDF',[
             "voucher"   =>  $voucher,
             "declaracion_jurada"   =>  $declaracionJurada

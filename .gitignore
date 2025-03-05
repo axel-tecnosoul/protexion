@@ -1,3 +1,5 @@
 .env
 public/imagenes
 client_access/views/archivos_empresas
+save_log.txt
+public/respaldos

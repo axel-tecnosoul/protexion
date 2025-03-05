@@ -103,8 +103,8 @@
                       <tr>
                         @if ($estudios_sistema[0][$item]->estudio->nombre == "ESPIROMETRIA")
                           <td style="width: 65%">ESPIROMETRIA (FORMULARIO)</td>
-                          <td style="text-align: center" title="<?=$title?>">
-                            <a target="_blank" href="{{ route('espiriometrias.pdf',$voucher->id) }}" class="btn fondo1 btn-responsive <?=$disabled?>">
+                          <td style="text-align: center" title="Imprimir">
+                            <a target="_blank" href="{{ route('espiriometrias.pdf',$voucher->id) }}" class="btn fondo1 btn-responsive">
                               <i class="fas fa-file-pdf"></i>
                             </a>
                           </td>

@@ -190,15 +190,19 @@
         <table class="table" >
             <tr >
                 <td style="width: 350px;text-align: center" colspan="6">
-                    <div>
-                        <img src="{{$declaracion_jurada->firma}}" height=130 alt="firma del paciente"><!-- style="border:solid 1px black" -->
+                    <div style="height:130px">
+                        @if ($declaracion_jurada)
+                            <img src="{{$declaracion_jurada->firma}}" height=130 alt="firma del paciente"><!-- style="border:solid 1px black" -->
+                        @endif
                     </div>
                     <label style="font-weight: inherit;font-size: 12px;">Firma del Paciente</label>
                 </td>
                 <td style="width: 350px;text-align: center;" colspan="6">
                     <div style="height:130px">
-                        @if ($declaracion_jurada->personalClinica->foto)
-                            <img src="{{public_path('imagenes/firmas/'.$declaracion_jurada->personalClinica->foto)}}"  height="130" alt="firma del médico">
+                        @if ($declaracion_jurada)
+                            @if ($declaracion_jurada->personalClinica->foto)
+                                <img src="{{public_path('imagenes/firmas/'.$declaracion_jurada->personalClinica->foto)}}"  height="130" alt="firma del médico">
+                            @endif
                         @endif
                     </div>
                     <label style="font-weight: inherit;font-size: 12px;">Firma del Médico</label>
