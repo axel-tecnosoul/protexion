@@ -489,7 +489,7 @@ class Empresas{
 
           //$asunto="Notificación de nuevo archivo";
           $asunto="Resultados Exámenes Médicos del Paciente ".$paciente.", fecha ".date("d/m/Y",strtotime($turno));
-          $cuerpo='<b>*Por favor no responda este mail*</b><br><br>Hola '.$usuario.', desde ProteXion queremos informarte que un nuevo archivo ha sido subido a nuestro sistema online para clientes.<br><br>Para dascarglo puede hacer un click <a href="https://protexionpr.com.ar/client_access/login.php" target="_blank">Aqui</a><br><br><br>Te recodamos que TODOS los ESTUDIOS los realizamos en UNA sola mañana, RESULTADOS en 24/48 hs.<br>Para cualquier duda o consulta al mail info@protexionpr.com.ar / gerencia@protexionpr.com.ar<br>Turnos al WhatsApp 3743 483004';
+          $cuerpo='<b>*Por favor no responda este mail*</b><br><br>Hola '.$usuario.', desde ProteXion queremos informarte que un nuevo archivo ha sido subido a nuestro sistema online para clientes.<br><br>Para dascarglo puede hacer un click <a href="https://protexionpr.com.ar/client_access/login.php" target="_blank">Aqui</a><br><br><br>Te recodamos que TODOS los ESTUDIOS los realizamos en UNA sola mañana, RESULTADOS en 24/48 hs.<br>Para cualquier duda o consulta al mail info@protexionpr.com.ar / gerencia@protexionpr.com.ar<br>Turnos al WhatsApp 3743 400804';
 
           $archivosAdjuntos[]=[
             "ruta"=>"../views/docs/INSTRUCTIVO PARA BAJAR ARCHIVOS SISTEMA PROTEXION.pdf",
@@ -564,7 +564,7 @@ class Empresas{
 
     $destinatarios[$row["email"]]=$row["usuario"];
     $asunto="Verificacion de Email";
-    $cuerpo='<b>*Por favor no responda este mail*</b><br><br>Hola '.$row["usuario"].'<br><br>Para verificar tu correo hacé click en el siguiente boton: <br><a href="'.$url.'administrar_empresas.php?accion=verificar_email&id='.$id_email.'" style="display:inline-block;text-decoration:none;background:#DA0037;border-radius:3px;color:white;font-family:Helvetica,sans-serif;font-size:16px;line-height:24px;font-weight:400;padding:12px 20px 11px;margin:0px;margin-top:25px" target="_blank" ><span class="il">Verificar</span> mi correo electrónico</a><br><br><br>Te recodamos que TODOS los ESTUDIOS los realizamos en UNA sola mañana, RESULTADOS en 24/48 hs.<br>Para cualquier duda o consulta al mail info@protexionpr.com.ar / gerencia@protexionpr.com.ar<br>Turnos al WhatsApp 3743 483004';
+    $cuerpo='<b>*Por favor no responda este mail*</b><br><br>Hola '.$row["usuario"].'<br><br>Para verificar tu correo hacé click en el siguiente boton: <br><a href="'.$url.'administrar_empresas.php?accion=verificar_email&id='.$id_email.'" style="display:inline-block;text-decoration:none;background:#DA0037;border-radius:3px;color:white;font-family:Helvetica,sans-serif;font-size:16px;line-height:24px;font-weight:400;padding:12px 20px 11px;margin:0px;margin-top:25px" target="_blank" ><span class="il">Verificar</span> mi correo electrónico</a><br><br><br>Te recodamos que TODOS los ESTUDIOS los realizamos en UNA sola mañana, RESULTADOS en 24/48 hs.<br>Para cualquier duda o consulta al mail info@protexionpr.com.ar / gerencia@protexionpr.com.ar<br>Turnos al WhatsApp 3743 400804';
 
     $adjuntos[]=[
       "ruta"=>"../views/docs/INSTRUCTIVO PARA BAJAR ARCHIVOS SISTEMA PROTEXION.pdf",

@@ -582,7 +582,7 @@ class Empresas{
 
       //$asunto="Notificación de nuevo archivo";
       $asunto="Resultados Exámenes Médicos del Paciente ".$paciente.", fecha ".date("d/m/Y",strtotime($turno));
-      $cuerpo='<b>*Por favor no responda este mail*</b><br><br>Hola '.$name.', desde ProteXion queremos informarte que un nuevo archivo ha sido subido a nuestro sistema online para clientes.<br><br>Para dascarglo puede hacer un click <a href="https://protexionpr.com.ar/client_access/login.php" target="_blank">Aqui</a><br><br><br>Te recodamos que TODOS los ESTUDIOS los realizamos en UNA sola mañana, RESULTADOS en 24/48 hs.<br>Para cualquier duda o consulta al mail info@protexionpr.com.ar / gerencia@protexionpr.com.ar<br>Turnos al WhatsApp 3743 483004';
+      $cuerpo='<b>*Por favor no responda este mail*</b><br><br>Hola '.$name.', desde ProteXion queremos informarte que un nuevo archivo ha sido subido a nuestro sistema online para clientes.<br><br>Para dascarglo puede hacer un click <a href="https://protexionpr.com.ar/client_access/login.php" target="_blank">Aqui</a><br><br><br>Te recodamos que TODOS los ESTUDIOS los realizamos en UNA sola mañana, RESULTADOS en 24/48 hs.<br>Para cualquier duda o consulta al mail info@protexionpr.com.ar / gerencia@protexionpr.com.ar<br>Turnos al WhatsApp 3743 400804';
 
       $mail->Subject = $asunto; //titulo
       $mensajeHtml = nl2br($cuerpo); //mensaje
