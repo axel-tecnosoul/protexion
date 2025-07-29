@@ -9,7 +9,7 @@
     //WEB
     /*private $host = "localhost";
 		private $user = "protex";
-		private $pass = "@iugo2024@";//<SoloLaSaVePr2022>
+		private $pass = "@Tucangüa18122022@";//@iugo2024@//<SoloLaSaVePr2022>
 		private $db = "protex_client_access";*/
     
 		public $conectar;
