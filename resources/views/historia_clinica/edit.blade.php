@@ -99,7 +99,7 @@ $observacion1_an="";
 $observacion_an="";
 /* EXAMEN CLÌNICO */
 if(isset($historia_clinica)){
-  if(isset($historia_clinica->examenClinico)){
+  //if(isset($historia_clinica->examenClinico)){
     //$estatura_anterior=($historia_clinica->examenClinico->estatura) ? "Historia Clinica Anterior: ".$historia_clinica->examenClinico->estatura : "";
     //$peso_anterior=($historia_clinica->examenClinico->peso) ? "Historia Clinica Anterior: ".$historia_clinica->examenClinico->peso : "";
     $estatura=($historia_clinica->examenClinico->estatura) ? $historia_clinica->examenClinico->estatura : "";;
@@ -107,9 +107,9 @@ if(isset($historia_clinica)){
     $sobrepeso=($historia_clinica->examenClinico->sobrepeso) ?: "";
     $imc=($historia_clinica->examenClinico->imc) ?: "";
     $medicacion_actual=($historia_clinica->examenClinico->medicacion_actual) ?: "";
-  }
+  //}
   /* CARDIOVASCULAR */
-  if(isset($historia_clinica->cardiovascular)){
+  //if(isset($historia_clinica->cardiovascular)){
     $frecuencia_cardiaca=($historia_clinica->cardiovascular->frecuencia_cardiaca) ?: "";
     $sistolica=($historia_clinica->cardiovascular->sistolica) ?: "";
     $diastolica=($historia_clinica->cardiovascular->diastolica) ?: "";
@@ -117,9 +117,9 @@ if(isset($historia_clinica)){
     $observacion_varices=($historia_clinica->cardiovascular->observacion_varices) ?: "";
     $checked_pulso_anormal=($historia_clinica->cardiovascular->pulso=="A") ? "checked" : "";
     $checked_pulso_normal=($historia_clinica->cardiovascular->pulso=="N") ? "checked" : "";
-  }
+  //}
   /* PIEL*/
-  if(isset($historia_clinica->piel)){
+  //if(isset($historia_clinica->piel)){
     $observacion1_piel=($historia_clinica->piel->observacion1_piel) ?: "";
     $obs_vesicula=($historia_clinica->piel->obs_vesicula) ?: "";
     $obs_ulceras=($historia_clinica->piel->obs_ulceras) ?: "";
@@ -130,34 +130,34 @@ if(isset($historia_clinica)){
     $obs_eritemas=($historia_clinica->piel->obs_eritemas) ?: "";
     $obs_petequias=($historia_clinica->piel->obs_petequias) ?: "";
     $tejido=($historia_clinica->piel->tejido) ?: "";
-  }
+  //}
   /* OSTEOARTICULAR */
-  if(isset($historia_clinica->osteoarticular)){
+  //if(isset($historia_clinica->osteoarticular)){
     $observacion1_os=($historia_clinica->osteoarticular->observacion1_os) ?: "";
     $observacion2_os=($historia_clinica->osteoarticular->observacion2_os) ?: "";
     $observacion3_os=($historia_clinica->osteoarticular->observacion3_os) ?: "";
     $observacion4_os=($historia_clinica->osteoarticular->observacion4_os) ?: "";
     $observacion_os=($historia_clinica->osteoarticular->observacion_os) ?: "";
-  }
+  //}
   /* COLUMNA VERTEBRAL */
-  if(isset($historia_clinica->columna)){
+  //if(isset($historia_clinica->columna)){
     $observacion1_col=($historia_clinica->columna->observacion1_col) ?: "";
     $observacion2_col=($historia_clinica->columna->observacion2_col) ?: "";
     $observacion3_col=($historia_clinica->columna->observacion3_col) ?: "";
     $observacion4_col=($historia_clinica->columna->observacion4_col) ?: "";
     $observacion_col=($historia_clinica->columna->observacion_col) ?: "";
-  }
+  //}
   /*CABEZA Y CUELLO*/
-  if(isset($historia_clinica->cabezaCuello)){
+  //if(isset($historia_clinica->cabezaCuello)){
     $observacion1_cc=($historia_clinica->cabezaCuello->observacion1_cc) ?: "";
     $observacion2_cc=($historia_clinica->cabezaCuello->observacion2_cc) ?: "";
     $observacion3_cc=($historia_clinica->cabezaCuello->observacion3_cc) ?: "";
     $observacion4_cc=($historia_clinica->cabezaCuello->observacion4_cc) ?: "";
     $observacion5_cc=($historia_clinica->cabezaCuello->observacion5_cc) ?: "";
     $observacion6_cc=($historia_clinica->cabezaCuello->observacion6_cc) ?: "";
-  }
+  //}
   /*OFTALMOLOGICO*/
-  if(isset($historia_clinica->oftalmologico)){
+  //if(isset($historia_clinica->oftalmologico)){
     $observacion1_of=($historia_clinica->oftalmologico->observacion1_of) ?: "";
     $observacion2_of=($historia_clinica->oftalmologico->observacion2_of) ?: "";
     $observacion3_of=($historia_clinica->oftalmologico->observacion3_of) ?: "";
@@ -167,9 +167,9 @@ if(isset($historia_clinica)){
     $observacion6_of=($historia_clinica->oftalmologico->observacion6_of) ?: "";
     $usa_lentes=($historia_clinica->oftalmologico->pregunta7_of==1) ? "checked" : "";
     $observacion_of=($historia_clinica->oftalmologico->observacion_of) ?: "";
-  }
+  //}
   /* NEUROLOGICO */
-  if(isset($historia_clinica->neurologico)){
+  //if(isset($historia_clinica->neurologico)){
     $observacion1_neu=($historia_clinica->neurologico->observacion1_neu) ?: "";
     $observacion2_neu=($historia_clinica->neurologico->observacion2_neu) ?: "";
     $observacion3_neu=($historia_clinica->neurologico->observacion3_neu) ?: "";
@@ -178,9 +178,9 @@ if(isset($historia_clinica)){
     $observacion6_neu=($historia_clinica->neurologico->observacion6_neu) ?: "";
     $observacion7_neu=($historia_clinica->neurologico->observacion7_neu) ?: "";
     $observacion_neu=($historia_clinica->neurologico->observacion_neu) ?: "";
-  }
+  //}
   /* ODONTOLOGICO */
-  if(isset($historia_clinica->odontologico)){
+  //if(isset($historia_clinica->odontologico)){
     $observacion1_od=($historia_clinica->odontologico->observacion1_od) ?: "";
     $observacion2_od=($historia_clinica->odontologico->observacion2_od) ?: "";
     $pregunta4_od=($historia_clinica->odontologico->pregunta4_od==1) ? "checked" : "";
@@ -190,14 +190,14 @@ if(isset($historia_clinica)){
     $superior=($historia_clinica->odontologico->superior) ?: "";
     $inferior=($historia_clinica->odontologico->inferior) ?: "";
     $observacion_od=($historia_clinica->odontologico->observacion_od) ?: "";
-  }
+  //}
   /* TORAX Y APARATO RESPIRATORIO */
-  if(isset($historia_clinica->respiratorio)){
+  //if(isset($historia_clinica->respiratorio)){
     $observacion1_re=($historia_clinica->respiratorio->observacion1_re) ?: "";
     $observacion2_re=($historia_clinica->respiratorio->observacion2_re) ?: "";
-  }
+  //}
   /* ABDOMEN */
-  if(isset($historia_clinica->abdomen)){
+  //if(isset($historia_clinica->abdomen)){
     $observacion1_ab=($historia_clinica->abdomen->observacion1_ab) ?: "";
     $observacion2_ab=($historia_clinica->abdomen->observacion2_ab) ?: "";
     $observacion3_ab=($historia_clinica->abdomen->observacion3_ab) ?: "";
@@ -205,24 +205,24 @@ if(isset($historia_clinica)){
     $observacion5_ab=($historia_clinica->abdomen->observacion5_ab) ?: "";
     $observacion6_ab=($historia_clinica->abdomen->observacion6_ab) ?: "";
     $observacion_ab=($historia_clinica->abdomen->observacion_ab) ?: "";
-  }
+  //}
   /* REGIONES INGUINALES */
-  if(isset($historia_clinica->regionInguinal)){
+  //if(isset($historia_clinica->regionInguinal)){
     $observacion1_in=($historia_clinica->regionInguinal->observacion1_in) ?: "";
     $observacion2_in=($historia_clinica->regionInguinal->observacion2_in) ?: "";
     $observacion3_in=($historia_clinica->regionInguinal->observacion3_in) ?: "";
     $observacion_in=($historia_clinica->regionInguinal->observacion_in) ?: "";
-  }
+  //}
   /* GENITALES */
-  if(isset($historia_clinica->genital)){
+  //if(isset($historia_clinica->genital)){
     $observacion1_ge=($historia_clinica->genital->observacion1_ge) ?: "";
     $observacion_ge=($historia_clinica->genital->observacion_ge) ?: "";
-  }
+  //}
   /* REGION ANAL */
-  if(isset($historia_clinica->regionAnal)){
+  //if(isset($historia_clinica->regionAnal)){
     $observacion1_an=($historia_clinica->regionAnal->observacion1_an) ?: "";
     $observacion_an=($historia_clinica->regionAnal->observacion_an) ?: "";
-  }
+  //}
 }
 ?>
 
