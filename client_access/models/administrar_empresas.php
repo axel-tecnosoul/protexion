@@ -830,7 +830,7 @@ if (isset($accion)) {
       case "marcarArchivoDescargado":
         $empresas->marcarArchivoDescargado($id_archivo);
       break;
-      case "recibirArchivo":
+      /*case "recibirArchivo":
         //var_dump($_POST);
         if(isset($_POST["datosExtra"])){
           $datosExtra=$_POST["datosExtra"];
@@ -840,7 +840,69 @@ if (isset($accion)) {
         }else{
           echo "Faltan datos para subir el archivo".json_encode($_POST);
         }
-      break;
+      break;*/
+      case "recibirArchivo":
+        $limitePost = trim(ini_get('post_max_size'));
+        $limitePostBytes = (float) $limitePost;
+        $unidadLimite = strtolower(substr($limitePost, -1));
+
+        switch ($unidadLimite) {
+          case 'g':
+            $limitePostBytes *= 1024 * 1024 * 1024;
+            break;
+          case 'm':
+            $limitePostBytes *= 1024 * 1024;
+            break;
+          case 'k':
+            $limitePostBytes *= 1024;
+            break;
+        }
+
+        $tamanoEnvio = 0;
+
+        if (isset($_SERVER['CONTENT_LENGTH']) && is_scalar($_SERVER['CONTENT_LENGTH'])) {
+          $tamanoEnvio = (float) $_SERVER['CONTENT_LENGTH'];
+        }
+
+        $mensajeError = '';
+
+        // PHP descarta los campos y archivos cuando el envío supera post_max_size.
+        if ($limitePostBytes > 0 && $tamanoEnvio > $limitePostBytes) {
+          $mensajeError = 'El tamaño total del envío supera el máximo permitido de '
+            . $limitePost . ' en el acceso para clientes.';
+        }
+
+        if ($mensajeError === '' && isset($_FILES['file']['error'])) {
+          $erroresArchivos = $_FILES['file']['error'];
+
+          if (!is_array($erroresArchivos)) {
+            $erroresArchivos = [$erroresArchivos];
+          }
+
+          foreach ($erroresArchivos as $errorArchivo) {
+            if ($errorArchivo === UPLOAD_ERR_INI_SIZE) {
+              $mensajeError = 'Uno de los archivos supera el máximo permitido por archivo de '
+                . ini_get('upload_max_filesize') . ' en el acceso para clientes.';
+              break;
+            }
+
+            if ($errorArchivo !== UPLOAD_ERR_OK) {
+              $mensajeError = 'No se pudo recibir uno de los archivos en el acceso para clientes. '
+                . 'Código de error de carga: ' . (int) $errorArchivo . '.';
+              break;
+            }
+          }
+        }
+
+        if ($mensajeError !== '') {
+          echo $mensajeError;
+        } elseif (isset($_POST['datosExtra']) && is_string($_POST['datosExtra'])) {
+          $datosExtra = $_POST['datosExtra'];
+          echo $empresas->recibir_archivos($datosExtra);
+        } else {
+          echo 'Faltan los datos necesarios para subir el archivo al acceso para clientes.';
+        }
+        break;
       case "eliminarArchivoDesdeLocal":
         $idArchivo=$_POST["idArchivo"];
         
